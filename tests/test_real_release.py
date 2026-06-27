@@ -14,6 +14,12 @@ from lafc_evict_dataset.real_release import (
     summarize_candidate_source,
 )
 from lafc_evict_dataset.real_release_build import build_real_release
+from lafc_evict_dataset.real_release_build import (
+    _consolidate_partition_parquet_files,
+    _count_candidate_rows,
+    _duckdb_connect,
+    _register_candidate_partitions,
+)
 from lafc_evict_dataset.real_release_validation import validate_real_release
 from lafc_evict_dataset.io import resolve_candidate_files
 
@@ -416,6 +422,36 @@ def test_build_real_release_writes_partitioned_candidates_and_views(tmp_path: Pa
 
     errors = validate_real_release(output_dir)
     assert errors == []
+
+
+def test_consolidate_partition_parquet_files_merges_existing_target_with_extra_fragments(tmp_path: Path) -> None:
+    manifest_path, _, _ = _build_candidate_fixture(tmp_path)
+    shard_path = resolve_candidate_files(manifest_path)[0]
+    candidate_rows = pd.read_csv(shard_path)
+
+    partition_dir = (
+        tmp_path
+        / "candidate_rows"
+        / "split=train"
+        / "trace_family=cloudphysics"
+        / "capacity=32"
+        / "horizon=4"
+    )
+    partition_dir.mkdir(parents=True)
+
+    candidate_rows.iloc[:1].to_parquet(partition_dir / "candidate_rows.parquet", index=False)
+    candidate_rows.iloc[1:2].to_parquet(partition_dir / "part-0001.parquet", index=False)
+
+    con = _duckdb_connect()
+    try:
+        _consolidate_partition_parquet_files(con, tmp_path / "candidate_rows")
+        _register_candidate_partitions(con, tmp_path / "candidate_rows")
+        assert _count_candidate_rows(con) == 2
+    finally:
+        con.close()
+
+    parquet_files = sorted(partition_dir.glob("*.parquet"))
+    assert parquet_files == [partition_dir / "candidate_rows.parquet"]
 
 
 def test_validation_catches_blocked_family_in_release(tmp_path: Path) -> None:

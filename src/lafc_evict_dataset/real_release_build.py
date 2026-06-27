@@ -189,7 +189,13 @@ def _register_candidate_shards(con, shard_paths: list[Path]) -> None:
     con.execute(
         f"""
         CREATE OR REPLACE TEMP VIEW raw_candidates AS
-        SELECT * FROM read_csv({_sql_string_list(paths)}, header=true, auto_detect=true, union_by_name=true)
+        SELECT * FROM read_csv(
+            {_sql_string_list(paths)},
+            header=true,
+            auto_detect=true,
+            union_by_name=true,
+            quote='"'
+        )
         """
     )
     con.execute(
@@ -202,7 +208,19 @@ def _register_candidate_shards(con, shard_paths: list[Path]) -> None:
     )
 
 
-def _rename_partition_parquet_files(candidate_root: Path) -> None:
+def _register_candidate_partitions(con, candidate_root: Path) -> None:
+    paths = sorted(str(path) for path in candidate_root.rglob("candidate_rows.parquet"))
+    if not paths:
+        raise FileNotFoundError(f"No candidate_rows.parquet partitions under {candidate_root}")
+    con.execute(
+        f"""
+        CREATE OR REPLACE TEMP VIEW candidates AS
+        SELECT * FROM read_parquet({_sql_string_list(paths)})
+        """
+    )
+
+
+def _consolidate_partition_parquet_files(con, candidate_root: Path) -> None:
     for partition_dir in sorted(candidate_root.rglob("*")):
         if not partition_dir.is_dir():
             continue
@@ -210,15 +228,20 @@ def _rename_partition_parquet_files(candidate_root: Path) -> None:
         if not parquet_files:
             continue
         target = partition_dir / "candidate_rows.parquet"
-        if target.exists() and target not in parquet_files:
-            continue
         if len(parquet_files) == 1 and parquet_files[0].name == "candidate_rows.parquet":
             continue
-        if target.exists():
-            target.unlink()
-        parquet_files[0].rename(target)
-        for extra in parquet_files[1:]:
-            extra.unlink()
+
+        path_list = _sql_string_list([str(path) for path in parquet_files])
+        merged_path = partition_dir / "_candidate_rows_merged.parquet"
+        con.execute(
+            f"""
+            COPY (SELECT * FROM read_parquet({path_list}))
+            TO {merged_path.as_posix()!r} (FORMAT PARQUET)
+            """
+        )
+        for parquet_file in parquet_files:
+            parquet_file.unlink()
+        merged_path.rename(target)
 
 
 def _export_partitioned_candidates(con, *, candidate_root: Path, overwrite: bool) -> None:
@@ -242,7 +265,7 @@ def _export_partitioned_candidates(con, *, candidate_root: Path, overwrite: bool
         )
         """
     )
-    _rename_partition_parquet_files(candidate_root)
+    _consolidate_partition_parquet_files(con, candidate_root)
 
 
 def _build_decision_view(con, *, decision_view_path: Path) -> int:
@@ -644,6 +667,7 @@ def build_real_release(
             )
 
         _export_partitioned_candidates(con, candidate_root=candidate_root, overwrite=overwrite)
+        _register_candidate_partitions(con, candidate_root)
         candidate_row_count = _count_candidate_rows(con)
         decision_row_count = _build_decision_view(con, decision_view_path=decision_view_path)
         pairwise_sample_row_count: int | None = None
