@@ -1,5 +1,12 @@
 # LAFC-Evict Release Roadmap
 
+## Milestones
+
+- [x] scaffold created
+- [x] scaffold audited
+- [x] synthetic sample release dry-run
+- [ ] next: choose license-clean real subset
+
 ## Priority 0: Licensing and scope
 
 1. Complete upstream license and redistribution review for each trace family.

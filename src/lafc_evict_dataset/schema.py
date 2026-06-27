@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Final
 
+SCHEMA_VERSION: Final[str] = "lafc-evict-candidate-v1"
+
 BASE_REQUIRED_COLUMNS: Final[list[str]] = [
     "trace_name",
     "trace_family",

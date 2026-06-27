@@ -82,6 +82,17 @@ python scripts/validate_release_schema.py \
   --input-path release/lafc-evict-v0.1-open/candidate_rows
 ```
 
+## Build a synthetic sample release
+
+```bash
+python scripts/build_sample_release.py \
+  --input examples/tiny_candidate_rows.csv \
+  --output-dir release/lafc-evict-sample-v0.1 \
+  --overwrite
+```
+
+This command is only a release-workflow smoke test. It builds a fully synthetic dry-run package and is not a scientific benchmark release.
+
 ## Development
 
 Run the test suite:
