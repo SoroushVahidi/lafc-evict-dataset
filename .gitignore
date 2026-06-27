@@ -1,5 +1,7 @@
 data/
 release/
+publication/bundles/
+publication/.env
 *.parquet
 *.arrow
 *.pkl

@@ -22,6 +22,10 @@ dependencies = [
 dev = [
   "pytest>=8.0",
 ]
+publish = [
+  "huggingface_hub",
+  "requests",
+]
 
 [tool.setuptools]
 package-dir = { "" = "src" }
