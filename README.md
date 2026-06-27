@@ -6,6 +6,16 @@ It is intentionally limited to release-oriented code, schema definitions, metada
 
 LAFC-Evict releases **generated counterfactual supervision labels and benchmark views**. Upstream raw traces remain external source artifacts and should be cited separately using their original provenance and licensing terms.
 
+## Associated Paper / Preprint
+
+This dataset release accompanies the public preprint/manuscript:  
+**TODO: paper title**  
+Soroush Vahidi, TODO: coauthors if applicable.  
+Preprint: TODO: URL/DOI/arXiv/ResearchSquare/InReview link  
+Status: public preprint; manuscript under peer review.
+
+The paper describes the learning-augmented caching setting and the experiments that motivated this dataset release. This repository provides dataset-release artifacts, schemas, validation tools, benchmark views, and reproducibility utilities. When using the data artifact, cite both the paper/preprint and the dataset release DOI once the DOI is available.
+
 ## Scope
 
 The current `v0.1` scaffold focuses on:

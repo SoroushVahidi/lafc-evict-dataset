@@ -16,6 +16,7 @@ def main() -> None:
     from lafc_evict_dataset.publication import (
         collect_release_inventory,
         detect_hf_auth_available,
+        execute_huggingface_upload,
         plan_huggingface_upload,
     )
 
@@ -65,16 +66,24 @@ def main() -> None:
         except Exception as exc:
             parser.exit(1, f"Execute mode requires huggingface_hub: {exc}\n")
 
+        result = execute_huggingface_upload(
+            inventory,
+            repo_id=args.repo_id,
+            repo_type=args.repo_type,
+            private=args.private,
+            large_folder=args.large_folder,
+        )
         print(
             json.dumps(
                 {
                     "mode": "execute",
-                    "repo_id": args.repo_id,
+                    "repo_id": result.repo_id,
                     "repo_type": args.repo_type,
-                    "private": args.private,
+                    "private": result.private,
                     "large_folder": args.large_folder,
-                    "files_to_upload": list(plan.files),
-                    "note": "Execution path prepared. Real upload implementation intentionally remains manual-first.",
+                    "repo_url": result.repo_url,
+                    "verified_remote_paths": list(result.verified_remote_paths),
+                    "remote_file_count": len(result.uploaded_files),
                 },
                 indent=2,
             )

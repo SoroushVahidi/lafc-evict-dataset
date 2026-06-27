@@ -8,6 +8,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Final
 
+ASSOCIATED_PAPER_TITLE: Final[str] = "TODO: paper title"
+ASSOCIATED_PAPER_AUTHORS: Final[str] = "Soroush Vahidi, TODO: coauthors if applicable."
+ASSOCIATED_PAPER_LINK: Final[str] = "TODO: URL/DOI/arXiv/ResearchSquare/InReview link"
+ASSOCIATED_PAPER_STATUS: Final[str] = "public preprint; manuscript under peer review."
 
 SYNTHETIC_DISCLAIMER: Final[str] = (
     "This is a synthetic sample release for testing the publication workflow. "
@@ -49,6 +53,15 @@ class DryRunPlan:
     target: str
     files: tuple[str, ...]
     summary: dict[str, object]
+
+
+@dataclass(frozen=True)
+class HuggingFaceUploadResult:
+    repo_id: str
+    repo_url: str
+    private: bool
+    uploaded_files: tuple[str, ...]
+    verified_remote_paths: tuple[str, ...]
 
 
 def publication_template_path(name: str) -> Path:
@@ -111,6 +124,10 @@ def render_dataset_card(inventory: ReleaseInventory) -> str:
         synthetic_disclaimer=SYNTHETIC_DISCLAIMER if release_is_synthetic_sample(inventory) else "",
         synthetic_data_disclaimer=SYNTHETIC_DATA_DISCLAIMER if release_is_synthetic_sample(inventory) else "",
         release_name=release_name_from_inventory(inventory),
+        associated_paper_title=ASSOCIATED_PAPER_TITLE,
+        associated_paper_authors=ASSOCIATED_PAPER_AUTHORS,
+        associated_paper_link=ASSOCIATED_PAPER_LINK,
+        associated_paper_status=ASSOCIATED_PAPER_STATUS,
     ).strip() + "\n"
 
 
@@ -128,6 +145,17 @@ def render_zenodo_metadata(inventory: ReleaseInventory) -> dict[str, object]:
         "counterfactual supervision",
         str(inventory.release_manifest.get("release_type", "unknown")),
     ]
+    metadata["related_identifiers"] = [
+        {
+            "identifier": ASSOCIATED_PAPER_LINK,
+            "relation": "isSupplementTo",
+            "resource_type": "publication-preprint",
+        }
+    ]
+    metadata["notes"] = (
+        f"Associated paper/preprint: {ASSOCIATED_PAPER_TITLE}. "
+        f"Status: {ASSOCIATED_PAPER_STATUS}"
+    )
     return template
 
 
@@ -143,6 +171,10 @@ def render_github_release_notes(inventory: ReleaseInventory) -> str:
         decision_row_count=inventory.release_manifest.get("row_counts", {}).get("decision_view", 0),
         pairwise_row_count=inventory.release_manifest.get("row_counts", {}).get("pairwise_view", 0),
         synthetic_disclaimer=selected_note,
+        associated_paper_title=ASSOCIATED_PAPER_TITLE,
+        associated_paper_authors=ASSOCIATED_PAPER_AUTHORS,
+        associated_paper_link=ASSOCIATED_PAPER_LINK,
+        associated_paper_status=ASSOCIATED_PAPER_STATUS,
     ).strip() + "\n"
 
 
@@ -193,6 +225,18 @@ def write_json(path: str | Path, payload: dict[str, object]) -> Path:
     return output_path
 
 
+def expected_hf_remote_paths(inventory: ReleaseInventory) -> tuple[str, ...]:
+    return (
+        "README.md",
+        "metadata/release_manifest.json",
+        "metadata/checksums.sha256",
+        "metadata/validation_report.md",
+        "data/candidate_rows/",
+        "data/decision_view/",
+        "data/pairwise_view/",
+    )
+
+
 def token_like_matches(text: str) -> list[str]:
     matches: list[str] = []
     for pattern in TOKEN_LIKE_PATTERNS:
@@ -233,6 +277,18 @@ def detect_hf_auth_available() -> bool:
         return bool(HfFolder.get_token())
     except Exception:
         return False
+
+
+def hf_api_token() -> str | None:
+    token = os.environ.get("HF_TOKEN")
+    if token:
+        return token
+    try:
+        from huggingface_hub import HfFolder
+
+        return HfFolder.get_token()
+    except Exception:
+        return None
 
 
 def detect_zenodo_auth_available() -> bool:
@@ -279,6 +335,61 @@ def plan_huggingface_upload(
             "large_folder": large_folder,
             "release_dir": str(inventory.release_dir),
         },
+    )
+
+
+def execute_huggingface_upload(
+    inventory: ReleaseInventory,
+    *,
+    repo_id: str,
+    repo_type: str,
+    private: bool,
+    large_folder: bool,
+) -> HuggingFaceUploadResult:
+    token = hf_api_token()
+    if not token:
+        raise ValueError("Execute mode requires HF_TOKEN or a pre-authenticated Hugging Face CLI session.")
+
+    from huggingface_hub import HfApi
+
+    api = HfApi(token=token)
+    api.create_repo(repo_id=repo_id, repo_type=repo_type, private=private, exist_ok=True)
+
+    if large_folder and hasattr(api, "upload_large_folder"):
+        api.upload_large_folder(
+            repo_id=repo_id,
+            repo_type=repo_type,
+            folder_path=str(inventory.release_dir),
+        )
+    else:
+        api.upload_folder(
+            repo_id=repo_id,
+            repo_type=repo_type,
+            folder_path=str(inventory.release_dir),
+        )
+
+    repo_info = api.repo_info(repo_id=repo_id, repo_type=repo_type)
+    remote_files = tuple(sorted(api.list_repo_files(repo_id=repo_id, repo_type=repo_type)))
+    expected = expected_hf_remote_paths(inventory)
+    verified: list[str] = []
+    for expected_path in expected:
+        if expected_path.endswith("/"):
+            prefix = expected_path
+            if not any(path.startswith(prefix) for path in remote_files):
+                raise FileNotFoundError(f"Missing expected remote path prefix: {expected_path}")
+            verified.append(expected_path)
+        else:
+            if expected_path not in remote_files:
+                raise FileNotFoundError(f"Missing expected remote file: {expected_path}")
+            verified.append(expected_path)
+
+    private_flag = bool(getattr(repo_info, "private", private))
+    return HuggingFaceUploadResult(
+        repo_id=repo_id,
+        repo_url=f"https://huggingface.co/datasets/{repo_id}",
+        private=private_flag,
+        uploaded_files=remote_files,
+        verified_remote_paths=tuple(verified),
     )
 
 

@@ -2,6 +2,16 @@
 
 This repository is designed to export a release from an **existing generated candidate-row dataset**. It does not require committing raw traces to GitHub.
 
+## Associated Paper / Preprint
+
+This dataset release accompanies the public preprint/manuscript:  
+**TODO: paper title**  
+Soroush Vahidi, TODO: coauthors if applicable.  
+Preprint: TODO: URL/DOI/arXiv/ResearchSquare/InReview link  
+Status: public preprint; manuscript under peer review.
+
+Use the dataset release artifacts and the associated paper/preprint together when describing the learning-augmented caching setting and the experiments motivating the release.
+
 ## Inputs
 
 Supported inputs for release export:

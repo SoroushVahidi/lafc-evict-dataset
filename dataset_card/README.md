@@ -2,6 +2,8 @@
 
 This directory contains the release-facing documentation for LAFC-Evict.
 
+Associated paper/preprint metadata should be kept consistent across this directory, `README.md`, `CITATION.cff`, and publication templates. If exact public preprint metadata is not yet finalized in-repo, use conservative TODO placeholders and keep the status as: `public preprint; manuscript under peer review`.
+
 - `DATASET_CARD.md`: short-form dataset card.
 - `DATASHEET.md`: datasheet-style questions and answers.
 - `LICENSE_DATA.md`: upstream licensing and redistribution review checklist.

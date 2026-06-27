@@ -8,8 +8,16 @@
         "name": "Vahidi, Soroush"
       }
     ],
+    "related_identifiers": [
+      {
+        "identifier": "TODO: URL/DOI/arXiv/ResearchSquare/InReview link",
+        "relation": "isSupplementTo",
+        "resource_type": "publication-preprint"
+      }
+    ],
     "keywords": [],
     "version": "TODO",
-    "license": "TODO"
+    "license": "TODO",
+    "notes": "Associated paper/preprint: TODO: paper title. Status: public preprint; manuscript under peer review."
   }
 }

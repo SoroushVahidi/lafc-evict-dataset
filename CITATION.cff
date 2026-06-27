@@ -13,3 +13,17 @@ version: "0.1.0"
 date-released: "2026-06-27"
 doi: "TODO"
 license: "MIT"
+preferred-citation:
+  type: article
+  title: "TODO: paper title"
+  authors:
+    - family-names: "Vahidi"
+      given-names: "Soroush"
+  journal: "TODO"
+  year: 2026
+  doi: "TODO"
+  url: "TODO: URL/DOI/arXiv/ResearchSquare/InReview link"
+keywords:
+  - "cache eviction"
+  - "dataset release"
+  - "counterfactual supervision"
