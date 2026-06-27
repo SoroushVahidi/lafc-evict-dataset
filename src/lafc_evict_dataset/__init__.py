@@ -1,3 +1,10 @@
+from .governance import (
+    REQUIRED_FAMILIES,
+    REQUIRED_REGISTRY_FIELDS,
+    load_source_family_registry,
+    select_release_families,
+    write_selected_families_manifest,
+)
 from .release import SampleReleaseResult, build_sample_release
 from .schema import BASE_REQUIRED_COLUMNS, CANONICAL_COLUMNS, FEATURE_COLUMNS
 from .validation import validate_candidate_dataframe, validate_candidate_file
@@ -7,10 +14,15 @@ __all__ = [
     "BASE_REQUIRED_COLUMNS",
     "CANONICAL_COLUMNS",
     "FEATURE_COLUMNS",
+    "REQUIRED_FAMILIES",
+    "REQUIRED_REGISTRY_FIELDS",
     "SampleReleaseResult",
     "build_decision_view",
     "build_pairwise_view",
     "build_sample_release",
+    "load_source_family_registry",
+    "select_release_families",
     "validate_candidate_dataframe",
     "validate_candidate_file",
+    "write_selected_families_manifest",
 ]

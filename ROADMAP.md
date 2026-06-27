@@ -5,12 +5,13 @@
 - [x] scaffold created
 - [x] scaffold audited
 - [x] synthetic sample release dry-run
-- [ ] next: choose license-clean real subset
+- [x] source-family release governance
+- [ ] next: choose license-clean real subset for `lafc-evict-v0.1-open`
 
 ## Priority 0: Licensing and scope
 
 1. Complete upstream license and redistribution review for each trace family.
-2. Select the first public release subset using only license-clean/open traces.
+2. Select the first public release subset for `lafc-evict-v0.1-open` using only registry-approved license-clean/open traces.
 3. Keep CitiBike and Brightkite out of the first public release unless review clears them.
 
 ## Priority 1: Release build

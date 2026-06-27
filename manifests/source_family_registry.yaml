@@ -1,0 +1,77 @@
+families:
+  - family: twemcache
+    source_name: Twitter cache trace / Twemcache open trace collection
+    source_url: https://github.com/twitter/cache-trace
+    upstream_license: open_trace_collection_needs_citation_review
+    redistribution_status: eligible_pending_final_review
+    recommended_for_v0_1_open: true
+    privacy_risk: low
+    notes: Candidate for lafc-evict-v0.1-open if final redistribution and attribution checks stay clear.
+    required_citation: true
+    review_status: needs_review
+
+  - family: metakv
+    source_name: MetaKV trace family via open cache trace collection
+    source_url: https://github.com/cacheMon/cache_dataset
+    upstream_license: open_trace_collection_needs_citation_review
+    redistribution_status: eligible_pending_final_review
+    recommended_for_v0_1_open: true
+    privacy_risk: low
+    notes: Candidate for lafc-evict-v0.1-open if final redistribution and attribution checks stay clear.
+    required_citation: true
+    review_status: needs_review
+
+  - family: metacdn
+    source_name: MetaCDN trace family via open cache trace collection
+    source_url: https://github.com/cacheMon/cache_dataset
+    upstream_license: open_trace_collection_needs_citation_review
+    redistribution_status: eligible_pending_final_review
+    recommended_for_v0_1_open: true
+    privacy_risk: low
+    notes: Candidate for lafc-evict-v0.1-open if final redistribution and attribution checks stay clear.
+    required_citation: true
+    review_status: needs_review
+
+  - family: cloudphysics
+    source_name: CloudPhysics / open cache trace collection block I/O family
+    source_url: https://github.com/cacheMon/cache_dataset
+    upstream_license: open_trace_collection_needs_citation_review
+    redistribution_status: eligible_pending_final_review
+    recommended_for_v0_1_open: true
+    privacy_risk: low
+    notes: Candidate for lafc-evict-v0.1-open if the specific open trace collection provenance and attribution terms are confirmed.
+    required_citation: true
+    review_status: needs_review
+
+  - family: wiki2018
+    source_name: Wikimedia public pageviews derived proxy trace
+    source_url: https://dumps.wikimedia.org/other/pageviews/
+    upstream_license: wikimedia_public_pageviews_with_attribution
+    redistribution_status: eligible_pending_final_review
+    recommended_for_v0_1_open: true
+    privacy_risk: low
+    notes: Pageview-derived proxy trace for request mixtures; not a byte-for-byte CDN trace and should be described that way.
+    required_citation: true
+    review_status: needs_review
+
+  - family: citibike
+    source_name: Citi Bike trip-data derived trace family
+    source_url: https://citibikenyc.com/system-data
+    upstream_license: source_terms_require_review
+    redistribution_status: blocked_pending_review
+    recommended_for_v0_1_open: false
+    privacy_risk: medium
+    notes: Exclude from lafc-evict-v0.1-open until redistribution and privacy review are complete.
+    required_citation: true
+    review_status: blocked_pending_review
+
+  - family: brightkite
+    source_name: Brightkite / SNAP-derived trace family
+    source_url: https://snap.stanford.edu/data/loc-brightkite.html
+    upstream_license: source_terms_and_privacy_require_review
+    redistribution_status: blocked_pending_review
+    recommended_for_v0_1_open: false
+    privacy_risk: medium
+    notes: Exclude from lafc-evict-v0.1-open until license and privacy review are complete.
+    required_citation: true
+    review_status: blocked_pending_review

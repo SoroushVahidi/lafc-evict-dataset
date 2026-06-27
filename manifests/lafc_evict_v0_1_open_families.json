@@ -1,0 +1,21 @@
+{
+  "excluded_families": [
+    {
+      "family": "brightkite",
+      "reason": "not recommended for v0.1-open; redistribution_status=blocked_pending_review"
+    },
+    {
+      "family": "citibike",
+      "reason": "not recommended for v0.1-open; redistribution_status=blocked_pending_review"
+    }
+  ],
+  "release_scope": "v0.1-open",
+  "selected_families": [
+    "cloudphysics",
+    "metacdn",
+    "metakv",
+    "twemcache",
+    "wiki2018"
+  ],
+  "warning": "This selector output is a release-governance aid based on repository metadata. It is not legal advice."
+}

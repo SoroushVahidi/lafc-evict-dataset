@@ -16,11 +16,15 @@ These originate from external providers, public dumps, or upstream workload repo
 
 This project does **not** claim authorship of those raw traces.
 
+Release-scope decisions about those families are tracked separately in the machine-readable source-family registry. That registry is a release-governance tool, not legal advice.
+
 ## 2. Processed traces
 
 Processed traces are standardized outputs produced by preprocessing scripts from raw inputs. They may normalize record format, identifiers, metadata fields, and paging-view exports.
 
 These processed traces are generated artifacts, but they are still trace-derived and may remain subject to upstream redistribution constraints.
+
+For the first intended real release, `lafc-evict-v0.1-open`, only families selected by the registry should be considered in scope.
 
 ## 3. Generated features
 

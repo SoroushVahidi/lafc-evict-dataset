@@ -34,6 +34,8 @@ This repository does **not** claim authorship of upstream raw traces. The main `
 
 The first public release should be restricted to **license-clean/open-trace** families only. In particular, **CitiBike** and **Brightkite** require redistribution review before they should appear in any public non-synthetic release.
 
+The intended first real public subset is **`lafc-evict-v0.1-open`**, selected through the machine-readable source-family registry in `manifests/source_family_registry.yaml`. That registry is a release-governance tool, not legal advice.
+
 ## Repository layout
 
 ```text
@@ -81,6 +83,17 @@ Validate the candidate rows:
 python scripts/validate_release_schema.py \
   --input-path release/lafc-evict-v0.1-open/candidate_rows
 ```
+
+Select the intended first real public trace-family subset:
+
+```bash
+python scripts/select_release_families.py \
+  --registry manifests/source_family_registry.yaml \
+  --release-scope v0.1-open \
+  --output manifests/lafc_evict_v0_1_open_families.json
+```
+
+This selector is a governance aid for `lafc-evict-v0.1-open`. CitiBike and Brightkite remain excluded until review is complete, and `lafc-evict-full-heavy_r1` remains an internal/reproducibility target until redistribution questions are resolved.
 
 ## Build a synthetic sample release
 
