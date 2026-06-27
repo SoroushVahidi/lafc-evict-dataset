@@ -10,7 +10,7 @@
     ],
     "related_identifiers": [
       {
-        "identifier": "TODO: URL/DOI/arXiv/ResearchSquare/InReview link",
+        "identifier": "https://ssrn.com/abstract=6636732",
         "relation": "isSupplementTo",
         "resource_type": "publication-preprint"
       }
@@ -18,6 +18,6 @@
     "keywords": [],
     "version": "TODO",
     "license": "TODO",
-    "notes": "Associated paper/preprint: TODO: paper title. Status: public preprint; manuscript under peer review."
+    "notes": "Associated paper/preprint: Decision-aligned eviction-value prediction for robust learning-augmented caching. Status: public preprint; manuscript under peer review."
   }
 }

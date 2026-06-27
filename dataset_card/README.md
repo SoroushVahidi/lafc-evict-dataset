@@ -2,7 +2,7 @@
 
 This directory contains the release-facing documentation for LAFC-Evict.
 
-Associated paper/preprint metadata should be kept consistent across this directory, `README.md`, `CITATION.cff`, and publication templates. If exact public preprint metadata is not yet finalized in-repo, use conservative TODO placeholders and keep the status as: `public preprint; manuscript under peer review`.
+Associated paper/preprint metadata should be kept consistent across this directory, `README.md`, `CITATION.cff`, and publication templates. The current public preprint metadata is: `Decision-aligned eviction-value prediction for robust learning-augmented caching`, `Soroush Vahidi`, `Available at SSRN 6636732`, and status `public preprint; manuscript under peer review`.
 
 - `DATASET_CARD.md`: short-form dataset card.
 - `DATASHEET.md`: datasheet-style questions and answers.

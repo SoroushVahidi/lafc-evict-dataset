@@ -9,9 +9,9 @@ LAFC-Evict releases **generated counterfactual supervision labels and benchmark 
 ## Associated Paper / Preprint
 
 This dataset release accompanies the public preprint/manuscript:  
-**TODO: paper title**  
-Soroush Vahidi, TODO: coauthors if applicable.  
-Preprint: TODO: URL/DOI/arXiv/ResearchSquare/InReview link  
+**Decision-aligned eviction-value prediction for robust learning-augmented caching**  
+Soroush Vahidi.  
+Available at SSRN 6636732.  
 Status: public preprint; manuscript under peer review.
 
 The paper describes the learning-augmented caching setting and the experiments that motivated this dataset release. This repository provides dataset-release artifacts, schemas, validation tools, benchmark views, and reproducibility utilities. When using the data artifact, cite both the paper/preprint and the dataset release DOI once the DOI is available.

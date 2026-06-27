@@ -18,6 +18,7 @@ Preprint: {associated_paper_link}
 Status: {associated_paper_status}
 
 The paper describes the learning-augmented caching setting and the experiments that motivated this dataset release. When using the data artifact, cite both the paper/preprint and the dataset release DOI once the DOI is available.
+This repository provides dataset-release artifacts, schemas, validation tools, benchmark views, and reproducibility utilities.
 
 ## Included views
 

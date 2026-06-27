@@ -15,14 +15,13 @@ doi: "TODO"
 license: "MIT"
 preferred-citation:
   type: article
-  title: "TODO: paper title"
+  title: "Decision-aligned eviction-value prediction for robust learning-augmented caching"
   authors:
     - family-names: "Vahidi"
       given-names: "Soroush"
-  journal: "TODO"
   year: 2026
   doi: "TODO"
-  url: "TODO: URL/DOI/arXiv/ResearchSquare/InReview link"
+  url: "https://ssrn.com/abstract=6636732"
 keywords:
   - "cache eviction"
   - "dataset release"

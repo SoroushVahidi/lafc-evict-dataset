@@ -8,9 +8,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Final
 
-ASSOCIATED_PAPER_TITLE: Final[str] = "TODO: paper title"
-ASSOCIATED_PAPER_AUTHORS: Final[str] = "Soroush Vahidi, TODO: coauthors if applicable."
-ASSOCIATED_PAPER_LINK: Final[str] = "TODO: URL/DOI/arXiv/ResearchSquare/InReview link"
+ASSOCIATED_PAPER_TITLE: Final[str] = "Decision-aligned eviction-value prediction for robust learning-augmented caching"
+ASSOCIATED_PAPER_AUTHORS: Final[str] = "Soroush Vahidi."
+ASSOCIATED_PAPER_LINK: Final[str] = "https://ssrn.com/abstract=6636732"
 ASSOCIATED_PAPER_STATUS: Final[str] = "public preprint; manuscript under peer review."
 
 SYNTHETIC_DISCLAIMER: Final[str] = (
