@@ -63,7 +63,13 @@ def _resolve_manifest_paths(manifest_path: Path) -> list[Path]:
             continue
         candidate = Path(raw_path)
         if not candidate.is_absolute():
-            candidate = (manifest_path.parent / candidate).resolve()
+            resolved_candidate = None
+            for base in [manifest_path.parent, *manifest_path.parents]:
+                trial = (base / candidate).resolve()
+                if trial.exists():
+                    resolved_candidate = trial
+                    break
+            candidate = resolved_candidate or (manifest_path.parent / candidate).resolve()
         out.append(candidate)
     return out
 

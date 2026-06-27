@@ -29,6 +29,15 @@ from .publication import (
     write_json,
     ZenodoExecutionResult,
 )
+from .real_release import (
+    CandidateSourceSummary,
+    build_real_release_command,
+    dry_run_export_plan,
+    filter_candidate_dataframe_by_family,
+    infer_trace_family_from_path,
+    load_family_selection,
+    summarize_candidate_source,
+)
 from .release import SampleReleaseResult, build_sample_release
 from .schema import BASE_REQUIRED_COLUMNS, CANONICAL_COLUMNS, FEATURE_COLUMNS
 from .validation import validate_candidate_dataframe, validate_candidate_file
@@ -37,6 +46,7 @@ from .views import build_decision_view, build_pairwise_view
 __all__ = [
     "BASE_REQUIRED_COLUMNS",
     "CANONICAL_COLUMNS",
+    "CandidateSourceSummary",
     "FEATURE_COLUMNS",
     "REQUIRED_FAMILIES",
     "REQUIRED_REGISTRY_FIELDS",
@@ -48,14 +58,19 @@ __all__ = [
     "ZenodoExecutionResult",
     "build_publication_manifest",
     "build_decision_view",
+    "build_real_release_command",
     "build_pairwise_view",
     "build_sample_release",
     "collect_release_inventory",
     "detect_github_auth_available",
     "detect_hf_auth_available",
     "detect_zenodo_auth_available",
+    "dry_run_export_plan",
     "execute_zenodo_deposit",
+    "filter_candidate_dataframe_by_family",
+    "infer_trace_family_from_path",
     "load_source_family_registry",
+    "load_family_selection",
     "plan_github_release",
     "plan_huggingface_upload",
     "plan_zenodo_upload",
@@ -65,6 +80,7 @@ __all__ = [
     "render_zenodo_metadata",
     "safe_zenodo_bundle_filenames",
     "select_release_families",
+    "summarize_candidate_source",
     "token_like_matches",
     "validate_candidate_dataframe",
     "validate_candidate_file",

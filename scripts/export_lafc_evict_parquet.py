@@ -19,6 +19,10 @@ def main() -> None:
         read_candidate_dataframe,
         sha256_file,
     )
+    from lafc_evict_dataset.real_release import (
+        dry_run_export_plan,
+        filter_candidate_dataframe_by_family,
+    )
     from lafc_evict_dataset.schema import CANONICAL_COLUMNS, DECISION_KEY_COLUMNS, normalize_split_value
     from lafc_evict_dataset.validation import validate_candidate_dataframe
 
@@ -32,6 +36,9 @@ def main() -> None:
     parser.add_argument("--input-path", required=True, help="Candidate row CSV/Parquet, shard directory, or manifest.json")
     parser.add_argument("--output-dir", required=True, help="Release output directory")
     parser.add_argument("--dataset-id", default="lafc-evict-v0.1-open", help="Release identifier written into release_manifest.json")
+    parser.add_argument("--include-family", action="append", default=[], help="Trace family to include. Repeat for multiple families.")
+    parser.add_argument("--exclude-family", action="append", default=[], help="Trace family to exclude. Repeat for multiple families.")
+    parser.add_argument("--dry-run", action="store_true", help="Scan metadata and estimate the export without writing Parquet output.")
     parser.add_argument(
         "--allow-cross-split-duplicate-decision-ids",
         action="store_true",
@@ -41,6 +48,21 @@ def main() -> None:
     args = parser.parse_args()
 
     try:
+        include_families = set(args.include_family)
+        exclude_families = set(args.exclude_family)
+        if args.dry_run:
+            print(
+                json.dumps(
+                    dry_run_export_plan(
+                        args.input_path,
+                        include_families=include_families,
+                        exclude_families=exclude_families,
+                    ),
+                    indent=2,
+                )
+            )
+            return
+
         output_dir = ensure_clean_output_dir(args.output_dir, overwrite=args.overwrite, kind="Output directory").resolve()
         candidate_root = output_dir / "candidate_rows"
         manifest_path = fail_if_output_exists(
@@ -50,6 +72,13 @@ def main() -> None:
         )
 
         df = read_candidate_dataframe(args.input_path)
+        df = filter_candidate_dataframe_by_family(
+            df,
+            include_families=include_families,
+            exclude_families=exclude_families,
+        )
+        if df.empty:
+            raise ValueError("Family filters excluded every candidate row. Adjust --include-family/--exclude-family.")
         df = df[CANONICAL_COLUMNS].copy()
         df["split"] = df["split"].map(normalize_split_value)
         df = df.sort_values([*DECISION_KEY_COLUMNS, "candidate_page_id"]).reset_index(drop=True)
@@ -100,6 +129,8 @@ def main() -> None:
             "decision_count": int(df[DECISION_KEY_COLUMNS].drop_duplicates().shape[0]),
             "columns": CANONICAL_COLUMNS,
             "partitions": partition_cols,
+            "selected_families": sorted(df["trace_family"].astype(str).unique().tolist()),
+            "excluded_families": sorted(exclude_families),
             "files": file_entries,
         }
         ensure_parent(manifest_path).write_text(json.dumps(manifest, indent=2), encoding="utf-8")
