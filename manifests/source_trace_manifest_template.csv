@@ -1,0 +1,2 @@
+path,trace_name,dataset_source,trace_family,upstream_url,license_status,redistribution_status,notes
+/absolute/or/relative/path/to/processed_trace.jsonl,example_trace,example_source,example_family,https://example.org/source,TODO review,TODO review,Document upstream source and release decision here

@@ -1,0 +1,17 @@
+{
+  "dataset_id": "lafc-evict-v0.1-open",
+  "dataset_name": "LAFC-Evict: Counterfactual Supervision for Learned Cache Eviction",
+  "format": "lafc-evict-candidate-parquet-v1",
+  "release_date": "TODO",
+  "host": "TODO Hugging Face or Zenodo",
+  "license_review_status": "TODO",
+  "columns": [],
+  "partitions": ["split", "trace_family", "capacity", "horizon"],
+  "files": [
+    {
+      "path": "candidate_rows/split=train/trace_family=example/capacity=32/horizon=4/candidate_rows.parquet",
+      "row_count": 0,
+      "sha256": "TODO"
+    }
+  ]
+}
