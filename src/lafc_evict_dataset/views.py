@@ -4,7 +4,7 @@ from itertools import combinations
 
 import pandas as pd
 
-from .schema import CANONICAL_COLUMNS, DECISION_METADATA_COLUMNS
+from .schema import CANONICAL_COLUMNS, DECISION_KEY_COLUMNS, DECISION_METADATA_COLUMNS
 
 
 def _candidate_specific_columns() -> list[str]:
@@ -14,7 +14,7 @@ def _candidate_specific_columns() -> list[str]:
 
 def _with_regret(df: pd.DataFrame) -> pd.DataFrame:
     out = df.copy()
-    out["best_y_loss"] = out.groupby(["trace_name", "capacity", "horizon", "decision_id"])["y_loss"].transform("min")
+    out["best_y_loss"] = out.groupby(DECISION_KEY_COLUMNS)["y_loss"].transform("min")
     out["regret"] = out["y_loss"] - out["best_y_loss"]
     return out
 
@@ -76,4 +76,6 @@ def build_pairwise_view(df: pd.DataFrame, *, include_ties: bool = False) -> pd.D
 
     if not pairwise_rows:
         return pd.DataFrame(columns=[*group_cols, "candidate_a_page_id", "candidate_b_page_id"])
-    return pd.DataFrame(pairwise_rows)
+    return pd.DataFrame(pairwise_rows).sort_values(
+        [*group_cols, "candidate_a_page_id", "candidate_b_page_id"]
+    ).reset_index(drop=True)

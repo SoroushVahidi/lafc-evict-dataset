@@ -12,6 +12,8 @@ Each canonical row represents one candidate eviction at one eviction decision. A
 
 LAFC-Evict does not originate the upstream raw traces. Instead, the pipeline starts from externally sourced traces, preprocesses them into a common format, then generates features and labels.
 
+Those upstream raw traces must be cited separately and may have their own licensing or attribution obligations.
+
 ## Preprocessing
 
 The release pipeline assumes existing generated candidate rows are already available. This repository converts those rows into release-ready Parquet partitions and benchmark views without requiring raw traces in the release repository.
@@ -28,6 +30,8 @@ The release pipeline assumes existing generated candidate rows are already avail
 - claims of raw-trace ownership,
 - claims that the default `v1` labels are globally optimal,
 - redistribution of upstream traces without trace-family review.
+
+The first public release should therefore be restricted to license-clean/open-trace families only. CitiBike and Brightkite require review before redistribution.
 
 ## Distribution
 

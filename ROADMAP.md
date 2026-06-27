@@ -1,0 +1,25 @@
+# LAFC-Evict Release Roadmap
+
+## Priority 0: Licensing and scope
+
+1. Complete upstream license and redistribution review for each trace family.
+2. Select the first public release subset using only license-clean/open traces.
+3. Keep CitiBike and Brightkite out of the first public release unless review clears them.
+
+## Priority 1: Release build
+
+1. Regenerate or export the selected candidate rows into release Parquet partitions.
+2. Validate the release schema on the full selected subset.
+3. Generate and verify SHA256 checksums.
+
+## Priority 2: Hosting and metadata
+
+1. Prepare the Hugging Face dataset card and hosted files.
+2. Prepare the Zenodo deposition and final DOI metadata.
+3. Finalize `CITATION.cff`, release manifest values, and version tags.
+
+## Priority 3: Benchmark usability
+
+1. Add a baseline benchmark notebook for candidate, decision, and pairwise views.
+2. Add example release manifests for hosted dataset snapshots.
+3. Document any intentionally allowed cross-split or trace-family exceptions.

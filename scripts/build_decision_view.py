@@ -14,15 +14,25 @@ def main() -> None:
     from lafc_evict_dataset.io import read_candidate_dataframe, write_table
     from lafc_evict_dataset.views import build_decision_view
 
-    parser = argparse.ArgumentParser(description="Build one-row-per-decision LAFC-Evict benchmark view.")
+    parser = argparse.ArgumentParser(
+        description=(
+            "Build the deterministic decision-level LAFC-Evict benchmark view from existing candidate rows. "
+            "Input may be CSV, Parquet, a shard directory, or a manifest JSON."
+        ),
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
     parser.add_argument("--input-path", required=True, help="Candidate row CSV/Parquet, shard directory, or manifest.json")
     parser.add_argument("--output-path", required=True, help="Output .csv or .parquet file")
+    parser.add_argument("--overwrite", action="store_true", help="Replace an existing output file.")
     args = parser.parse_args()
 
-    df = read_candidate_dataframe(args.input_path)
-    decision_view = build_decision_view(df)
-    path = write_table(decision_view, args.output_path)
-    print(f"Wrote {path}")
+    try:
+        df = read_candidate_dataframe(args.input_path)
+        decision_view = build_decision_view(df)
+        path = write_table(decision_view, args.output_path, overwrite=args.overwrite)
+        print(f"Wrote {path}")
+    except Exception as exc:
+        parser.exit(1, f"Error building decision view: {exc}\n")
 
 
 if __name__ == "__main__":

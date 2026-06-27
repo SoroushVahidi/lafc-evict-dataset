@@ -6,7 +6,7 @@
 
 ## What this repository releases
 
-This repository prepares a public dataset package for cache-eviction supervision. The canonical unit is:
+This repository prepares a public dataset package for cache-eviction supervision. It releases **generated counterfactual supervision labels and benchmark views**, not upstream raw traces. The canonical unit is:
 
 - one candidate victim,
 - at one full-cache miss eviction decision,
@@ -29,6 +29,10 @@ The primary `v1` label is:
 
 This is a finite-window supervision signal. It should **not** be described as offline-optimal unless a different label family is explicitly released and documented.
 
+## Raw traces and citation
+
+Raw traces are external source artifacts and must be cited separately according to their own provenance, attribution, and licensing terms.
+
 ## What is not included in GitHub
 
 - raw traces,
@@ -39,6 +43,10 @@ This is a finite-window supervision signal. It should **not** be described as of
 - Slurm artifacts.
 
 Public release artifacts should be hosted separately, for example on Hugging Face or Zenodo.
+
+## First public release policy
+
+The first public release should be limited to license-clean/open-trace families only. CitiBike and Brightkite require review before redistribution.
 
 ## Intended benchmark views
 

@@ -6,7 +6,13 @@ import numpy as np
 import pandas as pd
 
 from .io import read_candidate_dataframe
-from .schema import ALLOWED_SPLIT_SETS, CANONICAL_COLUMNS, DECISION_METADATA_COLUMNS, normalize_split_value
+from .schema import (
+    ALLOWED_SPLIT_SETS,
+    CANONICAL_COLUMNS,
+    DECISION_KEY_COLUMNS,
+    DECISION_METADATA_COLUMNS,
+    normalize_split_value,
+)
 
 
 def validate_candidate_dataframe(
@@ -27,16 +33,28 @@ def validate_candidate_dataframe(
             f"found {sorted(split_values)}"
         )
 
+    y_loss_numeric = pd.to_numeric(df["y_loss"], errors="coerce")
+    y_value_numeric = pd.to_numeric(df["y_value"], errors="coerce")
+    if y_loss_numeric.isna().any() or y_value_numeric.isna().any():
+        errors.append("Labels y_loss and y_value must be present and numeric")
+
     if df["y_loss"].isna().any() or df["y_value"].isna().any():
         errors.append("Missing labels detected in y_loss or y_value")
 
-    if not np.allclose(df["y_value"].to_numpy(dtype=float), -df["y_loss"].to_numpy(dtype=float)):
+    if not y_loss_numeric.isna().any() and not y_value_numeric.isna().any() and not np.allclose(
+        y_value_numeric.to_numpy(dtype=float),
+        -y_loss_numeric.to_numpy(dtype=float),
+    ):
         errors.append("y_value must equal -y_loss for all rows")
 
     normalized = df.copy()
-    normalized["split_norm"] = normalized["split"].map(normalize_split_value)
+    try:
+        normalized["split_norm"] = normalized["split"].map(normalize_split_value)
+    except ValueError as exc:
+        errors.append(str(exc))
+        return errors
 
-    decision_group = normalized.groupby(["trace_name", "capacity", "horizon", "decision_id"], dropna=False, sort=False)
+    decision_group = normalized.groupby(DECISION_KEY_COLUMNS, dropna=False, sort=False)
     for key, group in decision_group:
         for column in DECISION_METADATA_COLUMNS:
             if group[column].nunique(dropna=False) != 1:
@@ -63,7 +81,10 @@ def validate_candidate_file(
     *,
     allow_cross_split_duplicate_decision_ids: bool = False,
 ) -> list[str]:
-    df = read_candidate_dataframe(input_path)
+    try:
+        df = read_candidate_dataframe(input_path)
+    except Exception as exc:
+        return [f"Failed to read candidate rows from {input_path}: {exc}"]
     return validate_candidate_dataframe(
         df,
         allow_cross_split_duplicate_decision_ids=allow_cross_split_duplicate_decision_ids,

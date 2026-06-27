@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from lafc_evict_dataset.io import read_candidate_dataframe
 from lafc_evict_dataset.views import build_decision_view, build_pairwise_view
 
 
@@ -50,3 +51,18 @@ def test_pairwise_view_skips_ties_by_default_and_labels_correctly() -> None:
     assert d2_pair["label_a_better"] == 0
     assert d2_pair["label_b_better"] == 1
     assert d2_pair["regret_diff_a_minus_b"] == 2.0
+
+
+def test_read_candidate_dataframe_supports_csv_and_parquet(tmp_path: Path) -> None:
+    df = _load_example()
+    csv_path = tmp_path / "candidate_rows.csv"
+    parquet_path = tmp_path / "candidate_rows.parquet"
+    df.to_csv(csv_path, index=False)
+    df.to_parquet(parquet_path, index=False)
+
+    csv_df = read_candidate_dataframe(csv_path)
+    parquet_df = read_candidate_dataframe(parquet_path)
+
+    assert len(csv_df) == len(df)
+    assert len(parquet_df) == len(df)
+    assert parquet_df["capacity"].dtype.name == "Int64"

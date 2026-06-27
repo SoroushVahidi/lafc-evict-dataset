@@ -4,6 +4,8 @@ This repository is a standalone, conservative package for preparing the public r
 
 It is intentionally limited to release-oriented code, schema definitions, metadata templates, benchmark-view builders, and a tiny synthetic example. It does **not** include raw traces, processed traces, generated large datasets, model artifacts, Slurm logs, or paper-specific research outputs.
 
+LAFC-Evict releases **generated counterfactual supervision labels and benchmark views**. Upstream raw traces remain external source artifacts and should be cited separately using their original provenance and licensing terms.
+
 ## Scope
 
 The current `v0.1` scaffold focuses on:
@@ -30,6 +32,8 @@ LAFC-Evict distinguishes five layers:
 
 This repository does **not** claim authorship of upstream raw traces. The main `v1` label is **finite-horizon counterfactual LRU-continuation miss count after forcing one candidate eviction**, not an offline-optimal target.
 
+The first public release should be restricted to **license-clean/open-trace** families only. In particular, **CitiBike** and **Brightkite** require redistribution review before they should appear in any public non-synthetic release.
+
 ## Repository layout
 
 ```text
@@ -49,6 +53,12 @@ Create a release from an existing generated candidate-row directory or manifest:
 python scripts/export_lafc_evict_parquet.py \
   --input-path /path/to/generated/candidate_rows_or_manifest \
   --output-dir release/lafc-evict-v0.1-open
+```
+
+Install from a fresh clone:
+
+```bash
+pip install -e .[dev]
 ```
 
 Build derived benchmark views:

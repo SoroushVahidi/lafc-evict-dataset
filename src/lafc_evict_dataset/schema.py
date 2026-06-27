@@ -82,6 +82,13 @@ DECISION_METADATA_COLUMNS: Final[list[str]] = [
     "split",
 ]
 
+DECISION_KEY_COLUMNS: Final[list[str]] = [
+    "trace_name",
+    "capacity",
+    "horizon",
+    "decision_id",
+]
+
 PAIRWISE_SHARED_COLUMNS: Final[list[str]] = DECISION_METADATA_COLUMNS
 
 SPLIT_NORMALIZATION: Final[dict[str, str]] = {

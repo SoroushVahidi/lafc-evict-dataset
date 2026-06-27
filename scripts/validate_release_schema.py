@@ -13,9 +13,20 @@ if str(SRC) not in sys.path:
 def main() -> None:
     from lafc_evict_dataset.validation import validate_candidate_file
 
-    parser = argparse.ArgumentParser(description="Validate LAFC-Evict candidate-row release schema.")
+    parser = argparse.ArgumentParser(
+        description=(
+            "Validate canonical LAFC-Evict candidate rows. "
+            "Checks required columns, split values, label presence/numericity, "
+            "decision grouping consistency, and cross-split decision ID reuse."
+        ),
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
     parser.add_argument("--input-path", required=True, help="Candidate row CSV/Parquet, shard directory, or manifest.json")
-    parser.add_argument("--allow-cross-split-duplicate-decision-ids", action="store_true")
+    parser.add_argument(
+        "--allow-cross-split-duplicate-decision-ids",
+        action="store_true",
+        help="Allow the same decision_id to appear in multiple splits when explicitly documented.",
+    )
     args = parser.parse_args()
 
     errors = validate_candidate_file(

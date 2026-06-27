@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import shutil
 from pathlib import Path
 from typing import Iterable
 
@@ -24,15 +25,38 @@ def ensure_parent(path: str | Path) -> Path:
     return out
 
 
+def fail_if_output_exists(path: str | Path, *, overwrite: bool, kind: str) -> Path:
+    out = Path(path)
+    if out.exists() and not overwrite:
+        raise FileExistsError(
+            f"{kind} already exists at {out}. Pass --overwrite to replace it."
+        )
+    return out
+
+
+def ensure_clean_output_dir(path: str | Path, *, overwrite: bool, kind: str) -> Path:
+    out = Path(path)
+    if out.exists():
+        has_files = any(out.iterdir())
+        if has_files and overwrite:
+            shutil.rmtree(out)
+        elif has_files and not overwrite:
+            raise FileExistsError(
+                f"{kind} already exists and is not empty: {out}. Pass --overwrite to replace files."
+            )
+    out.mkdir(parents=True, exist_ok=True)
+    return out
+
+
 def _resolve_manifest_paths(manifest_path: Path) -> list[Path]:
     payload = json.loads(manifest_path.read_text(encoding="utf-8"))
-    shards = payload.get("shards", [])
+    entries = payload.get("files", payload.get("shards", []))
     out: list[Path] = []
-    for shard in shards:
-        if isinstance(shard, str):
-            raw_path = shard
-        elif isinstance(shard, dict):
-            raw_path = shard.get("path", "")
+    for entry in entries:
+        if isinstance(entry, str):
+            raw_path = entry
+        elif isinstance(entry, dict):
+            raw_path = entry.get("path", "")
         else:
             raw_path = ""
         if not raw_path:
@@ -97,8 +121,9 @@ def read_candidate_dataframe(input_path: str | Path) -> pd.DataFrame:
     return coerce_candidate_dataframe(pd.concat(frames, ignore_index=True))
 
 
-def write_table(df: pd.DataFrame, output_path: str | Path) -> Path:
+def write_table(df: pd.DataFrame, output_path: str | Path, *, overwrite: bool = False) -> Path:
     path = ensure_parent(output_path)
+    fail_if_output_exists(path, overwrite=overwrite, kind="Output file")
     if path.suffix.lower() == ".csv":
         df.to_csv(path, index=False)
         return path
