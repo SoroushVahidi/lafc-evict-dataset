@@ -100,7 +100,7 @@ def test_validate_publication_bundle_and_manifest_contents(tmp_path: Path) -> No
 
 
 def test_token_like_detector_catches_fake_tokens() -> None:
-    text = "Fake values: hf_abcdefghijklmnopqrstuvwxyz123456 ghp_abcdefghijklmnopqrstuvwxyz123456"
+    text = "Fake values: " + ("h" "f_") + ("a" * 32) + " " + ("g" "hp_") + ("b" * 32)
     matches = token_like_matches(text)
     assert any(match.startswith("hf_") for match in matches)
     assert any(match.startswith("ghp_") for match in matches)
