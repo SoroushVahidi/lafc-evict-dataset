@@ -7,6 +7,7 @@ from pathlib import Path
 import pandas as pd
 
 from .io import ensure_clean_output_dir, ensure_parent, fail_if_output_exists, iter_files, sha256_file
+from .publication import render_hf_dataset_card_metadata
 from .schema import CANONICAL_COLUMNS, DECISION_KEY_COLUMNS, SCHEMA_VERSION, normalize_split_value
 from .validation import validate_candidate_dataframe
 from .views import build_decision_view, build_pairwise_view
@@ -99,9 +100,16 @@ def _write_validation_report(
     ensure_parent(output_path).write_text(body + "\n", encoding="utf-8")
 
 
-def _write_release_readme(*, output_path: Path, include_ties: bool) -> None:
+def _write_release_readme(*, output_path: Path, include_ties: bool, candidate_row_count: int) -> None:
+    metadata_block = render_hf_dataset_card_metadata(
+        dataset_name="lafc-evict-sample",
+        release_type="synthetic_sample",
+        candidate_row_count=candidate_row_count,
+    )
     text = "\n".join(
         [
+            metadata_block,
+            "",
             "# LAFC-Evict Sample Release v0.1",
             "",
             "This directory is a fully synthetic LAFC-Evict sample release dry run built from `examples/tiny_candidate_rows.csv`.",
@@ -111,7 +119,7 @@ def _write_release_readme(*, output_path: Path, include_ties: bool) -> None:
             "- Release type: `synthetic_sample`",
             f"- Pairwise ties included: `{'yes' if include_ties else 'no'}`",
             "",
-            "This sample release is only a release-workflow smoke test. It is synthetic and not suitable for scientific benchmarking.",
+            "This is a synthetic sample release for testing the publication workflow. It is not suitable for scientific benchmarking.",
             "",
             "This sample release contains synthetic rows only and does not include raw traces or external trace-derived data.",
         ]
@@ -208,7 +216,11 @@ def build_sample_release(
     }
     ensure_parent(manifest_path).write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
-    _write_release_readme(output_path=readme_path, include_ties=include_ties)
+    _write_release_readme(
+        output_path=readme_path,
+        include_ties=include_ties,
+        candidate_row_count=int(len(df)),
+    )
 
     checksum_lines = _checksum_lines(release_root, checksums_path)
     ensure_parent(checksums_path).write_text("\n".join(checksum_lines) + "\n", encoding="utf-8")

@@ -22,6 +22,24 @@ SYNTHETIC_DATA_DISCLAIMER: Final[str] = (
     "This sample release contains synthetic rows only and does not include raw traces or external trace-derived data."
 )
 
+HF_DATASET_LICENSE: Final[str] = "mit"
+HF_BASE_TAGS: Final[tuple[str, ...]] = (
+    "tabular",
+    "caching",
+    "cache-eviction",
+    "learning-augmented-algorithms",
+    "counterfactual-supervision",
+    "pandas",
+    "mlcroissant",
+)
+HF_SYNTHETIC_TAGS: Final[tuple[str, ...]] = ("synthetic",)
+HF_TASK_CATEGORIES: Final[tuple[str, ...]] = ("tabular-regression", "tabular-classification")
+HF_DEFAULT_CONFIG_DATA_FILES: Final[tuple[tuple[str, str], ...]] = (
+    ("train", "data/candidate_rows/split=train/**/*.parquet"),
+    ("validation", "data/candidate_rows/split=val/**/*.parquet"),
+    ("test", "data/candidate_rows/split=test/**/*.parquet"),
+)
+
 TOKEN_LIKE_PATTERNS: Final[tuple[re.Pattern[str], ...]] = (
     re.compile(r"\bhf_[A-Za-z0-9]{20,}\b"),
     re.compile(r"\bghp_[A-Za-z0-9]{20,}\b"),
@@ -112,6 +130,81 @@ def release_is_synthetic_sample(inventory: ReleaseInventory) -> bool:
     return str(inventory.release_manifest.get("release_type", "")) == "synthetic_sample"
 
 
+def pretty_name_for_release(dataset_name: str, release_type: str) -> str:
+    if release_type == "synthetic_sample":
+        return "LAFC-Evict Sample"
+    if dataset_name == "lafc-evict-v0.1-open":
+        return "LAFC-Evict v0.1 Open"
+    if dataset_name == "lafc-evict":
+        return "LAFC-Evict"
+    return dataset_name.replace("-", " ").title()
+
+
+def size_category_for_row_count(row_count: int) -> str:
+    if row_count < 1_000:
+        return "n<1K"
+    if row_count < 10_000:
+        return "1K<n<10K"
+    if row_count < 100_000:
+        return "10K<n<100K"
+    if row_count < 1_000_000:
+        return "100K<n<1M"
+    if row_count < 10_000_000:
+        return "1M<n<10M"
+    if row_count < 100_000_000:
+        return "10M<n<100M"
+    if row_count < 1_000_000_000:
+        return "100M<n<1B"
+    if row_count < 10_000_000_000:
+        return "1B<n<10B"
+    if row_count < 100_000_000_000:
+        return "10B<n<100B"
+    if row_count < 1_000_000_000_000:
+        return "100B<n<1T"
+    return "n>1T"
+
+
+def dataset_tags_for_release(release_type: str) -> tuple[str, ...]:
+    if release_type == "synthetic_sample":
+        return (*HF_BASE_TAGS, *HF_SYNTHETIC_TAGS)
+    return HF_BASE_TAGS
+
+
+def render_hf_dataset_card_metadata(
+    *,
+    dataset_name: str,
+    release_type: str,
+    candidate_row_count: int,
+) -> str:
+    pretty_name = pretty_name_for_release(dataset_name, release_type)
+    size_category = size_category_for_row_count(candidate_row_count)
+    tags = dataset_tags_for_release(release_type)
+
+    lines = [
+        "---",
+        f'pretty_name: {json.dumps(pretty_name)}',
+        f'license: {json.dumps(HF_DATASET_LICENSE)}',
+        "tags:",
+        *[f"- {json.dumps(tag)}" for tag in tags],
+        "task_categories:",
+        *[f"- {json.dumps(category)}" for category in HF_TASK_CATEGORIES],
+        "size_categories:",
+        f"- {json.dumps(size_category)}",
+        "configs:",
+        "- config_name: default",
+        "  data_files:",
+    ]
+    for split, path in HF_DEFAULT_CONFIG_DATA_FILES:
+        lines.extend(
+            [
+                f"  - split: {json.dumps(split)}",
+                f"    path: {json.dumps(path)}",
+            ]
+        )
+    lines.append("---")
+    return "\n".join(lines)
+
+
 def render_dataset_card(inventory: ReleaseInventory) -> str:
     template = read_publication_template("HF_DATASET_CARD_TEMPLATE.md")
     return template.format(
@@ -128,6 +221,11 @@ def render_dataset_card(inventory: ReleaseInventory) -> str:
         associated_paper_authors=ASSOCIATED_PAPER_AUTHORS,
         associated_paper_link=ASSOCIATED_PAPER_LINK,
         associated_paper_status=ASSOCIATED_PAPER_STATUS,
+        hf_metadata_block=render_hf_dataset_card_metadata(
+            dataset_name=str(inventory.release_manifest.get("dataset_name", "unknown")),
+            release_type=str(inventory.release_manifest.get("release_type", "unknown")),
+            candidate_row_count=int(inventory.release_manifest.get("row_counts", {}).get("candidate_rows", 0)),
+        ),
     ).strip() + "\n"
 
 

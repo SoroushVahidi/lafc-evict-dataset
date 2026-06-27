@@ -1,3 +1,5 @@
+{hf_metadata_block}
+
 # {dataset_name}
 
 Version: `{version}`  

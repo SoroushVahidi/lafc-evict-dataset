@@ -71,6 +71,7 @@ def test_sample_release_manifest_counts_and_disclaimer(tmp_path: Path) -> None:
     manifest = json.loads((output_dir / "metadata" / "release_manifest.json").read_text(encoding="utf-8"))
     report = (output_dir / "metadata" / "validation_report.md").read_text(encoding="utf-8")
     checksums = (output_dir / "metadata" / "checksums.sha256").read_text(encoding="utf-8")
+    readme = (output_dir / "README.md").read_text(encoding="utf-8")
 
     assert manifest["dataset_name"] == "lafc-evict-sample"
     assert manifest["version"] == "0.1"
@@ -84,6 +85,16 @@ def test_sample_release_manifest_counts_and_disclaimer(tmp_path: Path) -> None:
     assert manifest["note"] == "Synthetic sample release only; not suitable for scientific benchmarking."
     assert "This sample release contains synthetic rows only and does not include raw traces or external trace-derived data." in report
     assert checksums.strip()
+    assert readme.startswith("---\n")
+    assert 'pretty_name: "LAFC-Evict Sample"' in readme
+    assert 'license: "mit"' in readme
+    assert "tags:" in readme
+    assert '- "synthetic"' in readme
+    assert "task_categories:" in readme
+    assert "configs:" in readme
+    assert '  - split: "validation"' in readme
+    assert '    path: "data/candidate_rows/split=val/**/*.parquet"' in readme
+    assert "This is a synthetic sample release for testing the publication workflow. It is not suitable for scientific benchmarking." in readme
 
 
 def test_sample_release_overwrite_protection(tmp_path: Path) -> None:

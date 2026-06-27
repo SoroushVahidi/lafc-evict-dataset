@@ -90,6 +90,13 @@ def test_validate_publication_bundle_and_manifest_contents(tmp_path: Path) -> No
     assert manifest["publication_status"] == "draft_local"
     assert SYNTHETIC_DISCLAIMER in readme
     assert SYNTHETIC_DISCLAIMER in dataset_card
+    assert dataset_card.startswith("---\n")
+    assert 'pretty_name: "LAFC-Evict Sample"' in dataset_card
+    assert 'license: "mit"' in dataset_card
+    assert "tags:" in dataset_card
+    assert "task_categories:" in dataset_card
+    assert "size_categories:" in dataset_card
+    assert "configs:" in dataset_card
 
 
 def test_token_like_detector_catches_fake_tokens() -> None:
