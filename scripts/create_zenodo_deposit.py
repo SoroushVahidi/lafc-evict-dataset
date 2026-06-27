@@ -12,7 +12,11 @@ if str(SRC) not in sys.path:
 
 
 def main() -> None:
-    from lafc_evict_dataset.publication import detect_zenodo_auth_available, plan_zenodo_upload
+    from lafc_evict_dataset.publication import (
+        detect_zenodo_auth_available,
+        execute_zenodo_deposit,
+        plan_zenodo_upload,
+    )
 
     parser = argparse.ArgumentParser(
         description="Dry-run-first Zenodo deposit helper for LAFC-Evict publication bundles.",
@@ -33,8 +37,8 @@ def main() -> None:
         args.dry_run = True
     if args.execute and args.dry_run:
         parser.exit(1, "Use either --execute or --dry-run, not both.\n")
-    if args.publish and not args.execute:
-        parser.exit(1, "--publish requires --execute.\n")
+    if args.publish:
+        parser.exit(1, "--publish is disabled for this workflow.\n")
 
     bundle_dir = Path(args.bundle_dir).resolve()
     zenodo_metadata = bundle_dir / "zenodo_metadata.json"
@@ -69,20 +73,32 @@ def main() -> None:
             )
             return
 
-        if args.production and not args.sandbox and not args.execute:
-            parser.exit(1, "Production mode requires --execute.\n")
         if not detect_zenodo_auth_available():
-            parser.exit(1, "Execute mode requires ZENODO_TOKEN.\n")
+            parser.exit(1, "Execute mode requires ZENODO_SANDBOX_TOKEN or ZENODO_TOKEN.\n")
+
+        result = execute_zenodo_deposit(
+            bundle_dir,
+            sandbox=args.sandbox,
+            include_release_files=args.include_release_files,
+            release_dir=release_dir if release_dir.exists() else None,
+        )
 
         print(
             json.dumps(
                 {
                     "mode": "execute",
-                    "target": "sandbox" if args.sandbox else "production",
-                    "publish": args.publish,
+                    "target": result.target,
                     "include_release_files": args.include_release_files,
                     "files": list(plan.files),
-                    "note": "Execution path prepared. Final DOI publication still requires explicit --publish.",
+                    "deposition_id": result.deposition_id,
+                    "concept_record_id": result.concept_record_id,
+                    "metadata_title": result.metadata_title,
+                    "uploaded_filenames": list(result.uploaded_filenames),
+                    "doi": result.doi,
+                    "prereserved_doi": result.prereserved_doi,
+                    "state": result.state,
+                    "submitted": result.submitted,
+                    "links": result.links,
                 },
                 indent=2,
             )

@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "title": "TODO",
+    "title": "LAFC-Evict release",
     "upload_type": "dataset",
-    "description": "TODO",
+    "description": "Draft LAFC-Evict release metadata.",
     "creators": [
       {
         "name": "Vahidi, Soroush"
@@ -16,8 +16,8 @@
       }
     ],
     "keywords": [],
-    "version": "TODO",
-    "license": "TODO",
+    "version": "0.1",
+    "license": "MIT",
     "notes": "Associated paper/preprint: Decision-aligned eviction-value prediction for robust learning-augmented caching. Status: public preprint; manuscript under peer review."
   }
 }

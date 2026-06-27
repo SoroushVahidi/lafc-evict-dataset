@@ -6,12 +6,22 @@ import re
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Final
+from typing import Any, Final, Protocol
 
 ASSOCIATED_PAPER_TITLE: Final[str] = "Decision-aligned eviction-value prediction for robust learning-augmented caching"
 ASSOCIATED_PAPER_AUTHORS: Final[str] = "Soroush Vahidi."
 ASSOCIATED_PAPER_LINK: Final[str] = "https://ssrn.com/abstract=6636732"
 ASSOCIATED_PAPER_STATUS: Final[str] = "public preprint; manuscript under peer review."
+ASSOCIATED_PAPER_CITATION: Final[str] = "Available at SSRN 6636732."
+ZENODO_SANDBOX_BASE_URL: Final[str] = "https://sandbox.zenodo.org"
+ZENODO_PRODUCTION_BASE_URL: Final[str] = "https://zenodo.org"
+ZENODO_SAFE_BUNDLE_FILENAMES: Final[tuple[str, ...]] = (
+    "README.md",
+    "dataset_card.md",
+    "github_release_notes.md",
+    "publication_manifest.json",
+    "zenodo_metadata.json",
+)
 
 SYNTHETIC_DISCLAIMER: Final[str] = (
     "This is a synthetic sample release for testing the publication workflow. "
@@ -80,6 +90,39 @@ class HuggingFaceUploadResult:
     private: bool
     uploaded_files: tuple[str, ...]
     verified_remote_paths: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class ZenodoExecutionResult:
+    target: str
+    deposition_id: int
+    concept_record_id: str | None
+    metadata_title: str
+    uploaded_filenames: tuple[str, ...]
+    links: dict[str, str]
+    doi: str | None
+    prereserved_doi: str | None
+    state: str | None
+    submitted: bool | None
+
+
+class ResponseLike(Protocol):
+    status_code: int
+    text: str
+
+    def json(self) -> Any:
+        ...
+
+
+class SessionLike(Protocol):
+    def post(self, url: str, **kwargs: Any) -> ResponseLike:
+        ...
+
+    def put(self, url: str, **kwargs: Any) -> ResponseLike:
+        ...
+
+    def get(self, url: str, **kwargs: Any) -> ResponseLike:
+        ...
 
 
 def publication_template_path(name: str) -> Path:
@@ -233,10 +276,21 @@ def render_zenodo_metadata(inventory: ReleaseInventory) -> dict[str, object]:
     template = json.loads(read_publication_template("ZENODO_METADATA_TEMPLATE.json"))
     metadata = template["metadata"]
     metadata["title"] = f"{inventory.release_manifest.get('dataset_name', 'lafc-evict')} {inventory.release_manifest.get('version', '')}".strip()
-    metadata["description"] = (
-        SYNTHETIC_DISCLAIMER if release_is_synthetic_sample(inventory) else "Draft LAFC-Evict release metadata."
-    )
+    if release_is_synthetic_sample(inventory):
+        metadata["description"] = " ".join(
+            [
+                SYNTHETIC_DISCLAIMER,
+                SYNTHETIC_DATA_DISCLAIMER,
+                f"Associated manuscript: {ASSOCIATED_PAPER_TITLE}",
+                f"Author: {ASSOCIATED_PAPER_AUTHORS}",
+                ASSOCIATED_PAPER_CITATION,
+                f"Status: {ASSOCIATED_PAPER_STATUS}",
+            ]
+        )
+    else:
+        metadata["description"] = "Draft LAFC-Evict release metadata."
     metadata["version"] = str(inventory.release_manifest.get("version", "unknown"))
+    metadata["license"] = "MIT"
     metadata["keywords"] = [
         "cache eviction",
         "dataset release",
@@ -252,6 +306,8 @@ def render_zenodo_metadata(inventory: ReleaseInventory) -> dict[str, object]:
     ]
     metadata["notes"] = (
         f"Associated paper/preprint: {ASSOCIATED_PAPER_TITLE}. "
+        f"Author: {ASSOCIATED_PAPER_AUTHORS} "
+        f"{ASSOCIATED_PAPER_CITATION} "
         f"Status: {ASSOCIATED_PAPER_STATUS}"
     )
     return template
@@ -390,7 +446,7 @@ def hf_api_token() -> str | None:
 
 
 def detect_zenodo_auth_available() -> bool:
-    return bool(os.environ.get("ZENODO_TOKEN"))
+    return bool(zenodo_api_token())
 
 
 def detect_github_auth_available() -> bool:
@@ -498,11 +554,7 @@ def plan_zenodo_upload(
     include_release_files: bool,
     release_dir: Path | None = None,
 ) -> DryRunPlan:
-    files = sorted(
-        path.relative_to(bundle_dir).as_posix()
-        for path in bundle_dir.rglob("*")
-        if path.is_file()
-    )
+    files = list(safe_zenodo_bundle_filenames(bundle_dir))
     if include_release_files and release_dir is not None:
         files.extend(
             sorted(
@@ -519,6 +571,176 @@ def plan_zenodo_upload(
             "bundle_dir": str(bundle_dir),
             "include_release_files": include_release_files,
         },
+    )
+
+
+def zenodo_api_token() -> str | None:
+    sandbox_token = os.environ.get("ZENODO_SANDBOX_TOKEN")
+    if sandbox_token:
+        return sandbox_token
+    token = os.environ.get("ZENODO_TOKEN")
+    if token:
+        return token
+    return None
+
+
+def zenodo_base_url(*, sandbox: bool) -> str:
+    return ZENODO_SANDBOX_BASE_URL if sandbox else ZENODO_PRODUCTION_BASE_URL
+
+
+def safe_zenodo_bundle_filenames(bundle_dir: Path) -> tuple[str, ...]:
+    return tuple(name for name in ZENODO_SAFE_BUNDLE_FILENAMES if (bundle_dir / name).exists())
+
+
+def _sanitize_sensitive_text(text: str, *, token: str | None) -> str:
+    sanitized = text
+    if token:
+        sanitized = sanitized.replace(token, "[REDACTED_TOKEN]")
+    sanitized = re.sub(r"Bearer\s+[A-Za-z0-9._-]+", "Bearer [REDACTED_TOKEN]", sanitized)
+    sanitized = re.sub(r"(access_token=)[^&\s]+", r"\1[REDACTED_TOKEN]", sanitized)
+    return sanitized
+
+
+def _safe_response_body(response: ResponseLike, *, token: str | None) -> str:
+    try:
+        body = json.dumps(response.json(), sort_keys=True)
+    except Exception:
+        body = response.text.strip()
+    body = _sanitize_sensitive_text(body, token=token)
+    return body[:2000]
+
+
+def _raise_zenodo_error(action: str, response: ResponseLike, *, token: str | None) -> None:
+    raise RuntimeError(
+        f"{action} failed with status {response.status_code}: {_safe_response_body(response, token=token)}"
+    )
+
+
+def _request_json(
+    session: SessionLike,
+    method: str,
+    url: str,
+    *,
+    token: str,
+    json_payload: dict[str, object] | None = None,
+    data: Any = None,
+) -> dict[str, Any]:
+    request = getattr(session, method)
+    headers = {"Authorization": f"Bearer {token}"}
+    kwargs: dict[str, Any] = {"headers": headers, "timeout": 30}
+    if json_payload is not None:
+        kwargs["json"] = json_payload
+    if data is not None:
+        kwargs["data"] = data
+    response = request(url, **kwargs)
+    if response.status_code >= 400:
+        _raise_zenodo_error(f"{method.upper()} {url}", response, token=token)
+    payload = response.json()
+    if not isinstance(payload, dict):
+        raise RuntimeError(f"{method.upper()} {url} returned a non-object JSON response.")
+    return payload
+
+
+def execute_zenodo_deposit(
+    bundle_dir: Path,
+    *,
+    sandbox: bool = True,
+    include_release_files: bool = False,
+    release_dir: Path | None = None,
+    session: SessionLike | None = None,
+) -> ZenodoExecutionResult:
+    if session is None:
+        try:
+            import requests
+        except ImportError as exc:
+            raise RuntimeError("Execute mode requires the optional 'requests' dependency.") from exc
+
+        session = requests.Session()
+
+    token = zenodo_api_token()
+    if not token:
+        raise ValueError("Execute mode requires ZENODO_SANDBOX_TOKEN or ZENODO_TOKEN.")
+
+    bundle_dir = bundle_dir.resolve()
+    metadata_path = bundle_dir / "zenodo_metadata.json"
+    metadata_payload = json.loads(metadata_path.read_text(encoding="utf-8"))
+    base_url = zenodo_base_url(sandbox=sandbox)
+
+    created = _request_json(
+        session,
+        "post",
+        f"{base_url}/api/deposit/depositions",
+        token=token,
+        json_payload={},
+    )
+
+    deposition_id = int(created["id"])
+    latest_draft_url = str(created.get("links", {}).get("latest_draft", f"{base_url}/api/deposit/depositions/{deposition_id}"))
+    updated = _request_json(
+        session,
+        "put",
+        latest_draft_url,
+        token=token,
+        json_payload=metadata_payload,
+    )
+
+    bucket_url = str(updated.get("links", {}).get("bucket") or created.get("links", {}).get("bucket", ""))
+    if not bucket_url:
+        raise RuntimeError("Zenodo deposition response did not include a bucket upload URL.")
+
+    uploaded_filenames: list[str] = []
+    for relative_name in safe_zenodo_bundle_filenames(bundle_dir):
+        file_path = bundle_dir / relative_name
+        with file_path.open("rb") as handle:
+            _request_json(
+                session,
+                "put",
+                f"{bucket_url}/{file_path.name}",
+                token=token,
+                data=handle,
+            )
+        uploaded_filenames.append(relative_name)
+
+    if include_release_files and release_dir is not None:
+        for path in sorted(release_dir.rglob("*")):
+            if not path.is_file():
+                continue
+            relative_path = path.relative_to(release_dir).as_posix()
+            with path.open("rb") as handle:
+                _request_json(
+                    session,
+                    "put",
+                    f"{bucket_url}/{relative_path}",
+                    token=token,
+                    data=handle,
+                )
+            uploaded_filenames.append(f"release::{relative_path}")
+
+    verified = _request_json(session, "get", latest_draft_url, token=token)
+    verified_metadata = verified.get("metadata", {})
+    links_payload = verified.get("links", {})
+    safe_links = {
+        key: str(value)
+        for key, value in links_payload.items()
+        if key in {"self", "html", "latest_draft", "latest_draft_html"}
+    }
+    prereserved_doi = None
+    if isinstance(verified_metadata, dict):
+        prereserve = verified_metadata.get("prereserve_doi", {})
+        if isinstance(prereserve, dict):
+            prereserved_doi = str(prereserve.get("doi")) if prereserve.get("doi") else None
+
+    return ZenodoExecutionResult(
+        target="sandbox" if sandbox else "production",
+        deposition_id=int(verified.get("id", deposition_id)),
+        concept_record_id=str(verified.get("conceptrecid")) if verified.get("conceptrecid") is not None else None,
+        metadata_title=str(verified_metadata.get("title", "")) if isinstance(verified_metadata, dict) else "",
+        uploaded_filenames=tuple(uploaded_filenames),
+        links=safe_links,
+        doi=str(verified.get("doi")) if verified.get("doi") else None,
+        prereserved_doi=prereserved_doi,
+        state=str(verified.get("state")) if verified.get("state") is not None else None,
+        submitted=bool(verified.get("submitted")) if verified.get("submitted") is not None else None,
     )
 
 

@@ -5,7 +5,13 @@ import subprocess
 import sys
 from pathlib import Path
 
-from lafc_evict_dataset.publication import SYNTHETIC_DISCLAIMER, token_like_matches
+from lafc_evict_dataset.publication import (
+    ASSOCIATED_PAPER_CITATION,
+    ASSOCIATED_PAPER_STATUS,
+    ASSOCIATED_PAPER_TITLE,
+    SYNTHETIC_DISCLAIMER,
+    token_like_matches,
+)
 
 
 def _repo_root() -> Path:
@@ -97,6 +103,16 @@ def test_validate_publication_bundle_and_manifest_contents(tmp_path: Path) -> No
     assert "task_categories:" in dataset_card
     assert "size_categories:" in dataset_card
     assert "configs:" in dataset_card
+    metadata = zenodo_metadata["metadata"]
+    assert metadata["license"] == "MIT"
+    assert SYNTHETIC_DISCLAIMER in metadata["description"]
+    assert "Soroush Vahidi" in metadata["description"]
+    assert ASSOCIATED_PAPER_TITLE in metadata["description"]
+    assert ASSOCIATED_PAPER_CITATION in metadata["description"]
+    assert ASSOCIATED_PAPER_STATUS in metadata["description"]
+    assert "Soroush Vahidi" in metadata["notes"]
+    assert ASSOCIATED_PAPER_CITATION in metadata["notes"]
+    assert ASSOCIATED_PAPER_STATUS in metadata["notes"]
 
 
 def test_token_like_detector_catches_fake_tokens() -> None:

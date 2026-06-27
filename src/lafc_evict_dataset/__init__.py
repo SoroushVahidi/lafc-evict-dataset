@@ -15,6 +15,7 @@ from .publication import (
     detect_github_auth_available,
     detect_hf_auth_available,
     detect_zenodo_auth_available,
+    execute_zenodo_deposit,
     plan_github_release,
     plan_huggingface_upload,
     plan_zenodo_upload,
@@ -22,9 +23,11 @@ from .publication import (
     render_github_release_notes,
     render_publication_readme,
     render_zenodo_metadata,
+    safe_zenodo_bundle_filenames,
     token_like_matches,
     validate_public_text_file,
     write_json,
+    ZenodoExecutionResult,
 )
 from .release import SampleReleaseResult, build_sample_release
 from .schema import BASE_REQUIRED_COLUMNS, CANONICAL_COLUMNS, FEATURE_COLUMNS
@@ -42,6 +45,7 @@ __all__ = [
     "SampleReleaseResult",
     "SYNTHETIC_DATA_DISCLAIMER",
     "SYNTHETIC_DISCLAIMER",
+    "ZenodoExecutionResult",
     "build_publication_manifest",
     "build_decision_view",
     "build_pairwise_view",
@@ -50,6 +54,7 @@ __all__ = [
     "detect_github_auth_available",
     "detect_hf_auth_available",
     "detect_zenodo_auth_available",
+    "execute_zenodo_deposit",
     "load_source_family_registry",
     "plan_github_release",
     "plan_huggingface_upload",
@@ -58,6 +63,7 @@ __all__ = [
     "render_github_release_notes",
     "render_publication_readme",
     "render_zenodo_metadata",
+    "safe_zenodo_bundle_filenames",
     "select_release_families",
     "token_like_matches",
     "validate_candidate_dataframe",

@@ -13,6 +13,9 @@ if str(SRC) not in sys.path:
 
 def main() -> None:
     from lafc_evict_dataset.publication import (
+        ASSOCIATED_PAPER_CITATION,
+        ASSOCIATED_PAPER_STATUS,
+        ASSOCIATED_PAPER_TITLE,
         SYNTHETIC_DISCLAIMER,
         validate_public_text_file,
     )
@@ -38,9 +41,10 @@ def main() -> None:
             errors.append(f"Missing {label}: {path}")
 
     manifest: dict[str, object] | None = None
+    zenodo_metadata_payload: dict[str, object] | None = None
     if required["zenodo_metadata"].exists():
         try:
-            json.loads(required["zenodo_metadata"].read_text(encoding="utf-8"))
+            zenodo_metadata_payload = json.loads(required["zenodo_metadata"].read_text(encoding="utf-8"))
         except Exception as exc:
             errors.append(f"Invalid JSON in zenodo_metadata.json: {exc}")
     if required["publication_manifest"].exists():
@@ -72,6 +76,21 @@ def main() -> None:
         for path in [required["readme"], required["dataset_card"], required["github_release_notes"]]:
             if path.exists() and SYNTHETIC_DISCLAIMER not in path.read_text(encoding="utf-8"):
                 errors.append(f"Synthetic sample disclaimer missing from {path.name}")
+        if isinstance(zenodo_metadata_payload, dict):
+            metadata = zenodo_metadata_payload.get("metadata", {})
+            if isinstance(metadata, dict):
+                description = str(metadata.get("description", ""))
+                notes = str(metadata.get("notes", ""))
+                if SYNTHETIC_DISCLAIMER not in description:
+                    errors.append("Synthetic sample disclaimer missing from zenodo_metadata.json description.")
+                for required_text in [
+                    ASSOCIATED_PAPER_TITLE,
+                    "Soroush Vahidi",
+                    ASSOCIATED_PAPER_CITATION,
+                    ASSOCIATED_PAPER_STATUS,
+                ]:
+                    if required_text not in f"{description}\n{notes}":
+                        errors.append(f"Required associated-paper metadata missing from zenodo_metadata.json: {required_text}")
 
     if errors:
         for error in errors:
