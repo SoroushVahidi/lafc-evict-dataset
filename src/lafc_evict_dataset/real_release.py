@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import csv
 import json
-import shlex
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Final
@@ -182,15 +181,11 @@ def summarize_candidate_source(
     if missing_selected:
         warnings.append("One or more selected families are missing from the source candidate rows.")
     warnings.append(
-        "The repository does not yet have a single end-to-end real-release builder that emits candidate rows, "
-        "decision view, pairwise view, and release checksum/report artifacts in one safe pass."
-    )
-    warnings.append(
-        "Current release/export and downstream view scripts materialize full candidate dataframes in memory. "
-        "That is not yet a safe execution path for the full real release."
+        "Full pairwise materialization is intentionally omitted from the default real release because "
+        "it can grow quadratically with decision size. Use --pairwise-sample for a capped sample."
     )
 
-    ready_to_proceed = not blocked_present and not missing_selected
+    ready_to_proceed = not missing_selected
     return CandidateSourceSummary(
         source_path=source_path,
         manifest_path=manifest_path,
@@ -224,23 +219,20 @@ def build_real_release_command(
     dataset_id: str,
     include_families: tuple[str, ...],
     exclude_families: tuple[str, ...],
+    family_selection: str | Path | None = None,
 ) -> str:
-    parts = [
-        "python",
-        "scripts/export_lafc_evict_parquet.py",
-        "--input-path",
-        str(Path(input_path)),
-        "--output-dir",
-        str(Path(output_dir)),
-        "--dataset-id",
-        dataset_id,
-    ]
-    for family in include_families:
-        parts.extend(["--include-family", family])
-    for family in exclude_families:
-        parts.extend(["--exclude-family", family])
-    parts.append("--overwrite")
-    return " \\\n  ".join(shlex.quote(part) for part in parts)
+    from .real_release_build import build_real_release_cli_command
+
+    selection = family_selection or Path("manifests/lafc_evict_v0_1_open_families.json")
+    return build_real_release_cli_command(
+        input_manifest=input_path,
+        family_selection=selection,
+        output_dir=output_dir,
+        dataset_id=dataset_id,
+        dry_run=False,
+        overwrite=True,
+        pairwise_sample=True,
+    )
 
 
 def render_real_release_report(

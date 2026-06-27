@@ -62,6 +62,21 @@ tests/          Pytest coverage for schema, views, validation, and checksums
 Create a release from an existing generated candidate-row directory or manifest:
 
 ```bash
+python scripts/build_real_release.py \
+  --input-manifest /path/to/generated/candidate_rows/manifest.json \
+  --family-selection manifests/lafc_evict_v0_1_open_families.json \
+  --output-dir release/lafc-evict-v0.1-open \
+  --dataset-id lafc-evict-v0.1-open \
+  --dry-run
+```
+
+The memory-safe real-release builder defaults to dry-run. Pass `--overwrite` to materialize release artifacts. It uses DuckDB for out-of-core CSV shard ingestion and Parquet export, so it does not load the full selected subset into pandas memory.
+
+`lafc-evict-v0.1-open` is the first real public release target. It includes only the selected open trace families from `manifests/lafc_evict_v0_1_open_families.json` and excludes CitiBike and Brightkite. Full pairwise materialization is intentionally not part of the default real release because it can grow quadratically with decision size; use `--pairwise-sample` for a capped sample or derive pairwise tasks from candidate rows.
+
+Legacy export (loads all shards into pandas memory; not safe for the full real release):
+
+```bash
 python scripts/export_lafc_evict_parquet.py \
   --input-path /path/to/generated/candidate_rows_or_manifest \
   --output-dir release/lafc-evict-v0.1-open
@@ -104,6 +119,24 @@ python scripts/select_release_families.py \
 ```
 
 This selector is a governance aid for `lafc-evict-v0.1-open`. CitiBike and Brightkite remain excluded until review is complete, and `lafc-evict-full-heavy_r1` remains an internal/reproducibility target until redistribution questions are resolved.
+
+Build the real public release (dry-run first):
+
+```bash
+python scripts/build_real_release.py \
+  --input-manifest /path/to/generated/candidate_rows/manifest.json \
+  --family-selection manifests/lafc_evict_v0_1_open_families.json \
+  --output-dir release/lafc-evict-v0.1-open \
+  --dataset-id lafc-evict-v0.1-open \
+  --dry-run
+```
+
+Validate a built real release:
+
+```bash
+python scripts/validate_real_release.py \
+  --release-root release/lafc-evict-v0.1-open
+```
 
 ## Build a synthetic sample release
 

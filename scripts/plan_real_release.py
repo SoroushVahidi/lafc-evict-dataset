@@ -42,6 +42,7 @@ def main() -> None:
             dataset_id=args.release_name,
             include_families=selected_families,
             exclude_families=excluded_families,
+            family_selection=args.family_selection,
         )
         report = render_real_release_report(
             summary,

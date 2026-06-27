@@ -6,7 +6,8 @@
 - [x] scaffold audited
 - [x] synthetic sample release dry-run
 - [x] source-family release governance
-- [ ] next: choose license-clean real subset for `lafc-evict-v0.1-open`
+- [x] memory-safe real release builder for `lafc-evict-v0.1-open`
+- [ ] next: run full real release build for `lafc-evict-v0.1-open`
 
 ## Priority 0: Licensing and scope
 
@@ -16,8 +17,8 @@
 
 ## Priority 1: Release build
 
-1. Regenerate or export the selected candidate rows into release Parquet partitions.
-2. Validate the release schema on the full selected subset.
+1. Dry-run and then build `lafc-evict-v0.1-open` with `scripts/build_real_release.py` using the Wulver candidate-row manifest.
+2. Validate the release with `scripts/validate_real_release.py`.
 3. Generate and verify SHA256 checksums.
 
 ## Priority 2: Hosting and metadata

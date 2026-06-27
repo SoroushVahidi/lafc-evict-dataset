@@ -5,10 +5,12 @@
 Recommended first public release.
 
 - Include only the license-clean/open-trace families selected by the source-family registry and selector output.
-- Publish candidate rows, decision view, pairwise view, schema docs, manifests, and checksums.
+- Publish candidate rows, decision view, release metadata, schema docs, manifests, and checksums.
 - Do not include ambiguous trace families until upstream review is complete.
 - CitiBike and Brightkite remain excluded until review is complete.
 - The registry and selector are release-governance tools, not legal advice.
+- Full pairwise materialization is intentionally not part of the default real release because it can grow quadratically with decision size.
+- Pairwise tasks can be derived from candidate rows or generated as capped samples with `scripts/build_real_release.py --pairwise-sample`.
 
 ## `lafc-evict-full-heavy_r1`
 
