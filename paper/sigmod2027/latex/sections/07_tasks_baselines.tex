@@ -27,7 +27,8 @@ As a first executable check, we ran only two non-feature sanity baselines on the
   \caption{Benchmark task definitions and representative evaluation outputs.}
   \label{tab:task-definitions}
   \centering
-  \begin{tabular}{p{0.23\columnwidth}p{0.23\columnwidth}p{0.42\columnwidth}}
+  \footnotesize
+  \begin{tabularx}{\columnwidth}{@{}P{0.22\columnwidth}P{0.20\columnwidth}L@{}}
     \toprule
     Task & Inputs & Representative outputs \\
     \midrule
@@ -36,7 +37,7 @@ As a first executable check, we ran only two non-feature sanity baselines on the
     Pairwise preference & pairwise rows from one decision & Accuracy or ROC-AUC, with tie handling stated explicitly and non-tie-only reporting marked when used \\
     Label characterization & candidate or decision aggregates & Histograms, quantiles, tie rates, regret summaries, and per-family/capacity/horizon breakdowns \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 \begin{table}[t]
@@ -44,7 +45,7 @@ As a first executable check, we ran only two non-feature sanity baselines on the
   \label{tab:baseline-results}
   \centering
   \footnotesize
-  \begin{tabular}{p{0.26\columnwidth}p{0.17\columnwidth}p{0.12\columnwidth}p{0.31\columnwidth}}
+  \begin{tabularx}{\columnwidth}{@{}P{0.29\columnwidth}P{0.18\columnwidth}P{0.13\columnwidth}L@{}}
     \toprule
     Model family & Task & Status & Notes \\
     \midrule
@@ -54,5 +55,5 @@ As a first executable check, we ran only two non-feature sanity baselines on the
     Linear / logistic model & all & pending & candidate-row or feature-joined path still pending \\
     Tree-based model & all & pending & defer until simpler baselines stabilize \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}

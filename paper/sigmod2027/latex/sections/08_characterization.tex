@@ -8,10 +8,11 @@ What remains missing are the candidate-row label-distribution summaries that mak
 \input{tables/table_decision_breakdown}
 
 \begin{table}[t]
-  \caption{Candidate-row label-distribution summary is still pending because it requires a candidate-row scan or additional precomputed metadata.}
+  \caption{Pending candidate-row label-distribution summaries. These statistics still require a candidate-row scan or additional precomputed metadata.}
   \label{tab:label-distribution}
   \centering
-  \begin{tabular}{ll}
+  \footnotesize
+  \begin{tabularx}{\columnwidth}{@{}P{0.35\columnwidth}L@{}}
     \toprule
     Statistic & Status \\
     \midrule
@@ -19,7 +20,7 @@ What remains missing are the candidate-row label-distribution summaries that mak
     \texttt{y\_value} summary & pending candidate-row statistics job \\
     Per-family summaries & pending candidate-row statistics job \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 \input{tables/table_candidate_count_stats}

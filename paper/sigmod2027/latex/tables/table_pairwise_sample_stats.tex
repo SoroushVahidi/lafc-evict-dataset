@@ -1,17 +1,20 @@
 \begin{table}[t]
   \centering
   \footnotesize
-  \caption{Pairwise-sample-backed summary statistics for the shipped sample view. The preserved release passed full real-release validation on 2026-06-29.}
+  \caption{Pairwise-sample-backed summary statistics for the shipped sample view.}
   \label{tab:pairwise-sample-stats}
-  \begin{tabular}{lp{0.42\columnwidth}}
+  \begin{tabularx}{\columnwidth}{@{}P{0.34\columnwidth}L@{}}
     \toprule
     statistic & value \\
     \midrule
     pairwise rows & 1,000,000 \\
     split breakdown & test=102,024; train=737,896; val=160,080 \\
-    family breakdown & wiki2018=250,872; cloudphysics=245,336; metakv=190,584; twemcache=169,064; metacdn=144,144 \\
+    family breakdown & wiki2018=250,872; cloudphysics=245,336;\newline
+    metakv=190,584; twemcache=169,064;\newline
+    metacdn=144,144 \\
     unique decisions represented & 118,635 \\
-    label distribution & a\_better=6,134; b\_better=113,898; tie=879,968 \\
+    label distribution & a\_better=6,134; b\_better=113,898;\newline
+    tie=879,968 \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}

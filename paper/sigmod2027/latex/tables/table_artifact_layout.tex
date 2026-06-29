@@ -1,9 +1,9 @@
 \begin{table}[t]
   \centering
   \footnotesize
-  \caption{Release artifact layout using release-relative paths. The table is metadata-backed where applicable, and the anonymous review artifact remains pending.}
+  \caption{Release artifact layout using release-relative paths. Metadata-backed entries are shown where applicable, and the anonymous review bundle remains pending.}
   \label{tab:artifact-layout}
-  \begin{tabular}{lp{0.52\columnwidth}}
+  \begin{tabularx}{\columnwidth}{@{}P{0.31\columnwidth}L@{}}
     \toprule
     artifact & relative\_path \\
     \midrule
@@ -13,7 +13,7 @@
     release manifest & metadata/release\_manifest.json \\
     validation report & metadata/validation\_report.md \\
     checksums & metadata/checksums.sha256 \\
-    publication bundle & anonymous review artifact path pending \\
+    publication bundle & anonymous review artifact pending \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}

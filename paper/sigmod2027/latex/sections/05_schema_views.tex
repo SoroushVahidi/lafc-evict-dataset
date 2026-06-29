@@ -14,11 +14,11 @@ Beyond candidate rows, the release defines two derived views. The \emph{decision
 \end{figure}
 
 \begin{table}[t]
-  \caption{Placeholder for compact schema summary.}
+  \caption{Compact summary of candidate-row schema groups and derived-view fields.}
   \label{tab:schema-summary}
   \centering
   \footnotesize
-  \begin{tabular}{p{0.26\columnwidth}p{0.58\columnwidth}}
+  \begin{tabularx}{\columnwidth}{@{}P{0.31\columnwidth}L@{}}
     \toprule
     Column group & Notes \\
     \midrule
@@ -29,5 +29,5 @@ Beyond candidate rows, the release defines two derived views. The \emph{decision
     Derived decision fields & tie and regret summaries \\
     Derived pairwise fields & A/B labels and regret differences \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
