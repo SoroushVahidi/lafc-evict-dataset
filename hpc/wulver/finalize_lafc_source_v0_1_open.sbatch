@@ -106,7 +106,6 @@ python "$RELEASE_REPO/src/lafc_evict_dataset/wulver_source_summary.py" \
   --source-root "$SOURCE_OUT_DIR" \
   --out-split-summary "$SOURCE_OUT_DIR/split_summary.csv" \
   --progress-file "$SOURCE_OUT_DIR/status/split_summary_rebuild_progress.json"
-
 python scripts/summarize_wulver_evict_value_dataset.py \
   --manifest "$BUILD_MANIFEST" \
   --out-json "$SUMMARY_JSON" \
