@@ -6,7 +6,7 @@ Define the smallest defensible baseline suite for the first SIGMOD benchmark pap
 
 ## Current release constraints
 
-- Full real-release validation is still pending.
+- Full real-release validation passed on the preserved release on 2026-06-29.
 - Candidate-row label distributions are still pending because they require candidate-row scans.
 - The shipped pairwise sample is lightweight and label-centric:
   - it includes `decision_id`, `capacity`, `horizon`, `split`, `trace_family`, `trace_name`, `candidate_a_page_id`, `candidate_b_page_id`, `y_loss_a`, `y_loss_b`, `y_loss_diff_a_minus_b`, `label_a_better`, `label_b_better`, and `is_tie`;
@@ -110,7 +110,7 @@ Define the smallest defensible baseline suite for the first SIGMOD benchmark pap
 
 - The current pairwise sample does not expose the candidate feature columns needed for LRU-derived, predictor-derived, or full logistic pairwise baselines.
 - Candidate-row tasks require HPC because the release contains 277,995,072 candidate rows across 168 parquet shards.
-- Full-release validation remains pending, so baseline write-ups must describe current results as preserved-release results rather than fully certified final release results.
+- Full-release validation has passed on the preserved release, so baseline write-ups may state that result while still describing current numbers as preserved-release results rather than final published artifact results.
 
 ## Output expectations
 

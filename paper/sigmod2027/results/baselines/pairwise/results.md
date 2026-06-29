@@ -4,7 +4,7 @@ These results come only from the shipped pairwise sample:
 
 - input file: `release/lafc-evict-v0.1-open-current-contract-preserved/data/pairwise_sample/pairwise_sample.parquet`
 - evaluation mode: non-tie rows only
-- full real-release validation: pending
+- full real-release validation: passed on preserved release on 2026-06-29
 - candidate feature baselines: pending feature join or augmented pairwise export
 
 ## Commands

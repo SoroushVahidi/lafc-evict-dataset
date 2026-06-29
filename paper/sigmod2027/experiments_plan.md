@@ -121,7 +121,7 @@ Do not expand into heavy deep-learning baselines unless the pipeline already exi
 
 ## Current risks
 
-- Full real-release validation is still pending.
+- Full real-release validation passed on the preserved release on 2026-06-29.
 - Full release anonymization is still pending.
 - Some release-governance and redistribution review items are still marked as pending final review.
 - There is no committed baseline-results pipeline in this repository yet.

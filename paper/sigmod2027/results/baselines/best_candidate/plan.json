@@ -23,9 +23,9 @@
   ],
   "blockers": [
     "decision-grouped candidate-row evaluation requires Wolverine-scale access to candidate-row shards",
-    "full real-release validation is still pending"
+    "full real-release validation passed on the preserved release on 2026-06-29"
   ],
-  "full_validation_status": "pending",
+  "full_validation_status": "passed",
   "input_path": "release/lafc-evict-v0.1-open-current-contract-preserved/data/candidate_rows",
   "input_view": "candidate_rows",
   "metrics": [

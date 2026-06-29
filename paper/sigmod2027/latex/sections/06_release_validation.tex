@@ -14,7 +14,7 @@ The validation surface is part of the benchmark contribution. Current checks inc
   \item checksum verification.
 \end{itemize}
 
-The preserved current-contract open release has passed lightweight metadata repair, repository tests, and publication-bundle validation. However, the full real-release validation command has not yet been run on the preserved open release. For the anonymous SIGMOD submission, this means the manuscript can describe the validation machinery and the preserved release state, but it should not claim final end-to-end release certification yet.
+The preserved current-contract open release has passed lightweight metadata repair, repository tests, publication-bundle validation, and full real-release validation. The June 29, 2026 preserved-release validation run completed successfully with \texttt{exit\_status=0}. The validator CLI does not rewrite the release-internal \texttt{metadata/validation\_report.md}, so that file still reflects earlier build-time paths and should not be treated as the authoritative June 29 validation record. For the anonymous SIGMOD submission, this means the manuscript can now state that the preserved release passed end-to-end validation while still keeping public hosting and anonymous artifact packaging explicitly pending.
 
 \begin{figure}[t]
   \centering

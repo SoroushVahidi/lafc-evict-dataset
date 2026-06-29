@@ -10,7 +10,7 @@
     "python scripts/sigmod2027/run_pairwise_baseline.py --mode run-light --baseline majority_non_tie --release-root release/lafc-evict-v0.1-open-current-contract-preserved --output-dir paper/sigmod2027/results/baselines/pairwise",
     "python scripts/sigmod2027/run_pairwise_baseline.py --mode run-light --baseline random_non_tie --seed 7 --release-root release/lafc-evict-v0.1-open-current-contract-preserved --output-dir paper/sigmod2027/results/baselines/pairwise"
   ],
-  "full_validation_status": "pending",
+  "full_validation_status": "passed",
   "candidate_feature_baselines_status": "pending_feature_join",
   "safe_for_anonymous_manuscript": true,
   "pairwise_sample_rows_total": 1000000,

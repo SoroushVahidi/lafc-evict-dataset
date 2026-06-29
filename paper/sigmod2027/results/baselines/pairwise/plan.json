@@ -24,9 +24,9 @@
   "blockers": [
     "the shipped pairwise sample does not currently include candidate-side predictor or LRU feature columns",
     "feature-based pairwise baselines therefore require an augmented pairwise export or a candidate-row feature join on Wolverine",
-    "full real-release validation is still pending"
+    "full real-release validation passed on the preserved release on 2026-06-29"
   ],
-  "full_validation_status": "pending",
+  "full_validation_status": "passed",
   "input_path": "release/lafc-evict-v0.1-open-current-contract-preserved/data/pairwise_sample/pairwise_sample.parquet",
   "input_view": "pairwise_sample",
   "metrics": [

@@ -4,12 +4,13 @@
 
 - Stale repo-local release: `/home/soroush/lafc-evict-dataset/release/lafc-evict-v0.1-open`
 - Preserved current-contract release: `/home/soroush/lafc-evict-dataset/release/lafc-evict-v0.1-open-current-contract-preserved`
-- Fresh publication bundle: `/tmp/lafc-evict-v0.1-open-current-contract-preserved-publication-bundle`
+- Fresh publication bundle: `/tmp/lafc-evict-v0.1-open-current-contract-final-publication-bundle-20260629`
 
 ## What has passed
 
 - Preserved current-contract release copied into durable repo-local storage.
 - Lightweight metadata repair completed on the preserved release.
+- Full real-release validation passed on the preserved release on 2026-06-29 (`start_utc=2026-06-29T04:13:25+00:00`, `end_utc=2026-06-29T04:13:51+00:00`, `exit_status=0`).
 - Publication bundle regenerated from the preserved release.
 - Publication bundle validation passed.
 - Public-facing bundle files were checked and do not contain `/home/soroush`, `/tmp`, or `/mmfs1` absolute paths.
@@ -17,18 +18,9 @@
 
 ## What has not yet passed
 
-- Full real-release validation has not been run on the preserved release.
+- The release-internal `metadata/validation_report.md` was not refreshed by the overnight validation command and still reflects earlier build-time paths.
 - No upload or publication step has been run.
 - No commit or push has been performed.
-
-## Full validation command to run later
-
-Run only after explicit approval:
-
-```bash
-python scripts/validate_real_release.py \
-  --release-root /home/soroush/lafc-evict-dataset/release/lafc-evict-v0.1-open-current-contract-preserved
-```
 
 ## Wolverine heavy resume command to run later
 
@@ -57,4 +49,4 @@ python scripts/build_real_release.py \
 
 ## Warning
 
-This release is preserved and lightly audited, but it is not yet fully validated or published.
+This release is preserved and fully validated locally, but it is not yet published and its internal `metadata/validation_report.md` remains stale.

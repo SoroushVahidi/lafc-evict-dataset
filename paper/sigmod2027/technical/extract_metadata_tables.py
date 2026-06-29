@@ -17,6 +17,10 @@ from typing import Iterable
 import duckdb
 import pyarrow.parquet as pq
 
+FULL_VALIDATION_DATE = "2026-06-29"
+FULL_VALIDATION_SUMMARY = "preserved release passed full validation on 2026-06-29"
+STALE_REPORT_NOTE = "present but stale; June 29 validation log is authoritative"
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
@@ -365,16 +369,20 @@ def main() -> None:
             )
 
     dataset_scale_rows = [
-        {"metric": "candidate rows", "value": row_counts.get("candidate_rows"), "notes": "manifest-backed; pending full validation"},
-        {"metric": "decision rows", "value": row_counts.get("decision_view"), "notes": "manifest-backed and decision-view-backed; pending full validation"},
-        {"metric": "pairwise-sample rows", "value": pairwise_rows, "notes": "manifest-backed and pairwise-sample-backed; pending full validation"},
+        {"metric": "candidate rows", "value": row_counts.get("candidate_rows"), "notes": f"manifest-backed; {FULL_VALIDATION_SUMMARY}"},
+        {"metric": "decision rows", "value": row_counts.get("decision_view"), "notes": f"manifest-backed and decision-view-backed; {FULL_VALIDATION_SUMMARY}"},
+        {"metric": "pairwise-sample rows", "value": pairwise_rows, "notes": f"manifest-backed and pairwise-sample-backed; {FULL_VALIDATION_SUMMARY}"},
         {"metric": "candidate parquet files", "value": candidate_parquet_count, "notes": "counted from manifest file inventory only"},
         {"metric": "total release files", "value": total_release_files, "notes": "manifest-backed"},
         {"metric": "manifest file_inventory count", "value": total_release_files, "notes": "manifest-backed"},
         {"metric": "checksum entry count", "value": checksums_count, "notes": "checksums.sha256 line count"},
         {"metric": "selected trace families", "value": ", ".join(selected_families), "notes": "manifest-backed"},
         {"metric": "excluded/pending trace families", "value": ", ".join(excluded_families), "notes": "manifest-backed"},
-        {"metric": "full validation status", "value": "pending", "notes": "full real-release validation has not been run"},
+        {
+            "metric": "full validation status",
+            "value": "passed",
+            "notes": "preserved release passed full validation on 2026-06-29; release-internal metadata/validation_report.md was not refreshed by the validator CLI",
+        },
     ]
     split_count_rows = [
         {
@@ -447,7 +455,7 @@ def main() -> None:
         {"artifact": "decision view", "relative_path": "data/decision_view/decision_view.parquet", "status": "present", "notes": "single derived decision-view parquet"},
         {"artifact": "pairwise sample", "relative_path": "data/pairwise_sample/pairwise_sample.parquet", "status": "present", "notes": "capped shipped sample; not full pairwise materialization"},
         {"artifact": "release manifest", "relative_path": "metadata/release_manifest.json", "status": "present", "notes": "manifest-backed release metadata"},
-        {"artifact": "validation report", "relative_path": "metadata/validation_report.md", "status": "present", "notes": "lightweight validation report present"},
+        {"artifact": "validation report", "relative_path": "metadata/validation_report.md", "status": "present", "notes": STALE_REPORT_NOTE},
         {"artifact": "checksums", "relative_path": "metadata/checksums.sha256", "status": "present", "notes": "175 checksum entries"},
         {
             "artifact": "publication bundle",
@@ -463,12 +471,12 @@ def main() -> None:
         dataset_scale_rows,
         ["metric", "value", "notes"],
         title="table_dataset_scale",
-        intro="All values are manifest-backed unless noted otherwise. Full real-release validation remains pending.",
+        intro="All values are manifest-backed unless noted otherwise. The preserved release passed full real-release validation on 2026-06-29.",
     )
     write_latex(
         latex_dir / "table_dataset_scale.tex",
         latex_table(
-            caption="Dataset scale values from preserved-release metadata. The counts are manifest-backed or view-backed as noted, and full real-release validation remains pending.",
+            caption="Dataset scale values from preserved-release metadata. The counts are manifest-backed or view-backed as noted, and the preserved release passed full real-release validation on 2026-06-29.",
             label="tab:dataset-scale",
             headers=["metric", "value"],
             rows=[{"metric": row["metric"], "value": row["value"]} for row in dataset_scale_rows],
@@ -488,7 +496,7 @@ def main() -> None:
     write_latex(
         latex_dir / "table_split_counts.tex",
         latex_table(
-            caption="Split counts from manifest-backed candidate-row metadata. These are candidate-row counts, not decision-view counts, and full real-release validation remains pending.",
+            caption="Split counts from manifest-backed candidate-row metadata. These are candidate-row counts, not decision-view counts, and the preserved release passed full real-release validation on 2026-06-29.",
             label="tab:split-counts",
             headers=["split", "row_count"],
             rows=[{"split": row["split"], "row_count": row["row_count"]} for row in split_count_rows],
@@ -522,7 +530,7 @@ def main() -> None:
     write_latex(
         latex_dir / "table_decision_breakdown.tex",
         latex_table(
-            caption="Decision-view-backed benchmark composition by family, capacity, horizon, and split. Full real-release validation remains pending.",
+            caption="Decision-view-backed benchmark composition by family, capacity, horizon, and split. The preserved release passed full real-release validation on 2026-06-29.",
             label="tab:decision-breakdown",
             headers=["dimension", "counts"],
             rows=decision_summary_rows,
@@ -546,7 +554,7 @@ def main() -> None:
     write_latex(
         latex_dir / "table_candidate_count_stats.tex",
         latex_table(
-            caption="Decision-view-backed candidate-count statistics. These values summarize the number of candidates per decision and remain pending full real-release validation.",
+            caption="Decision-view-backed candidate-count statistics. These values summarize the number of candidates per decision, and the preserved release passed full real-release validation on 2026-06-29.",
             label="tab:candidate-count-stats",
             headers=["group", "min", "med", "mean", "max"],
             rows=[
@@ -580,7 +588,7 @@ def main() -> None:
     write_latex(
         latex_dir / "table_regret_tie_stats.tex",
         latex_table(
-            caption="Decision-view-backed tie and regret summaries. Full real-release validation remains pending.",
+            caption="Decision-view-backed tie and regret summaries. The preserved release passed full real-release validation on 2026-06-29.",
             label="tab:regret-ties",
             headers=["statistic", "value"],
             rows=[{"statistic": row["statistic"], "value": row["value"]} for row in tie_summary_rows],
@@ -645,7 +653,7 @@ def main() -> None:
     write_latex(
         latex_dir / "table_pairwise_sample_stats.tex",
         latex_table(
-            caption="Pairwise-sample-backed summary statistics for the shipped sample view. Full real-release validation remains pending.",
+            caption="Pairwise-sample-backed summary statistics for the shipped sample view. The preserved release passed full real-release validation on 2026-06-29.",
             label="tab:pairwise-sample-stats",
             headers=["statistic", "value"],
             rows=pairwise_compact_rows,

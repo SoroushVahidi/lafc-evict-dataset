@@ -22,7 +22,7 @@ Current release state relevant to the paper:
 - Lightweight metadata repair completed.
 - Publication bundle regeneration and bundle validation passed.
 - Repository tests passed.
-- Full real-release validation is still pending and must not be claimed as complete in the paper until it is run.
+- Full real-release validation passed on the preserved release on 2026-06-29; the paper should cite that pass while keeping anonymous artifact packaging and final public hosting claims pending.
 
 Important drafting constraints:
 

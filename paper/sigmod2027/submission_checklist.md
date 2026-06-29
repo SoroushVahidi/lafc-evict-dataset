@@ -33,14 +33,14 @@
 
 - Confirm there is no simultaneous substantially overlapping submission.
 - Verify benchmark claims match what the current release actually supports.
-- Do not claim full real-release validation has passed yet.
+- Claim full real-release validation only as a preserved-release result backed by the June 29, 2026 local validation log, not by the stale internal `metadata/validation_report.md`.
 - Do not claim public hosting or DOI assignment is complete yet.
 - Make the finite-horizon continuation-policy label definition explicit.
 - Make the trace-family release-governance boundary explicit.
 
 ## Current project gating items
 
-- Full real-release validation is still pending.
+- Full real-release validation passed on the preserved release on 2026-06-29.
 - Final public upload is still pending.
 - Final anonymous artifact packaging is still pending.
 - Baseline experiment results are still pending.

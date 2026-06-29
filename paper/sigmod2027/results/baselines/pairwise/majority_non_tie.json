@@ -1,7 +1,7 @@
 {
   "baseline": "majority_non_tie",
   "evaluation_population": "non_tie_rows_only",
-  "full_validation_status": "pending",
+  "full_validation_status": "passed",
   "input_path": "release/lafc-evict-v0.1-open-current-contract-preserved/data/pairwise_sample/pairwise_sample.parquet",
   "input_view": "pairwise_sample",
   "metrics": [

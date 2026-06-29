@@ -16,7 +16,7 @@
 
 ## Technical dependencies
 
-- Full real-release validation still pending.
+- Full real-release validation passed on the preserved release on 2026-06-29; the release-internal `metadata/validation_report.md` still needs a separate safe refresh path if we want that file to reflect the June 29 run.
 - Anonymous artifact packaging still pending.
 - Metadata-backed statistics tables are now available from `paper/sigmod2027/technical/extract_metadata_tables.py`.
 - Candidate-row label-distribution statistics are still pending because they require a candidate-row scan or additional precomputed metadata.
@@ -32,7 +32,7 @@
 
 ## Metadata-backed tables now available
 
-- Dataset scale: manifest-backed, with full validation explicitly marked pending.
+- Dataset scale: manifest-backed, with full validation now passed on the preserved release.
 - Split counts: manifest-backed candidate-row counts.
 - Decision breakdowns by family, capacity, horizon, and split: decision-view-backed.
 - Candidate-count statistics: decision-view-backed overall and per family.
@@ -59,7 +59,7 @@
 
 - Pairwise sample is highly tie-heavy, so the paper must state clearly whether pairwise evaluation is over all rows or over the non-tie subset.
 - The shipped pairwise sample lacks candidate-side feature columns, which blocks LRU-derived and predictor-derived pairwise baselines unless a feature join is added.
-- Full real-release validation is still pending, so all current benchmark numbers must remain explicitly metadata-backed or view-backed rather than fully certified.
+- Even though full real-release validation passed on the preserved release, current benchmark numbers should still be described as manifest-backed, decision-view-backed, or pairwise-sample-backed as appropriate, and the stale release-internal `metadata/validation_report.md` should not be cited as the June 29 validation record.
 - The majority non-tie baseline looks artificially strong on train and validation because the non-tie subset is highly imbalanced; that must be framed as a sanity check, not a meaningful learned result.
 
 ## Related-work verification

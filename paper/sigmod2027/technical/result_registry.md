@@ -2,7 +2,7 @@
 
 | Result / table / figure | Manuscript section | Source file or command | Status | Validation requirement | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Dataset scale table | 3 Benchmark Design | `python paper/sigmod2027/technical/extract_metadata_tables.py` -> `results/metadata_tables/table_dataset_scale.*` | available | manifest-backed only | safe to cite with pending full-validation note |
+| Dataset scale table | 3 Benchmark Design | `python paper/sigmod2027/technical/extract_metadata_tables.py` -> `results/metadata_tables/table_dataset_scale.*` | available | manifest-backed only | safe to cite with the June 29 preserved-release validation pass note |
 | Split counts | 3 Benchmark Design | `extract_metadata_tables.py` -> `table_split_counts.*` | available | manifest-backed only | candidate-row counts from `row_counts_by_split`; no candidate-row scan |
 | Decision breakdown by family / capacity / horizon / split | 8 Empirical Characterization | `extract_metadata_tables.py` -> `table_decision_breakdown.*` | available | decision-view-backed only | no candidate-row scan required |
 | Artifact layout table | 6 Release Construction and Validation | `extract_metadata_tables.py` -> `table_artifact_layout.*` | available | documentation accuracy only | uses release-relative paths for manuscript safety |
@@ -22,4 +22,4 @@
 | Pairwise baseline results | 7 Benchmark Tasks and Baselines | `paper/sigmod2027/results/baselines/pairwise/results.json` | available | pairwise-sample-backed only | overall non-tie accuracy: majority `0.9489`, random `0.4980`; tie-heavy sample requires explicit caveat |
 | Wolverine baseline execution plan | 7 Benchmark Tasks and Baselines | `paper/sigmod2027/technical/wolverine_baseline_plan.md` | available | planning only | no jobs submitted from local machine |
 | Anonymous artifact statement | 6 Release Construction and Validation | anonymous artifact plan | available | artifact audit still pending | manuscript wording can be drafted now |
-| Full release validation statement | 6 Release Construction and Validation / 9 Limitations | `scripts/validate_real_release.py` on preserved release | pending | full real-release validation | must remain explicitly pending |
+| Full release validation statement | 6 Release Construction and Validation / 9 Limitations | `scripts/validate_real_release.py` on preserved release | available | full real-release validation | passed on 2026-06-29 from `04:13:25+00:00` to `04:13:51+00:00`; release-internal `metadata/validation_report.md` was not refreshed by the validator CLI |

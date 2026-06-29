@@ -12,7 +12,7 @@ This file defines the JSON structure for baseline plans and lightweight baseline
   "release_root": "release/lafc-evict-v0.1-open-current-contract-preserved",
   "input_view": "pairwise_sample",
   "input_path": "release/.../data/pairwise_sample/pairwise_sample.parquet",
-  "full_validation_status": "pending",
+  "full_validation_status": "passed",
   "notes": []
 }
 ```
@@ -32,7 +32,7 @@ This file defines the JSON structure for baseline plans and lightweight baseline
 - `input_path`
   - repo-relative file or directory path
 - `full_validation_status`
-  - currently `pending`
+  - current examples use `passed` for the June 29, 2026 preserved-release validation run; other states such as `pending` remain valid for future work
 - `requires_wolverine`
   - boolean
 - `safe_for_anonymous_manuscript`

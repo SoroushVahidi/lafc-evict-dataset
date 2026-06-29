@@ -4,7 +4,7 @@ This directory holds lightweight benchmark tables for the SIGMOD/PACMMOD 2027 pa
 
 - Source scope is intentionally limited to the preserved release manifest, checksums file, decision view, and shipped pairwise sample.
 - No candidate-row parquet contents are scanned here.
-- Full real-release validation is still pending and must remain labeled as pending in manuscript-facing tables.
+- Full real-release validation passed on the preserved release on 2026-06-29; manuscript-facing tables should reflect that pass while keeping candidate-row scans and public hosting claims pending.
 - Generated Markdown and CSV outputs live under `metadata_tables/`.
 - Generated LaTeX table files live under `../latex/tables/`.
 

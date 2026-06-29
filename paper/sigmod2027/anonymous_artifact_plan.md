@@ -8,7 +8,7 @@ Prepare a review artifact that lets SIGMOD/PACMMOD reviewers inspect the benchma
 
 - The preserved release and publication bundle are useful technical inputs.
 - The current publication bundle is not anonymous yet because it still mentions the associated public preprint and author identity.
-- Full real-release validation is still pending and must not be represented as complete.
+- Full real-release validation passed on the preserved release on 2026-06-29, but the current publication bundle still is not anonymous and must not be reused as a review artifact without further sanitization.
 
 ## Review artifact options
 
