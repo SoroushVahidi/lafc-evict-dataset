@@ -15,13 +15,17 @@ from lafc_evict_dataset.real_release import (
 )
 from lafc_evict_dataset.real_release_build import build_real_release
 from lafc_evict_dataset.real_release_build import (
+    _checksum_lines,
     _consolidate_partition_parquet_files,
     _count_candidate_rows,
     _duckdb_connect,
     _register_candidate_partitions,
 )
+from lafc_evict_dataset.real_release_migration import migrate_real_release_contract
 from lafc_evict_dataset.real_release_validation import validate_real_release
+from lafc_evict_dataset.release_metadata import collect_release_file_inventory
 from lafc_evict_dataset.io import resolve_candidate_files
+from lafc_evict_dataset.views import DECISION_VIEW_COLUMNS, build_decision_view
 
 
 def _repo_root() -> Path:
@@ -142,6 +146,71 @@ def _build_candidate_fixture(tmp_path: Path) -> tuple[Path, Path, Path]:
         encoding="utf-8",
     )
     return manifest_path, selection_path, source_dir
+
+
+def _downgrade_real_release_to_stale_contract(release_dir: Path) -> None:
+    candidate_paths = sorted((release_dir / "data" / "candidate_rows").rglob("candidate_rows.parquet"))
+    candidates = pd.concat([pd.read_parquet(path) for path in candidate_paths], ignore_index=True)
+    group_cols = ["decision_id", "capacity", "horizon", "split", "trace_family", "trace_name"]
+
+    def _stale_row(group: pd.DataFrame) -> pd.Series:
+        best = group["y_loss"].min()
+        best_candidates = (
+            group.loc[group["y_loss"] == best, "candidate_page_id"].astype(str).sort_values().tolist()
+        )
+        return pd.Series(
+            {
+                "candidate_count": int(group["candidate_page_id"].nunique()),
+                "min_y_loss": float(group["y_loss"].min()),
+                "max_y_loss": float(group["y_loss"].max()),
+                "mean_y_loss": float(group["y_loss"].mean()),
+                "tie_count": int((group["y_loss"] == best).sum()),
+                "best_candidate_page_id": best_candidates[0],
+            }
+        )
+
+    stale_decision_view = (
+        candidates.groupby(group_cols, dropna=False, sort=True).apply(_stale_row).reset_index()
+    )
+    stale_decision_path = release_dir / "data" / "decision_view" / "decision_view.parquet"
+    stale_decision_view.to_parquet(stale_decision_path, index=False)
+
+    manifest_path = release_dir / "metadata" / "release_manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest.pop("dataset_name", None)
+    manifest.pop("row_counts", None)
+    manifest["candidate_row_count"] = int(len(candidates))
+    manifest["decision_row_count"] = int(len(stale_decision_view))
+    pairwise_path = release_dir / "data" / "pairwise_sample" / "pairwise_sample.parquet"
+    manifest["pairwise_sample_row_count"] = int(len(pd.read_parquet(pairwise_path))) if pairwise_path.exists() else None
+    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
+    checksums_path = release_dir / "metadata" / "checksums.sha256"
+    checksums_path.write_text(
+        "\n".join(_checksum_lines(release_dir, checksums_path)) + "\n",
+        encoding="utf-8",
+    )
+
+
+def _build_stale_real_release_fixture(tmp_path: Path) -> Path:
+    manifest_path, selection_path, _ = _build_candidate_fixture(tmp_path)
+    release_dir = tmp_path / "stale-release"
+    build_real_release(
+        input_manifest=manifest_path,
+        family_selection=selection_path,
+        output_dir=release_dir,
+        dataset_id="lafc-evict-v0.1-open",
+        repo_root=_repo_root(),
+        dry_run=False,
+        overwrite=True,
+        skip_disk_space_check=True,
+        pairwise_sample=True,
+        max_pairwise_rows=100,
+        max_pairs_per_decision=4,
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp",
+    )
+    _downgrade_real_release_to_stale_contract(release_dir)
+    return release_dir
 
 
 def test_infer_trace_family_from_wulver_shard_path() -> None:
@@ -354,6 +423,21 @@ def test_build_real_release_dry_run_does_not_write_release_data(tmp_path: Path) 
     assert not output_dir.exists()
 
 
+def test_duckdb_connect_applies_resource_limits(tmp_path: Path) -> None:
+    temp_dir = tmp_path / ".duckdb_tmp"
+    con = _duckdb_connect(
+        duckdb_threads=2,
+        duckdb_memory_limit="1GB",
+        duckdb_temp_dir=temp_dir,
+    )
+    try:
+        assert con.execute("SELECT current_setting('threads')").fetchone()[0] == 2
+        assert con.execute("SELECT current_setting('memory_limit')").fetchone()[0]
+        assert con.execute("SELECT current_setting('temp_directory')").fetchone()[0] == str(temp_dir.resolve())
+    finally:
+        con.close()
+
+
 def test_blocked_family_in_selection_hard_fails(tmp_path: Path) -> None:
     manifest_path, _, _ = _build_candidate_fixture(tmp_path)
     bad_selection = tmp_path / "bad_families.json"
@@ -381,6 +465,165 @@ def test_blocked_family_in_selection_hard_fails(tmp_path: Path) -> None:
         raise AssertionError("Expected blocked family selection to fail")
 
 
+def test_build_real_release_candidate_rows_stage_only_writes_candidates(tmp_path: Path) -> None:
+    manifest_path, selection_path, _ = _build_candidate_fixture(tmp_path)
+    output_dir = tmp_path / "release"
+
+    result = build_real_release(
+        input_manifest=manifest_path,
+        family_selection=selection_path,
+        output_dir=output_dir,
+        dataset_id="lafc-evict-v0.1-open",
+        repo_root=_repo_root(),
+        dry_run=False,
+        overwrite=True,
+        skip_disk_space_check=True,
+        stages=["candidate_rows"],
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp",
+    )
+
+    assert result.candidate_row_count == 6
+    assert result.decision_row_count is None
+    assert result.pairwise_sample_row_count is None
+    assert result.manifest_path is None
+    assert list((output_dir / "data" / "candidate_rows").rglob("candidate_rows.parquet"))
+    assert not (output_dir / "data" / "decision_view").exists()
+    assert not (output_dir / "data" / "pairwise_sample").exists()
+    assert not (output_dir / "metadata").exists()
+    assert not (output_dir / "README.md").exists()
+
+
+def test_build_real_release_decision_view_stage_reads_emitted_candidate_parquet(tmp_path: Path) -> None:
+    manifest_path, selection_path, _ = _build_candidate_fixture(tmp_path)
+    output_dir = tmp_path / "release"
+
+    build_real_release(
+        input_manifest=manifest_path,
+        family_selection=selection_path,
+        output_dir=output_dir,
+        dataset_id="lafc-evict-v0.1-open",
+        repo_root=_repo_root(),
+        dry_run=False,
+        overwrite=True,
+        skip_disk_space_check=True,
+        stages=["candidate_rows"],
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp",
+    )
+
+    partition_path = next(
+        (output_dir / "data" / "candidate_rows").rglob("candidate_rows.parquet")
+    )
+    partition = pd.read_parquet(partition_path)
+    partition.loc[partition["candidate_page_id"] == "A", "y_loss"] = 0.0
+    partition.to_parquet(partition_path, index=False)
+
+    build_real_release(
+        input_manifest=manifest_path,
+        family_selection=selection_path,
+        output_dir=output_dir,
+        dataset_id="lafc-evict-v0.1-open",
+        repo_root=_repo_root(),
+        dry_run=False,
+        overwrite=True,
+        skip_disk_space_check=True,
+        stages=["decision_view"],
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp",
+    )
+
+    decision_view = pd.read_parquet(output_dir / "data" / "decision_view" / "decision_view.parquet")
+    expected_candidates = pd.concat(
+        [pd.read_parquet(path) for path in sorted((output_dir / "data" / "candidate_rows").rglob("candidate_rows.parquet"))],
+        ignore_index=True,
+    )
+    expected_decision_view = build_decision_view(expected_candidates)
+    assert decision_view.columns.tolist() == DECISION_VIEW_COLUMNS
+    pd.testing.assert_frame_equal(
+        decision_view.sort_values(list(decision_view.columns)).reset_index(drop=True),
+        expected_decision_view.sort_values(list(expected_decision_view.columns)).reset_index(drop=True),
+        check_dtype=False,
+    )
+
+
+def test_build_real_release_pairwise_sample_stage_respects_caps(tmp_path: Path) -> None:
+    manifest_path, selection_path, _ = _build_candidate_fixture(tmp_path)
+    output_dir = tmp_path / "release"
+
+    build_real_release(
+        input_manifest=manifest_path,
+        family_selection=selection_path,
+        output_dir=output_dir,
+        dataset_id="lafc-evict-v0.1-open",
+        repo_root=_repo_root(),
+        dry_run=False,
+        overwrite=True,
+        skip_disk_space_check=True,
+        stages=["candidate_rows"],
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp",
+    )
+
+    result = build_real_release(
+        input_manifest=manifest_path,
+        family_selection=selection_path,
+        output_dir=output_dir,
+        dataset_id="lafc-evict-v0.1-open",
+        repo_root=_repo_root(),
+        dry_run=False,
+        overwrite=True,
+        skip_disk_space_check=True,
+        stages=["pairwise_sample"],
+        pairwise_sample=True,
+        max_pairwise_rows=2,
+        max_pairs_per_decision=1,
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp",
+    )
+
+    pairwise_path = output_dir / "data" / "pairwise_sample" / "pairwise_sample.parquet"
+    pairwise = pd.read_parquet(pairwise_path)
+    assert result.pairwise_sample_row_count == len(pairwise)
+    assert len(pairwise) <= 2
+    assert pairwise.groupby(["decision_id", "capacity", "horizon", "split", "trace_family", "trace_name"]).size().max() <= 1
+
+
+def test_build_real_release_resume_skips_existing_non_empty_stage_outputs(tmp_path: Path) -> None:
+    manifest_path, selection_path, _ = _build_candidate_fixture(tmp_path)
+    output_dir = tmp_path / "release"
+
+    build_real_release(
+        input_manifest=manifest_path,
+        family_selection=selection_path,
+        output_dir=output_dir,
+        dataset_id="lafc-evict-v0.1-open",
+        repo_root=_repo_root(),
+        dry_run=False,
+        overwrite=True,
+        skip_disk_space_check=True,
+        stages=["candidate_rows"],
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp",
+    )
+
+    partition_path = next(
+        (output_dir / "data" / "candidate_rows").rglob("candidate_rows.parquet")
+    )
+    before_mtime = partition_path.stat().st_mtime_ns
+
+    result = build_real_release(
+        input_manifest=manifest_path,
+        family_selection=selection_path,
+        output_dir=output_dir,
+        dataset_id="lafc-evict-v0.1-open",
+        repo_root=_repo_root(),
+        dry_run=False,
+        overwrite=False,
+        resume=True,
+        skip_disk_space_check=True,
+        stages=["candidate_rows"],
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp",
+    )
+
+    assert partition_path.stat().st_mtime_ns == before_mtime
+    assert result.candidate_row_count == 6
+
+
 def test_build_real_release_writes_partitioned_candidates_and_views(tmp_path: Path) -> None:
     manifest_path, selection_path, _ = _build_candidate_fixture(tmp_path)
     output_dir = tmp_path / "release"
@@ -398,6 +641,7 @@ def test_build_real_release_writes_partitioned_candidates_and_views(tmp_path: Pa
         max_pairwise_rows=100,
         max_pairs_per_decision=4,
         pairwise_seed=7,
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp",
     )
 
     assert result.candidate_row_count == 6
@@ -409,16 +653,29 @@ def test_build_real_release_writes_partitioned_candidates_and_views(tmp_path: Pa
     assert len(partitions) == 3
     assert (output_dir / "data" / "decision_view" / "decision_view.parquet").exists()
     assert (output_dir / "data" / "pairwise_sample" / "pairwise_sample.parquet").exists()
+    assert not (output_dir / "data" / "pairwise").exists()
 
     manifest = json.loads((output_dir / "metadata" / "release_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["dataset_name"] == "lafc-evict-v0.1-open"
     assert manifest["selected_families"] == ["cloudphysics"]
     assert manifest["excluded_families"] == ["brightkite", "citibike"]
     assert manifest["blocked_families_absent"] is True
+    assert manifest["schema_version"] == "lafc-evict-candidate-v1"
+    assert manifest["row_counts"] == {
+        "candidate_rows": 6,
+        "decision_view": 3,
+        "pairwise_sample": manifest["pairwise_sample_row_count"],
+    }
+    assert manifest["file_inventory"] == collect_release_file_inventory(output_dir)
+    assert "metadata/release_manifest.json" in manifest["file_inventory"]
+    assert "metadata/checksums.sha256" in manifest["file_inventory"]
 
     decision_view = pd.read_parquet(output_dir / "data" / "decision_view" / "decision_view.parquet")
     assert set(decision_view["trace_family"]) == {"cloudphysics"}
+    assert decision_view.columns.tolist() == DECISION_VIEW_COLUMNS
     assert decision_view.loc[0, "tie_count"] >= 1
-    assert decision_view.loc[0, "best_candidate_page_id"] is not None
+    assert decision_view.loc[0, "optimal_candidate_page_ids"] is not None
+    assert decision_view.loc[0, "optimal_candidate_count"] >= 1
 
     errors = validate_real_release(output_dir)
     assert errors == []
@@ -466,6 +723,7 @@ def test_validation_catches_blocked_family_in_release(tmp_path: Path) -> None:
         dry_run=False,
         overwrite=True,
         skip_disk_space_check=True,
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp",
     )
 
     blocked_partition = (
@@ -486,7 +744,191 @@ def test_validation_catches_blocked_family_in_release(tmp_path: Path) -> None:
     assert any("Blocked families present" in error for error in errors)
 
 
+def test_validation_catches_y_value_mismatch_in_release(tmp_path: Path) -> None:
+    manifest_path, selection_path, _ = _build_candidate_fixture(tmp_path)
+    output_dir = tmp_path / "release"
+    build_real_release(
+        input_manifest=manifest_path,
+        family_selection=selection_path,
+        output_dir=output_dir,
+        dataset_id="lafc-evict-v0.1-open",
+        repo_root=_repo_root(),
+        dry_run=False,
+        overwrite=True,
+        skip_disk_space_check=True,
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp",
+    )
+
+    partition_path = next((output_dir / "data" / "candidate_rows").rglob("candidate_rows.parquet"))
+    corrupted = pd.read_parquet(partition_path)
+    corrupted.loc[0, "y_value"] = 123.0
+    corrupted.to_parquet(partition_path, index=False)
+
+    errors = validate_real_release(output_dir)
+    assert any("y_value must equal -y_loss" in error for error in errors)
+
+
+def test_validation_catches_duplicate_candidate_id_within_decision(tmp_path: Path) -> None:
+    manifest_path, selection_path, _ = _build_candidate_fixture(tmp_path)
+    output_dir = tmp_path / "release"
+    build_real_release(
+        input_manifest=manifest_path,
+        family_selection=selection_path,
+        output_dir=output_dir,
+        dataset_id="lafc-evict-v0.1-open",
+        repo_root=_repo_root(),
+        dry_run=False,
+        overwrite=True,
+        skip_disk_space_check=True,
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp",
+    )
+
+    partition_path = next((output_dir / "data" / "candidate_rows").rglob("candidate_rows.parquet"))
+    duplicated = pd.read_parquet(partition_path)
+    duplicated = pd.concat([duplicated, duplicated.iloc[[0]]], ignore_index=True)
+    duplicated.to_parquet(partition_path, index=False)
+
+    errors = validate_real_release(output_dir)
+    assert any("Duplicate candidate_page_id within decision group" in error for error in errors)
+
+
+def test_validation_catches_inconsistent_decision_metadata(tmp_path: Path) -> None:
+    manifest_path, selection_path, _ = _build_candidate_fixture(tmp_path)
+    output_dir = tmp_path / "release"
+    build_real_release(
+        input_manifest=manifest_path,
+        family_selection=selection_path,
+        output_dir=output_dir,
+        dataset_id="lafc-evict-v0.1-open",
+        repo_root=_repo_root(),
+        dry_run=False,
+        overwrite=True,
+        skip_disk_space_check=True,
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp",
+    )
+
+    partition_path = next((output_dir / "data" / "candidate_rows").rglob("candidate_rows.parquet"))
+    inconsistent = pd.read_parquet(partition_path)
+    inconsistent.loc[inconsistent.index[-1], "decision_t"] = 999
+    inconsistent.to_parquet(partition_path, index=False)
+
+    errors = validate_real_release(output_dir)
+    assert any("Inconsistent decision_t within decision group" in error for error in errors)
+
+
+def test_validation_catches_cross_split_decision_id_reuse(tmp_path: Path) -> None:
+    manifest_path, selection_path, _ = _build_candidate_fixture(tmp_path)
+    output_dir = tmp_path / "release"
+    build_real_release(
+        input_manifest=manifest_path,
+        family_selection=selection_path,
+        output_dir=output_dir,
+        dataset_id="lafc-evict-v0.1-open",
+        repo_root=_repo_root(),
+        dry_run=False,
+        overwrite=True,
+        skip_disk_space_check=True,
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp",
+    )
+
+    target_partition = output_dir / "data" / "candidate_rows" / "split=test" / "trace_family=cloudphysics" / "capacity=32" / "horizon=4" / "candidate_rows.parquet"
+    target = pd.read_parquet(target_partition)
+    reused = target.copy()
+    reused["decision_id"] = "d1"
+    reused["split"] = "test"
+    pd.concat([target, reused.iloc[[0]]], ignore_index=True).to_parquet(target_partition, index=False)
+
+    errors = validate_real_release(output_dir)
+    assert any("spanning multiple splits without override" in error for error in errors)
+
+
 def test_real_release_builder_does_not_use_pandas_concat() -> None:
     source = (_repo_root() / "src" / "lafc_evict_dataset" / "real_release_build.py").read_text(encoding="utf-8")
     assert "pd.concat" not in source
     assert "read_candidate_dataframe" not in source
+    assert "pairwise_view" not in source
+
+
+def test_migrate_real_release_contract_repairs_stale_manifest_and_decision_view(tmp_path: Path) -> None:
+    source_release = _build_stale_real_release_fixture(tmp_path)
+    migrated_release = tmp_path / "migrated-release"
+
+    result = migrate_real_release_contract(
+        source_release_dir=source_release,
+        output_dir=migrated_release,
+        repo_root=_repo_root(),
+        staging_mode="copy",
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp_migrate",
+    )
+
+    assert result.candidate_rows_reused is True
+    assert result.pairwise_sample_reused is True
+    assert result.pairwise_sample_regenerated is False
+    assert result.candidate_rows_staging_mode == "copy"
+
+    manifest = json.loads((migrated_release / "metadata" / "release_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["dataset_name"] == "lafc-evict-v0.1-open"
+    assert manifest["dataset_id"] == "lafc-evict-v0.1-open"
+    assert manifest["row_counts"] == {
+        "candidate_rows": 6,
+        "decision_view": 3,
+        "pairwise_sample": 3,
+    }
+    assert manifest["migration"]["source_release_directory"] == str(source_release.resolve())
+    assert manifest["migration"]["decision_view_regenerated"] is True
+    assert manifest["migration"]["candidate_rows_reused"] is True
+    assert manifest["migration"]["pairwise_sample_reused"] is True
+    assert manifest["file_inventory"] == collect_release_file_inventory(migrated_release)
+
+    decision_view = pd.read_parquet(migrated_release / "data" / "decision_view" / "decision_view.parquet")
+    assert decision_view.columns.tolist() == DECISION_VIEW_COLUMNS
+
+    errors = validate_real_release(migrated_release)
+    assert errors == []
+
+
+def test_repair_release_metadata_script_repairs_file_inventory_and_checksums(tmp_path: Path) -> None:
+    release_dir = _build_stale_real_release_fixture(tmp_path)
+    migrated_release = tmp_path / "migrated-release"
+    migrate_real_release_contract(
+        source_release_dir=release_dir,
+        output_dir=migrated_release,
+        repo_root=_repo_root(),
+        staging_mode="copy",
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp_migrate",
+    )
+
+    manifest_path = migrated_release / "metadata" / "release_manifest.json"
+    checksums_path = migrated_release / "metadata" / "checksums.sha256"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["file_inventory"] = [
+        path
+        for path in manifest["file_inventory"]
+        if path not in {"metadata/release_manifest.json", "metadata/checksums.sha256"}
+    ]
+    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    checksums_path.write_text(
+        "\n".join(_checksum_lines(migrated_release, checksums_path)) + "\n",
+        encoding="utf-8",
+    )
+
+    script = _repo_root() / "scripts" / "repair_release_metadata.py"
+    dry_run = subprocess.run(
+        [sys.executable, str(script), "--release-root", str(migrated_release)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    dry_run_payload = json.loads(dry_run.stdout)
+    assert dry_run_payload["would_update_manifest"] is True
+    assert dry_run_payload["missing_from_file_inventory"] == [
+        "metadata/checksums.sha256",
+        "metadata/release_manifest.json",
+    ]
+
+    subprocess.run(
+        [sys.executable, str(script), "--release-root", str(migrated_release), "--apply"],
+        check=True,
+    )
+    repaired_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert repaired_manifest["file_inventory"] == collect_release_file_inventory(migrated_release)

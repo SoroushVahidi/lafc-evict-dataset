@@ -58,6 +58,11 @@ TOKEN_LIKE_PATTERNS: Final[tuple[re.Pattern[str], ...]] = (
 )
 
 PUBLIC_TEXT_SUFFIXES: Final[set[str]] = {".md", ".txt", ".json"}
+PUBLIC_RELEASE_ARTIFACT_RELATIVE_PATHS: Final[dict[str, str]] = {
+    "release_manifest": "metadata/release_manifest.json",
+    "checksums": "metadata/checksums.sha256",
+    "validation_report": "metadata/validation_report.md",
+}
 
 
 @dataclass(frozen=True)
@@ -73,6 +78,7 @@ class ReleaseInventory:
     has_candidate_rows: bool
     has_decision_view: bool
     has_pairwise_view: bool
+    has_pairwise_sample: bool
 
 
 @dataclass(frozen=True)
@@ -133,6 +139,35 @@ def read_publication_template(name: str) -> str:
     return publication_template_path(name).read_text(encoding="utf-8")
 
 
+def manifest_dataset_name(manifest: dict[str, object]) -> str:
+    return str(manifest.get("dataset_name") or manifest.get("dataset_id") or "unknown")
+
+
+def manifest_row_counts(manifest: dict[str, object]) -> dict[str, int]:
+    row_counts: dict[str, int] = {}
+    raw_row_counts = manifest.get("row_counts", {})
+    if isinstance(raw_row_counts, dict):
+        for key, value in raw_row_counts.items():
+            if value is not None:
+                row_counts[str(key)] = int(value)
+
+    legacy_mappings = {
+        "candidate_rows": "candidate_row_count",
+        "decision_view": "decision_row_count",
+        "pairwise_view": "pairwise_view_row_count",
+        "pairwise_sample": "pairwise_sample_row_count",
+    }
+    for nested_key, flat_key in legacy_mappings.items():
+        if nested_key not in row_counts and manifest.get(flat_key) is not None:
+            row_counts[nested_key] = int(manifest[flat_key])
+    return row_counts
+
+
+def manifest_pairwise_row_count(manifest: dict[str, object]) -> int:
+    row_counts = manifest_row_counts(manifest)
+    return int(row_counts.get("pairwise_view", row_counts.get("pairwise_sample", 0)))
+
+
 def collect_release_inventory(release_dir: str | Path) -> ReleaseInventory:
     release_path = Path(release_dir).resolve()
     manifest_path = release_path / "metadata" / "release_manifest.json"
@@ -162,6 +197,7 @@ def collect_release_inventory(release_dir: str | Path) -> ReleaseInventory:
         has_candidate_rows=any(path.startswith("data/candidate_rows/") for path in rel_files),
         has_decision_view="data/decision_view/decision_view.parquet" in rel_files,
         has_pairwise_view="data/pairwise_view/pairwise_view.parquet" in rel_files,
+        has_pairwise_sample="data/pairwise_sample/pairwise_sample.parquet" in rel_files,
     )
 
 
@@ -250,13 +286,14 @@ def render_hf_dataset_card_metadata(
 
 def render_dataset_card(inventory: ReleaseInventory) -> str:
     template = read_publication_template("HF_DATASET_CARD_TEMPLATE.md")
+    row_counts = manifest_row_counts(inventory.release_manifest)
     return template.format(
-        dataset_name=inventory.release_manifest.get("dataset_name", "unknown"),
+        dataset_name=manifest_dataset_name(inventory.release_manifest),
         version=inventory.release_manifest.get("version", "unknown"),
         release_type=inventory.release_manifest.get("release_type", "unknown"),
-        candidate_row_count=inventory.release_manifest.get("row_counts", {}).get("candidate_rows", 0),
-        decision_row_count=inventory.release_manifest.get("row_counts", {}).get("decision_view", 0),
-        pairwise_row_count=inventory.release_manifest.get("row_counts", {}).get("pairwise_view", 0),
+        candidate_row_count=row_counts.get("candidate_rows", 0),
+        decision_row_count=row_counts.get("decision_view", 0),
+        pairwise_row_count=manifest_pairwise_row_count(inventory.release_manifest),
         synthetic_disclaimer=SYNTHETIC_DISCLAIMER if release_is_synthetic_sample(inventory) else "",
         synthetic_data_disclaimer=SYNTHETIC_DATA_DISCLAIMER if release_is_synthetic_sample(inventory) else "",
         release_name=release_name_from_inventory(inventory),
@@ -265,9 +302,9 @@ def render_dataset_card(inventory: ReleaseInventory) -> str:
         associated_paper_link=ASSOCIATED_PAPER_LINK,
         associated_paper_status=ASSOCIATED_PAPER_STATUS,
         hf_metadata_block=render_hf_dataset_card_metadata(
-            dataset_name=str(inventory.release_manifest.get("dataset_name", "unknown")),
+            dataset_name=manifest_dataset_name(inventory.release_manifest),
             release_type=str(inventory.release_manifest.get("release_type", "unknown")),
-            candidate_row_count=int(inventory.release_manifest.get("row_counts", {}).get("candidate_rows", 0)),
+            candidate_row_count=int(row_counts.get("candidate_rows", 0)),
         ),
     ).strip() + "\n"
 
@@ -275,7 +312,7 @@ def render_dataset_card(inventory: ReleaseInventory) -> str:
 def render_zenodo_metadata(inventory: ReleaseInventory) -> dict[str, object]:
     template = json.loads(read_publication_template("ZENODO_METADATA_TEMPLATE.json"))
     metadata = template["metadata"]
-    metadata["title"] = f"{inventory.release_manifest.get('dataset_name', 'lafc-evict')} {inventory.release_manifest.get('version', '')}".strip()
+    metadata["title"] = f"{manifest_dataset_name(inventory.release_manifest)} {inventory.release_manifest.get('version', '')}".strip()
     if release_is_synthetic_sample(inventory):
         metadata["description"] = " ".join(
             [
@@ -316,14 +353,15 @@ def render_zenodo_metadata(inventory: ReleaseInventory) -> dict[str, object]:
 def render_github_release_notes(inventory: ReleaseInventory) -> str:
     template = read_publication_template("GITHUB_RELEASE_NOTES_TEMPLATE.md")
     selected_note = SYNTHETIC_DISCLAIMER if release_is_synthetic_sample(inventory) else ""
+    row_counts = manifest_row_counts(inventory.release_manifest)
     return template.format(
         release_name=release_name_from_inventory(inventory),
-        dataset_name=inventory.release_manifest.get("dataset_name", "unknown"),
+        dataset_name=manifest_dataset_name(inventory.release_manifest),
         version=inventory.release_manifest.get("version", "unknown"),
         release_type=inventory.release_manifest.get("release_type", "unknown"),
-        candidate_row_count=inventory.release_manifest.get("row_counts", {}).get("candidate_rows", 0),
-        decision_row_count=inventory.release_manifest.get("row_counts", {}).get("decision_view", 0),
-        pairwise_row_count=inventory.release_manifest.get("row_counts", {}).get("pairwise_view", 0),
+        candidate_row_count=row_counts.get("candidate_rows", 0),
+        decision_row_count=row_counts.get("decision_view", 0),
+        pairwise_row_count=manifest_pairwise_row_count(inventory.release_manifest),
         synthetic_disclaimer=selected_note,
         associated_paper_title=ASSOCIATED_PAPER_TITLE,
         associated_paper_authors=ASSOCIATED_PAPER_AUTHORS,
@@ -334,7 +372,7 @@ def render_github_release_notes(inventory: ReleaseInventory) -> str:
 
 def render_publication_readme(inventory: ReleaseInventory) -> str:
     lines = [
-        f"# {inventory.release_manifest.get('dataset_name', 'unknown')} Publication Bundle",
+        f"# {manifest_dataset_name(inventory.release_manifest)} Publication Bundle",
         "",
         f"- Release name: `{release_name_from_inventory(inventory)}`",
         f"- Version: `{inventory.release_manifest.get('version', 'unknown')}`",
@@ -352,23 +390,25 @@ def build_publication_manifest(
     *,
     bundle_dir: str | Path,
 ) -> dict[str, object]:
+    # Publication bundles are intended to be shareable as-is, so they deliberately avoid
+    # machine-local absolute paths. They describe release artifacts using release-relative paths.
     return {
-        "dataset_name": inventory.release_manifest.get("dataset_name", "unknown"),
+        "dataset_name": manifest_dataset_name(inventory.release_manifest),
         "version": inventory.release_manifest.get("version", "unknown"),
         "release_type": inventory.release_manifest.get("release_type", "unknown"),
-        "source_release_directory": str(inventory.release_dir),
+        "source_release_name": inventory.release_dir.name,
         "total_files_in_release_directory": inventory.total_files,
         "total_bytes_in_release_directory": inventory.total_bytes,
-        "checksum_file_path": str(inventory.checksums_path),
-        "validation_report_path": str(inventory.validation_report_path),
+        "release_artifact_paths": dict(PUBLIC_RELEASE_ARTIFACT_RELATIVE_PATHS),
         "has_candidate_rows": inventory.has_candidate_rows,
         "has_decision_view": inventory.has_decision_view,
         "has_pairwise_view": inventory.has_pairwise_view,
+        "has_pairwise_sample": inventory.has_pairwise_sample,
         "intended_huggingface_repo_id": "TODO/replace-with-dataset-repo-id",
         "intended_zenodo_deposition_id": "TODO",
         "intended_github_tag": "TODO",
         "publication_status": "draft_local",
-        "bundle_directory": str(Path(bundle_dir).resolve()),
+        "bundle_directory_name": Path(bundle_dir).resolve().name,
     }
 
 
@@ -380,15 +420,19 @@ def write_json(path: str | Path, payload: dict[str, object]) -> Path:
 
 
 def expected_hf_remote_paths(inventory: ReleaseInventory) -> tuple[str, ...]:
-    return (
+    paths = [
         "README.md",
         "metadata/release_manifest.json",
         "metadata/checksums.sha256",
         "metadata/validation_report.md",
         "data/candidate_rows/",
         "data/decision_view/",
-        "data/pairwise_view/",
-    )
+    ]
+    if inventory.has_pairwise_view:
+        paths.append("data/pairwise_view/")
+    elif inventory.has_pairwise_sample:
+        paths.append("data/pairwise_sample/")
+    return tuple(paths)
 
 
 def token_like_matches(text: str) -> list[str]:

@@ -16,6 +16,7 @@ def main() -> None:
         ASSOCIATED_PAPER_CITATION,
         ASSOCIATED_PAPER_STATUS,
         ASSOCIATED_PAPER_TITLE,
+        PUBLIC_RELEASE_ARTIFACT_RELATIVE_PATHS,
         SYNTHETIC_DISCLAIMER,
         validate_public_text_file,
     )
@@ -54,23 +55,26 @@ def main() -> None:
             errors.append(f"Invalid JSON in publication_manifest.json: {exc}")
 
     if manifest is not None:
-        release_dir = Path(str(manifest.get("source_release_directory", "")))
-        if not release_dir.exists():
-            errors.append(f"Referenced release directory does not exist: {release_dir}")
-        checksum_path = Path(str(manifest.get("checksum_file_path", "")))
-        if not checksum_path.exists():
-            errors.append(f"Referenced checksum file does not exist: {checksum_path}")
-        validation_report_path = Path(str(manifest.get("validation_report_path", "")))
-        if not validation_report_path.exists():
-            errors.append(f"Referenced validation report does not exist: {validation_report_path}")
+        source_release_name = str(manifest.get("source_release_name", "")).strip()
+        if not source_release_name:
+            errors.append("Publication manifest must include source_release_name.")
+        release_artifact_paths = manifest.get("release_artifact_paths", {})
+        if not isinstance(release_artifact_paths, dict):
+            errors.append("Publication manifest must include release_artifact_paths.")
+        else:
+            for key, expected_value in PUBLIC_RELEASE_ARTIFACT_RELATIVE_PATHS.items():
+                if str(release_artifact_paths.get(key, "")).strip() != expected_value:
+                    errors.append(
+                        "Publication manifest must use the standard release-relative artifact path "
+                        f"for {key}: {expected_value}"
+                    )
         if not str(manifest.get("release_type", "")).strip():
             errors.append("Publication manifest must include an explicit release_type.")
 
     for path in required.values():
         if not path.exists():
             continue
-        allow_absolute = path.name == "publication_manifest.json"
-        errors.extend(validate_public_text_file(path, allow_absolute_paths=allow_absolute))
+        errors.extend(validate_public_text_file(path, allow_absolute_paths=False))
 
     if manifest is not None and str(manifest.get("release_type")) == "synthetic_sample":
         for path in [required["readme"], required["dataset_card"], required["github_release_notes"]]:

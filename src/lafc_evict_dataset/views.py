@@ -6,6 +6,21 @@ import pandas as pd
 
 from .schema import CANONICAL_COLUMNS, DECISION_KEY_COLUMNS, DECISION_METADATA_COLUMNS
 
+DECISION_VIEW_VALUE_COLUMNS = [
+    "candidate_count",
+    "min_y_loss",
+    "max_y_value",
+    "optimal_candidate_page_ids",
+    "optimal_candidate_count",
+    "tie_count",
+    "regret_mean",
+    "regret_std",
+    "regret_max",
+    "regret_sum",
+]
+
+DECISION_VIEW_COLUMNS = [*DECISION_METADATA_COLUMNS, *DECISION_VIEW_VALUE_COLUMNS]
+
 
 def _candidate_specific_columns() -> list[str]:
     shared = set(DECISION_METADATA_COLUMNS)

@@ -23,6 +23,10 @@ def main() -> None:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("--bundle-dir", required=True)
+    parser.add_argument(
+        "--release-dir",
+        help="Optional release directory to include when uploading release payload files. Required with --include-release-files.",
+    )
     parser.add_argument("--sandbox", action="store_true")
     parser.add_argument("--production", action="store_true")
     parser.add_argument("--include-release-files", action="store_true")
@@ -51,12 +55,14 @@ def main() -> None:
     try:
         metadata = json.loads(zenodo_metadata.read_text(encoding="utf-8"))
         publication_manifest = json.loads(publication_manifest_path.read_text(encoding="utf-8"))
-        release_dir = Path(str(publication_manifest.get("source_release_directory", ""))).resolve()
+        release_dir = Path(args.release_dir).resolve() if args.release_dir else None
+        if args.include_release_files and release_dir is None:
+            parser.exit(1, "--include-release-files requires --release-dir because publication bundles omit local absolute paths.\n")
         plan = plan_zenodo_upload(
             bundle_dir,
             sandbox=args.sandbox,
             include_release_files=args.include_release_files,
-            release_dir=release_dir if release_dir.exists() else None,
+            release_dir=release_dir if release_dir is not None and release_dir.exists() else None,
         )
         if args.dry_run:
             print(
@@ -80,7 +86,7 @@ def main() -> None:
             bundle_dir,
             sandbox=args.sandbox,
             include_release_files=args.include_release_files,
-            release_dir=release_dir if release_dir.exists() else None,
+            release_dir=release_dir if release_dir is not None and release_dir.exists() else None,
         )
 
         print(

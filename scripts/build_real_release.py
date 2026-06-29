@@ -14,6 +14,14 @@ if str(SRC) not in sys.path:
 def main() -> None:
     from lafc_evict_dataset.real_release_build import build_real_release, dry_run_real_release
 
+    stage_choices = (
+        "candidate_rows",
+        "decision_view",
+        "pairwise_sample",
+        "metadata",
+        "checksums",
+        "validate",
+    )
     parser = argparse.ArgumentParser(
         description=(
             "Build a memory-safe real LAFC-Evict public release from an existing candidate-row manifest. "
@@ -27,14 +35,24 @@ def main() -> None:
     parser.add_argument("--dataset-id", default="lafc-evict-v0.1-open", help="Release identifier")
     parser.add_argument("--dry-run", action="store_true", help="Scan metadata and estimate the build without writing output")
     parser.add_argument("--overwrite", action="store_true", help="Materialize the release artifacts")
+    parser.add_argument("--resume", action="store_true", help="Skip completed non-empty stage outputs instead of rewriting them")
     parser.add_argument("--skip-disk-space-check", action="store_true", help="Skip the conservative free-disk-space guard")
+    parser.add_argument(
+        "--stage",
+        action="append",
+        choices=stage_choices,
+        help="Run only the selected stage(s); may be repeated",
+    )
     parser.add_argument("--pairwise-sample", action="store_true", help="Emit a capped pairwise sample parquet")
     parser.add_argument("--max-pairwise-rows", type=int, default=1_000_000, help="Maximum pairwise sample rows")
     parser.add_argument("--max-pairs-per-decision", type=int, default=8, help="Maximum pairs per sampled decision")
     parser.add_argument("--pairwise-seed", type=int, default=7, help="Seed used to sample decisions for pairwise rows")
+    parser.add_argument("--duckdb-threads", type=int, default=2, help="DuckDB thread limit")
+    parser.add_argument("--duckdb-memory-limit", default="8GB", help="DuckDB memory limit")
+    parser.add_argument("--duckdb-temp-dir", default=".duckdb_tmp", help="DuckDB spill/temp directory")
     args = parser.parse_args()
 
-    building = args.overwrite and not args.dry_run
+    building = not args.dry_run and (args.overwrite or args.resume)
     dry_run = not building
 
     try:
@@ -46,6 +64,11 @@ def main() -> None:
                 dataset_id=args.dataset_id,
                 skip_disk_space_check=args.skip_disk_space_check,
                 pairwise_sample=args.pairwise_sample,
+                duckdb_threads=args.duckdb_threads,
+                duckdb_memory_limit=args.duckdb_memory_limit,
+                duckdb_temp_dir=args.duckdb_temp_dir,
+                stages=args.stage,
+                resume=args.resume,
             )
             print(json.dumps(payload, indent=2))
             return
@@ -57,12 +80,17 @@ def main() -> None:
             dataset_id=args.dataset_id,
             repo_root=ROOT,
             dry_run=False,
-            overwrite=True,
+            overwrite=args.overwrite,
+            resume=args.resume,
             skip_disk_space_check=args.skip_disk_space_check,
+            stages=args.stage,
             pairwise_sample=args.pairwise_sample,
             max_pairwise_rows=args.max_pairwise_rows,
             max_pairs_per_decision=args.max_pairs_per_decision,
             pairwise_seed=args.pairwise_seed,
+            duckdb_threads=args.duckdb_threads,
+            duckdb_memory_limit=args.duckdb_memory_limit,
+            duckdb_temp_dir=args.duckdb_temp_dir,
         )
         print(
             json.dumps(
@@ -75,7 +103,7 @@ def main() -> None:
                     "decision_row_count": result.decision_row_count,
                     "pairwise_sample_row_count": result.pairwise_sample_row_count,
                     "total_bytes": result.total_bytes,
-                    "manifest_path": str(result.manifest_path),
+                    "manifest_path": str(result.manifest_path) if result.manifest_path else None,
                 },
                 indent=2,
             )
