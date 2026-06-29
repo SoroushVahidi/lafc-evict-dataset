@@ -5,13 +5,7 @@ The canonical candidate schema currently consists of decision metadata, candidat
 
 Beyond candidate rows, the release defines two derived views. The \emph{decision view} aggregates all rows that share a decision identifier and summarizes each decision with candidate count, minimum loss, maximum value, the set of optimal candidate IDs, tie count, and regret summary statistics. The \emph{pairwise view} compares candidate pairs from the same decision and derives pairwise preference labels from the ordering of their \texttt{y\_loss} values, with ties when the losses are equal. The current preserved open release does not ship the full pairwise view; it ships a capped pairwise sample of 1,000,000 rows instead.
 
-\begin{figure}[t]
-  \centering
-  \fbox{\parbox{0.9\columnwidth}{\centering Placeholder for schema-and-view diagram:\\candidate schema, decision view, pairwise sample}}
-  \caption{Planned schema and derived-view diagram.}
-  \label{fig:schema-views}
-  \Description{Placeholder box for a schema-view figure showing the candidate schema and the derived decision and pairwise views.}
-\end{figure}
+Operationally, the schema can be read as a layered projection over the same decision events: candidate rows are the atomic supervised objects, the decision view groups those rows by \texttt{decision\_id}, and the shipped pairwise sample keeps only selected within-decision comparisons. Table~\ref{tab:schema-summary} summarizes those column groups and derived fields directly in manuscript form.
 
 \begin{table}[t]
   \caption{Compact summary of candidate-row schema groups and derived-view fields.}

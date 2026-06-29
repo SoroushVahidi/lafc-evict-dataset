@@ -3,10 +3,9 @@
 ## Highest priority
 
 - Keep the new formal notation for the counterfactual label stable across later edits.
-- Add the benchmark overview figure.
-- Add the artifact layout figure.
 - Tighten the generated metadata-backed tables so they fit the SIGMOD page budget cleanly.
 - Decide how prominently to present the current light pairwise sanity baselines versus holding richer baselines for the next draft.
+- Keep missing empirical work confined to internal TODO/planning files rather than manuscript-facing tables or prose.
 
 ## Anonymity checks
 
@@ -30,6 +29,7 @@
 - Move long schema descriptions to appendix if needed.
 - Keep release-engineering detail concise in the main text.
 - Decide which of the generated characterization tables stay in the main paper versus appendix.
+- Keep the manuscript figure set limited to the real pipeline overview unless a new figure is both metadata-backed and submission-essential.
 
 ## Metadata-backed tables now available
 

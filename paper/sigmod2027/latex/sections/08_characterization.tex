@@ -1,27 +1,11 @@
 \section{Empirical Characterization}
 \label{sec:characterization}
 
-The empirical center of gravity for this paper should be benchmark characterization, not an oversized model bake-off. The release metadata already supports several useful facts: total candidate rows, total decision rows, pairwise-sample size, split counts, family counts, capacity counts, and horizon counts. These are enough to establish the scale and heterogeneity of the benchmark in the first submission draft.
+The empirical center of gravity for this paper should be benchmark characterization, not an oversized model bake-off. The release metadata already supports several useful facts: total candidate rows, total decision rows, pairwise-sample size, split counts, family counts, capacity counts, and horizon counts. These are enough to establish the scale and heterogeneity of the benchmark in the current submission draft.
 
-What remains missing are the candidate-row label-distribution summaries that make the benchmark scientifically interpretable at the row level. By contrast, decision-view-backed tie frequency, regret spread, candidate-count distributions per decision, and pairwise-sample balance can already be extracted without any candidate-row scan.
+The present manuscript therefore limits characterization claims to metadata-backed, decision-view-backed, and pairwise-sample-backed summaries. Detailed row-level distributions of \texttt{y\_loss} and \texttt{y\_value} require a candidate-row scan and are intentionally omitted here rather than approximated from incomplete metadata.
 
 \input{tables/table_decision_breakdown}
-
-\begin{table}[t]
-  \caption{Pending candidate-row label-distribution summaries. These statistics still require a candidate-row scan or additional precomputed metadata.}
-  \label{tab:label-distribution}
-  \centering
-  \footnotesize
-  \begin{tabularx}{\columnwidth}{@{}P{0.35\columnwidth}L@{}}
-    \toprule
-    Statistic & Status \\
-    \midrule
-    \texttt{y\_loss} summary & pending candidate-row statistics job \\
-    \texttt{y\_value} summary & pending candidate-row statistics job \\
-    Per-family summaries & pending candidate-row statistics job \\
-    \bottomrule
-  \end{tabularx}
-\end{table}
 
 \input{tables/table_candidate_count_stats}
 
