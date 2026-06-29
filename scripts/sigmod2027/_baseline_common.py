@@ -22,7 +22,6 @@ if str(SRC_ROOT) not in sys.path:
 
 from lafc_evict_dataset.schema import BASE_REQUIRED_COLUMNS, FEATURE_COLUMNS  # noqa: E402
 
-FULL_VALIDATION_STATUS = "passed"
 DEFAULT_BATCH_SIZE = 65_536
 DEFAULT_GROUP_BY = ("split", "trace_family", "capacity", "horizon")
 DEFAULT_QUANTILES = (0.05, 0.25, 0.5, 0.75, 0.95)
@@ -101,6 +100,18 @@ def release_identity(manifest: dict[str, object]) -> dict[str, object]:
         "release_type": manifest.get("release_type"),
         "schema_version": manifest.get("schema_version"),
     }
+
+
+def detected_validation_status(release_root: Path) -> str:
+    report_path = release_root / "metadata" / "validation_report.md"
+    if not report_path.exists():
+        return "unknown"
+    text = report_path.read_text(encoding="utf-8", errors="replace")
+    if "Validation result: passed" in text:
+        return "passed"
+    if "Validation result: failed" in text:
+        return "failed"
+    return "unknown"
 
 
 def candidate_partition_entries(manifest: dict[str, object]) -> list[dict[str, object]]:

@@ -7,7 +7,6 @@ from pathlib import Path
 
 from _baseline_common import (
     DEFAULT_GROUP_BY,
-    FULL_VALIDATION_STATUS,
     RunningNumericSummary,
     build_file_budget,
     budget_exhausted,
@@ -15,6 +14,7 @@ from _baseline_common import (
     candidate_schema_summary,
     checkpoint_path,
     consume_budget,
+    detected_validation_status,
     decode_group_key,
     encode_group_key,
     ensure_output_dir_safe,
@@ -118,7 +118,7 @@ def build_plan_payload(
         "release_identity": release_identity(manifest),
         "input_view": "candidate_rows",
         "input_path": repo_relative(release_root / "data" / "candidate_rows"),
-        "full_validation_status": FULL_VALIDATION_STATUS,
+        "full_validation_status": detected_validation_status(release_root),
         "requires_wolverine": True,
         "safe_for_anonymous_manuscript": False,
         "targets": targets,
@@ -268,7 +268,7 @@ def build_target_payload(
         "release_identity": release_identity(manifest),
         "input_view": "candidate_rows",
         "input_path": repo_relative(release_root / "data" / "candidate_rows"),
-        "full_validation_status": FULL_VALIDATION_STATUS,
+        "full_validation_status": detected_validation_status(release_root),
         "requires_wolverine": True,
         "safe_for_anonymous_manuscript": True,
         "target": target,

@@ -10,7 +10,6 @@ import numpy as np
 import pandas as pd
 
 from _baseline_common import (
-    FULL_VALIDATION_STATUS,
     RunningNumericSummary,
     available_feature_columns,
     build_file_budget,
@@ -22,6 +21,7 @@ from _baseline_common import (
     current_git_commit,
     current_timestamp_utc,
     decode_group_key,
+    detected_validation_status,
     decision_key_columns,
     duplicate_partition_keys,
     encode_group_key,
@@ -195,7 +195,7 @@ def plan_payload(
         "release_identity": release_identity(manifest),
         "input_view": "candidate_rows",
         "input_path": repo_relative(release_root / "data" / "candidate_rows"),
-        "full_validation_status": FULL_VALIDATION_STATUS,
+        "full_validation_status": detected_validation_status(release_root),
         "requires_wolverine": True,
         "safe_for_anonymous_manuscript": False,
         "metrics": ["decision_count", "optimal_selection_rate", "mean_regret", "median_regret"],
@@ -328,7 +328,7 @@ def result_payload(
         "release_identity": release_identity(manifest),
         "input_view": "candidate_rows",
         "input_path": repo_relative(release_root / "data" / "candidate_rows"),
-        "full_validation_status": FULL_VALIDATION_STATUS,
+        "full_validation_status": detected_validation_status(release_root),
         "requires_wolverine": True,
         "safe_for_anonymous_manuscript": True,
         "scorer": state["scorer"],

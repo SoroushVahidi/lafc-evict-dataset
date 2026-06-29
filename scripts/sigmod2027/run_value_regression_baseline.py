@@ -10,7 +10,6 @@ from pathlib import Path
 import numpy as np
 
 from _baseline_common import (
-    FULL_VALIDATION_STATUS,
     available_feature_columns,
     build_file_budget,
     budget_exhausted,
@@ -20,6 +19,7 @@ from _baseline_common import (
     consume_budget,
     current_git_commit,
     current_timestamp_utc,
+    detected_validation_status,
     ensure_output_dir_safe,
     guard_output_path,
     iter_candidate_batches,
@@ -209,7 +209,7 @@ def plan_payload(
         "input_view": "candidate_rows",
         "input_path": repo_relative(release_root / "data" / "candidate_rows"),
         "target": args.target,
-        "full_validation_status": FULL_VALIDATION_STATUS,
+        "full_validation_status": detected_validation_status(release_root),
         "requires_wolverine": True,
         "safe_for_anonymous_manuscript": False,
         "metrics": ["rows", "MAE", "RMSE", "R2", "constant_predictor_MAE", "constant_predictor_RMSE"],
@@ -437,7 +437,7 @@ def result_payload(
         "input_view": "candidate_rows",
         "input_path": repo_relative(release_root / "data" / "candidate_rows"),
         "target": args.target,
-        "full_validation_status": FULL_VALIDATION_STATUS,
+        "full_validation_status": detected_validation_status(release_root),
         "requires_wolverine": True,
         "safe_for_anonymous_manuscript": True,
         "baseline": "linear_regression",
