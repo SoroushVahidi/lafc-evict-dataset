@@ -2,7 +2,7 @@
 
 ## Highest priority
 
-- Add formal notation for the counterfactual label.
+- Keep the new formal notation for the counterfactual label stable across later edits.
 - Add the benchmark overview figure.
 - Add the artifact layout figure.
 - Tighten the generated metadata-backed tables so they fit the SIGMOD page budget cleanly.
@@ -58,7 +58,7 @@
 
 ## Remaining benchmark-task risks
 
-- Pairwise sample is highly tie-heavy, so the paper must state clearly whether pairwise evaluation is over all rows or over the non-tie subset.
+- Pairwise sample is highly tie-heavy, so any added pairwise results must continue to state clearly whether evaluation is over all rows or over the non-tie subset.
 - The shipped pairwise sample lacks candidate-side feature columns, which blocks LRU-derived and predictor-derived pairwise baselines unless a feature join is added.
 - Even though full real-release validation passed on the preserved release, current benchmark numbers should still be described as manifest-backed, decision-view-backed, or pairwise-sample-backed as appropriate, and the stale release-internal `metadata/validation_report.md` should not be cited as the June 29 validation record.
 - The majority non-tie baseline looks artificially strong on train and validation because the non-tie subset is highly imbalanced; that must be framed as a sanity check, not a meaningful learned result.

@@ -1,36 +1,40 @@
 \section{Benchmark Tasks and Baselines}
 \label{sec:tasks-baselines}
 
-\lafc\ supports three benchmark tasks from one release.
+\lafc\ supports four benchmark tasks from one release.
 
 \paragraph{Candidate-level value prediction.}
-Predict \texttt{y\_loss} or \texttt{y\_value} from the candidate row. This task measures how well a model predicts counterfactual eviction quality as a pointwise target.
+Predict \texttt{y\_loss} or \texttt{y\_value} from a single candidate row. This is a pointwise task over the canonical benchmark unit and measures how well a model predicts finite-horizon counterfactual eviction quality for one candidate at one decision.
 
-\paragraph{Best-candidate prediction.}
-Identify the minimum-loss candidate within a decision. This task can be framed as ranking or decision-level classification and connects more directly to the actual victim-selection problem.
+\paragraph{Best-candidate selection.}
+Given all candidate rows for one decision, identify a member of the minimum-loss set. This task can be framed as ranking or decision-level classification and connects most directly to the actual cache-eviction choice because it evaluates whether a method selects a benchmark-optimal victim within that decision.
 
 \paragraph{Pairwise preference prediction.}
-Predict whether candidate A is better than candidate B within the same decision. This task uses the pairwise view or the shipped pairwise sample and provides a simpler binary learning interface for preference modeling.
+Predict whether candidate A is better than candidate B within the same decision, where ``better'' means lower \texttt{y\_loss} or equivalently higher \texttt{y\_value}. This task uses the pairwise view or the shipped pairwise sample and provides a simpler learning interface for within-decision preference modeling. Because equal losses induce ties, any paper using this task should state explicitly whether evaluation includes tie rows, excludes them, or maps them to a separate class.
 
-The baseline plan in this draft is intentionally conservative: LRU-derived heuristics, a predictor-score baseline, linear or logistic models, and one tree-based baseline. A small MLP can be added only if it is easy to train and explain within the page budget. No downstream cache-performance experiment should appear unless the original pipeline already exposes it cleanly and reproducibly.
+\paragraph{Candidate-label distribution characterization.}
+Summarize the empirical label surface without training a predictive model. This characterization task studies distributions of \texttt{y\_loss}, \texttt{y\_value}, regret, tie frequency, and decision ambiguity across families, capacities, horizons, and splits. It is descriptive rather than competitive, but it is important for understanding benchmark difficulty and for interpreting downstream task results.
 
-As a first executable check, we ran only two non-feature sanity baselines on the shipped pairwise sample: a majority baseline and a random baseline, both evaluated on the non-tie subset only. This is intentionally weaker than the eventual feature-based pairwise task because the shipped pairwise sample omits candidate-side predictor and LRU feature columns. The resulting numbers therefore test the sampled label surface and split behavior rather than the predictive power of cache-state features.
+The baseline plan in this draft is intentionally conservative: LRU-derived heuristics, a predictor-score baseline, linear or logistic models, and one tree-based baseline. A small MLP can be added only if it is easy to train and explain within the page budget. No downstream cache-performance experiment should appear unless the original pipeline already exposes it cleanly and reproducibly, because the present manuscript makes a benchmark-definition claim rather than an automatic deployment claim.
+
+As a first executable check, we ran only two non-feature sanity baselines on the shipped pairwise sample: a majority baseline and a random baseline, both evaluated on the non-tie subset only. This is intentionally weaker than the eventual feature-based pairwise task because the shipped pairwise sample omits candidate-side predictor and LRU feature columns. The resulting numbers therefore test the sampled label surface and split behavior rather than the predictive power of cache-state features, and they should not be overread as end-to-end cache-policy evidence.
 
 \input{tables/table_pairwise_sample_stats}
 
 \input{tables/table_pairwise_baseline_light}
 
 \begin{table}[t]
-  \caption{Placeholder for benchmark task definitions and evaluation metrics.}
+  \caption{Benchmark task definitions and representative evaluation outputs.}
   \label{tab:task-definitions}
   \centering
-  \begin{tabular}{lll}
+  \begin{tabular}{p{0.23\columnwidth}p{0.23\columnwidth}p{0.42\columnwidth}}
     \toprule
-    Task & Inputs & Planned metrics \\
+    Task & Inputs & Representative outputs \\
     \midrule
-    Value regression & candidate rows & \todo{MAE, RMSE} \\
-    Best-candidate prediction & decision groups & \todo{Top-1, regret-aware metric} \\
-    Pairwise preference & pairwise sample & \todo{Accuracy, ROC-AUC} \\
+    Value regression & candidate rows & MAE, RMSE, and optional rank correlation between predicted and observed values \\
+    Best-candidate selection & decision groups & Top-1 accuracy against the benchmark-optimal set and mean realized regret relative to the best available candidate \\
+    Pairwise preference & pairwise rows from one decision & Accuracy or ROC-AUC, with tie handling stated explicitly and non-tie-only reporting marked when used \\
+    Label characterization & candidate or decision aggregates & Histograms, quantiles, tie rates, regret summaries, and per-family/capacity/horizon breakdowns \\
     \bottomrule
   \end{tabular}
 \end{table}
