@@ -11,8 +11,8 @@ It intentionally does not submit jobs from the local machine.
 - Wolverine source-resume and finalizer work is still in flight.
 - Do not launch any new Wolverine result-generation jobs until those source/finalizer jobs complete.
 - The local repo already contains the light pairwise sanity outputs under `paper/sigmod2027/results/baselines/pairwise/`.
-- The local repo does not yet contain a checked-in SIGMOD runner that produces final candidate-row label-distribution outputs.
-- The local repo does not yet contain a checked-in SIGMOD runner that produces final value-regression or best-candidate result files; the current candidate-row scripts emit planning JSON only.
+- The local repo now contains checked-in resume-safe runners for candidate-label stats, value regression, and best-candidate evaluation.
+- Those runners were only syntax-checked and tiny-fixture-tested locally; the preserved-release runs still belong on Wolverine.
 
 ## Minimal remaining result set
 
@@ -47,28 +47,59 @@ python scripts/sigmod2027/run_pairwise_baseline.py \
   --output-dir paper/sigmod2027/results/baselines/pairwise
 ```
 
-### Candidate-row preflight plan stubs
-
-Run these on Wolverine only after the source/finalizer jobs finish.
-They verify manifest/schema assumptions and emit `plan.json`; they do not generate final candidate-row results.
+### Candidate-row schema-only preflight
 
 ```bash
+python scripts/sigmod2027/run_candidate_label_stats.py \
+  --release-root release/lafc-evict-v0.1-open-current-contract-preserved \
+  --output-dir paper/sigmod2027/results/candidate_label_stats \
+  --target both \
+  --mode plan
+
 python scripts/sigmod2027/run_value_regression_baseline.py \
   --release-root release/lafc-evict-v0.1-open-current-contract-preserved \
   --output-dir paper/sigmod2027/results/baselines/value_regression \
-  --target y_loss
+  --target y_loss \
+  --mode plan
 
 python scripts/sigmod2027/run_best_candidate_baseline.py \
   --release-root release/lafc-evict-v0.1-open-current-contract-preserved \
-  --output-dir paper/sigmod2027/results/baselines/best_candidate
+  --output-dir paper/sigmod2027/results/baselines/best_candidate \
+  --mode plan
 ```
 
-## Command gap that still exists
+### Candidate-row result-generation commands to run later on Wolverine
 
-- No checked-in `scripts/sigmod2027/` command currently emits the final candidate-row `y_loss` / `y_value` summary files.
-- No checked-in `scripts/sigmod2027/` command currently emits the final `linear_regression_y_loss.json` result file.
-- No checked-in `scripts/sigmod2027/` command currently emits the final `best_candidate_from_linear_score.json` result file.
-- Therefore the later Wolverine phase should start with the two preflight plan stubs above, then add the missing candidate-row runners before any Slurm submission for final results.
+Run these only after source/finalizer completion is confirmed.
+
+```bash
+python scripts/sigmod2027/run_candidate_label_stats.py \
+  --release-root release/lafc-evict-v0.1-open-current-contract-preserved \
+  --output-dir paper/sigmod2027/results/candidate_label_stats \
+  --target both \
+  --mode run \
+  --resume
+
+python scripts/sigmod2027/run_value_regression_baseline.py \
+  --release-root release/lafc-evict-v0.1-open-current-contract-preserved \
+  --output-dir paper/sigmod2027/results/baselines/value_regression \
+  --target y_loss \
+  --mode run \
+  --resume
+
+python scripts/sigmod2027/run_best_candidate_baseline.py \
+  --release-root release/lafc-evict-v0.1-open-current-contract-preserved \
+  --output-dir paper/sigmod2027/results/baselines/best_candidate \
+  --linear-score-json paper/sigmod2027/results/baselines/value_regression/linear_regression_y_loss.json \
+  --mode run \
+  --resume
+```
+
+## Remaining execution caveats
+
+- The stats runner and both baseline runners stream candidate partitions and support `--max-files` plus `--resume`, but the full preserved-release runs are still heavy jobs.
+- The pairwise sample still lacks candidate-side feature columns, so richer pairwise baselines remain a separate feature-join problem.
+- No Slurm wrapper is committed here on purpose; launch details can stay cluster-local once source/finalizer work finishes.
 
 ## Manuscript-safe labels
 
@@ -88,4 +119,4 @@ python scripts/sigmod2027/run_best_candidate_baseline.py \
 - Do not run any full candidate-row scan on the local machine.
 - Do not run any command that reads every file under `release/.../data/candidate_rows/`.
 - Do not submit Slurm jobs until Wolverine source/finalizer completion is confirmed.
-- Do not describe plan-only JSON files as final baseline results.
+- Do not describe plan-mode JSON files as final baseline results.

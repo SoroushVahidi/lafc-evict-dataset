@@ -49,6 +49,22 @@ These are already available in the repository and do not justify another local e
 - any large joint cube over family, capacity, horizon, and split,
 - feature-summary scans across all candidate rows.
 
+## Implemented runner
+
+The repository now includes:
+
+```bash
+python scripts/sigmod2027/run_candidate_label_stats.py \
+  --release-root release/lafc-evict-v0.1-open-current-contract-preserved \
+  --output-dir paper/sigmod2027/results/candidate_label_stats \
+  --target both \
+  --mode plan
+```
+
+- `--mode plan` reads manifest metadata plus a single candidate-partition schema only.
+- `--mode run` streams candidate parquet files file-by-file and supports `--max-files`, `--resume`, and `--overwrite`.
+- Full-scale `--mode run` belongs on Wolverine after source/finalizer completion.
+
 ## Minimum missing characterization outputs still worth generating
 
 | Output | Supports paper section | Exact input artifact | Exact expected output files | Run site | Full candidate-row scan | Estimated resources | Must wait for source/finalizer completion? |
@@ -62,3 +78,4 @@ These are already available in the repository and do not justify another local e
 - Decision-view and pairwise-sample statistics are much cheaper than full candidate-row scans and should be prioritized for the next extraction pass.
 - Candidate-row scans should be treated as explicit Wolverine jobs only after the current source/finalizer work completes.
 - Do not run candidate-row label-distribution scans locally against the preserved release.
+- The candidate-label stats runner is now implemented; the remaining gap is executing it at preserved-release scale, not building the CLI.

@@ -21,8 +21,7 @@
 - Anonymous artifact packaging still pending.
 - Metadata-backed statistics tables are now available from `paper/sigmod2027/technical/extract_metadata_tables.py`.
 - Candidate-row label-distribution statistics are still pending because they require a candidate-row scan or additional precomputed metadata.
-- Baseline experiment plans and runner stubs now exist under `paper/sigmod2027/technical/` and `scripts/sigmod2027/`.
-- The candidate-row SIGMOD scripts currently emit planning JSON only; they do not yet produce final value-regression or best-candidate result files.
+- Resume-safe candidate-row stats and baseline runners now exist under `scripts/sigmod2027/`, but the preserved-release executions are still pending.
 - Feature-based pairwise baselines are still blocked on a candidate-row feature join or an augmented pairwise export.
 
 ## Editing priorities
@@ -53,9 +52,9 @@
 - Pairwise sample first:
   shipped sample supports light sanity baselines now, and current results are recorded under `paper/sigmod2027/results/baselines/pairwise/`.
 - Value regression:
-  planning stub exists, but full-scale candidate-row execution belongs on Wolverine and still needs a final result runner.
+  runner exists, but full-scale candidate-row execution still belongs on Wolverine.
 - Best-candidate prediction:
-  planning stub exists, but full-scale candidate-row execution belongs on Wolverine and still needs a final result runner.
+  runner exists, but full-scale candidate-row execution still belongs on Wolverine.
 
 ## Remaining benchmark-task risks
 

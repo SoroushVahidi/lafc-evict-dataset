@@ -27,7 +27,7 @@ Define the smallest defensible baseline suite for the first SIGMOD benchmark pap
 - Metrics:
   `MAE`, `RMSE`, within-decision Spearman rank correlation, and top-1 regret if a decision-level reconstruction path is implemented.
 - Status:
-  planned only; the current repo script emits `plan.json` and does not produce final baseline metrics.
+  runner implemented; result still pending because the full preserved-release run belongs on Wolverine.
 - Local feasibility:
   not appropriate for local full-scale execution.
 - Wolverine requirement:
@@ -42,7 +42,7 @@ Define the smallest defensible baseline suite for the first SIGMOD benchmark pap
 - Metrics:
   top-1 accuracy, top-k accuracy, and regret of the selected candidate.
 - Status:
-  planned only; the current repo script emits `plan.json` and does not produce final baseline metrics.
+  runner implemented; result still pending because the full preserved-release run belongs on Wolverine.
 - Local feasibility:
   not appropriate for local full-scale execution.
 - Wolverine requirement:
@@ -116,12 +116,41 @@ Define the smallest defensible baseline suite for the first SIGMOD benchmark pap
   - first candidate-row-backed best-candidate baseline worth generating for the paper.
 - No additional pairwise baseline output is required for the minimum SIGMOD draft because the current light non-tie sanity outputs already exist.
 
+## Implemented runners
+
+### Value regression
+
+```bash
+python scripts/sigmod2027/run_value_regression_baseline.py \
+  --release-root release/lafc-evict-v0.1-open-current-contract-preserved \
+  --output-dir paper/sigmod2027/results/baselines/value_regression \
+  --target y_loss \
+  --mode plan
+```
+
+- `--mode plan` inspects metadata/schema only.
+- `--mode run` streams candidate rows, fits a streaming linear regression baseline, and emits `linear_regression_<target>.json`.
+- `--max-files`, `--resume`, and `--overwrite` allow chunked or restart-safe execution.
+
+### Best-candidate
+
+```bash
+python scripts/sigmod2027/run_best_candidate_baseline.py \
+  --release-root release/lafc-evict-v0.1-open-current-contract-preserved \
+  --output-dir paper/sigmod2027/results/baselines/best_candidate \
+  --mode plan
+```
+
+- `--mode plan` inspects metadata/schema only.
+- `--mode run` streams candidate rows decision-by-decision and emits `best_candidate_from_<scorer>.json`.
+- The first intended SIGMOD result path uses `--linear-score-json` with the `linear_regression_y_loss.json` output from the value-regression runner.
+
 ## Blocking issues to track
 
 - The current pairwise sample does not expose the candidate feature columns needed for LRU-derived, predictor-derived, or full logistic pairwise baselines.
 - Candidate-row tasks require HPC because the release contains 277,995,072 candidate rows across 168 parquet shards.
-- The current checked-in candidate-row scripts under `scripts/sigmod2027/` are preflight planners, not final result emitters.
 - Full-release validation has passed on the preserved release, so baseline write-ups may state that result while still describing current numbers as preserved-release results rather than final published artifact results.
+- The remaining risk is execution cost and result validation on Wolverine, not missing local runner implementations.
 
 ## Output expectations
 
