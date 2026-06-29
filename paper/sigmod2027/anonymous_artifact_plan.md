@@ -48,7 +48,7 @@ Prepare a review artifact that lets SIGMOD/PACMMOD reviewers inspect the benchma
 - Datasheet and limitations notes.
 - Validation scripts and release-construction scripts.
 - Sample release.
-- If feasible, anonymous metadata for the preserved `lafc-evict-v0.1-open` release:
+- If feasible, anonymous metadata for the preserved `lafc-evict-v0.1-open-current-contract-preserved` release:
   release manifest, validation report, checksums, and aggregate statistics.
 
 ## Files to exclude or rewrite

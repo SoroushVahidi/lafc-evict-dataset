@@ -92,21 +92,21 @@ Build derived benchmark views:
 
 ```bash
 python scripts/build_decision_view.py \
-  --input-path release/lafc-evict-v0.1-open/candidate_rows \
-  --output-path release/lafc-evict-v0.1-open/decision_view.parquet
+  --input-path release/lafc-evict-v0.1-open/data/candidate_rows \
+  --output-path release/lafc-evict-v0.1-open/data/decision_view/decision_view.parquet
 ```
 
 ```bash
 python scripts/build_pairwise_view.py \
-  --input-path release/lafc-evict-v0.1-open/candidate_rows \
-  --output-path release/lafc-evict-v0.1-open/pairwise_view.parquet
+  --input-path release/lafc-evict-v0.1-open/data/candidate_rows \
+  --output-path release/lafc-evict-v0.1-open/data/pairwise_view/pairwise_view.parquet
 ```
 
 Validate the candidate rows:
 
 ```bash
 python scripts/validate_release_schema.py \
-  --input-path release/lafc-evict-v0.1-open/candidate_rows
+  --input-path release/lafc-evict-v0.1-open/data/candidate_rows
 ```
 
 Select the intended first real public trace-family subset:

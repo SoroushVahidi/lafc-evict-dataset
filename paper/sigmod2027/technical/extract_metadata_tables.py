@@ -41,8 +41,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--bundle-dir",
-        default="/tmp/lafc-evict-v0.1-open-current-contract-preserved-publication-bundle",
-        help="Optional existing local publication bundle directory.",
+        default="artifacts/publication-bundle",
+        help="Optional existing local publication bundle directory; override with your local path if needed.",
     )
     return parser.parse_args()
 

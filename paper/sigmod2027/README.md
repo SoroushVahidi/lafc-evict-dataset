@@ -38,4 +38,4 @@ Files in this directory:
 - `experiments_plan.md`: minimum experimental package for the submission.
 - `related_work_notes.md`: categories and questions for literature search.
 
-This directory intentionally does not contain final LaTeX yet.
+This directory now contains a tracked LaTeX draft, but the manuscript is still not submission-ready.

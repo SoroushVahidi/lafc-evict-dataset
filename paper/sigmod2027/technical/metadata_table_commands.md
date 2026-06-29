@@ -28,5 +28,5 @@ latexmk -pdf main.tex
 
 ```bash
 python scripts/validate_publication_bundle.py \
-  --bundle-dir /tmp/lafc-evict-v0.1-open-current-contract-preserved-publication-bundle
+  --bundle-dir <bundle-root>
 ```

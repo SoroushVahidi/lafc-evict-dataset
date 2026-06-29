@@ -3,7 +3,7 @@
 
 \lafc\ is organized around five layers: external raw traces, processed traces, generated features, generated labels, and benchmark tasks. The release in this repository begins after candidate-row generation and focuses on converting existing generated data into a reusable benchmark package with schema, validation, and release metadata.
 
-The first intended open subset is \texttt{lafc-evict-v0.1-open}. The preserved current-contract release metadata identifies five selected families: \texttt{cloudphysics}, \texttt{metacdn}, \texttt{metakv}, \texttt{twemcache}, and \texttt{wiki2018}. The family registry also lists \texttt{brightkite} and \texttt{citibike} as excluded from the open subset pending review. This scope boundary is a release-governance decision, not a statement that the broader internally generated dataset is automatically redistributable.
+The first intended open subset is \texttt{lafc-evict-v0.1-open}. The preserved current-contract release metadata identifies five selected families: \texttt{cloudphysics}, \texttt{metacdn}, \texttt{metakv}, \texttt{twemcache}, and \texttt{wiki2018}. The family registry also lists \texttt{brightkite} and \texttt{citibike} as excluded from the open subset pending review. This scope boundary is a release-governance decision, not a statement that the broader internally generated dataset is automatically redistributable. Not every selected family appears in every split in the current preserved release; for example, \texttt{metacdn} contributes train and validation decision rows but no test decision rows.
 
 The benchmark is designed to satisfy four requirements:
 \begin{enumerate}[leftmargin=*]

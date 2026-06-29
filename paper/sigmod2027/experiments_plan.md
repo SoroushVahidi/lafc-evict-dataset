@@ -124,5 +124,5 @@ Do not expand into heavy deep-learning baselines unless the pipeline already exi
 - Full real-release validation passed on the preserved release on 2026-06-29.
 - Full release anonymization is still pending.
 - Some release-governance and redistribution review items are still marked as pending final review.
-- There is no committed baseline-results pipeline in this repository yet.
+- Light pairwise sanity baseline results now exist in the repository, while value-regression and best-candidate baselines remain pending.
 - The 12-page limit means the experiments section must stay compact and benchmark-focused.
