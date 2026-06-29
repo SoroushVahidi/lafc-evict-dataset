@@ -67,6 +67,7 @@
 
 - Verify whether `DRL-Clusters` has any archival systems paper worth citing; otherwise leave it out.
 - Decide whether `HR-Cache` stays in the main related-work section or becomes a short secondary mention.
+- If `MAT` later appears in an archival venue, refresh the citation away from the arXiv entry.
 - Keep `KVP / Learning to Evict from Key-Value Cache` out unless the paper explicitly expands to KV-cache-specific literature.
 - If any cloud/block-storage trace family claim is added, replace the broad phrase with exact dataset citations.
 
