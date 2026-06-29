@@ -1,0 +1,22 @@
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \caption{Dataset scale values from preserved-release metadata. The counts are manifest-backed or view-backed as noted, and full real-release validation remains pending.}
+  \label{tab:dataset-scale}
+  \begin{tabular}{lp{0.46\columnwidth}}
+    \toprule
+    metric & value \\
+    \midrule
+    candidate rows & 277,995,072 \\
+    decision rows & 2,363,286 \\
+    pairwise-sample rows & 1,000,000 \\
+    candidate parquet files & 168 \\
+    total release files & 176 \\
+    manifest file\_inventory count & 176 \\
+    checksum entry count & 175 \\
+    selected trace families & cloudphysics, metacdn, metakv, twemcache, wiki2018 \\
+    excluded/pending trace families & brightkite, citibike \\
+    full validation status & pending \\
+    \bottomrule
+  \end{tabular}
+\end{table}

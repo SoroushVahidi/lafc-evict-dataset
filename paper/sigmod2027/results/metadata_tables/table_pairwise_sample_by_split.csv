@@ -1,0 +1,4 @@
+split,pairwise_rows
+test,102024
+train,737896
+val,160080

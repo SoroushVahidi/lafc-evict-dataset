@@ -1,0 +1,26 @@
+\section{Release Construction and Validation}
+\label{sec:release-validation}
+
+The release pipeline is designed to package existing generated candidate rows into a benchmark artifact without requiring raw traces in the repository. The builder uses an out-of-core DuckDB path to ingest candidate shards, normalize split values, emit partitioned Parquet candidate rows, derive the decision view, optionally create a capped pairwise sample, and write release metadata and checksums.
+
+The validation surface is part of the benchmark contribution. Current checks include:
+\begin{itemize}[leftmargin=*]
+  \item schema completeness for candidate partitions,
+  \item split normalization and split-set consistency,
+  \item presence of selected families and absence of blocked families,
+  \item duplicate candidate detection within decision groups,
+  \item consistency of decision metadata within a decision,
+  \item decision-view schema and count consistency,
+  \item checksum verification.
+\end{itemize}
+
+The preserved current-contract open release has passed lightweight metadata repair, repository tests, and publication-bundle validation. However, the full real-release validation command has not yet been run on the preserved open release. For the anonymous SIGMOD submission, this means the manuscript can describe the validation machinery and the preserved release state, but it should not claim final end-to-end release certification yet.
+
+\begin{figure}[t]
+  \centering
+  \fbox{\parbox{0.9\columnwidth}{\centering Placeholder for artifact/release layout figure:\\release tree, manifest, checksums, publication bundle}}
+  \caption{Planned overview of the release artifact layout and validation surface.}
+  \label{fig:artifact-layout}
+\end{figure}
+
+\input{tables/table_artifact_layout}

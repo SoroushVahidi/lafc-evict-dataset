@@ -1,0 +1,45 @@
+\documentclass[sigconf,anonymous]{acmart}
+
+\settopmatter{printacmref=false}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+\pagestyle{plain}
+
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\newcommand{\lafc}{LAFC-Evict}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+
+\begin{document}
+
+\title{\lafc: A Large-Scale Counterfactual Benchmark for Learned Cache Eviction: [Experiments \& Analysis]}
+
+\author{Anonymous Authors}
+
+\begin{abstract}
+Learned cache-eviction research has outgrown small ad hoc evaluations, yet empirical comparison remains difficult because prior studies often rely on private traces, release-incomplete preprocessing pipelines, or supervision targets that are not comparable across papers. This paper presents \lafc, a benchmark package for learned cache eviction built around decision-aligned counterfactual supervision. Each canonical row represents one candidate victim at one eviction decision and includes release-facing provenance fields, cache-state features, and a finite-horizon counterfactual label defined by the continuation-policy miss count after forcing that eviction. The benchmark also exposes decision-level and pairwise benchmark views to support regression, ranking, and preference-learning tasks.
+
+The current open-release candidate covers five selected trace families---\texttt{cloudphysics}, \texttt{metacdn}, \texttt{metakv}, \texttt{twemcache}, and \texttt{wiki2018}---and the preserved release metadata currently reports 277,995,072 candidate rows, 2,363,286 decision-view rows, and a capped pairwise sample of 1,000,000 rows. Two additional families, \texttt{brightkite} and \texttt{citibike}, remain excluded pending redistribution review. Beyond introducing the benchmark design, the paper describes the release schema, validation checks, and reproducibility surface needed for benchmark reuse, and it outlines baseline tasks for value prediction, best-candidate prediction, and pairwise preference modeling. Full release validation for the preserved open candidate is still pending, so the present draft focuses on the validated release structure and the empirical plan rather than claiming final benchmark certification.
+\end{abstract}
+
+\maketitle
+
+\input{sections/01_introduction}
+\input{sections/02_background}
+\input{sections/03_benchmark_design}
+\input{sections/04_label_generation}
+\input{sections/05_schema_views}
+\input{sections/06_release_validation}
+\input{sections/07_tasks_baselines}
+\input{sections/08_characterization}
+\input{sections/09_limitations_ethics}
+\input{sections/10_related_work}
+\input{sections/11_conclusion}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{refs}
+
+\end{document}

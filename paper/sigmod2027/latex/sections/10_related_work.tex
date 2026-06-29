@@ -1,0 +1,26 @@
+\section{Related Work}
+\label{sec:related-work}
+
+\subsection{Classical Cache Replacement}
+
+Classical cache-replacement work defines the policy landscape that any learned benchmark must eventually interface with. Belady's optimal look-ahead policy remains the canonical offline reference point~\cite{belady1966study}. Practical online policies then emphasize different signals: LIRS focuses on inter-reference recency~\cite{jiang2002lirs}, ARC adaptively balances recency and frequency~\cite{megiddo2003arc}, CLOCK-Pro revisits CLOCK-style replacement with stronger reuse sensitivity~\cite{jiang2005clockpro}, and GreedyDual-Size accounts for cost and size~\cite{cao1997greedydual}. TinyLFU and W-TinyLFU further show that admission and segmented cache management matter in modern software caches~\cite{einziger2017tinylfu,einziger2018wtinylfu}. These works provide policies and analytic baselines, but they do not provide a public benchmark artifact with per-candidate counterfactual labels and reusable task views.
+
+\subsection{Learned Caching and ML-Based Eviction}
+
+Recent learned-caching papers contribute learned policies rather than benchmark releases. RL-Cache studies learned cache admission for content delivery~\cite{kirilin2020rlcache}. ALPS emphasizes lightweight learned replacement and the importance of learning overheads~\cite{shahout2024alps}. Feedforward Neural Networks for Caching is especially relevant because it argues that learned predictors can be useful while heavier models are not automatically justified~\cite{fedchenko2018fnncache}. HR-Cache extends the learned-caching line into edge delivery settings~\cite{torabi2024hrcache}. The distinction for this paper is therefore the unit of contribution: prior work mainly proposes and evaluates policies, whereas \lafc\ contributes a release-oriented supervision benchmark that later policy-learning work can reuse.
+
+\subsection{Cache Traces and Systems Benchmarks}
+
+Public traces and benchmark infrastructure are equally important prior art. The UMass Trace Repository and large-scale workload studies of key-value stores and Twemcache clusters demonstrate the value of realistic, heterogeneous workload data for systems evaluation~\cite{umasstracerepo,atikoglu2012kvworkload,yang2020twemcache}. More broadly, reusable benchmark artifacts such as YCSB, OLTP-Bench, and the Join Order Benchmark made comparison easier by publishing standard workload or evaluation surfaces rather than only one-off experimental setups~\cite{cooper2010ycsb,difallah2013oltpbench,leis2018job}.
+
+Those contributions, however, stop at a different layer than \lafc. Raw traces expose requests and workload structure; benchmark harnesses expose workloads or evaluation tasks; neither necessarily exposes one labeled row per eviction candidate with finite-horizon counterfactual supervision. \lafc\ is therefore best understood as a benchmark layer built on top of real traces rather than as a replacement for trace repositories themselves.
+
+\subsection{Counterfactual Supervision and Learning-to-Rank}
+
+The label design also connects to counterfactual learning and ranking. Counterfactual Risk Minimization and contextual-bandit offline evaluation established core tools for learning from logged partial feedback~\cite{swaminathan2015crm,li2011offlinecb}. Unbiased learning-to-rank and pairwise debiasing work show how ranking objectives can be learned despite biased interaction data~\cite{joachims2017unbiasedltr,saito2020pairwise}. Public learning-to-rank collections such as LETOR and the Yahoo! Learning to Rank Challenge demonstrate how much a field benefits when reusable labeled artifacts exist~\cite{liu2009ltr,qin2010letor,chapelle2011yahoo}.
+
+These references matter here because each cache decision in \lafc\ induces a candidate set, an optimal subset, regret summaries, and a natural pairwise structure. Even so, \lafc\ is not simply a ranking dataset transplanted into systems. Its labels are tied to finite-horizon eviction outcomes under a specified continuation policy, and its release structure is tailored to cache-decision analysis rather than user-feedback ranking. To our knowledge, we are not aware of prior public caching datasets that provide per-candidate finite-horizon counterfactual eviction labels at this scale.
+
+\subsection{Benchmark Differentiation}
+
+Taken together, the closest prior works provide one of four ingredients: cache policies, learned policies, raw traces, or general benchmark methodology. \lafc\ contributes a different combination: a real-trace-derived, decision-aligned benchmark release with per-candidate finite-horizon counterfactual eviction supervision, decision-level summaries, pairwise task views, and release-oriented validation metadata. That is the central differentiation the paper needs to maintain throughout: \lafc\ is not a new policy and not merely a raw trace repository, but a reusable benchmark artifact for learned cache-eviction research.

@@ -1,0 +1,25 @@
+# Result Registry
+
+| Result / table / figure | Manuscript section | Source file or command | Status | Validation requirement | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Dataset scale table | 3 Benchmark Design | `python paper/sigmod2027/technical/extract_metadata_tables.py` -> `results/metadata_tables/table_dataset_scale.*` | available | manifest-backed only | safe to cite with pending full-validation note |
+| Split counts | 3 Benchmark Design | `extract_metadata_tables.py` -> `table_split_counts.*` | available | manifest-backed only | candidate-row counts from `row_counts_by_split`; no candidate-row scan |
+| Decision breakdown by family / capacity / horizon / split | 8 Empirical Characterization | `extract_metadata_tables.py` -> `table_decision_breakdown.*` | available | decision-view-backed only | no candidate-row scan required |
+| Artifact layout table | 6 Release Construction and Validation | `extract_metadata_tables.py` -> `table_artifact_layout.*` | available | documentation accuracy only | uses release-relative paths for manuscript safety |
+| Schema summary table | 5 Dataset Schema and Views | `src/lafc_evict_dataset/schema.py` | available | code-backed | no heavy job needed |
+| Task definition table | 7 Benchmark Tasks and Baselines | manuscript + `experiments_plan.md` | available | none | conceptual table only |
+| Candidate-count distribution | 8 Empirical Characterization | `extract_metadata_tables.py` -> `table_candidate_count_stats.*` | available | decision-view-backed only | overall and per-family summaries are now available |
+| Tie fraction and tie-count stats | 8 Empirical Characterization | `extract_metadata_tables.py` -> `table_regret_tie_stats.*` | available | decision-view-backed only | tie distribution and tie fraction now available |
+| Regret summary statistics | 8 Empirical Characterization | `extract_metadata_tables.py` -> `table_regret_tie_stats.*` | available | decision-view-backed only | regret columns present in the decision view |
+| Pairwise label balance | 7 Benchmark Tasks and Baselines / 8 Empirical Characterization | `extract_metadata_tables.py` -> `table_pairwise_sample_stats.*` | available | pairwise-sample-backed only | no full pairwise view required |
+| Label-distribution table for `y_loss` / `y_value` | 8 Empirical Characterization | candidate-row statistics job | pending | candidate-row scan | likely Wolverine-side |
+| Pairwise baseline planning stub | 7 Benchmark Tasks and Baselines | `scripts/sigmod2027/run_pairwise_baseline.py --mode plan` | available | pairwise-sample-backed only | current shipped pairwise sample lacks candidate feature columns |
+| Pairwise light sanity baseline | 7 Benchmark Tasks and Baselines | `scripts/sigmod2027/run_pairwise_baseline.py --mode run-light` + `paper/sigmod2027/results/baselines/pairwise/results.*` | available | pairwise-sample-backed only | non-feature majority and random baselines now available on non-tie rows only; candidate feature baselines still pending |
+| Value-regression planning stub | 7 Benchmark Tasks and Baselines | `scripts/sigmod2027/run_value_regression_baseline.py` | available | candidate-row-backed plan only | training itself belongs on Wolverine |
+| Best-candidate planning stub | 7 Benchmark Tasks and Baselines | `scripts/sigmod2027/run_best_candidate_baseline.py` | available | candidate-row-backed plan only | training itself belongs on Wolverine |
+| Value-regression baseline results | 7 Benchmark Tasks and Baselines | baseline jobs | pending | experiment-specific validation | do not invent |
+| Best-candidate baseline results | 7 Benchmark Tasks and Baselines | baseline jobs | pending | experiment-specific validation | do not invent |
+| Pairwise baseline results | 7 Benchmark Tasks and Baselines | `paper/sigmod2027/results/baselines/pairwise/results.json` | available | pairwise-sample-backed only | overall non-tie accuracy: majority `0.9489`, random `0.4980`; tie-heavy sample requires explicit caveat |
+| Wolverine baseline execution plan | 7 Benchmark Tasks and Baselines | `paper/sigmod2027/technical/wolverine_baseline_plan.md` | available | planning only | no jobs submitted from local machine |
+| Anonymous artifact statement | 6 Release Construction and Validation | anonymous artifact plan | available | artifact audit still pending | manuscript wording can be drafted now |
+| Full release validation statement | 6 Release Construction and Validation / 9 Limitations | `scripts/validate_real_release.py` on preserved release | pending | full real-release validation | must remain explicitly pending |

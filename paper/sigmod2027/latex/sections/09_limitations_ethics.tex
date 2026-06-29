@@ -1,0 +1,12 @@
+\section{Limitations, Ethics, and Reuse}
+\label{sec:limitations}
+
+This benchmark should be interpreted with several constraints in mind. First, the main label is a finite-horizon continuation-policy-specific counterfactual target. It should not be described as a universal optimality label, and good performance on it does not automatically imply online deployment gains.
+
+Second, the open subset is intentionally narrower than the larger internally generated dataset mix. The current family registry still marks some families as pending redistribution review, and two families remain excluded from the open subset. This release-governance boundary is part of the benchmark story and should be made explicit rather than hidden in artifact packaging details.
+
+Third, benchmark reuse should preserve provenance distinctions. The release exposes generated supervision and derived tasks, but it does not erase the attribution and review requirements of the upstream trace sources from which candidate rows were derived.
+
+Fourth, the preserved open release is in a technically strong but not yet final state. Lightweight metadata repair, bundle validation, and repository tests have passed, but full real-release validation is still pending. The paper should describe this candidly until final validation is complete.
+
+\todo{Add a brief note on the difference between benchmark generalization claims and operational deployment claims.}

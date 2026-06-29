@@ -1,0 +1,16 @@
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \caption{Decision-view-backed benchmark composition by family, capacity, horizon, and split. Full real-release validation remains pending.}
+  \label{tab:decision-breakdown}
+  \begin{tabular}{lp{0.62\columnwidth}}
+    \toprule
+    dimension & counts \\
+    \midrule
+    trace\_family & wiki2018=598,560; cloudphysics=576,219; metakv=454,053; twemcache=397,494; metacdn=336,960 \\
+    capacity & 32=613,314; 64=599,172; 128=582,678; 256=568,122 \\
+    horizon & 4=787,762; 8=787,762; 16=787,762 \\
+    split & test=242,418; train=1,746,882; val=373,986 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

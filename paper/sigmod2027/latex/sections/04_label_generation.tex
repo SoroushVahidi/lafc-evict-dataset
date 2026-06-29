@@ -1,0 +1,10 @@
+\section{Counterfactual Label Generation}
+\label{sec:label-generation}
+
+The benchmark label is defined on candidate victims rather than on completed policies. For each full-cache miss decision and each candidate resident page, the release records a finite-horizon counterfactual cost obtained after forcing that candidate eviction and continuing under a fixed continuation policy. The canonical loss label is \texttt{y\_loss}, and the release also includes \texttt{y\_value} as its negation.
+
+This label has two consequences for the paper. First, it creates a common numerical target for regression-style benchmark tasks. Second, it induces structured decision-level objects: the minimum-loss candidates define the optimal set within a decision, and regret can be measured for every non-optimal candidate relative to that minimum.
+
+The benchmark should describe this supervision carefully. It is a generated counterfactual label family, not an upstream annotation. It is finite-horizon, not asymptotic. It is tied to a continuation policy, not a universally optimal control objective. These boundaries are central to the scientific positioning of the paper.
+
+\todo{Insert formal notation for a decision, candidate set, forced eviction, and finite-horizon continuation loss.}

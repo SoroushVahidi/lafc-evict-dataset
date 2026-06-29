@@ -1,0 +1,15 @@
+{
+  "release_root": "release/lafc-evict-v0.1-open-current-contract-preserved",
+  "results_dir": "paper/sigmod2027/results/metadata_tables",
+  "latex_tables_dir": "paper/sigmod2027/latex/tables",
+  "candidate_rows_scanned": false,
+  "generated_tables": [
+    "table_dataset_scale",
+    "table_split_counts",
+    "table_decision_breakdown",
+    "table_candidate_count_stats",
+    "table_regret_tie_stats",
+    "table_pairwise_sample_stats",
+    "table_artifact_layout"
+  ]
+}

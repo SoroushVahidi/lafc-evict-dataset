@@ -1,0 +1,7 @@
+trace_family,min_candidate_count,median_candidate_count,mean_candidate_count,max_candidate_count
+overall,32,64.0,117.63073618681784,256
+cloudphysics,32,64.0,118.34683687972802,256
+metacdn,32,64.0,117.11680911680912,256
+metakv,32,64.0,119.52042602956043,256
+twemcache,32,64.0,111.52421923349786,256
+wiki2018,32,64.0,119.85244587008822,256

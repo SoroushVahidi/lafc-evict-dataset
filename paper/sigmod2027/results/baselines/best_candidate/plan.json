@@ -1,0 +1,147 @@
+{
+  "baselines": [
+    {
+      "name": "random_candidate",
+      "status": "planned"
+    },
+    {
+      "name": "lru_victim_choice",
+      "status": "planned"
+    },
+    {
+      "name": "predictor_victim_choice",
+      "status": "planned"
+    },
+    {
+      "name": "best_candidate_from_linear_score",
+      "status": "planned"
+    },
+    {
+      "name": "best_candidate_from_gradient_boosting",
+      "status": "optional"
+    }
+  ],
+  "blockers": [
+    "decision-grouped candidate-row evaluation requires Wolverine-scale access to candidate-row shards",
+    "full real-release validation is still pending"
+  ],
+  "full_validation_status": "pending",
+  "input_path": "release/lafc-evict-v0.1-open-current-contract-preserved/data/candidate_rows",
+  "input_view": "candidate_rows",
+  "metrics": [
+    "top1_accuracy",
+    "topk_accuracy",
+    "selected_candidate_regret"
+  ],
+  "mode": "plan",
+  "recommended_next_step": "Implement the ranking or decision-group reconstruction path on Wolverine after value-regression feature handling is stable.",
+  "release_root": "release/lafc-evict-v0.1-open-current-contract-preserved",
+  "release_summary": {
+    "candidate_partitions": 168,
+    "candidate_rows": 277995072,
+    "decision_rows": 2363286,
+    "excluded_families": [
+      "brightkite",
+      "citibike"
+    ],
+    "pairwise_sample_rows": 1000000,
+    "selected_families": [
+      "cloudphysics",
+      "metacdn",
+      "metakv",
+      "twemcache",
+      "wiki2018"
+    ]
+  },
+  "requires_wolverine": true,
+  "safe_for_anonymous_manuscript": false,
+  "schema_check": {
+    "available_columns": [
+      "trace_name",
+      "trace_family",
+      "dataset_source",
+      "capacity",
+      "horizon",
+      "decision_id",
+      "decision_t",
+      "decision_chunk_id",
+      "candidate_page_id",
+      "split",
+      "y_loss",
+      "y_value",
+      "request_bucket",
+      "request_confidence",
+      "candidate_bucket",
+      "candidate_confidence",
+      "candidate_recency_rank",
+      "candidate_age_norm",
+      "candidate_predictor_score",
+      "candidate_lru_score",
+      "candidate_is_predictor_victim",
+      "candidate_is_lru_victim",
+      "score_gap_to_predictor_best",
+      "score_gap_to_lru_victim",
+      "bucket_gap_to_predictor_best",
+      "bucket_gap_to_lru_victim",
+      "confidence_gap_to_predictor_best",
+      "confidence_gap_to_lru_victim",
+      "cache_bucket_mean",
+      "cache_bucket_std",
+      "cache_bucket_min",
+      "cache_bucket_max",
+      "cache_unique_bucket_count",
+      "cache_confidence_mean",
+      "cache_confidence_std",
+      "predictor_lru_disagree",
+      "recent_candidate_request_rate",
+      "recent_candidate_hit_rate"
+    ],
+    "feature_columns": [
+      "request_bucket",
+      "request_confidence",
+      "candidate_bucket",
+      "candidate_confidence",
+      "candidate_recency_rank",
+      "candidate_age_norm",
+      "candidate_predictor_score",
+      "candidate_lru_score",
+      "candidate_is_predictor_victim",
+      "candidate_is_lru_victim",
+      "score_gap_to_predictor_best",
+      "score_gap_to_lru_victim",
+      "bucket_gap_to_predictor_best",
+      "bucket_gap_to_lru_victim",
+      "confidence_gap_to_predictor_best",
+      "confidence_gap_to_lru_victim",
+      "cache_bucket_mean",
+      "cache_bucket_std",
+      "cache_bucket_min",
+      "cache_bucket_max",
+      "cache_unique_bucket_count",
+      "cache_confidence_mean",
+      "cache_confidence_std",
+      "predictor_lru_disagree",
+      "recent_candidate_request_rate",
+      "recent_candidate_hit_rate"
+    ],
+    "missing_feature_columns": [],
+    "missing_required_columns": [],
+    "required_columns": [
+      "trace_name",
+      "trace_family",
+      "dataset_source",
+      "capacity",
+      "horizon",
+      "decision_id",
+      "decision_t",
+      "decision_chunk_id",
+      "candidate_page_id",
+      "split",
+      "y_loss",
+      "y_value"
+    ],
+    "sample_partition_path": "release/lafc-evict-v0.1-open-current-contract-preserved/data/candidate_rows/split=test/trace_family=cloudphysics/capacity=128/horizon=16/candidate_rows.parquet"
+  },
+  "status": "dry_run_checked",
+  "task": "best_candidate"
+}

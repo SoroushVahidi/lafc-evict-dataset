@@ -1,0 +1,53 @@
+\section{Benchmark Tasks and Baselines}
+\label{sec:tasks-baselines}
+
+\lafc\ supports three benchmark tasks from one release.
+
+\paragraph{Candidate-level value prediction.}
+Predict \texttt{y\_loss} or \texttt{y\_value} from the candidate row. This task measures how well a model predicts counterfactual eviction quality as a pointwise target.
+
+\paragraph{Best-candidate prediction.}
+Identify the minimum-loss candidate within a decision. This task can be framed as ranking or decision-level classification and connects more directly to the actual victim-selection problem.
+
+\paragraph{Pairwise preference prediction.}
+Predict whether candidate A is better than candidate B within the same decision. This task uses the pairwise view or the shipped pairwise sample and provides a simpler binary learning interface for preference modeling.
+
+The baseline plan in this draft is intentionally conservative: LRU-derived heuristics, a predictor-score baseline, linear or logistic models, and one tree-based baseline. A small MLP can be added only if it is easy to train and explain within the page budget. No downstream cache-performance experiment should appear unless the original pipeline already exposes it cleanly and reproducibly.
+
+As a first executable check, we ran only two non-feature sanity baselines on the shipped pairwise sample: a majority baseline and a random baseline, both evaluated on the non-tie subset only. This is intentionally weaker than the eventual feature-based pairwise task because the shipped pairwise sample omits candidate-side predictor and LRU feature columns. The resulting numbers therefore test the sampled label surface and split behavior rather than the predictive power of cache-state features.
+
+\input{tables/table_pairwise_sample_stats}
+
+\input{tables/table_pairwise_baseline_light}
+
+\begin{table}[t]
+  \caption{Placeholder for benchmark task definitions and evaluation metrics.}
+  \label{tab:task-definitions}
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    Task & Inputs & Planned metrics \\
+    \midrule
+    Value regression & candidate rows & \todo{MAE, RMSE} \\
+    Best-candidate prediction & decision groups & \todo{Top-1, regret-aware metric} \\
+    Pairwise preference & pairwise sample & \todo{Accuracy, ROC-AUC} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \caption{Current baseline status for the first paper draft.}
+  \label{tab:baseline-results}
+  \centering
+  \begin{tabular}{llll}
+    \toprule
+    Model family & Task & Status & Notes \\
+    \midrule
+    Majority / random non-feature & pairwise sample & available & light sanity baseline on non-tie rows only \\
+    LRU-derived heuristic & pairwise / candidate tasks & pending & pairwise feature join still required \\
+    Predictor-score baseline & pairwise / candidate tasks & pending & pairwise feature join still required \\
+    Linear / logistic model & all & pending & candidate-row or feature-joined path still pending \\
+    Tree-based model & all & pending & defer until simpler baselines stabilize \\
+    \bottomrule
+  \end{tabular}
+\end{table}

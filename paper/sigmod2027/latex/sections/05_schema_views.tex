@@ -1,0 +1,31 @@
+\section{Dataset Schema and Views}
+\label{sec:schema-views}
+
+The canonical candidate schema currently consists of decision metadata, candidate identity, split information, labels, and feature columns. The decision metadata includes \texttt{trace\_name}, \texttt{trace\_family}, \texttt{dataset\_source}, \texttt{capacity}, \texttt{horizon}, \texttt{decision\_id}, \texttt{decision\_t}, \texttt{decision\_chunk\_id}, and \texttt{split}. Candidate identity is represented through \texttt{candidate\_page\_id}. The labels are \texttt{y\_loss} and \texttt{y\_value}. Feature columns cover request context, candidate context, predictor/LRU signals, cache summary statistics, and recent request or hit rates.
+
+Beyond candidate rows, the release defines two derived views. The \emph{decision view} summarizes each decision with candidate count, minimum loss, maximum value, the set of optimal candidate IDs, tie count, and regret summary statistics. The \emph{pairwise view} compares candidate pairs from the same decision and exposes pairwise preference labels. The current preserved open release does not ship the full pairwise view; it ships a capped pairwise sample of 1,000,000 rows instead.
+
+\begin{figure}[t]
+  \centering
+  \fbox{\parbox{0.9\columnwidth}{\centering Placeholder for schema-and-view diagram:\\candidate schema, decision view, pairwise sample}}
+  \caption{Planned schema and derived-view diagram.}
+  \label{fig:schema-views}
+\end{figure}
+
+\begin{table}[t]
+  \caption{Placeholder for compact schema summary.}
+  \label{tab:schema-summary}
+  \centering
+  \begin{tabular}{ll}
+    \toprule
+    Column group & Notes \\
+    \midrule
+    Decision metadata & family, capacity, horizon, split, IDs \\
+    Candidate identity & candidate page ID \\
+    Labels & \texttt{y\_loss}, \texttt{y\_value} \\
+    Feature groups & request, candidate, cache, disagreement, rate \\
+    Derived decision fields & tie and regret summaries \\
+    Derived pairwise fields & A/B labels and regret differences \\
+    \bottomrule
+  \end{tabular}
+\end{table}

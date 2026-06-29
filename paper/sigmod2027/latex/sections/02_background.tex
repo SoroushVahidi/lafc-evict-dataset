@@ -1,0 +1,17 @@
+\section{Background and Motivation: Learned Cache Eviction}
+\label{sec:background}
+
+At each full-cache miss, a cache must evict one resident object before admitting the requested one. Classical policies such as LRU operationalize this choice through simple recency structure, while learned or learning-augmented approaches attempt to predict which eviction will lead to lower future miss cost. In practice, these approaches differ in feature sets, prediction targets, and evaluation methodology.
+
+The main difficulty for a benchmark is that victim selection is structured, not i.i.d. A model does not act on one object in isolation; it acts within a decision set whose size, feature spread, and ambiguity vary across traces and capacities. A useful benchmark should therefore preserve decision boundaries instead of flattening them away.
+
+This observation motivates the core \lafc\ design choice: represent supervision at the candidate-within-decision level. Each row corresponds to one candidate victim at one eviction decision, and the label records the finite-horizon counterfactual cost of forcing that eviction under a fixed continuation policy. This representation allows both pointwise learning and within-decision evaluation.
+
+\begin{figure}[t]
+  \centering
+  \fbox{\parbox{0.9\columnwidth}{\centering Placeholder for benchmark task overview figure:\\candidate rows $\rightarrow$ decision view $\rightarrow$ pairwise sample}}
+  \caption{Planned overview of the three benchmark task views derived from candidate-level supervision.}
+  \label{fig:task-overview}
+\end{figure}
+
+\todo{Add a compact illustrative example of one cache decision with 3--5 candidate victims and one optimal set.}

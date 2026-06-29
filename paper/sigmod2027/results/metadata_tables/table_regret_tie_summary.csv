@@ -1,0 +1,8 @@
+statistic,value,notes
+total decisions,2363286,decision-view-backed
+decisions with tie_count > 1,2363286,decision-view-backed
+fraction with tie_count > 1,1.0,decision-view-backed
+max tie_count,256,decision-view-backed
+regret_mean mean/std/max,0.01 / 0.02 / 0.88,decision-view-backed
+regret_std mean/std/max,0.05 / 0.08 / 1.24,decision-view-backed
+regret_max mean/std/max,0.32 / 0.47 / 4,decision-view-backed

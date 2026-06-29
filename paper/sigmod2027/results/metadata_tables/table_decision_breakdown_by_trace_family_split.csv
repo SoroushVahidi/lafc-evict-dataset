@@ -1,0 +1,15 @@
+trace_family,split,decision_rows
+cloudphysics,test,94584
+cloudphysics,train,435801
+cloudphysics,val,45834
+metacdn,train,201672
+metacdn,val,135288
+metakv,test,33945
+metakv,train,306765
+metakv,val,113343
+twemcache,test,64737
+twemcache,train,302388
+twemcache,val,30369
+wiki2018,test,49152
+wiki2018,train,500256
+wiki2018,val,49152
