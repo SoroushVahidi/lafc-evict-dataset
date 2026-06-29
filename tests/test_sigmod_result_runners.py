@@ -7,6 +7,8 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 from lafc_evict_dataset.release import build_sample_release
 
@@ -41,6 +43,36 @@ def sample_release(tmp_path: Path) -> Path:
         include_ties=True,
     )
     return release_root
+
+
+def _write_manual_release(root: Path, partitions: list[tuple[str, pd.DataFrame]]) -> Path:
+    candidate_entries = []
+    for relative_path, frame in partitions:
+        output_path = root / relative_path
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        pq.write_table(pa.Table.from_pandas(frame, preserve_index=False), output_path)
+        candidate_entries.append(
+            {
+                "path": relative_path,
+                "row_count": int(len(frame)),
+                "split": str(frame.iloc[0]["split"]),
+                "trace_family": str(frame.iloc[0]["trace_family"]),
+                "capacity": int(frame.iloc[0]["capacity"]),
+                "horizon": int(frame.iloc[0]["horizon"]),
+            }
+        )
+    metadata_dir = root / "metadata"
+    metadata_dir.mkdir(parents=True, exist_ok=True)
+    manifest = {
+        "dataset_name": "lafc-evict-manual",
+        "version": "0.1",
+        "release_type": "synthetic_sample",
+        "schema_version": "lafc-evict-candidate-v1",
+        "row_counts": {"candidate_rows": int(sum(len(frame) for _, frame in partitions)), "decision_view": 0, "pairwise_sample": 0},
+        "candidate_partitions": candidate_entries,
+    }
+    (metadata_dir / "release_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    return root
 
 
 def test_plan_modes_do_not_iterate_candidate_rows(monkeypatch: pytest.MonkeyPatch, sample_release: Path, tmp_path: Path) -> None:
@@ -196,6 +228,8 @@ def test_value_regression_runner_emits_expected_json(sample_release: Path, tmp_p
     }
     assert payload["split_metrics"]["train"]["rows"] > 0
     assert payload["split_metrics"]["test"]["rows"] > 0
+    assert payload["timestamp_utc"]
+    assert payload["git_commit"]
 
 
 def test_best_candidate_runner_supports_linear_score_json(sample_release: Path, tmp_path: Path) -> None:
@@ -236,6 +270,38 @@ def test_best_candidate_runner_supports_linear_score_json(sample_release: Path, 
     assert payload["overall_metrics"]["decision_count"] == 3
     assert payload["overall_metrics"]["mean_regret"] is not None
     assert payload["group_metrics"]
+    assert payload["timestamp_utc"]
+    assert payload["git_commit"]
+
+
+def test_best_candidate_runner_rejects_duplicate_manifest_partitions(tmp_path: Path) -> None:
+    module = _load_sigmod_module("run_best_candidate_baseline")
+    rows = pd.read_csv(_example_path())
+    rows = rows[rows["decision_id"].isin(["d1", "d2"])].copy()
+    first = rows[rows["candidate_page_id"].isin(["A", "B", "D", "E"])].copy()
+    second = rows[rows["candidate_page_id"].isin(["C", "F"])].copy()
+    release_root = _write_manual_release(
+        tmp_path / "manual-release",
+        [
+            ("data/candidate_rows/part-000.parquet", first),
+            ("data/candidate_rows/part-001.parquet", second),
+        ],
+    )
+
+    output_dir = tmp_path / "best-manual"
+    with pytest.raises(ValueError, match="Duplicate partitions found"):
+        module.main(
+            [
+                "--release-root",
+                str(release_root),
+                "--output-dir",
+                str(output_dir),
+                "--mode",
+                "run",
+                "--score-column",
+                "candidate_is_lru_victim",
+            ]
+        )
 
 
 def test_output_guard_rejects_release_root_destinations(sample_release: Path) -> None:

@@ -10,7 +10,6 @@ from pathlib import Path
 import numpy as np
 
 from _baseline_common import (
-    FEATURE_COLUMNS,
     FULL_VALIDATION_STATUS,
     available_feature_columns,
     build_file_budget,
@@ -19,11 +18,14 @@ from _baseline_common import (
     candidate_schema_summary,
     checkpoint_path,
     consume_budget,
+    current_git_commit,
+    current_timestamp_utc,
     ensure_output_dir_safe,
     guard_output_path,
     iter_candidate_batches,
     load_checkpoint,
     load_manifest,
+    release_identity,
     release_summary,
     remove_checkpoint,
     repo_relative,
@@ -200,7 +202,10 @@ def plan_payload(
         "task": "value_regression",
         "status": "dry_run_checked",
         "mode": "plan",
+        "timestamp_utc": current_timestamp_utc(),
+        "git_commit": current_git_commit(),
         "release_root": str(release_root),
+        "release_identity": release_identity(manifest),
         "input_view": "candidate_rows",
         "input_path": repo_relative(release_root / "data" / "candidate_rows"),
         "target": args.target,
@@ -218,6 +223,9 @@ def plan_payload(
         "notes": [
             "Plan mode reads release metadata and one candidate partition schema only.",
             "Run mode trains with streaming normal-equation accumulation and never loads the full release into memory.",
+        ],
+        "limitations": [
+            "The implemented baseline is a streaming linear model only, not a richer non-linear benchmark.",
         ],
     }
 
@@ -422,7 +430,10 @@ def result_payload(
         "task": "value_regression",
         "status": "available",
         "mode": "run",
+        "timestamp_utc": current_timestamp_utc(),
+        "git_commit": current_git_commit(),
         "release_root": str(release_root),
+        "release_identity": release_identity(manifest),
         "input_view": "candidate_rows",
         "input_path": repo_relative(release_root / "data" / "candidate_rows"),
         "target": args.target,
@@ -432,6 +443,7 @@ def result_payload(
         "baseline": "linear_regression",
         "features": state["features"],
         "files_total": len(inventory),
+        "files_processed": len(inventory),
         "release_summary": release_summary(manifest),
         "output_file": repo_relative(output_path),
         "model": {
@@ -445,6 +457,10 @@ def result_payload(
         "notes": [
             "Training used streaming normal-equation accumulation over train rows only.",
             "Evaluation streamed candidate parquet files without loading the full release into memory.",
+        ],
+        "limitations": [
+            "The fitted model uses three streaming passes over candidate files: feature means, normal equations, and evaluation.",
+            "Metrics report split-level regression quality only; within-decision rank correlation is not emitted by this runner.",
         ],
     }
 

@@ -20,8 +20,11 @@ from _baseline_common import (
     ensure_output_dir_safe,
     guard_output_path,
     iter_candidate_batches,
+    current_git_commit,
+    current_timestamp_utc,
     load_checkpoint,
     load_manifest,
+    release_identity,
     release_summary,
     remove_checkpoint,
     repo_relative,
@@ -109,7 +112,10 @@ def build_plan_payload(
         "task": "candidate_label_stats",
         "status": "dry_run_checked",
         "mode": "plan",
+        "timestamp_utc": current_timestamp_utc(),
+        "git_commit": current_git_commit(),
         "release_root": str(release_root),
+        "release_identity": release_identity(manifest),
         "input_view": "candidate_rows",
         "input_path": repo_relative(release_root / "data" / "candidate_rows"),
         "full_validation_status": FULL_VALIDATION_STATUS,
@@ -129,6 +135,9 @@ def build_plan_payload(
         "notes": [
             "Plan mode inspects release metadata and one candidate partition schema only.",
             "Run mode streams candidate parquet files file-by-file without loading the full release into memory.",
+        ],
+        "limitations": [
+            "Plan mode does not prove runtime or memory on the full preserved release.",
         ],
     }
 
@@ -253,7 +262,10 @@ def build_target_payload(
         "task": "candidate_label_stats",
         "status": "available",
         "mode": "run",
+        "timestamp_utc": current_timestamp_utc(),
+        "git_commit": current_git_commit(),
         "release_root": str(release_root),
+        "release_identity": release_identity(manifest),
         "input_view": "candidate_rows",
         "input_path": repo_relative(release_root / "data" / "candidate_rows"),
         "full_validation_status": FULL_VALIDATION_STATUS,
@@ -262,6 +274,7 @@ def build_target_payload(
         "target": target,
         "group_by": group_by,
         "files_total": files_total,
+        "files_processed": files_total,
         "release_summary": release_summary(manifest),
         "output_files": {kind: repo_relative(path) for kind, path in output_paths.items()},
         "overall_summary": overall_summary,
@@ -269,6 +282,10 @@ def build_target_payload(
         "notes": [
             "Run mode streamed candidate parquet files without loading the full release into memory.",
             "Quantiles are exact on small inputs and bounded-memory approximations on larger inputs.",
+        ],
+        "limitations": [
+            "Grouped summaries accumulate one numeric summary per unique group key in memory.",
+            "Quantiles become approximate once the bounded reservoir sample is saturated.",
         ],
     }
     return payload, csv_rows

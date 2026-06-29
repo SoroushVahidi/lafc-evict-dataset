@@ -19,14 +19,18 @@ from _baseline_common import (
     candidate_schema_summary,
     checkpoint_path,
     consume_budget,
+    current_git_commit,
+    current_timestamp_utc,
     decode_group_key,
     decision_key_columns,
+    duplicate_partition_keys,
     encode_group_key,
     ensure_output_dir_safe,
     guard_output_path,
     iter_candidate_batches,
     load_checkpoint,
     load_manifest,
+    release_identity,
     release_summary,
     remove_checkpoint,
     repo_relative,
@@ -185,7 +189,10 @@ def plan_payload(
         "task": "best_candidate",
         "status": "dry_run_checked",
         "mode": "plan",
+        "timestamp_utc": current_timestamp_utc(),
+        "git_commit": current_git_commit(),
         "release_root": str(release_root),
+        "release_identity": release_identity(manifest),
         "input_view": "candidate_rows",
         "input_path": repo_relative(release_root / "data" / "candidate_rows"),
         "full_validation_status": FULL_VALIDATION_STATUS,
@@ -201,6 +208,9 @@ def plan_payload(
         "notes": [
             "Plan mode reads release metadata and one candidate partition schema only.",
             "Run mode assumes candidate rows remain decision-contiguous within each partition, matching the release builder ordering.",
+        ],
+        "limitations": [
+            "If a future release format ever shards one decision across multiple manifest-listed candidate parquet files, this runner relies on carryover logic rather than decision-view joins.",
         ],
     }
 
@@ -312,7 +322,10 @@ def result_payload(
         "task": "best_candidate",
         "status": "available",
         "mode": "run",
+        "timestamp_utc": current_timestamp_utc(),
+        "git_commit": current_git_commit(),
         "release_root": str(release_root),
+        "release_identity": release_identity(manifest),
         "input_view": "candidate_rows",
         "input_path": repo_relative(release_root / "data" / "candidate_rows"),
         "full_validation_status": FULL_VALIDATION_STATUS,
@@ -320,6 +333,7 @@ def result_payload(
         "safe_for_anonymous_manuscript": True,
         "scorer": state["scorer"],
         "files_total": len(inventory),
+        "files_processed": len(inventory),
         "release_summary": release_summary(manifest),
         "output_file": repo_relative(output_path),
         "overall_metrics": overall,
@@ -327,6 +341,10 @@ def result_payload(
         "notes": [
             "Evaluation streamed candidate parquet files without loading the full release into memory.",
             "Decision regret is computed as selected y_loss minus the minimum y_loss within the same decision.",
+        ],
+        "limitations": [
+            "The current implementation only evaluates y_loss-based regret, even when the scorer is not derived from a regression model.",
+            "The default score-column path prefers explicit victim-indicator columns over raw score columns when both are present.",
         ],
     }
 
@@ -336,6 +354,13 @@ def run(args: argparse.Namespace) -> None:
     output_dir = ensure_output_dir_safe(Path(args.output_dir), release_root)
     manifest = load_manifest(release_root)
     inventory = candidate_file_inventory(release_root, manifest)
+    duplicates = duplicate_partition_keys(inventory)
+    if duplicates:
+        rendered = ", ".join(str(key) for key in duplicates)
+        raise ValueError(
+            "Best-candidate streaming runner requires at most one manifest candidate parquet file per "
+            f"(split, trace_family, capacity, horizon) partition. Duplicate partitions found: {rendered}"
+        )
     schema_summary = candidate_schema_summary(release_root, manifest)
     config = scorer_config(args, schema_summary["available_columns"])
     output_path = guard_output_path(output_dir / output_filename(config), release_root)
@@ -369,16 +394,13 @@ def run(args: argparse.Namespace) -> None:
     required_columns = list(dict.fromkeys(required_columns))
 
     budget = build_file_budget(args.max_files)
+    carryover_rows = state["carryover_rows"]
     for file_index in range(int(state["next_file_index"]), len(inventory)):
         if budget_exhausted(budget):
             break
-        carryover_rows = state["carryover_rows"]
         for batch in iter_candidate_batches(inventory[file_index]["path"], columns=required_columns):
             complete, carryover_rows = split_complete_and_carryover(batch, carryover_rows)
             process_complete_frame(complete, state, config)
-        if carryover_rows:
-            process_complete_frame(pd.DataFrame(carryover_rows), state, config)
-            carryover_rows = []
         state["carryover_rows"] = carryover_rows
         state["next_file_index"] = file_index + 1
         save_checkpoint(
@@ -406,6 +428,10 @@ def run(args: argparse.Namespace) -> None:
             )
         )
         return
+
+    if carryover_rows:
+        process_complete_frame(pd.DataFrame(carryover_rows), state, config)
+        state["carryover_rows"] = []
 
     payload = result_payload(
         release_root=release_root,

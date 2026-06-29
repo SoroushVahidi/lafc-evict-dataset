@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import csv
+import datetime as dt
 import json
 import math
 import os
+import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -92,6 +94,15 @@ def release_summary(manifest: dict[str, object]) -> dict[str, object]:
     }
 
 
+def release_identity(manifest: dict[str, object]) -> dict[str, object]:
+    return {
+        "dataset_name": manifest.get("dataset_name"),
+        "version": manifest.get("version"),
+        "release_type": manifest.get("release_type"),
+        "schema_version": manifest.get("schema_version"),
+    }
+
+
 def candidate_partition_entries(manifest: dict[str, object]) -> list[dict[str, object]]:
     partitions = manifest.get("candidate_partitions", [])
     if not isinstance(partitions, list) or not partitions:
@@ -142,6 +153,22 @@ def candidate_file_inventory(release_root: Path, manifest: dict[str, object]) ->
             }
         )
     return inventory
+
+
+def duplicate_partition_keys(inventory: Sequence[dict[str, object]]) -> list[tuple[object, object, object, object]]:
+    seen: set[tuple[object, object, object, object]] = set()
+    duplicates: set[tuple[object, object, object, object]] = set()
+    for item in inventory:
+        key = (
+            item.get("split"),
+            item.get("trace_family"),
+            item.get("capacity"),
+            item.get("horizon"),
+        )
+        if key in seen:
+            duplicates.add(key)
+        seen.add(key)
+    return sorted(duplicates)
 
 
 def manifest_row_count(manifest: dict[str, object], key: str) -> int | None:
@@ -281,6 +308,23 @@ def sanitize_output_name(name: str) -> str:
         else:
             cleaned.append("_")
     return "".join(cleaned)
+
+
+def current_timestamp_utc() -> str:
+    return dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
+
+
+def current_git_commit() -> str | None:
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(REPO_ROOT), "rev-parse", "HEAD"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except Exception:
+        return None
+    return result.stdout.strip() or None
 
 
 def _is_relative_to(path: Path, parent: Path) -> bool:
@@ -484,4 +528,3 @@ class RunningNumericSummary:
         if isinstance(reservoir_payload, dict):
             summary.reservoir = DeterministicReservoir.from_state(reservoir_payload)
         return summary
-
