@@ -5,8 +5,8 @@ The benchmark label is defined on candidate victims rather than on completed pol
 \[
 L_{t,H}^{\pi}(c)
 =
-\text{number of cache misses over } r_{t+1}, \ldots, r_{t+H}
-\text{ in the induced trajectory.}
+\#\{\tau \in \{t+1, \ldots, t+H\} :
+r_{\tau} \text{ misses in the induced trajectory}\}.
 \]
 The release stores this quantity as \texttt{y\_loss}, and it stores the corresponding value label as \texttt{y\_value} $= -\texttt{y\_loss}$. The triggering miss at time $t$ is common to all candidates and is therefore not the decision-discriminating part of the label.
 

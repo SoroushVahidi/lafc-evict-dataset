@@ -14,13 +14,14 @@ The validation surface is part of the benchmark contribution. Current checks inc
   \item checksum verification.
 \end{itemize}
 
-The preserved current-contract open release has passed lightweight metadata repair, repository tests, publication-bundle validation, and full real-release validation. The June 29, 2026 preserved-release validation run completed successfully with \texttt{exit\_status=0}. The validator CLI does not rewrite the release-internal \texttt{metadata/validation\_report.md}, so that file still reflects earlier build-time paths and should not be treated as the authoritative June 29 validation record. For the anonymous SIGMOD submission, this means the manuscript can now state that the preserved release passed end-to-end validation while still keeping public hosting and anonymous artifact packaging explicitly pending.
+The preserved current-contract open release has passed lightweight metadata repair, repository tests, publication-bundle validation, and full real-release validation. The June 29, 2026 preserved-release validation run completed successfully with \texttt{exit\_status=0}. The validator CLI does not rewrite the release-internal validation-report markdown file, so that file still reflects earlier build-time paths and should not be treated as the authoritative June 29 validation record. For the anonymous SIGMOD submission, this means the manuscript can now state that the preserved release passed end-to-end validation while still keeping public hosting and anonymous artifact packaging explicitly pending.
 
 \begin{figure}[t]
   \centering
   \fbox{\parbox{0.9\columnwidth}{\centering Placeholder for artifact/release layout figure:\\release tree, manifest, checksums, publication bundle}}
   \caption{Planned overview of the release artifact layout and validation surface.}
   \label{fig:artifact-layout}
+  \Description{Placeholder box for a release-layout figure showing the release tree, manifest, checksums, and publication-bundle components.}
 \end{figure}
 
 \input{tables/table_artifact_layout}

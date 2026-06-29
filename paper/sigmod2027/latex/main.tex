@@ -25,6 +25,10 @@ Learned cache-eviction research has outgrown small ad hoc evaluations, yet empir
 The current open-release candidate covers five selected trace families---\texttt{cloudphysics}, \texttt{metacdn}, \texttt{metakv}, \texttt{twemcache}, and \texttt{wiki2018}---and the preserved release metadata currently reports 277,995,072 candidate rows, 2,363,286 decision-view rows, and a capped pairwise sample of 1,000,000 rows. Two additional families, \texttt{brightkite} and \texttt{citibike}, remain excluded pending redistribution review. Beyond introducing the benchmark design, the paper describes the release schema, validation checks, and reproducibility surface needed for benchmark reuse, and it outlines benchmark tasks for value prediction, best-candidate selection, pairwise preference modeling, and descriptive label characterization. Full release validation for the preserved open candidate passed on June 29, 2026, so the present draft can describe a validated preserved release while still keeping candidate-row characterization, richer baselines, and final public hosting claims pending. The labels should nevertheless be interpreted as decision-aligned finite-horizon counterfactual targets rather than offline-optimal supervision.
 \end{abstract}
 
+\ccsdesc[500]{Information systems~Data management systems}
+\ccsdesc[300]{Computing methodologies~Machine learning}
+\keywords{learned cache eviction, benchmark datasets, counterfactual supervision, cache replacement}
+
 \maketitle
 
 \input{sections/01_introduction}
