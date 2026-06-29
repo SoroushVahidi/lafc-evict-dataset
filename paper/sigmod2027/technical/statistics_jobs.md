@@ -40,15 +40,25 @@ These can be pulled now without heavy dataset rebuilds:
 3. decision-view tie and regret summaries,
 4. pairwise-sample label-balance summaries.
 
+These are already available in the repository and do not justify another local extraction pass for planning purposes.
+
 ## Defer-until-approved or Wolverine-side jobs
 
-- full candidate-row label distributions,
+- one candidate-row summary pass that emits both `y_loss` and `y_value` global summaries,
 - per-family candidate-label percentiles,
 - any large joint cube over family, capacity, horizon, and split,
 - feature-summary scans across all candidate rows.
+
+## Minimum missing characterization outputs still worth generating
+
+| Output | Supports paper section | Exact input artifact | Exact expected output files | Run site | Full candidate-row scan | Estimated resources | Must wait for source/finalizer completion? |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Candidate-row `y_loss` summary | 8 Empirical Characterization | `release/lafc-evict-v0.1-open-current-contract-preserved/data/candidate_rows/` | `paper/sigmod2027/results/candidate_label_stats/y_loss_summary.json`, `paper/sigmod2027/results/candidate_label_stats/y_loss_summary.csv` | Wolverine | yes | `16` CPU, `64G` RAM, `2-4` hours | yes |
+| Candidate-row `y_value` summary | 8 Empirical Characterization | `release/lafc-evict-v0.1-open-current-contract-preserved/data/candidate_rows/` | `paper/sigmod2027/results/candidate_label_stats/y_value_summary.json`, `paper/sigmod2027/results/candidate_label_stats/y_value_summary.csv` | Wolverine | yes | same pass as `y_loss` if combined | yes |
 
 ## Notes
 
 - Manifest-backed numbers are already suitable for the manuscript if labeled clearly as metadata-backed.
 - Decision-view and pairwise-sample statistics are much cheaper than full candidate-row scans and should be prioritized for the next extraction pass.
-- Candidate-row scans should be treated as explicit jobs and preferably run on Wolverine if runtime becomes nontrivial.
+- Candidate-row scans should be treated as explicit Wolverine jobs only after the current source/finalizer work completes.
+- Do not run candidate-row label-distribution scans locally against the preserved release.

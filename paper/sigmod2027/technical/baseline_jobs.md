@@ -7,6 +7,7 @@ Define the smallest defensible baseline suite for the first SIGMOD benchmark pap
 ## Current release constraints
 
 - Full real-release validation passed on the preserved release on 2026-06-29.
+- Wolverine source-resume and finalizer work is still running, so no new Wolverine result-generation jobs should be launched until that work finishes.
 - Candidate-row label distributions are still pending because they require candidate-row scans.
 - The shipped pairwise sample is lightweight and label-centric:
   - it includes `decision_id`, `capacity`, `horizon`, `split`, `trace_family`, `trace_name`, `candidate_a_page_id`, `candidate_b_page_id`, `y_loss_a`, `y_loss_b`, `y_loss_diff_a_minus_b`, `label_a_better`, `label_b_better`, and `is_tie`;
@@ -26,7 +27,7 @@ Define the smallest defensible baseline suite for the first SIGMOD benchmark pap
 - Metrics:
   `MAE`, `RMSE`, within-decision Spearman rank correlation, and top-1 regret if a decision-level reconstruction path is implemented.
 - Status:
-  planned only.
+  planned only; the current repo script emits `plan.json` and does not produce final baseline metrics.
 - Local feasibility:
   not appropriate for local full-scale execution.
 - Wolverine requirement:
@@ -41,7 +42,7 @@ Define the smallest defensible baseline suite for the first SIGMOD benchmark pap
 - Metrics:
   top-1 accuracy, top-k accuracy, and regret of the selected candidate.
 - Status:
-  planned only.
+  planned only; the current repo script emits `plan.json` and does not produce final baseline metrics.
 - Local feasibility:
   not appropriate for local full-scale execution.
 - Wolverine requirement:
@@ -56,7 +57,7 @@ Define the smallest defensible baseline suite for the first SIGMOD benchmark pap
 - Metrics:
   accuracy, binary log loss on the non-tie subset, and ROC-AUC if a score-producing model is available.
 - Status:
-  partially runnable now.
+  lightly runnable now and already satisfied for the minimum sanity-check need.
 - Local feasibility:
   yes for very light baselines on the shipped pairwise sample.
 - Wolverine requirement:
@@ -76,10 +77,11 @@ Define the smallest defensible baseline suite for the first SIGMOD benchmark pap
 
 ## Recommended first-pass execution order
 
-1. Pairwise sample sanity baselines on the non-tie subset.
-2. Pairwise feature-joined baselines on Wolverine if the simple sanity pass is useful.
-3. Candidate-row value regression on Wolverine.
-4. Candidate-row best-candidate prediction on Wolverine.
+1. Wait for Wolverine source-resume and finalizer completion.
+2. Keep the existing pairwise non-tie sanity results as-is; no rerun is needed for planning.
+3. Run one candidate-row label-summary job that emits both `y_loss` and `y_value` summaries in a single pass.
+4. Run one `linear_regression` baseline on `y_loss`.
+5. Run one `best_candidate_from_linear_score` baseline induced from that same `y_loss` score.
 
 ## Concrete baseline definitions
 
@@ -106,10 +108,19 @@ Define the smallest defensible baseline suite for the first SIGMOD benchmark pap
 - `gradient_boosting`
   - optional second-pass model once the linear path is stable.
 
+## Minimum missing baseline outputs still worth generating
+
+- `paper/sigmod2027/results/baselines/value_regression/linear_regression_y_loss.json`
+  - first candidate-row-backed value baseline worth generating for the paper.
+- `paper/sigmod2027/results/baselines/best_candidate/best_candidate_from_linear_score.json`
+  - first candidate-row-backed best-candidate baseline worth generating for the paper.
+- No additional pairwise baseline output is required for the minimum SIGMOD draft because the current light non-tie sanity outputs already exist.
+
 ## Blocking issues to track
 
 - The current pairwise sample does not expose the candidate feature columns needed for LRU-derived, predictor-derived, or full logistic pairwise baselines.
 - Candidate-row tasks require HPC because the release contains 277,995,072 candidate rows across 168 parquet shards.
+- The current checked-in candidate-row scripts under `scripts/sigmod2027/` are preflight planners, not final result emitters.
 - Full-release validation has passed on the preserved release, so baseline write-ups may state that result while still describing current numbers as preserved-release results rather than final published artifact results.
 
 ## Output expectations
