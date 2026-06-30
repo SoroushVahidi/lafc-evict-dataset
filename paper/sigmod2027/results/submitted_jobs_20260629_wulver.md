@@ -57,3 +57,20 @@ Exact next action after value regression succeeds:
 ```bash
 sbatch hpc/wulver/sigmod2027/run_best_candidate_baseline.sbatch
 ```
+
+## Best-candidate timeout and resume
+
+- Best-candidate job `1085963` hit the wall-clock limit at the original `--time=08:00:00`.
+  - `sacct` state: `TIMEOUT`; batch step `CANCELLED` at `2026-06-30T16:37:52` with exit code `0:15` (Slurm-issued SIGTERM on time limit, not an application error).
+  - No traceback, exception, or OOM in `.out`/`.err` logs.
+- Checkpoint inspected (read-only) before resubmission:
+  - Path: `paper/sigmod2027/results/baselines/best_candidate/.best_candidate_from_linear_score.checkpoint.json` (~67M)
+  - `state.stage`: `evaluate`
+  - `state.next_file_index`: `78`
+  - Checkpoint judged valid and resumable.
+- Candidate-label stats (`1085544`) and value regression (`1085545`) were **not** resubmitted; both remained `COMPLETED` with `ExitCode 0:0` and their result files were verified present/nonempty before resubmission.
+- Resumed best-candidate job ID: `1086763`
+  - Submitted with `sbatch --time=24:00:00 hpc/wulver/sigmod2027/run_best_candidate_baseline.sbatch` (partition `general` has `MaxTime=UNLIMITED`, so 24h is within limits).
+  - Script invoked with its built-in `--resume` flag; no script edits were needed.
+  - Initial state after submission: `RUNNING` on `n0095`, startup header in `.out` matched the prior run, `.err` empty.
+- Final output `paper/sigmod2027/results/baselines/best_candidate/best_candidate_from_linear_score.json` still pending completion of job `1086763`.
