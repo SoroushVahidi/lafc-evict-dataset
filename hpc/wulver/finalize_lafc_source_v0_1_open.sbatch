@@ -100,10 +100,9 @@ python scripts/build_evict_value_dataset_wulver_v1.py \
 
 # In all-skip resume mode the upstream builder rebuilds manifest.json from
 # completed-unit markers, but it does not repopulate split_summary.csv.
-# Reconstruct the split summary from the completed shards before writing the
-# human-readable summary files.
-PYTHONPATH="$RELEASE_REPO/src${PYTHONPATH:+:$PYTHONPATH}" \
-python -m lafc_evict_dataset.wulver_source_summary \
+# Invoke the helper by file path so it stays independent of package-level
+# imports like PyYAML-backed governance helpers.
+python "$RELEASE_REPO/src/lafc_evict_dataset/wulver_source_summary.py" \
   --source-root "$SOURCE_OUT_DIR" \
   --out-split-summary "$SOURCE_OUT_DIR/split_summary.csv" \
   --progress-file "$SOURCE_OUT_DIR/status/split_summary_rebuild_progress.json"
