@@ -246,8 +246,22 @@ def save_checkpoint(path: Path, payload: dict[str, object]) -> None:
     write_json(path, payload)
 
 
-def load_checkpoint(path: Path) -> dict[str, object]:
-    return read_json(path)
+def load_checkpoint(path: Path, *, missing_ok: bool = False) -> dict[str, object] | None:
+    if not path.exists():
+        if missing_ok:
+            return None
+        raise FileNotFoundError(f"Checkpoint does not exist: {path}")
+    try:
+        payload = read_json(path)
+    except json.JSONDecodeError as exc:
+        raise ValueError(
+            f"Checkpoint file is corrupt: {path}. Delete it or rerun with --overwrite to start fresh."
+        ) from exc
+    if not isinstance(payload, dict):
+        raise ValueError(
+            f"Checkpoint file must contain a JSON object: {path}. Delete it or rerun with --overwrite to start fresh."
+        )
+    return payload
 
 
 def remove_checkpoint(path: Path) -> None:

@@ -326,11 +326,11 @@ def run(args: argparse.Namespace) -> None:
         resume=args.resume,
     )
 
-    if args.resume:
-        checkpoint_payload = load_checkpoint(checkpoint)
-        state = load_state(checkpoint_payload, targets, args.group_by)
-    else:
+    checkpoint_payload = load_checkpoint(checkpoint, missing_ok=args.resume) if args.resume else None
+    if checkpoint_payload is None:
         state = fresh_state(targets, args.group_by)
+    else:
+        state = load_state(checkpoint_payload, targets, args.group_by)
 
     budget = build_file_budget(args.max_files)
     start_index = int(state["next_file_index"])

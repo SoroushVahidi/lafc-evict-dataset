@@ -381,10 +381,11 @@ def run(args: argparse.Namespace) -> None:
         return
 
     reset_outputs(output_paths=[output_path], checkpoint_paths=[checkpoint], overwrite=args.overwrite, resume=args.resume)
-    if args.resume:
-        state = load_state(load_checkpoint(checkpoint), config)
-    else:
+    checkpoint_payload = load_checkpoint(checkpoint, missing_ok=args.resume) if args.resume else None
+    if checkpoint_payload is None:
         state = initial_state(config)
+    else:
+        state = load_state(checkpoint_payload, config)
 
     required_columns = ["candidate_page_id", "y_loss", *decision_key_columns()]
     if config["mode"] == "linear_score":

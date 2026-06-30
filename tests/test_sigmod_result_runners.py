@@ -191,6 +191,29 @@ def test_candidate_label_stats_resume_is_safe_and_does_not_modify_input(sample_r
     assert candidate_after == candidate_before
 
 
+def test_candidate_label_stats_resume_starts_fresh_when_checkpoint_is_missing(sample_release: Path, tmp_path: Path) -> None:
+    module = _load_sigmod_module("run_candidate_label_stats")
+    output_dir = tmp_path / "candidate_label_stats_resume_fresh"
+
+    module.main(
+        [
+            "--release-root",
+            str(sample_release),
+            "--output-dir",
+            str(output_dir),
+            "--mode",
+            "run",
+            "--target",
+            "both",
+            "--resume",
+        ]
+    )
+
+    assert (output_dir / "y_loss_summary.json").exists()
+    assert (output_dir / "y_value_summary.json").exists()
+    assert not (output_dir / ".candidate_label_stats.checkpoint.json").exists()
+
+
 def test_value_regression_runner_emits_expected_json(sample_release: Path, tmp_path: Path) -> None:
     module = _load_sigmod_module("run_value_regression_baseline")
     output_dir = tmp_path / "value_regression"
@@ -230,6 +253,77 @@ def test_value_regression_runner_emits_expected_json(sample_release: Path, tmp_p
     assert payload["split_metrics"]["test"]["rows"] > 0
     assert payload["timestamp_utc"]
     assert payload["git_commit"]
+
+
+def test_value_regression_resume_starts_fresh_when_checkpoint_is_missing(sample_release: Path, tmp_path: Path) -> None:
+    module = _load_sigmod_module("run_value_regression_baseline")
+    output_dir = tmp_path / "value_regression_resume_fresh"
+
+    module.main(
+        [
+            "--release-root",
+            str(sample_release),
+            "--output-dir",
+            str(output_dir),
+            "--mode",
+            "run",
+            "--target",
+            "y_loss",
+            "--resume",
+        ]
+    )
+
+    assert (output_dir / "linear_regression_y_loss.json").exists()
+    assert not (output_dir / ".value_regression_y_loss.checkpoint.json").exists()
+
+
+def test_value_regression_resume_uses_existing_checkpoint(sample_release: Path, tmp_path: Path) -> None:
+    module = _load_sigmod_module("run_value_regression_baseline")
+    output_dir = tmp_path / "value_regression_resume_existing"
+
+    module.main(
+        [
+            "--release-root",
+            str(sample_release),
+            "--output-dir",
+            str(output_dir),
+            "--mode",
+            "run",
+            "--target",
+            "y_loss",
+            "--max-files",
+            "1",
+        ]
+    )
+
+    assert (output_dir / ".value_regression_y_loss.checkpoint.json").exists()
+    assert not (output_dir / "linear_regression_y_loss.json").exists()
+
+    module.main(
+        [
+            "--release-root",
+            str(sample_release),
+            "--output-dir",
+            str(output_dir),
+            "--mode",
+            "run",
+            "--target",
+            "y_loss",
+            "--resume",
+        ]
+    )
+
+    assert (output_dir / "linear_regression_y_loss.json").exists()
+    assert not (output_dir / ".value_regression_y_loss.checkpoint.json").exists()
+
+
+def test_corrupt_checkpoint_fails_clearly(tmp_path: Path) -> None:
+    module = _load_sigmod_module("_baseline_common")
+    checkpoint = tmp_path / "corrupt.checkpoint.json"
+    checkpoint.write_text("{not valid json\n", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="Checkpoint file is corrupt"):
+        module.load_checkpoint(checkpoint)
 
 
 def test_best_candidate_runner_supports_linear_score_json(sample_release: Path, tmp_path: Path) -> None:

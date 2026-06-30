@@ -492,10 +492,11 @@ def run(args: argparse.Namespace) -> None:
 
     reset_outputs(output_paths=[output_path], checkpoint_paths=[checkpoint], overwrite=args.overwrite, resume=args.resume)
 
-    if args.resume:
-        state = load_state(load_checkpoint(checkpoint), features)
-    else:
+    checkpoint_payload = load_checkpoint(checkpoint, missing_ok=args.resume) if args.resume else None
+    if checkpoint_payload is None:
         state = initial_state(features)
+    else:
+        state = load_state(checkpoint_payload, features)
 
     budget = build_file_budget(args.max_files)
 
