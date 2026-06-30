@@ -41,6 +41,17 @@
   - `1085545` (`sigmod-value-reg`) running on `n0119`
 - Best-candidate remains not submitted.
 
+## Best-candidate submission
+
+- Date/time: Tue Jun 30 08:38:02 EDT 2026
+- Candidate-label stats `1085544` completed successfully with `ExitCode 0:0`.
+- Value regression `1085545` completed successfully with `ExitCode 0:0`.
+- `paper/sigmod2027/results/baselines/value_regression/linear_regression_y_loss.json` existed and was nonempty before submission.
+- Best-candidate job ID: `1085963`
+- Queue state after submission:
+  - `1085963` (`sigmod-best-cand`) running on `n0053`
+- Best-candidate was submitted only after the value-regression JSON existed.
+
 Exact next action after value regression succeeds:
 
 ```bash
