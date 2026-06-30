@@ -29,7 +29,17 @@
 - Value-regression job ID: `1085537`
   - Submission outcome: submitted, then failed quickly.
   - Failure cause: missing checkpoint file `/mmfs1/home/sv96/lafc-work/lafc-evict-dataset/paper/sigmod2027/results/baselines/value_regression/.value_regression_y_loss.checkpoint.json` while running with `--resume`.
-- Best-candidate was not submitted yet.
+
+## Resume fix and resubmission
+
+- Root cause: the SIGMOD result runners treated `--resume` as "load checkpoint unconditionally", so a fresh run failed before any work started if the checkpoint file did not exist yet.
+- Fix commit: `83a7b6b` (`Allow fresh SIGMOD result runs with resume`)
+- Candidate-label stats resubmission job ID: `1085544`
+- Value-regression resubmission job ID: `1085545`
+- Queue state at Mon Jun 29 22:18:50 EDT 2026:
+  - `1085544` (`sigmod-cand-stats`) running on `n0006`
+  - `1085545` (`sigmod-value-reg`) running on `n0119`
+- Best-candidate remains not submitted.
 
 Exact next action after value regression succeeds:
 
