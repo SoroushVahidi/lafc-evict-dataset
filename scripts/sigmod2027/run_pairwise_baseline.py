@@ -83,7 +83,7 @@ def build_plan_payload(args: argparse.Namespace, manifest: dict[str, object], pa
         "input_view": "pairwise_sample",
         "input_path": repo_relative(pairwise_path),
         "full_validation_status": "pending",
-        "requires_wolverine": False,
+        "requires_large_memory_machine": False,
         "safe_for_anonymous_manuscript": False,
         "metrics": ["accuracy_non_tie", "binary_log_loss_non_tie", "roc_auc_if_score_based"],
         "baselines": [
@@ -104,10 +104,10 @@ def build_plan_payload(args: argparse.Namespace, manifest: dict[str, object], pa
         "release_summary": release_summary(manifest),
         "blockers": [
             "the shipped pairwise sample does not currently include candidate-side predictor or LRU feature columns",
-            "feature-based pairwise baselines therefore require an augmented pairwise export or a candidate-row feature join on Wolverine",
+            "feature-based pairwise baselines therefore require an augmented pairwise export or a candidate-row feature join on a large-memory execution environment",
             "full real-release validation is still pending",
         ],
-        "recommended_next_step": "Run a light non-tie sanity baseline now, or prepare a Wolverine-side feature join for richer pairwise models.",
+        "recommended_next_step": "Run a light non-tie sanity baseline now, or prepare a feature join on a large-memory execution environment for richer pairwise models.",
     }
 
 
@@ -159,7 +159,7 @@ def run_light_baseline(args: argparse.Namespace, pairwise_path: Path, plan_paylo
         "input_path": repo_relative(pairwise_path),
         "evaluation_population": "non_tie_rows_only",
         "full_validation_status": "pending",
-        "requires_wolverine": False,
+        "requires_large_memory_machine": False,
         "safe_for_anonymous_manuscript": False,
         "metrics": ["accuracy_non_tie", "binary_log_loss_non_tie"],
         "release_summary": plan_payload["release_summary"],

@@ -18,7 +18,7 @@
     }
   ],
   "blockers": [
-    "candidate-row execution would touch the full 277,995,072-row release and should run on Wolverine only",
+    "candidate-row execution would touch the full 277,995,072-row release and should run on a large-memory execution environment only",
     "full real-release validation passed on the preserved release on 2026-06-29"
   ],
   "full_validation_status": "passed",
@@ -31,7 +31,7 @@
     "top1_regret_if_available"
   ],
   "mode": "plan",
-  "recommended_next_step": "Prepare and submit a Wolverine-side candidate-row baseline job after the pairwise sanity path is settled.",
+  "recommended_next_step": "Prepare and submit a large-memory-environment-side candidate-row baseline job after the pairwise sanity path is settled.",
   "release_root": "release/lafc-evict-v0.1-open-current-contract-preserved",
   "release_summary": {
     "candidate_partitions": 168,
@@ -50,7 +50,7 @@
       "wiki2018"
     ]
   },
-  "requires_wolverine": true,
+  "requires_large_memory_machine": true,
   "safe_for_anonymous_manuscript": false,
   "schema_check": {
     "available_columns": [

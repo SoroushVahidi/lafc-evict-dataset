@@ -32,7 +32,7 @@
       "wiki2018"
     ]
   },
-  "requires_wolverine": false,
+  "requires_large_memory_machine": false,
   "safe_for_anonymous_manuscript": false,
   "split_metrics": {
     "test": {

@@ -2021,7 +2021,7 @@
       "trace_family": "wiki2018"
     }
   ],
-  "input_path": "/mmfs1/scratch/ikoutis/sv96/lafc-work/release/lafc-evict-v0.1-open-current-contract-preserved/data/candidate_rows",
+  "input_path": "release/<evaluated-open-release>/data/candidate_rows",
   "input_view": "candidate_rows",
   "limitations": [
     "The current implementation only evaluates y_loss-based regret, even when the scorer is not derived from a regression model.",
@@ -2047,7 +2047,7 @@
     "schema_version": "lafc-evict-candidate-v1",
     "version": "0.1"
   },
-  "release_root": "/mmfs1/scratch/ikoutis/sv96/lafc-work/release/lafc-evict-v0.1-open-current-contract-preserved",
+  "release_root": "release/<evaluated-open-release>",
   "release_summary": {
     "candidate_partitions": 168,
     "candidate_rows": 277995072,
@@ -2065,7 +2065,7 @@
       "wiki2018"
     ]
   },
-  "requires_wolverine": true,
+  "requires_large_memory_machine": true,
   "safe_for_anonymous_manuscript": true,
   "scorer": {
     "coefficients": {

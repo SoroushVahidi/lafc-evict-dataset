@@ -16,7 +16,7 @@
 - Remove author names from the submission draft.
 - Remove affiliations and acknowledgments from the submission draft.
 - Do not reference the public preprint in a way that breaks anonymity.
-- Do not expose personal paths such as `/home/soroush`, `/tmp`, or `/mmfs1`.
+- Do not expose personal paths such as `/home/<username>`, `/tmp`, or `/mmfs1`.
 - Do not expose GitHub usernames, Hugging Face usernames, Zenodo identity, or institution-identifying metadata.
 - Check PDF metadata before submission.
 - Check artifact metadata and filenames before sharing with reviewers.

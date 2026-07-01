@@ -380,7 +380,7 @@ def run(args: argparse.Namespace) -> dict[str, object]:
         "input_path": repo_relative(augmented_path),
         "linear_score_json": repo_relative(linear_score_path),
         "full_validation_status": detected_validation_status(release_root),
-        "requires_wolverine": True,
+        "requires_large_memory_machine": True,
         "safe_for_anonymous_manuscript": True,
         "evaluation_population": "non_tie_rows_only",
         "pairwise_sample_rows_total": int(len(df)),

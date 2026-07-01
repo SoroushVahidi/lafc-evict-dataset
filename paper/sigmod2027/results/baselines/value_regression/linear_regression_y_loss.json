@@ -32,7 +32,7 @@
   "files_total": 168,
   "full_validation_status": "passed",
   "git_commit": "c7d4178b872b2cdf0b913db21604a97e2ea76417",
-  "input_path": "/mmfs1/scratch/ikoutis/sv96/lafc-work/release/lafc-evict-v0.1-open-current-contract-preserved/data/candidate_rows",
+  "input_path": "release/<evaluated-open-release>/data/candidate_rows",
   "input_view": "candidate_rows",
   "limitations": [
     "The fitted model uses three streaming passes over candidate files: feature means, normal equations, and evaluation.",
@@ -111,7 +111,7 @@
     "schema_version": "lafc-evict-candidate-v1",
     "version": "0.1"
   },
-  "release_root": "/mmfs1/scratch/ikoutis/sv96/lafc-work/release/lafc-evict-v0.1-open-current-contract-preserved",
+  "release_root": "release/<evaluated-open-release>",
   "release_summary": {
     "candidate_partitions": 168,
     "candidate_rows": 277995072,
@@ -129,7 +129,7 @@
       "wiki2018"
     ]
   },
-  "requires_wolverine": true,
+  "requires_large_memory_machine": true,
   "safe_for_anonymous_manuscript": true,
   "split_metrics": {
     "test": {
