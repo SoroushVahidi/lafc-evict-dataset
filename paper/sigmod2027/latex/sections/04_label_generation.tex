@@ -1,7 +1,7 @@
 \section{Counterfactual Label Generation}
 \label{sec:label-generation}
 
-The benchmark label is defined on candidate victims rather than on completed policies. Let $r_1, r_2, \ldots$ denote a request sequence, and let $t$ index a request $r_t$ that misses when the cache is full. Write $S_t^{-}$ for the cache state immediately before the eviction choice and $C_t \subseteq S_t^{-}$ for the candidate set of resident objects that may be evicted at that decision. For any candidate $c \in C_t$, consider the intervention that evicts $c$, admits the missed request, and then follows a fixed continuation policy $\pi$ for the next $H$ requests. The resulting finite-horizon counterfactual loss is
+The benchmark label is defined on candidate victims rather than on completed policies. Let $r_1, r_2, \ldots$ denote a request sequence, and let $t$ index a request $r_t$ that misses when the cache is full. Write $S_t^{-}$ for the cache state immediately before the eviction choice; the candidate set $C_t = S_t^{-}$ is every resident object, so $|C_t|$ equals the cache capacity (32, 64, 128, or 256 objects in the evaluated release), counted in objects rather than bytes, with upstream object sizes not separately modeled. For any candidate $c \in C_t$, consider the intervention that evicts $c$, admits the missed request into the freed slot, and then follows a fixed continuation policy $\pi$ for the next $H$ requests, resolving every subsequent miss according to $\pi$; in the evaluated release, $\pi$ is LRU continuation rather than a Belady/offline-optimal rule. The resulting finite-horizon counterfactual loss counts those subsequent misses, so every miss contributes unit cost:
 \[
 \begin{aligned}
 L_{t,H}^{\pi}(c)
