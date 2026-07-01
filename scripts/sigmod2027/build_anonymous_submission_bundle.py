@@ -16,6 +16,7 @@ result file that was regenerated after the last redaction pass.
 from __future__ import annotations
 
 import argparse
+import re
 import shutil
 import subprocess
 import sys
@@ -27,6 +28,7 @@ PAPER_ROOT = REPO_ROOT / "paper" / "sigmod2027"
 # Relative-to-PAPER_ROOT paths/globs that are safe to hand to reviewers.
 INCLUDE_GLOBS = [
     "latex/main.tex",
+    "latex/main.pdf",
     "latex/refs.bib",
     "latex/sections/*.tex",
     "latex/tables/*.tex",
@@ -45,9 +47,34 @@ INCLUDE_GLOBS = [
 # This is a safety net, not the primary inclusion mechanism.
 EXCLUDE_NAMES = {
     "TODO.md",
-    "main.pdf",  # regenerate fresh for the bundle; a stale build can carry local PDF metadata
 }
 EXCLUDE_DIR_NAMES = {"__pycache__"}
+
+# Same denylist family used by the repo-wide anonymity grep, applied to the
+# compiled PDF's metadata and extracted text before it is allowed in a bundle.
+PDF_DENYLIST = re.compile(
+    r"/home/|/mmfs1|/scratch|sv96|soroush|ikoutis|NJIT|wulver|wolverine"
+    r"|github\.com/SoroushVahidi|/Users/|/mnt/|/Volumes/",
+    re.IGNORECASE,
+)
+
+
+def verify_pdf_is_safe(pdf_path: Path) -> None:
+    if not pdf_path.exists():
+        return
+    for tool, args in (("pdfinfo", [str(pdf_path)]), ("pdftotext", [str(pdf_path), "-"])):
+        if shutil.which(tool) is None:
+            print(f"warning: {tool} not found, skipping PDF metadata/text check", file=sys.stderr)
+            continue
+        output = subprocess.run([tool, *args], capture_output=True, text=True).stdout
+        hit = PDF_DENYLIST.search(output)
+        if hit:
+            print(
+                f"Refusing to bundle {pdf_path}: {tool} output contains "
+                f"deanonymizing text ({hit.group(0)!r}).",
+                file=sys.stderr,
+            )
+            raise SystemExit(1)
 
 # Directories under paper/sigmod2027/ that are internal-only and must never
 # reach a review bundle: planning notes, HPC/job-execution notes, and
@@ -110,6 +137,8 @@ def main() -> None:
     if not args.skip_redaction_check:
         run_redaction_check()
 
+    verify_pdf_is_safe(PAPER_ROOT / "latex" / "main.pdf")
+
     if args.out.exists():
         shutil.rmtree(args.out)
     args.out.mkdir(parents=True)
@@ -123,9 +152,9 @@ def main() -> None:
 
     print(f"Copied {len(files)} files into {args.out}")
     print(
-        "Reminder: recompile main.tex from this bundle directory to produce a "
-        "fresh PDF (avoid reusing a locally built main.pdf, which can carry "
-        "local build/user metadata)."
+        "main.pdf was checked with pdfinfo/pdftotext and included since it "
+        "carried no deanonymizing metadata or text. If main.tex changes, "
+        "recompile before re-running this script so the bundled PDF stays current."
     )
     print(
         "Known internal-only paths intentionally excluded: "
