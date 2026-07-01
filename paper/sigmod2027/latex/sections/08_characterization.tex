@@ -1,9 +1,11 @@
 \section{Empirical Characterization}
 \label{sec:characterization}
 
-The empirical center of gravity for this paper should be benchmark characterization, not an oversized model bake-off. The release metadata already supports several useful facts: total candidate rows, total decision rows, pairwise-sample size, split counts, family counts, capacity counts, and horizon counts. These are enough to establish the scale and heterogeneity of the benchmark in the current submission draft.
+The empirical center of gravity for this paper should be benchmark characterization, not an oversized model bake-off. The release metadata establishes the scale and heterogeneity of the benchmark, and the committed candidate-row summaries now let us add full label-distribution reporting without changing the benchmark framing.
 
-The present manuscript therefore limits characterization claims to metadata-backed, decision-view-backed, and pairwise-sample-backed summaries. Detailed row-level distributions of \texttt{y\_loss} and \texttt{y\_value} require a candidate-row scan and are intentionally omitted here rather than approximated from incomplete metadata.
+Across 277,995,072 candidate rows, \texttt{y\_loss} has mean 7.7561, standard deviation 4.6542, and 5/25/50/75/95th percentiles of 2/4/7/11/16. The corresponding \texttt{y\_value} summary mirrors those values by sign, as expected from the benchmark definition. The resulting label surface is broad but still bounded by the finite horizon, which keeps both candidate-level regression errors and decision-level regret interpretable.
+
+The same committed result files also show that the simple linear-score selector often lands in the benchmark-optimal set even though its underlying value regression is weak. That combination is useful descriptive context for later benchmark users: the release is not trivial, but a lightweight heuristic already clears a reproducible lower bar. At the same time, the evaluator's grouped decision count differs slightly from the manifest-backed decision-view count, so Table~\ref{tab:label-selection-summary} reports both numbers separately instead of collapsing them.
 
 \input{tables/table_decision_breakdown}
 

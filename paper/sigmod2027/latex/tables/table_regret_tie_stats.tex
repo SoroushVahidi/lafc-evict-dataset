@@ -1,19 +1,21 @@
 \begin{table}[t]
   \centering
   \footnotesize
-  \caption{Decision-view-backed tie and regret summaries.}
-  \label{tab:regret-ties}
+  \caption{Candidate-label and best-candidate-selection summaries from committed result JSON files.}
+  \label{tab:label-selection-summary}
   \begin{tabularx}{\columnwidth}{@{}P{0.50\columnwidth}L@{}}
     \toprule
     statistic & value \\
     \midrule
-    total decisions & 2,363,286 \\
-    decisions with tie\_count > 1 & 2,363,286 \\
-    fraction with tie\_count > 1 & 1 \\
-    max tie\_count & 256 \\
-    regret\_mean mean/std/max & 0.01 / 0.02 / 0.88 \\
-    regret\_std mean/std/max & 0.05 / 0.08 / 1.24 \\
-    regret\_max mean/std/max & 0.32 / 0.47 / 4 \\
+    candidate rows summarized & 277,995,072 \\
+    \texttt{y\_loss} mean / std & 7.7561 / 4.6542 \\
+    \texttt{y\_loss} q05 / q25 / q50 / q75 / q95 & 2 / 4 / 7 / 11 / 16 \\
+    \texttt{y\_value} mean / std & -7.7561 / 4.6542 \\
+    \texttt{y\_value} q05 / q25 / q50 / q75 / q95 & -16 / -11 / -7 / -4 / -2 \\
+    manifest-backed decision rows & 2,363,286 \\
+    best-candidate evaluator groups & 2,366,413 \\
+    best-candidate optimal-selection rate & 0.8755 \\
+    best-candidate regret mean / median / max & 0.1249 / 0 / 3 \\
     \bottomrule
   \end{tabularx}
 \end{table}
