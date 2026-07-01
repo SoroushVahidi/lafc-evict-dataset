@@ -12,9 +12,7 @@ Define the smallest defensible baseline suite for the first SIGMOD benchmark pap
 - The shipped pairwise sample is lightweight and label-centric:
   - it includes `decision_id`, `capacity`, `horizon`, `split`, `trace_family`, `trace_name`, `candidate_a_page_id`, `candidate_b_page_id`, `y_loss_a`, `y_loss_b`, `y_loss_diff_a_minus_b`, `label_a_better`, `label_b_better`, and `is_tie`;
   - it does **not** include candidate-side feature columns such as predictor scores, LRU scores, recency ranks, or bucket/confidence features.
-- As a result, feature-based pairwise baselines require either:
-  - an augmented pairwise export, or
-  - a join back to candidate-row features on Wolverine.
+- Feature-based pairwise baselines are now unblocked: `scripts/sigmod2027/build_augmented_pairwise_sample.py` joins the shipped pairwise sample back to candidate-row features (using the robust 7-column key `split`, `trace_family`, `capacity`, `horizon`, `trace_name`, `decision_id`, `candidate_page_id`), and `scripts/sigmod2027/run_feature_pairwise_baseline.py` evaluates baselines over the result. Both runners are implemented and unit-tested; execution of the full preserved-release job still belongs on Wolverine.
 
 ## Benchmark tasks
 
@@ -57,11 +55,11 @@ Define the smallest defensible baseline suite for the first SIGMOD benchmark pap
 - Metrics:
   accuracy, binary log loss on the non-tie subset, and ROC-AUC if a score-producing model is available.
 - Status:
-  lightly runnable now and already satisfied for the minimum sanity-check need.
+  light non-feature baselines and feature-based baselines (`lru_score_pairwise`, `predictor_score_pairwise`, `linear_score_pairwise`, `logistic_regression_pairwise`) are all available; executed on the preserved release via Slurm job `1087431` on 2026-07-01 (`7m09s`, no missing joins).
 - Local feasibility:
-  yes for very light baselines on the shipped pairwise sample.
+  yes for very light baselines on the shipped pairwise sample; the augmented feature join requires streaming the referenced candidate partitions.
 - Wolverine requirement:
-  only for feature-based pairwise models or feature joins back to candidate rows.
+  yes for the augmented pairwise sample and feature-based pairwise models (candidate-row scan, partition-pruned to rows referenced by the pairwise sample).
 
 ## Minimal baseline families
 
@@ -69,9 +67,9 @@ Define the smallest defensible baseline suite for the first SIGMOD benchmark pap
 | --- | --- | --- | --- | --- |
 | Random | optional floor | yes | yes | pairwise version can run now |
 | Majority / trivial class baseline | n/a | optional | yes | pairwise version can run now |
-| LRU-derived heuristic | yes | yes | yes if feature join exists | requires candidate-row features |
-| Predictor-score baseline | yes | yes | yes if feature join exists | requires candidate-row features |
-| Linear / logistic model | yes | yes via induced ranking | yes | pairwise metadata-only variant is possible but weak; feature-based version requires candidate-row features |
+| LRU-derived heuristic | yes | yes | yes | `lru_score_pairwise` available: accuracy `0.9596`, log loss `0.1326` |
+| Predictor-score baseline | yes | yes | yes | `predictor_score_pairwise` available: accuracy `0.9489`, log loss `0.2023` |
+| Linear / logistic model | yes | yes via induced ranking | yes | `linear_score_pairwise` (reuses `linear_regression_y_loss.json`) available: accuracy `0.9530`, log loss `0.1072`; `logistic_regression_pairwise` available: accuracy `0.9676`, log loss `0.0774` (best of the pairwise baselines) |
 | Gradient boosting | optional | optional | optional | likely Wolverine-side |
 | Small MLP | optional | optional | optional | not required for first draft |
 
@@ -114,7 +112,8 @@ Define the smallest defensible baseline suite for the first SIGMOD benchmark pap
   - first candidate-row-backed value baseline worth generating for the paper.
 - `paper/sigmod2027/results/baselines/best_candidate/best_candidate_from_linear_score.json`
   - first candidate-row-backed best-candidate baseline worth generating for the paper.
-- No additional pairwise baseline output is required for the minimum SIGMOD draft because the current light non-tie sanity outputs already exist.
+- `paper/sigmod2027/results/baselines/pairwise/augmented_pairwise_sample.parquet` and `paper/sigmod2027/results/baselines/pairwise/feature_pairwise_results.{json,csv,md}`
+  - strengthens the pairwise task beyond the light non-tie sanity baselines with candidate-feature-backed results (`lru_score_pairwise`, `predictor_score_pairwise`, `linear_score_pairwise`, `logistic_regression_pairwise`).
 
 ## Implemented runners
 
@@ -145,12 +144,32 @@ python scripts/sigmod2027/run_best_candidate_baseline.py \
 - `--mode run` streams candidate rows decision-by-decision and emits `best_candidate_from_<scorer>.json`.
 - The first intended SIGMOD result path uses `--linear-score-json` with the `linear_regression_y_loss.json` output from the value-regression runner.
 
+### Augmented pairwise sample and feature-based pairwise baselines
+
+```bash
+python scripts/sigmod2027/build_augmented_pairwise_sample.py \
+  --release-root release/lafc-evict-v0.1-open-current-contract-preserved \
+  --output-dir paper/sigmod2027/results/baselines/pairwise \
+  --mode plan
+
+python scripts/sigmod2027/run_feature_pairwise_baseline.py \
+  --release-root release/lafc-evict-v0.1-open-current-contract-preserved \
+  --augmented-path paper/sigmod2027/results/baselines/pairwise/augmented_pairwise_sample.parquet \
+  --linear-score-json paper/sigmod2027/results/baselines/value_regression/linear_regression_y_loss.json \
+  --output-dir paper/sigmod2027/results/baselines/pairwise
+```
+
+- `build_augmented_pairwise_sample.py --mode plan` inspects the pairwise-sample and candidate-row schemas only.
+- `build_augmented_pairwise_sample.py --mode run` streams only the candidate partitions referenced by the pairwise sample (partition-pruned, never the full 277M-row release), joins A/B candidate features with a robust 7-column key, validates the output row count against the input, and fails loudly if any pairwise row cannot be joined.
+- `--max-files`, `--resume`, and `--overwrite` allow chunked or restart-safe execution, same as the other streaming runners.
+- `run_feature_pairwise_baseline.py` reads the augmented sample directly (no further candidate-row scanning) and evaluates `random_non_tie`, `majority_non_tie`, `lru_score_pairwise`, `predictor_score_pairwise`, `linear_score_pairwise`, and `logistic_regression_pairwise` on the non-tie subset, with split-level metrics and class-imbalance notes.
+
 ## Blocking issues to track
 
-- The current pairwise sample does not expose the candidate feature columns needed for LRU-derived, predictor-derived, or full logistic pairwise baselines.
 - Candidate-row tasks require HPC because the release contains 277,995,072 candidate rows across 168 parquet shards.
 - Full-release validation has passed on the preserved release, so baseline write-ups may state that result while still describing current numbers as preserved-release results rather than final published artifact results.
 - The remaining risk is execution cost and result validation on Wolverine, not missing local runner implementations.
+- Resolved: the augmented pairwise sample and feature-based pairwise baseline runners were executed against the preserved release via Slurm job `1087431` on 2026-07-01. `feature_pairwise_results.*` numbers are validated and safe to cite; see `paper/sigmod2027/results/baselines/pairwise/feature_pairwise_results.md`.
 
 ## Output expectations
 
