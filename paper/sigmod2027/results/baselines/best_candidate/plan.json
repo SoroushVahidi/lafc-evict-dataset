@@ -22,7 +22,7 @@
     }
   ],
   "blockers": [
-    "decision-grouped candidate-row evaluation requires Wolverine-scale access to candidate-row shards",
+    "decision-grouped candidate-row evaluation requires large-memory-environment-scale access to candidate-row shards",
     "full real-release validation passed on the preserved release on 2026-06-29"
   ],
   "full_validation_status": "passed",
@@ -34,7 +34,7 @@
     "selected_candidate_regret"
   ],
   "mode": "plan",
-  "recommended_next_step": "Implement the ranking or decision-group reconstruction path on Wolverine after value-regression feature handling is stable.",
+  "recommended_next_step": "Implement the ranking or decision-group reconstruction path on a large-memory execution environment after value-regression feature handling is stable.",
   "release_root": "release/lafc-evict-v0.1-open-current-contract-preserved",
   "release_summary": {
     "candidate_partitions": 168,
@@ -53,7 +53,7 @@
       "wiki2018"
     ]
   },
-  "requires_wolverine": true,
+  "requires_large_memory_machine": true,
   "safe_for_anonymous_manuscript": false,
   "schema_check": {
     "available_columns": [

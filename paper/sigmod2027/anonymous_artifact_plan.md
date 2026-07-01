@@ -35,7 +35,7 @@ Prepare a review artifact that lets SIGMOD/PACMMOD reviewers inspect the benchma
 ## Required anonymity checks
 
 - No author names in README, dataset card, release notes, or bundle metadata.
-- No personal paths such as `/home/soroush`, `/tmp`, or `/mmfs1`.
+- No personal paths such as `/home/<username>`, `/tmp`, or `/mmfs1`.
 - No GitHub username, Hugging Face username, or Zenodo identity.
 - No acknowledgments or institution names.
 - No preprint identifiers if they reveal authorship.

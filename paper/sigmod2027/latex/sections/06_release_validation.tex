@@ -1,9 +1,9 @@
 \section{Release Construction and Validation}
 \label{sec:release-validation}
 
-The release pipeline is designed to package existing generated candidate rows into a benchmark artifact without requiring raw traces in the repository. The builder uses an out-of-core DuckDB path to ingest candidate shards, normalize split values, emit partitioned Parquet candidate rows, derive the decision view, optionally create a capped pairwise sample, and write release metadata and checksums.
+The release pipeline is designed to package existing generated candidate rows into a benchmark artifact without requiring raw traces in the release package. The builder uses an out-of-core DuckDB path to ingest candidate shards, normalize split values, emit partitioned Parquet candidate rows, derive the decision view, optionally create a capped pairwise sample, and write release metadata and checksums.
 
-The validation surface is part of the benchmark contribution. Current checks include:
+The validation surface is part of the benchmark contribution. The validation workflow includes:
 \begin{itemize}[leftmargin=*]
   \item schema completeness for candidate partitions,
   \item split normalization and split-set consistency,
@@ -14,8 +14,10 @@ The validation surface is part of the benchmark contribution. Current checks inc
   \item checksum verification.
 \end{itemize}
 
-The preserved current-contract open release has passed lightweight metadata repair, repository tests, publication-bundle validation, and full real-release validation. The June 29, 2026 preserved-release validation run completed successfully with \texttt{exit\_status=0}. The validator CLI does not rewrite the release-internal validation-report markdown file, so that file still reflects earlier build-time paths and should not be treated as the authoritative June 29 validation record. For the anonymous SIGMOD submission, this means the manuscript can state that the preserved release passed end-to-end validation without relying on unpublished hosting or packaging details.
+\begin{sloppypar}
+The evaluated open-release snapshot passed metadata repair, the provided verification suite, publication-bundle validation, and end-to-end release validation. The validation evidence comes from manifest-backed counts, schema checks, split checks, duplicate detection, and checksum verification implemented in reproducible scripts. The manuscript therefore reports validation of the release package without relying on unpublished hosting details. It does not claim that final public hosting or DOI assignment is complete. It also does not treat superseded status notes as the authoritative source of scientific evidence.
+\end{sloppypar}
 
-Table~\ref{tab:artifact-layout} summarizes the preserved release tree that the manuscript relies on: candidate rows, derived benchmark views, manifest, validation report, and checksums. Anonymous submission packaging is intentionally treated as external to that preserved release tree, so the paper's empirical and validation claims rest only on the preserved artifact itself.
+Table~\ref{tab:artifact-layout} summarizes the release-package components used in the evaluation: candidate rows, derived benchmark views, manifest metadata, and checksums. Validation claims rely on those package contents together with reproducible validation scripts rather than on any standalone status note.
 
 \input{tables/table_artifact_layout}

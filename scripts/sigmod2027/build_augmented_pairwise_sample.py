@@ -277,7 +277,7 @@ def plan_payload(
         "input_path": repo_relative(pairwise_path),
         "candidate_input_path": repo_relative(release_root / "data" / "candidate_rows"),
         "full_validation_status": detected_validation_status(release_root),
-        "requires_wolverine": True,
+        "requires_large_memory_machine": True,
         "safe_for_anonymous_manuscript": False,
         "pairwise_schema_check": {
             "required_shared_columns": PAIRWISE_SHARED_COLUMNS,
@@ -445,7 +445,7 @@ def run(args: argparse.Namespace) -> dict[str, object] | None:
         "input_path": repo_relative(pairwise_path),
         "candidate_input_path": repo_relative(release_root / "data" / "candidate_rows"),
         "full_validation_status": detected_validation_status(release_root),
-        "requires_wolverine": True,
+        "requires_large_memory_machine": True,
         "safe_for_anonymous_manuscript": True,
         "join_key_columns": FULL_JOIN_KEY_COLUMNS,
         "feature_columns": feature_columns,

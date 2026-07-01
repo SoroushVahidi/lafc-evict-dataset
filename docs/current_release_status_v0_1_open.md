@@ -2,8 +2,8 @@
 
 ## Current local release paths
 
-- Stale repo-local release: `/home/soroush/lafc-evict-dataset/release/lafc-evict-v0.1-open`
-- Preserved current-contract release: `/home/soroush/lafc-evict-dataset/release/lafc-evict-v0.1-open-current-contract-preserved`
+- Stale repo-local release: `/home/<username>/lafc-evict-dataset/release/lafc-evict-v0.1-open`
+- Preserved current-contract release: `/home/<username>/lafc-evict-dataset/release/lafc-evict-v0.1-open-current-contract-preserved`
 - Fresh publication bundle: `/tmp/lafc-evict-v0.1-open-current-contract-final-publication-bundle-20260629`
 
 ## What has passed
@@ -13,7 +13,7 @@
 - Full real-release validation passed on the preserved release on 2026-06-29 (`start_utc=2026-06-29T04:13:25+00:00`, `end_utc=2026-06-29T04:13:51+00:00`, `exit_status=0`).
 - Publication bundle regenerated from the preserved release.
 - Publication bundle validation passed.
-- Public-facing bundle files were checked and do not contain `/home/soroush`, `/tmp`, or `/mmfs1` absolute paths.
+- Public-facing bundle files were checked and do not contain `/home/<username>`, `/tmp`, or `/mmfs1` absolute paths.
 - Normal repository tests passed with `python -m pytest`.
 
 ## What has not yet passed
@@ -28,8 +28,8 @@ There is no repo-local Slurm wrapper script. The repo-side heavy build command b
 
 ```bash
 python scripts/build_real_release.py \
-  --input-manifest /home/soroush/Augmented-caching/data/derived/evict_value_v1_wulver_heavy_r1/manifest.json \
-  --family-selection /home/soroush/lafc-evict-dataset/manifests/lafc_evict_v0_1_open_families.json \
+  --input-manifest /home/<username>/Augmented-caching/data/derived/evict_value_v1_wulver_heavy_r1/manifest.json \
+  --family-selection /home/<username>/lafc-evict-dataset/manifests/lafc_evict_v0_1_open_families.json \
   --output-dir /tmp/lafc-evict-v0.1-open-current-contract \
   --dataset-id lafc-evict-v0.1-open \
   --duckdb-threads 2 \
