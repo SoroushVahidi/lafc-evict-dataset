@@ -1,0 +1,339 @@
+{
+  "baselines": {
+    "linear_score_pairwise": {
+      "model": {
+        "coefficient": -3.2570417708801997,
+        "feature_mean": 3.3506792004656933,
+        "feature_std": 2.0877874807929713,
+        "features_used": [
+          "bucket_gap_to_lru_victim",
+          "bucket_gap_to_predictor_best",
+          "cache_bucket_max",
+          "cache_bucket_mean",
+          "cache_bucket_min",
+          "cache_bucket_std",
+          "cache_confidence_mean",
+          "cache_confidence_std",
+          "cache_unique_bucket_count",
+          "candidate_age_norm",
+          "candidate_bucket",
+          "candidate_confidence",
+          "candidate_is_lru_victim",
+          "candidate_is_predictor_victim",
+          "candidate_lru_score",
+          "candidate_predictor_score",
+          "candidate_recency_rank",
+          "confidence_gap_to_lru_victim",
+          "confidence_gap_to_predictor_best",
+          "predictor_lru_disagree",
+          "recent_candidate_hit_rate",
+          "recent_candidate_request_rate",
+          "request_bucket",
+          "request_confidence",
+          "score_gap_to_lru_victim",
+          "score_gap_to_predictor_best"
+        ],
+        "intercept": -5.884190158402565,
+        "source_json": "paper/sigmod2027/results/baselines/value_regression/linear_regression_y_loss.json"
+      },
+      "name": "linear_score_pairwise",
+      "overall": {
+        "accuracy": 0.9530375233271128,
+        "log_loss": 0.10717073142680635,
+        "positive_rate": 0.051103039189549455,
+        "rows": 120032
+      },
+      "split_metrics": {
+        "test": {
+          "accuracy": 0.5836554389839868,
+          "log_loss": 0.6208228293091094,
+          "positive_rate": 0.4218663721700718,
+          "rows": 1811
+        },
+        "train": {
+          "accuracy": 0.944659500141622,
+          "log_loss": 0.11943724715166834,
+          "positive_rate": 0.05904964864245155,
+          "rows": 74141
+        },
+        "val": {
+          "accuracy": 0.9823049001814882,
+          "log_loss": 0.06543580194355213,
+          "positive_rate": 0.02250453720508167,
+          "rows": 44080
+        }
+      }
+    },
+    "logistic_regression_pairwise": {
+      "model": {
+        "coefficients": {
+          "bucket_gap_to_lru_victim": 0.0,
+          "bucket_gap_to_predictor_best": 0.0,
+          "cache_bucket_max": 0.0,
+          "cache_bucket_mean": 0.0,
+          "cache_bucket_min": 0.0,
+          "cache_bucket_std": 0.0,
+          "cache_confidence_mean": 0.0,
+          "cache_confidence_std": 0.0,
+          "cache_unique_bucket_count": 0.0,
+          "candidate_age_norm": -0.1103319345045529,
+          "candidate_bucket": 0.0,
+          "candidate_confidence": 0.0,
+          "candidate_is_lru_victim": 0.02762551906790643,
+          "candidate_is_predictor_victim": 0.027625519067906435,
+          "candidate_lru_score": 0.11033193439131016,
+          "candidate_predictor_score": 0.0,
+          "candidate_recency_rank": -0.7672977176889957,
+          "confidence_gap_to_lru_victim": 0.0,
+          "confidence_gap_to_predictor_best": 0.0,
+          "predictor_lru_disagree": 0.0,
+          "recent_candidate_hit_rate": -3.3371990626870187,
+          "recent_candidate_request_rate": 0.8985204329833502,
+          "request_bucket": 0.0,
+          "request_confidence": 0.0,
+          "score_gap_to_lru_victim": 0.11033193439131016,
+          "score_gap_to_predictor_best": 0.0
+        },
+        "features_used": [
+          "candidate_lru_score",
+          "candidate_predictor_score",
+          "candidate_recency_rank",
+          "candidate_age_norm",
+          "candidate_is_lru_victim",
+          "candidate_is_predictor_victim",
+          "request_bucket",
+          "request_confidence",
+          "candidate_bucket",
+          "candidate_confidence",
+          "score_gap_to_predictor_best",
+          "score_gap_to_lru_victim",
+          "bucket_gap_to_predictor_best",
+          "bucket_gap_to_lru_victim",
+          "confidence_gap_to_predictor_best",
+          "confidence_gap_to_lru_victim",
+          "cache_bucket_mean",
+          "cache_bucket_std",
+          "cache_bucket_min",
+          "cache_bucket_max",
+          "cache_unique_bucket_count",
+          "cache_confidence_mean",
+          "cache_confidence_std",
+          "predictor_lru_disagree",
+          "recent_candidate_request_rate",
+          "recent_candidate_hit_rate"
+        ],
+        "intercept": -6.214241804888255
+      },
+      "name": "logistic_regression_pairwise",
+      "overall": {
+        "accuracy": 0.9676336310317248,
+        "log_loss": 0.07736985295098463,
+        "positive_rate": 0.051103039189549455,
+        "rows": 120032
+      },
+      "split_metrics": {
+        "test": {
+          "accuracy": 0.7150745444505798,
+          "log_loss": 0.5190525987336365,
+          "positive_rate": 0.4218663721700718,
+          "rows": 1811
+        },
+        "train": {
+          "accuracy": 0.9606830228888199,
+          "log_loss": 0.09039848867476426,
+          "positive_rate": 0.05904964864245155,
+          "rows": 74141
+        },
+        "val": {
+          "accuracy": 0.9897005444646098,
+          "log_loss": 0.03730988167582293,
+          "positive_rate": 0.02250453720508167,
+          "rows": 44080
+        }
+      }
+    },
+    "lru_score_pairwise": {
+      "model": {
+        "coefficient": 1.6773564816753528,
+        "feature": "candidate_lru_score",
+        "feature_mean": -0.4143097202848042,
+        "feature_std": 0.3637648460513151,
+        "intercept": -3.923123459445678
+      },
+      "name": "lru_score_pairwise",
+      "overall": {
+        "accuracy": 0.9595857771260997,
+        "log_loss": 0.1326347514610061,
+        "positive_rate": 0.051103039189549455,
+        "rows": 120032
+      },
+      "split_metrics": {
+        "test": {
+          "accuracy": 0.6637217007178354,
+          "log_loss": 0.8425331737414066,
+          "positive_rate": 0.4218663721700718,
+          "rows": 1811
+        },
+        "train": {
+          "accuracy": 0.9521047733372897,
+          "log_loss": 0.15191445211021096,
+          "positive_rate": 0.05904964864245155,
+          "rows": 74141
+        },
+        "val": {
+          "accuracy": 0.9843239564428312,
+          "log_loss": 0.07104123221004184,
+          "positive_rate": 0.02250453720508167,
+          "rows": 44080
+        }
+      }
+    },
+    "majority_non_tie": {
+      "name": "majority_non_tie",
+      "overall": {
+        "accuracy": 0.9488969608104505,
+        "log_loss": 0.20234426856688614,
+        "positive_rate": 0.051103039189549455,
+        "rows": 120032
+      },
+      "split_metrics": {
+        "test": {
+          "accuracy": 0.5781336278299282,
+          "log_loss": 1.2288069250588411,
+          "positive_rate": 0.4218663721700718,
+          "rows": 1811
+        },
+        "train": {
+          "accuracy": 0.9409503513575485,
+          "log_loss": 0.22434455048138296,
+          "positive_rate": 0.05904964864245155,
+          "rows": 74141
+        },
+        "val": {
+          "accuracy": 0.9774954627949183,
+          "log_loss": 0.12316897881349133,
+          "positive_rate": 0.02250453720508167,
+          "rows": 44080
+        }
+      }
+    },
+    "predictor_score_pairwise": {
+      "model": {
+        "coefficient": 0.0,
+        "feature": "candidate_predictor_score",
+        "feature_mean": 0.0,
+        "feature_std": 1.0,
+        "intercept": -2.7685117841629934
+      },
+      "name": "predictor_score_pairwise",
+      "overall": {
+        "accuracy": 0.9488969608104505,
+        "log_loss": 0.20234426856688245,
+        "positive_rate": 0.051103039189549455,
+        "rows": 120032
+      },
+      "split_metrics": {
+        "test": {
+          "accuracy": 0.5781336278299282,
+          "log_loss": 1.2288069250590061,
+          "positive_rate": 0.4218663721700718,
+          "rows": 1811
+        },
+        "train": {
+          "accuracy": 0.9409503513575485,
+          "log_loss": 0.2243445504813829,
+          "positive_rate": 0.05904964864245155,
+          "rows": 74141
+        },
+        "val": {
+          "accuracy": 0.9774954627949183,
+          "log_loss": 0.12316897881347465,
+          "positive_rate": 0.02250453720508167,
+          "rows": 44080
+        }
+      }
+    },
+    "random_non_tie": {
+      "name": "random_non_tie",
+      "overall": {
+        "accuracy": 0.4993251799520128,
+        "log_loss": 0.6931471805599453,
+        "positive_rate": 0.051103039189549455,
+        "rows": 120032
+      },
+      "split_metrics": {
+        "test": {
+          "accuracy": 0.4815019326339039,
+          "log_loss": 0.6931471805599452,
+          "positive_rate": 0.4218663721700718,
+          "rows": 1811
+        },
+        "train": {
+          "accuracy": 0.49922445070878463,
+          "log_loss": 0.6931471805599453,
+          "positive_rate": 0.05904964864245155,
+          "rows": 74141
+        },
+        "val": {
+          "accuracy": 0.5002268602540835,
+          "log_loss": 0.6931471805599453,
+          "positive_rate": 0.02250453720508167,
+          "rows": 44080
+        }
+      }
+    }
+  },
+  "evaluation_population": "non_tie_rows_only",
+  "full_validation_status": "passed",
+  "git_commit": "42563745050e890c8a72aee39d9f969b3aa7aa32",
+  "input_path": "paper/sigmod2027/results/baselines/pairwise/augmented_pairwise_sample.parquet",
+  "input_view": "augmented_pairwise_sample",
+  "limitations": [
+    "Only the capped shipped pairwise sample is evaluated; the full quadratic pairwise view is never generated.",
+    "Logistic fits use a small custom Newton-Raphson implementation with L2 regularization, not scikit-learn."
+  ],
+  "linear_score_json": "paper/sigmod2027/results/baselines/value_regression/linear_regression_y_loss.json",
+  "mode": "run_feature",
+  "non_tie_row_count": 120032,
+  "notes": [
+    "Candidate-side A/B features come from build_augmented_pairwise_sample.py, joined back to candidate rows.",
+    "Score-based baselines (lru_score_pairwise, predictor_score_pairwise, linear_score_pairwise) fit a 1D logistic calibration on the train split of the score difference; the sign and slope are learned from data."
+  ],
+  "notes_on_class_imbalance": [
+    "train split positive rate (label_a_better=1) is 0.0590.",
+    "val split positive rate (label_a_better=1) is 0.0225.",
+    "test split positive rate (label_a_better=1) is 0.4219.",
+    "Positive rate varies substantially across splits, consistent with the tie-heavy, imbalanced nature of the shipped pairwise sample; headline accuracy numbers should always be read alongside log loss and split-level breakdowns."
+  ],
+  "pairwise_sample_rows_total": 1000000,
+  "release_identity": {
+    "dataset_name": "lafc-evict-v0.1-open",
+    "release_type": "real_public",
+    "schema_version": "lafc-evict-candidate-v1",
+    "version": "0.1"
+  },
+  "release_root": "/mmfs1/scratch/ikoutis/sv96/lafc-work/release/lafc-evict-v0.1-open-current-contract-preserved",
+  "release_summary": {
+    "candidate_partitions": 168,
+    "candidate_rows": 277995072,
+    "decision_rows": 2363286,
+    "excluded_families": [
+      "brightkite",
+      "citibike"
+    ],
+    "pairwise_sample_rows": 1000000,
+    "selected_families": [
+      "cloudphysics",
+      "metacdn",
+      "metakv",
+      "twemcache",
+      "wiki2018"
+    ]
+  },
+  "requires_wolverine": true,
+  "safe_for_anonymous_manuscript": true,
+  "status": "available",
+  "task": "pairwise_preference",
+  "tie_row_count": 879968,
+  "timestamp_utc": "2026-07-01T17:51:43+00:00"
+}

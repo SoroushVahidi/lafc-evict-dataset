@@ -16,6 +16,7 @@ Safety constraints:
 - `run_candidate_label_stats.sbatch`: candidate-label statistics, `16` CPUs, `64G`, `4:00:00`.
 - `run_value_regression_baseline.sbatch`: value-regression baseline, `24` CPUs, `96G`, `8:00:00`.
 - `run_best_candidate_baseline.sbatch`: best-candidate baseline, `24` CPUs, `96G`, `8:00:00`.
+- `run_feature_pairwise_baseline.sbatch`: builds the augmented pairwise sample (candidate-side A/B features joined onto the shipped pairwise sample) then runs the feature-based pairwise baselines, `20` CPUs, `80G`, `10:00:00`. Requires `linear_regression_y_loss.json` from the value-regression run and fails immediately if it is missing.
 
 ## Submission order
 
@@ -24,6 +25,7 @@ sbatch hpc/wulver/sigmod2027/run_candidate_label_stats.sbatch
 sbatch hpc/wulver/sigmod2027/run_value_regression_baseline.sbatch
 # after value regression succeeds:
 sbatch hpc/wulver/sigmod2027/run_best_candidate_baseline.sbatch
+sbatch hpc/wulver/sigmod2027/run_feature_pairwise_baseline.sbatch
 ```
 
 Dependency form:
@@ -31,6 +33,7 @@ Dependency form:
 ```bash
 jid_value=$(sbatch --parsable hpc/wulver/sigmod2027/run_value_regression_baseline.sbatch)
 sbatch --dependency=afterok:${jid_value} hpc/wulver/sigmod2027/run_best_candidate_baseline.sbatch
+sbatch --dependency=afterok:${jid_value} hpc/wulver/sigmod2027/run_feature_pairwise_baseline.sbatch
 ```
 
 ## Notes
