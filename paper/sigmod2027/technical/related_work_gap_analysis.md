@@ -69,6 +69,10 @@ The manuscript now states explicitly that:
 - `CacheQuery`
 - `Thesios`
 - `QD-LP` / "FIFO can be Better than LRU: the Power of Lazy Promotion and Quick Demotion"
+- `LRB` ("Learning Relaxed Belady")
+- `LHD` ("Learning Cache Replacement with Cacheus" is `rodriguez2021cacheus`, already cited; `LHD` refers to the separate "Least Hit Density" replacement policy)
+- `GL-Cache`
+- `FOO` / `PFOO` (approximate-Belady offline algorithms)
 
 These names came from the external investigation, but this repo does not currently contain verified BibTeX metadata for them in `paper/sigmod2027/latex/refs.bib` or a corresponding verified reference-audit entry. They should be added only after a separate metadata pass against authoritative sources.
 

@@ -52,7 +52,7 @@ old batching/carryover logic reproduced 2,366,413 bit-for-bit, and a direct
 
 Full rerun of `run_best_candidate_baseline.py` (`linear_score` mode) against
 all 168 manifest-listed candidate partitions on the preserved open release
-(Slurm, `general` partition; the run required more than 8 hours of wall
+(the cluster's `general` partition; the run required more than 8 hours of wall
 clock and was resumed once via its built-in checkpoint/`--resume` support —
 this matches the wall-clock profile of the original, pre-fix evaluator run
 on the same hardware, so it is not a performance regression from this fix).

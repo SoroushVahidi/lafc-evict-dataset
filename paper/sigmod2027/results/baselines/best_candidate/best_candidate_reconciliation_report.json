@@ -17,7 +17,7 @@
     "tests/test_sigmod_result_runners.py::test_best_candidate_runner_decision_count_matches_decision_view_row_count"
   ],
   "regeneration": {
-    "method": "Full rerun of scripts/sigmod2027/run_best_candidate_baseline.py (linear_score mode) against all 168 manifest-listed candidate partitions on the preserved open release, via Slurm (general partition), using the corrected evaluator code.",
+    "method": "Full rerun of scripts/sigmod2027/run_best_candidate_baseline.py (linear_score mode) against all 168 manifest-listed candidate partitions on the preserved open release, via the cluster's batch scheduler (general partition), using the corrected evaluator code.",
     "files_total": 168,
     "files_processed": 168,
     "old_evaluator_decision_count": 2366413,
