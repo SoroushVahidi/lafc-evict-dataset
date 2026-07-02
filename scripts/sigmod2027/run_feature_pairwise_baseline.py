@@ -129,14 +129,78 @@ def fit_predict_1d(feature_diff: np.ndarray, target: np.ndarray, train_mask: np.
     return y_pred, y_prob, model_info
 
 
+def _safe_div(numerator: float, denominator: float) -> float | None:
+    return float(numerator) / denominator if denominator else None
+
+
+def _f1(precision: float | None, recall: float | None) -> float | None:
+    if precision is None or recall is None:
+        return None
+    if precision + recall == 0:
+        return 0.0
+    return float(2 * precision * recall / (precision + recall))
+
+
+def compute_auroc(y_true: np.ndarray, y_prob: np.ndarray | None) -> float | None:
+    """Rank-based (Mann-Whitney U) AUROC; avoids an sklearn dependency."""
+    if y_prob is None or len(y_true) == 0:
+        return None
+    n_pos = int((y_true == 1).sum())
+    n_neg = int((y_true == 0).sum())
+    if n_pos == 0 or n_neg == 0:
+        return None
+    order = np.argsort(y_prob, kind="mergesort")
+    sorted_probs = y_prob[order]
+    ranks_sorted = np.arange(1, len(y_prob) + 1, dtype=float)
+    i = 0
+    n = len(sorted_probs)
+    while i < n:
+        j = i
+        while j + 1 < n and sorted_probs[j + 1] == sorted_probs[i]:
+            j += 1
+        if j > i:
+            ranks_sorted[i : j + 1] = ranks_sorted[i : j + 1].mean()
+        i = j + 1
+    ranks = np.empty(len(y_prob), dtype=float)
+    ranks[order] = ranks_sorted
+    sum_ranks_pos = ranks[y_true == 1].sum()
+    return float((sum_ranks_pos - n_pos * (n_pos + 1) / 2.0) / (n_pos * n_neg))
+
+
 def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray, y_prob: np.ndarray | None) -> dict[str, object]:
     accuracy = float((y_pred == y_true).mean()) if len(y_true) else None
     log_loss = binary_log_loss(y_true, y_prob) if y_prob is not None and len(y_true) else None
+
+    tp = int(((y_pred == 1) & (y_true == 1)).sum())
+    tn = int(((y_pred == 0) & (y_true == 0)).sum())
+    fp = int(((y_pred == 1) & (y_true == 0)).sum())
+    fn = int(((y_pred == 0) & (y_true == 1)).sum())
+
+    recall_a_better = _safe_div(tp, tp + fn) if len(y_true) else None
+    recall_b_better = _safe_div(tn, tn + fp) if len(y_true) else None
+    precision_a_better = _safe_div(tp, tp + fp) if len(y_true) else None
+    precision_b_better = _safe_div(tn, tn + fn) if len(y_true) else None
+    balanced_accuracy = (
+        (recall_a_better + recall_b_better) / 2.0
+        if recall_a_better is not None and recall_b_better is not None
+        else None
+    )
+    f1_a_better = _f1(precision_a_better, recall_a_better)
+    f1_b_better = _f1(precision_b_better, recall_b_better)
+    macro_f1 = (
+        (f1_a_better + f1_b_better) / 2.0 if f1_a_better is not None and f1_b_better is not None else None
+    )
+
     return {
         "rows": int(len(y_true)),
         "positive_rate": float(y_true.mean()) if len(y_true) else None,
         "accuracy": accuracy,
+        "balanced_accuracy": balanced_accuracy,
         "log_loss": log_loss,
+        "recall_a_better": recall_a_better,
+        "recall_b_better": recall_b_better,
+        "macro_f1": macro_f1,
+        "auroc": compute_auroc(y_true, y_prob),
     }
 
 
@@ -266,32 +330,47 @@ def build_markdown(payload: dict[str, object]) -> str:
     lines.append(f"- tie rows skipped: {payload['tie_row_count']:,}")
     lines.append(f"- full real-release validation: {payload['full_validation_status']}")
     lines.append("")
+    def _fmt(value: float | None) -> str:
+        return "" if value is None else f"{value:.4f}"
+
     lines.append("## Overall results")
     lines.append("")
-    lines.append("| Baseline | Rows | Accuracy | Log loss |")
-    lines.append("| --- | --- | --- | --- |")
+    lines.append(
+        "| Baseline | Rows | Accuracy | Balanced accuracy | Log loss | Recall (a_better) | "
+        "Recall (b_better) | Macro F1 | AUROC |"
+    )
+    lines.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- |")
     for name, baseline in payload["baselines"].items():
-        overall = baseline["overall"]
-        accuracy = overall["accuracy"]
-        log_loss = overall["log_loss"]
+        overall = baseline.get("overall")
+        if overall is None:
+            continue
         lines.append(
-            f"| `{name}` | {overall['rows']:,} | "
-            f"{'' if accuracy is None else f'{accuracy:.4f}'} | "
-            f"{'' if log_loss is None else f'{log_loss:.4f}'} |"
+            f"| `{name}` | {overall['rows']:,} | {_fmt(overall['accuracy'])} | "
+            f"{_fmt(overall.get('balanced_accuracy'))} | {_fmt(overall['log_loss'])} | "
+            f"{_fmt(overall.get('recall_a_better'))} | {_fmt(overall.get('recall_b_better'))} | "
+            f"{_fmt(overall.get('macro_f1'))} | {_fmt(overall.get('auroc'))} |"
         )
     lines.append("")
     lines.append("## Split-level results")
     lines.append("")
-    lines.append("| Baseline | Split | Rows | Positive rate | Accuracy | Log loss |")
-    lines.append("| --- | --- | --- | --- | --- | --- |")
+    lines.append(
+        "| Baseline | Split | Rows | Positive rate | Accuracy | Balanced accuracy | Log loss | "
+        "Recall (a_better) | Recall (b_better) | Macro F1 | AUROC |"
+    )
+    lines.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |")
     for name, baseline in payload["baselines"].items():
+        if "split_metrics" not in baseline:
+            continue
         for split in SPLITS:
             metrics = baseline["split_metrics"].get(split)
             if metrics is None:
                 continue
             lines.append(
-                f"| `{name}` | `{split}` | {metrics['rows']:,} | {metrics['positive_rate']:.4f} | "
-                f"{metrics['accuracy']:.4f} | {metrics['log_loss']:.4f} |"
+                f"| `{name}` | `{split}` | {metrics['rows']:,} | {_fmt(metrics['positive_rate'])} | "
+                f"{_fmt(metrics['accuracy'])} | {_fmt(metrics.get('balanced_accuracy'))} | "
+                f"{_fmt(metrics['log_loss'])} | {_fmt(metrics.get('recall_a_better'))} | "
+                f"{_fmt(metrics.get('recall_b_better'))} | {_fmt(metrics.get('macro_f1'))} | "
+                f"{_fmt(metrics.get('auroc'))} |"
             )
     lines.append("")
     lines.append("## Notes on class imbalance")

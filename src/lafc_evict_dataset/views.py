@@ -1,10 +1,16 @@
 from __future__ import annotations
 
+import hashlib
 from itertools import combinations
 
 import pandas as pd
 
-from .schema import CANONICAL_COLUMNS, DECISION_KEY_COLUMNS, DECISION_METADATA_COLUMNS
+from .schema import CANONICAL_COLUMNS, DECISION_METADATA_COLUMNS
+
+# Version tag mixed into the pairwise A/B orientation hash below (see
+# real_release_build.PAIRWISE_ORIENTATION_METHOD for the DuckDB-side
+# counterpart -- same method name, independent per-engine implementation).
+PAIRWISE_ORIENTATION_METHOD = "deterministic_hash_v1"
 
 DECISION_VIEW_VALUE_COLUMNS = [
     "candidate_count",
@@ -28,10 +34,27 @@ def _candidate_specific_columns() -> list[str]:
 
 
 def _with_regret(df: pd.DataFrame) -> pd.DataFrame:
+    # Must group by the full canonical decision key (DECISION_METADATA_COLUMNS),
+    # not a narrower key: grouping by fewer columns can silently pool y_loss
+    # across two distinct decisions that happen to share e.g. decision_id but
+    # differ in dataset_source/decision_t/decision_chunk_id, understating regret.
     out = df.copy()
-    out["best_y_loss"] = out.groupby(DECISION_KEY_COLUMNS)["y_loss"].transform("min")
+    out["best_y_loss"] = out.groupby(DECISION_METADATA_COLUMNS)["y_loss"].transform("min")
     out["regret"] = out["y_loss"] - out["best_y_loss"]
     return out
+
+
+def _orientation_swap(parts: list[object]) -> bool:
+    """Deterministic pseudo-random A/B swap decision (PAIRWISE_ORIENTATION_METHOD).
+
+    Uses a stable cryptographic hash (not Python's salted built-in hash())
+    over the decision key plus the two candidate ids, so the result is
+    reproducible across runs/machines and is not correlated with
+    candidate_page_id ordering.
+    """
+    key = "|".join(str(part) for part in parts) + f"|{PAIRWISE_ORIENTATION_METHOD}"
+    digest = hashlib.sha256(key.encode("utf-8")).digest()
+    return (digest[-1] % 2) == 1
 
 
 def build_decision_view(df: pd.DataFrame) -> pd.DataFrame:
@@ -68,7 +91,15 @@ def build_pairwise_view(df: pd.DataFrame, *, include_ties: bool = False) -> pd.D
     for group_key, group in rows.groupby(group_cols, dropna=False, sort=True):
         shared = dict(zip(group_cols, group_key))
         records = group.sort_values("candidate_page_id").to_dict(orient="records")
-        for left, right in combinations(records, 2):
+        for low, high in combinations(records, 2):
+            # `low`/`high` are ordered by candidate_page_id purely to enumerate
+            # each unordered pair exactly once. The actual A/B slot assignment
+            # is decided separately below by a deterministic hash, so which
+            # candidate lands in "a" is not systematically tied to id ordering.
+            swap = _orientation_swap(
+                [*group_key, low["candidate_page_id"], high["candidate_page_id"]]
+            )
+            left, right = (high, low) if swap else (low, high)
             left_regret = float(left["regret"])
             right_regret = float(right["regret"])
             is_tie = left_regret == right_regret

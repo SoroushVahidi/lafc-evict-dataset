@@ -294,5 +294,63 @@ def test_feature_pairwise_baseline_runs_without_crashing(tiny_release: Path, tmp
         assert baseline.get("status") != "skipped", f"{name} unexpectedly skipped: {baseline}"
         assert baseline["overall"]["accuracy"] is not None
         assert baseline["overall"]["log_loss"] is not None
+        assert baseline["overall"]["balanced_accuracy"] is not None
+        assert baseline["overall"]["recall_a_better"] is not None
+        assert baseline["overall"]["recall_b_better"] is not None
+        assert baseline["overall"]["auroc"] is not None
         for split_metrics in baseline["split_metrics"].values():
             assert split_metrics["rows"] > 0
+
+
+def test_compute_metrics_reports_balanced_accuracy_recalls_and_auroc() -> None:
+    import numpy as np
+
+    module = _load_module("run_feature_pairwise_baseline")
+
+    y_true = np.array([1, 1, 1, 1, 0, 0, 0, 0])
+    y_pred = np.array([1, 1, 0, 0, 0, 0, 1, 1])
+    y_prob = np.array([0.9, 0.8, 0.7, 0.6, 0.4, 0.3, 0.2, 0.1])
+
+    metrics = module.compute_metrics(y_true, y_pred, y_prob)
+
+    assert metrics["accuracy"] == pytest.approx(0.5)
+    assert metrics["recall_a_better"] == pytest.approx(0.5)
+    assert metrics["recall_b_better"] == pytest.approx(0.5)
+    assert metrics["balanced_accuracy"] == pytest.approx(0.5)
+    assert metrics["macro_f1"] == pytest.approx(0.5)
+    # y_prob perfectly separates the classes (all positives score higher than all negatives).
+    assert metrics["auroc"] == pytest.approx(1.0)
+
+
+def test_compute_metrics_macro_f1_is_none_when_a_better_precision_undefined() -> None:
+    import numpy as np
+
+    module = _load_module("run_feature_pairwise_baseline")
+
+    # Model never predicts the positive class (a_better): precision_a_better is 0/0.
+    y_true = np.array([1, 1, 0, 0])
+    y_pred = np.array([0, 0, 0, 0])
+    y_prob = np.array([0.4, 0.3, 0.2, 0.1])
+
+    metrics = module.compute_metrics(y_true, y_pred, y_prob)
+
+    assert metrics["recall_a_better"] == pytest.approx(0.0)
+    assert metrics["recall_b_better"] == pytest.approx(1.0)
+    assert metrics["balanced_accuracy"] == pytest.approx(0.5)
+    assert metrics["macro_f1"] is None
+
+
+def test_compute_auroc_matches_known_values() -> None:
+    import numpy as np
+
+    module = _load_module("run_feature_pairwise_baseline")
+
+    y_true = np.array([0, 0, 1, 1])
+    y_prob_perfect = np.array([0.1, 0.2, 0.8, 0.9])
+    y_prob_random = np.array([0.5, 0.5, 0.5, 0.5])
+    y_prob_inverted = np.array([0.9, 0.8, 0.2, 0.1])
+
+    assert module.compute_auroc(y_true, y_prob_perfect) == pytest.approx(1.0)
+    assert module.compute_auroc(y_true, y_prob_random) == pytest.approx(0.5)
+    assert module.compute_auroc(y_true, y_prob_inverted) == pytest.approx(0.0)
+    assert module.compute_auroc(np.array([1, 1, 1]), np.array([0.5, 0.6, 0.7])) is None
