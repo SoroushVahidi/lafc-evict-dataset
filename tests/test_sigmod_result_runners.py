@@ -11,6 +11,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 from lafc_evict_dataset.release import build_sample_release
+from lafc_evict_dataset.schema import DECISION_METADATA_COLUMNS
 
 
 def _repo_root() -> Path:
@@ -396,6 +397,103 @@ def test_best_candidate_runner_rejects_duplicate_manifest_partitions(tmp_path: P
                 "candidate_is_lru_victim",
             ]
         )
+
+
+def test_decision_key_columns_is_canonical_nine_column_key() -> None:
+    module = _load_sigmod_module("_baseline_common")
+    assert module.decision_key_columns() == list(DECISION_METADATA_COLUMNS)
+    assert len(module.decision_key_columns()) == 9
+
+
+def test_best_candidate_runner_distinguishes_decisions_sharing_old_six_column_key(tmp_path: Path) -> None:
+    """Regression test for the evaluator over-/under-counting bug.
+
+    Two logical decisions here share every column of the old, narrower
+    6-column key (split, trace_family, trace_name, capacity, horizon,
+    decision_id) but differ in dataset_source. Their rows are interleaved
+    non-contiguously in a single partition file. The old key would collapse
+    them into one groupby group (undercounting); the canonical 9-column key
+    must keep them separate.
+    """
+    base = pd.read_csv(_example_path())
+    d1 = base[base["decision_id"] == "d1"].reset_index(drop=True)
+
+    decision_a = d1.copy()
+    decision_a["dataset_source"] = "synthetic"
+
+    decision_b = d1.copy()
+    decision_b["dataset_source"] = "synthetic_alt"
+    decision_b["candidate_page_id"] = decision_b["candidate_page_id"] + "2"
+
+    old_six_col_key = ["split", "trace_family", "trace_name", "capacity", "horizon", "decision_id"]
+    combined = pd.concat(
+        [
+            decision_a.iloc[[0]],
+            decision_b.iloc[[0]],
+            decision_a.iloc[[1]],
+            decision_b.iloc[[1]],
+            decision_a.iloc[[2]],
+            decision_b.iloc[[2]],
+        ],
+        ignore_index=True,
+    )
+
+    # Sanity check: the old 6-column key really does collapse these two
+    # logical decisions into a single group (the bug this test guards against).
+    old_key_group_count = combined.groupby(old_six_col_key, sort=False).ngroups
+    assert old_key_group_count == 1
+
+    # The canonical 9-column key must see them as two distinct decisions.
+    nine_col_group_count = combined.groupby(list(DECISION_METADATA_COLUMNS), sort=False, dropna=False).ngroups
+    assert nine_col_group_count == 2
+
+    release_root = _write_manual_release(
+        tmp_path / "manual-release-collision",
+        [("data/candidate_rows/part-000.parquet", combined)],
+    )
+
+    module = _load_sigmod_module("run_best_candidate_baseline")
+    output_dir = tmp_path / "best-manual-collision"
+    module.main(
+        [
+            "--release-root",
+            str(release_root),
+            "--output-dir",
+            str(output_dir),
+            "--mode",
+            "run",
+            "--score-column",
+            "candidate_is_lru_victim",
+        ]
+    )
+    payload = json.loads((output_dir / "best_candidate_from_candidate_is_lru_victim.json").read_text(encoding="utf-8"))
+    assert payload["overall_metrics"]["decision_count"] == 2
+
+
+def test_best_candidate_runner_decision_count_matches_decision_view_row_count(
+    sample_release: Path, tmp_path: Path
+) -> None:
+    manifest = json.loads((sample_release / "metadata" / "release_manifest.json").read_text(encoding="utf-8"))
+    expected_decision_count = manifest["row_counts"]["decision_view"]
+
+    module = _load_sigmod_module("run_best_candidate_baseline")
+    output_dir = tmp_path / "best-candidate-smoke"
+    module.main(
+        [
+            "--release-root",
+            str(sample_release),
+            "--output-dir",
+            str(output_dir),
+            "--mode",
+            "run",
+            "--score-column",
+            "candidate_is_lru_victim",
+        ]
+    )
+    payload = json.loads(
+        (output_dir / "best_candidate_from_candidate_is_lru_victim.json").read_text(encoding="utf-8")
+    )
+    assert payload["overall_metrics"]["decision_count"] == expected_decision_count
 
 
 def test_output_guard_rejects_release_root_destinations(sample_release: Path) -> None:

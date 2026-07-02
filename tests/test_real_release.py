@@ -584,6 +584,132 @@ def test_build_real_release_pairwise_sample_stage_respects_caps(tmp_path: Path) 
     assert pairwise.groupby(["decision_id", "capacity", "horizon", "split", "trace_family", "trace_name"]).size().max() <= 1
 
 
+def test_build_real_release_records_pairwise_orientation_method(tmp_path: Path) -> None:
+    manifest_path, selection_path, _ = _build_candidate_fixture(tmp_path)
+    output_dir = tmp_path / "release"
+
+    build_real_release(
+        input_manifest=manifest_path,
+        family_selection=selection_path,
+        output_dir=output_dir,
+        dataset_id="lafc-evict-v0.1-open",
+        repo_root=_repo_root(),
+        dry_run=False,
+        overwrite=True,
+        skip_disk_space_check=True,
+        pairwise_sample=True,
+        max_pairwise_rows=100,
+        max_pairs_per_decision=4,
+        pairwise_seed=7,
+        duckdb_temp_dir=tmp_path / ".duckdb_tmp",
+    )
+
+    manifest = json.loads((output_dir / "metadata" / "release_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["pairwise_sample"]["orientation_method"] == "deterministic_hash_v1"
+
+
+def _write_candidate_partition_for_orientation_fixture(path: Path, num_decisions: int) -> None:
+    columns = [
+        "trace_name",
+        "trace_family",
+        "dataset_source",
+        "capacity",
+        "horizon",
+        "decision_id",
+        "decision_t",
+        "decision_chunk_id",
+        "candidate_page_id",
+        "split",
+        "y_loss",
+        "y_value",
+    ]
+    rows = []
+    for index in range(num_decisions):
+        decision_id = f"d{index:04d}"
+        rows.append(
+            ["t1", "cloudphysics", "src", 32, 4, decision_id, index, 0, "lo", "train", 1.0, -1.0]
+        )
+        rows.append(
+            ["t1", "cloudphysics", "src", 32, 4, decision_id, index, 0, "hi", "train", 2.0, -2.0]
+        )
+    frame = pd.DataFrame(rows, columns=columns)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    frame.to_parquet(path, index=False)
+
+
+def test_build_pairwise_sample_orientation_is_deterministic_and_reproducible(tmp_path: Path) -> None:
+    from lafc_evict_dataset.real_release_build import _build_pairwise_sample
+
+    candidate_path = tmp_path / "candidate_rows" / "candidate_rows.parquet"
+    _write_candidate_partition_for_orientation_fixture(candidate_path, num_decisions=30)
+
+    con = _duckdb_connect(duckdb_temp_dir=tmp_path / ".duckdb_tmp")
+    try:
+        _register_candidate_partitions(con, candidate_path.parent)
+        first_path = tmp_path / "pairwise_first.parquet"
+        second_path = tmp_path / "pairwise_second.parquet"
+        _build_pairwise_sample(
+            con,
+            pairwise_sample_path=first_path,
+            max_pairwise_rows=1000,
+            max_pairs_per_decision=8,
+            pairwise_seed=7,
+        )
+        _build_pairwise_sample(
+            con,
+            pairwise_sample_path=second_path,
+            max_pairwise_rows=1000,
+            max_pairs_per_decision=8,
+            pairwise_seed=7,
+        )
+    finally:
+        con.close()
+
+    first = pd.read_parquet(first_path).sort_values(["decision_id"]).reset_index(drop=True)
+    second = pd.read_parquet(second_path).sort_values(["decision_id"]).reset_index(drop=True)
+    pd.testing.assert_frame_equal(first, second)
+
+
+def test_build_pairwise_sample_orientation_not_lexicographic_by_candidate_id(tmp_path: Path) -> None:
+    from lafc_evict_dataset.real_release_build import _build_pairwise_sample
+
+    candidate_path = tmp_path / "candidate_rows" / "candidate_rows.parquet"
+    _write_candidate_partition_for_orientation_fixture(candidate_path, num_decisions=30)
+
+    con = _duckdb_connect(duckdb_temp_dir=tmp_path / ".duckdb_tmp")
+    try:
+        _register_candidate_partitions(con, candidate_path.parent)
+        pairwise_path = tmp_path / "pairwise.parquet"
+        _build_pairwise_sample(
+            con,
+            pairwise_sample_path=pairwise_path,
+            max_pairwise_rows=1000,
+            max_pairs_per_decision=8,
+            pairwise_seed=7,
+        )
+    finally:
+        con.close()
+
+    pairwise = pd.read_parquet(pairwise_path)
+    assert len(pairwise) == 30
+
+    # "lo" always has the lower candidate_page_id lexicographically (and the
+    # lower, hence "better", y_loss=1.0; "hi" has y_loss=2.0). If orientation
+    # were still lexicographic, candidate_a_page_id would be "lo" every time;
+    # a deterministic hash must break that pattern across 30 independent
+    # decisions.
+    a_is_lo = pairwise["candidate_a_page_id"] == "lo"
+    assert a_is_lo.any()
+    assert not a_is_lo.all()
+
+    # Label correctness must hold regardless of which slot "lo" (the lower
+    # y_loss, hence "better", candidate) landed in.
+    assert (pairwise.loc[a_is_lo, "label_a_better"] == 1).all()
+    assert (pairwise.loc[a_is_lo, "label_b_better"] == 0).all()
+    assert (pairwise.loc[~a_is_lo, "label_b_better"] == 1).all()
+    assert (pairwise.loc[~a_is_lo, "label_a_better"] == 0).all()
+
+
 def test_build_real_release_resume_skips_existing_non_empty_stage_outputs(tmp_path: Path) -> None:
     manifest_path, selection_path, _ = _build_candidate_fixture(tmp_path)
     output_dir = tmp_path / "release"

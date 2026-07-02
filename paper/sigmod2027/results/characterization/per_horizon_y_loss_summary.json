@@ -1,0 +1,57 @@
+{
+  "git_commit": "688fe655d4ae1ca68a54a314396768f78aa51fb9",
+  "group_by": [
+    "horizon"
+  ],
+  "horizon_summaries": [
+    {
+      "count": 92665024,
+      "horizon": 4,
+      "max": 4.0,
+      "mean": 3.3371267351098943,
+      "min": 0.0,
+      "q05": 1.0,
+      "q25": 3.0,
+      "q50": 4.0,
+      "q75": 4.0,
+      "q95": 4.0,
+      "std": 0.9565682540329045
+    },
+    {
+      "count": 92665024,
+      "horizon": 8,
+      "max": 8.0,
+      "mean": 6.660058135850696,
+      "min": 0.0,
+      "q05": 3.0,
+      "q25": 6.0,
+      "q50": 7.1062715974450725,
+      "q75": 8.0,
+      "q95": 8.0,
+      "std": 1.696526151628257
+    },
+    {
+      "count": 92665024,
+      "horizon": 16,
+      "max": 16.0,
+      "mean": 13.271164975902883,
+      "min": 0.0,
+      "q05": 7.000159684072152,
+      "q25": 11.0,
+      "q50": 14.100478395826997,
+      "q75": 16.0,
+      "q95": 16.0,
+      "std": 3.169567901332877
+    }
+  ],
+  "input_view": "candidate_rows",
+  "method": "DuckDB aggregate scan over all candidate_rows partitions (COUNT, AVG, STDDEV_POP, MIN, MAX exact; quantiles via APPROX_QUANTILE, T-Digest based)",
+  "notes": [
+    "y_loss is scanned directly from candidate_rows (one row per candidate per decision), not from decision_view.",
+    "Exact QUANTILE_CONT was infeasible at this row count on the available execution environment; APPROX_QUANTILE is used instead and is marked accordingly."
+  ],
+  "quantiles_approximate": true,
+  "status": "available",
+  "task": "per_horizon_y_loss_summary",
+  "timestamp_utc": "2026-07-02T00:41:30Z"
+}

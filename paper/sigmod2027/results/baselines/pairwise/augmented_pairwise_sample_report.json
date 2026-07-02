@@ -30,7 +30,7 @@
     "recent_candidate_hit_rate"
   ],
   "full_validation_status": "passed",
-  "git_commit": "42563745050e890c8a72aee39d9f969b3aa7aa32",
+  "git_commit": "688fe655d4ae1ca68a54a314396768f78aa51fb9",
   "input_path": "release/<evaluated-open-release>/data/pairwise_sample/pairwise_sample.parquet",
   "input_rows": 1000000,
   "join_key_columns": [
@@ -81,5 +81,5 @@
   "safe_for_anonymous_manuscript": true,
   "status": "available",
   "task": "build_augmented_pairwise_sample",
-  "timestamp_utc": "2026-07-01T17:51:36+00:00"
+  "timestamp_utc": "2026-07-02T01:01:25+00:00"
 }
