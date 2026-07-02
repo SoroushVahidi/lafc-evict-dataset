@@ -1,0 +1,48 @@
+{
+  "task": "best_candidate_reconciliation",
+  "status": "resolved",
+  "true_9col_distinct_decisions": 2363286,
+  "old_exact_replica_evaluator_count": 2366413,
+  "old_observed_mismatch": 3127,
+  "root_cause": "The best-candidate evaluator grouped candidate rows by a 6-column key (split, trace_family, trace_name, capacity, horizon, decision_id) instead of the true 9-column canonical decision key (adding dataset_source, decision_t, decision_chunk_id), and streamed candidate partitions in fixed-size batches with a carryover mechanism that assumed each decision's rows were contiguous within a partition. When a decision's rows were not contiguous, the carryover logic could flush the same physical decision across two separate 'complete' chunks, each independently grouped and counted, double-counting exactly 3,127 decisions with zero compensating undercounts (an exact replica of the old batching/carryover logic reproduced 2,366,413 bit-for-bit, and a direct decision_view query confirmed zero 6-column keys ever collapse two distinct 9-column decisions).",
+  "corrected_evaluator_decision_count": 2363286,
+  "corrected_evaluator_matches_true_decision_view_row_count": true,
+  "fix_summary": {
+    "decision_key_columns_fix": "decision_key_columns() in scripts/sigmod2027/_baseline_common.py now returns the canonical 9-column DECISION_METADATA_COLUMNS (imported from lafc_evict_dataset.schema) instead of a hardcoded 6-column subset.",
+    "contiguity_assumption_removed": "run_best_candidate_baseline.py no longer streams in fixed-size batches with cross-batch/cross-file carryover. Each manifest-listed candidate partition file is read in full and grouped once by the canonical 9-column key. This is correct regardless of row order because every decision's rows live entirely within one partition file (each file covers exactly one (split, trace_family, capacity, horizon) combination, enforced by the existing duplicate_partition_keys() check)."
+  },
+  "tests_added": [
+    "tests/test_sigmod_result_runners.py::test_decision_key_columns_is_canonical_nine_column_key",
+    "tests/test_sigmod_result_runners.py::test_best_candidate_runner_distinguishes_decisions_sharing_old_six_column_key",
+    "tests/test_sigmod_result_runners.py::test_best_candidate_runner_decision_count_matches_decision_view_row_count"
+  ],
+  "regeneration": {
+    "method": "Full rerun of scripts/sigmod2027/run_best_candidate_baseline.py (linear_score mode) against all 168 manifest-listed candidate partitions on the preserved open release, via the cluster's batch scheduler (general partition), using the corrected evaluator code.",
+    "files_total": 168,
+    "files_processed": 168,
+    "old_evaluator_decision_count": 2366413,
+    "new_evaluator_decision_count": 2363286,
+    "old_optimal_selection_rate": null,
+    "new_optimal_selection_rate": 0.8753193646473596,
+    "new_mean_regret": 0.12506950068675565,
+    "new_median_regret": 0.0,
+    "new_max_regret": 3.0
+  },
+  "decision_level_floors": {
+    "note": "Computed directly from decision_view.parquet (2,363,286 rows, one row per true decision) via a single cheap DuckDB aggregation -- no additional full candidate_rows scan required. Not invented metrics: optimal_candidate_count, candidate_count, and regret_mean are existing decision_view fields.",
+    "mean_optimal_set_size": 116.96959614705965,
+    "std_optimal_set_size": 85.12130941791513,
+    "min_optimal_set_size": 16,
+    "max_optimal_set_size": 256,
+    "mean_candidate_count": 117.63073618681784,
+    "random_selector_expected_optimal_selection_rate": 0.9912418754543462,
+    "random_selector_expected_regret": 0.008826200441884731,
+    "observation": "The dataset is heavily tied at the decision level: y_loss is a small bounded integer range (0..horizon), so on average ~99.4% of a decision's candidates already share the minimum y_loss. A uniform-random selector's expected optimal-selection rate (0.9912) and expected regret (0.0088) are therefore both very favorable purely from tie density, and are notably better than the linear_score selector's observed optimal_selection_rate (0.8753) and mean_regret (0.1251) on this release. This is a real characteristic of the corrected data, not a scoring bug: headline optimal_selection_rate/mean_regret numbers should be read alongside this random floor rather than in isolation."
+  },
+  "lru_or_continuation_rank_floor": {
+    "status": "omitted",
+    "reason": "No LRU/continuation-rank best-candidate baseline result already exists in this release, and computing one would require another full 168-file, multi-hour evaluator run (the same architecture just re-run with --score-column candidate_is_lru_victim), which is not cheap. Omitted per instructions rather than invented or approximated."
+  },
+  "no_absolute_or_internal_paths": true,
+  "git_commit": "688fe655d4ae1ca68a54a314396768f78aa51fb9"
+}

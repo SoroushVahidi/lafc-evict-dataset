@@ -75,6 +75,7 @@
 
 - Add additional unbiased-ranking references only if the ranking subsection needs more depth after page budgeting.
 - Add a concrete citation for any benchmark-governance or dataset-documentation framing paper only if it becomes necessary.
+- TODO: LRB (Learning Relaxed Belady), LHD (Least Hit Density), GL-Cache, and FOO/PFOO were named as candidate related-work additions, but this repo has no verified BibTeX metadata for them. Do not cite until a metadata-verification pass confirms exact venue/author/year against an authoritative source; see `paper/sigmod2027/technical/related_work_gap_analysis.md` for the same deferral pattern already used for `libCacheSim`, `cacheMon`, `ChampSim`, `CacheQuery`, `Thesios`, and `QD-LP`.
 
 ## Related-work claims needing explicit source confirmation
 

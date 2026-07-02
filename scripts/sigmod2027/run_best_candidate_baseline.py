@@ -207,10 +207,10 @@ def plan_payload(
         "checkpoint_path": repo_relative(checkpoint),
         "notes": [
             "Plan mode reads release metadata and one candidate partition schema only.",
-            "Run mode assumes candidate rows remain decision-contiguous within each partition, matching the release builder ordering.",
+            "Run mode reads each candidate partition file in full and groups it by the canonical 9-column decision key (decision_key_columns()); it does not assume decision-contiguous row ordering.",
         ],
         "limitations": [
-            "If a future release format ever shards one decision across multiple manifest-listed candidate parquet files, this runner relies on carryover logic rather than decision-view joins.",
+            "Correctness relies on each decision's rows living entirely within one manifest-listed candidate parquet file, enforced by the duplicate_partition_keys() check above. If a future release format ever shards one decision across multiple files, this runner would need to join against decision_view instead.",
         ],
     }
 
@@ -220,7 +220,6 @@ def initial_state(config: dict[str, object]) -> dict[str, object]:
         "stage": "evaluate",
         "scorer": config,
         "next_file_index": 0,
-        "carryover_rows": [],
         "overall": DecisionMetrics().to_state(),
         "groups": {},
     }
@@ -289,20 +288,22 @@ def process_complete_frame(frame: pd.DataFrame, state: dict[str, object], config
         update_metrics(state, group_key, regret)
 
 
-def split_complete_and_carryover(batch: pd.DataFrame, carryover_rows: list[dict[str, object]]) -> tuple[pd.DataFrame, list[dict[str, object]]]:
-    if carryover_rows:
-        batch = pd.concat([pd.DataFrame(carryover_rows), batch], ignore_index=True)
-    if batch.empty:
-        return batch, []
-    last_key = tuple(batch.iloc[-1][column] for column in decision_key_columns())
-    key_frame = batch[decision_key_columns()]
-    matches_last = np.ones(len(batch), dtype=bool)
-    for column, value in zip(decision_key_columns(), last_key):
-        matches_last &= key_frame[column].to_numpy() == value
-    first_last_index = int(np.flatnonzero(matches_last)[0])
-    complete = batch.iloc[:first_last_index].copy()
-    carryover = batch.iloc[first_last_index:].to_dict(orient="records")
-    return complete, carryover
+def read_partition_frame(path: Path, columns: list[str]) -> pd.DataFrame:
+    """Read one manifest-listed candidate partition file in full.
+
+    Every decision's rows live entirely within a single partition file: each
+    manifest partition covers exactly one (split, trace_family, capacity,
+    horizon) combination, and duplicate_partition_keys() rejects manifests
+    with more than one file per combination. So grouping an entire file's
+    rows at once by decision_key_columns() is correct regardless of row
+    order -- no cross-batch or cross-file carryover accounting is needed,
+    which avoids double-counting a decision whose rows are not contiguous
+    within the file (see decision_key_columns() docstring).
+    """
+    batches = list(iter_candidate_batches(path, columns=columns))
+    if not batches:
+        return pd.DataFrame(columns=columns)
+    return pd.concat(batches, ignore_index=True)
 
 
 def result_payload(
@@ -395,14 +396,11 @@ def run(args: argparse.Namespace) -> None:
     required_columns = list(dict.fromkeys(required_columns))
 
     budget = build_file_budget(args.max_files)
-    carryover_rows = state["carryover_rows"]
     for file_index in range(int(state["next_file_index"]), len(inventory)):
         if budget_exhausted(budget):
             break
-        for batch in iter_candidate_batches(inventory[file_index]["path"], columns=required_columns):
-            complete, carryover_rows = split_complete_and_carryover(batch, carryover_rows)
-            process_complete_frame(complete, state, config)
-        state["carryover_rows"] = carryover_rows
+        frame = read_partition_frame(inventory[file_index]["path"], required_columns)
+        process_complete_frame(frame, state, config)
         state["next_file_index"] = file_index + 1
         save_checkpoint(
             checkpoint,
@@ -429,10 +427,6 @@ def run(args: argparse.Namespace) -> None:
             )
         )
         return
-
-    if carryover_rows:
-        process_complete_frame(pd.DataFrame(carryover_rows), state, config)
-        state["carryover_rows"] = []
 
     payload = result_payload(
         release_root=release_root,

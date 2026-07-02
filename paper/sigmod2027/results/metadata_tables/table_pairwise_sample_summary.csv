@@ -1,6 +1,6 @@
 statistic,value,notes
 pairwise rows,1000000,pairwise-sample-backed
 unique decisions represented,118635,pairwise-sample-backed
-label_a_better rows,6134,pairwise-sample-backed
-label_b_better rows,113898,pairwise-sample-backed
-is_tie rows,879968,pairwise-sample-backed
+label_a_better rows,60673,pairwise-sample-backed
+label_b_better rows,61065,pairwise-sample-backed
+is_tie rows,878262,pairwise-sample-backed

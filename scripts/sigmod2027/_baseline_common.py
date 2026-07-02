@@ -20,7 +20,11 @@ SRC_ROOT = REPO_ROOT / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
-from lafc_evict_dataset.schema import BASE_REQUIRED_COLUMNS, FEATURE_COLUMNS  # noqa: E402
+from lafc_evict_dataset.schema import (  # noqa: E402
+    BASE_REQUIRED_COLUMNS,
+    DECISION_METADATA_COLUMNS,
+    FEATURE_COLUMNS,
+)
 
 DEFAULT_BATCH_SIZE = 65_536
 DEFAULT_GROUP_BY = ("split", "trace_family", "capacity", "horizon")
@@ -322,7 +326,16 @@ def available_feature_columns(schema: Sequence[str], requested: Sequence[str] | 
 
 
 def decision_key_columns() -> list[str]:
-    return ["split", "trace_family", "trace_name", "capacity", "horizon", "decision_id"]
+    """Canonical decision identity: the 9-column DECISION_METADATA_COLUMNS key.
+
+    This must match the key used to build decision_view.parquet
+    (see DECISION_METADATA_COLUMNS in lafc_evict_dataset.schema) so that
+    streaming evaluators count exactly one decision per true release decision.
+    A narrower key (e.g. omitting dataset_source/decision_t/decision_chunk_id)
+    can silently double-count a single decision whose rows are not contiguous
+    within a partition.
+    """
+    return list(DECISION_METADATA_COLUMNS)
 
 
 def sanitize_output_name(name: str) -> str:

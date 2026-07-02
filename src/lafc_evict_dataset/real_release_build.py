@@ -21,6 +21,10 @@ from .schema import CANONICAL_COLUMNS, DECISION_METADATA_COLUMNS, SCHEMA_VERSION
 
 DISK_SPACE_MULTIPLIER: Final[float] = 2.0
 DECISION_GROUP_COLUMNS: Final[tuple[str, ...]] = tuple(DECISION_METADATA_COLUMNS)
+# Version tag mixed into the pairwise A/B orientation hash below. Bump this
+# (and the string) if the orientation algorithm ever changes, so that old and
+# new pairwise samples are distinguishable by their "orientation_method".
+PAIRWISE_ORIENTATION_METHOD: Final[str] = "deterministic_hash_v1"
 DEFAULT_DUCKDB_THREADS: Final[int] = 2
 DEFAULT_DUCKDB_MEMORY_LIMIT: Final[str] = "8GB"
 DEFAULT_DUCKDB_TEMP_DIR: Final[str] = ".duckdb_tmp"
@@ -438,10 +442,31 @@ def _build_pairwise_sample(
     max_pairs_per_decision: int,
     pairwise_seed: int,
 ) -> int:
+    """Build the capped pairwise sample.
+
+    Candidate pairs within a decision are first enumerated as an unordered
+    pair via a lexicographic join (candidate_id_low < candidate_id_high) --
+    this is only used to enumerate each unordered pair exactly once and to
+    rank/cap pairs per decision deterministically. The final A/B orientation
+    exposed in candidate_a_page_id/candidate_b_page_id is decided separately
+    by a deterministic hash over stable decision + pair-identity fields
+    (PAIRWISE_ORIENTATION_METHOD), so which candidate lands in slot A is not
+    systematically correlated with candidate_page_id ordering.
+    """
     ensure_parent(pairwise_sample_path)
     group_cols = DECISION_GROUP_COLUMNS
     group_list = ", ".join(group_cols)
     join_same_decision = " AND ".join(f"a.{col} = b.{col}" for col in group_cols)
+    # NOTE: this expression is evaluated against the `pairs` CTE (aliased as
+    # `oriented`), whose columns are plain names (trace_name, capacity, ...),
+    # not table-qualified -- unlike join_same_decision above, which runs
+    # against the raw `candidates a`/`candidates b` join.
+    orientation_hash_expr = (
+        "hash(concat_ws('|', "
+        + ", ".join(f"CAST({col} AS VARCHAR)" for col in group_cols)
+        + ", candidate_id_low, candidate_id_high, "
+        + f"{PAIRWISE_ORIENTATION_METHOD!r}))"
+    )
     con.execute(
         f"""
         COPY (
@@ -463,14 +488,10 @@ def _build_pairwise_sample(
             pairs AS (
                 SELECT
                     {", ".join(f"a.{col}" for col in group_cols)},
-                    CAST(a.candidate_page_id AS VARCHAR) AS candidate_a_page_id,
-                    CAST(b.candidate_page_id AS VARCHAR) AS candidate_b_page_id,
-                    a.y_loss AS y_loss_a,
-                    b.y_loss AS y_loss_b,
-                    (a.y_loss - b.y_loss) AS y_loss_diff_a_minus_b,
-                    CASE WHEN a.y_loss < b.y_loss THEN 1 ELSE 0 END AS label_a_better,
-                    CASE WHEN b.y_loss < a.y_loss THEN 1 ELSE 0 END AS label_b_better,
-                    CASE WHEN a.y_loss = b.y_loss THEN 1 ELSE 0 END AS is_tie,
+                    CAST(a.candidate_page_id AS VARCHAR) AS candidate_id_low,
+                    CAST(b.candidate_page_id AS VARCHAR) AS candidate_id_high,
+                    a.y_loss AS y_loss_low,
+                    b.y_loss AS y_loss_high,
                     row_number() OVER (
                         PARTITION BY {", ".join(f"a.{col}" for col in group_cols)}
                         ORDER BY CAST(a.candidate_page_id AS VARCHAR), CAST(b.candidate_page_id AS VARCHAR)
@@ -481,20 +502,35 @@ def _build_pairwise_sample(
                     AND CAST(a.candidate_page_id AS VARCHAR) < CAST(b.candidate_page_id AS VARCHAR)
                 INNER JOIN sampled_decisions d
                     ON {" AND ".join(f"a.{col} = d.{col}" for col in group_cols)}
+            ),
+            oriented AS (
+                SELECT
+                    *,
+                    ({orientation_hash_expr} % 2 = 1) AS swap_orientation
+                FROM pairs
             )
             SELECT
                 {group_list},
-                candidate_a_page_id,
-                candidate_b_page_id,
-                y_loss_a,
-                y_loss_b,
-                y_loss_diff_a_minus_b,
-                label_a_better,
-                label_b_better,
-                is_tie
-            FROM pairs
+                CASE WHEN swap_orientation THEN candidate_id_high ELSE candidate_id_low END AS candidate_a_page_id,
+                CASE WHEN swap_orientation THEN candidate_id_low ELSE candidate_id_high END AS candidate_b_page_id,
+                CASE WHEN swap_orientation THEN y_loss_high ELSE y_loss_low END AS y_loss_a,
+                CASE WHEN swap_orientation THEN y_loss_low ELSE y_loss_high END AS y_loss_b,
+                (
+                    CASE WHEN swap_orientation THEN y_loss_high ELSE y_loss_low END
+                    - CASE WHEN swap_orientation THEN y_loss_low ELSE y_loss_high END
+                ) AS y_loss_diff_a_minus_b,
+                CASE
+                    WHEN swap_orientation THEN CASE WHEN y_loss_high < y_loss_low THEN 1 ELSE 0 END
+                    ELSE CASE WHEN y_loss_low < y_loss_high THEN 1 ELSE 0 END
+                END AS label_a_better,
+                CASE
+                    WHEN swap_orientation THEN CASE WHEN y_loss_low < y_loss_high THEN 1 ELSE 0 END
+                    ELSE CASE WHEN y_loss_high < y_loss_low THEN 1 ELSE 0 END
+                END AS label_b_better,
+                CASE WHEN y_loss_low = y_loss_high THEN 1 ELSE 0 END AS is_tie
+            FROM oriented
             WHERE pair_rank_in_decision <= {max_pairs_per_decision}
-            ORDER BY {group_list}, candidate_a_page_id, candidate_b_page_id
+            ORDER BY {group_list}, candidate_id_low, candidate_id_high
             LIMIT {max_pairwise_rows}
         )
         TO {pairwise_sample_path.as_posix()!r} (FORMAT PARQUET)
@@ -1096,9 +1132,12 @@ def build_real_release(
                     "max_pairwise_rows": max_pairwise_rows if pairwise_sample else None,
                     "max_pairs_per_decision": max_pairs_per_decision if pairwise_sample else None,
                     "pairwise_seed": pairwise_seed if pairwise_sample else None,
+                    "orientation_method": PAIRWISE_ORIENTATION_METHOD if pairwise_sample else None,
                     "note": (
                         "Full pairwise materialization is intentionally omitted from the default real release "
-                        "because it can grow quadratically with decision size."
+                        "because it can grow quadratically with decision size. Candidate A/B orientation within "
+                        "each pair is assigned by a deterministic hash over stable decision and pair-identity "
+                        "fields (see orientation_method), not by candidate_page_id ordering."
                     ),
                 },
             }

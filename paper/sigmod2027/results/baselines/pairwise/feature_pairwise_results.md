@@ -1,50 +1,49 @@
 # Feature-Based Pairwise Baseline Results
 
 - input file: `paper/sigmod2027/results/baselines/pairwise/augmented_pairwise_sample.parquet`
-- evaluation mode: non-tie rows only (120,032 of 1,000,000 rows)
-- tie rows skipped: 879,968
+- evaluation mode: non-tie rows only (121,738 of 1,000,000 rows)
+- tie rows skipped: 878,262
 - full real-release validation: passed
 
 ## Overall results
 
-| Baseline | Rows | Accuracy | Log loss |
-| --- | --- | --- | --- |
-| `random_non_tie` | 120,032 | 0.4993 | 0.6931 |
-| `majority_non_tie` | 120,032 | 0.9489 | 0.2023 |
-| `lru_score_pairwise` | 120,032 | 0.9596 | 0.1326 |
-| `predictor_score_pairwise` | 120,032 | 0.9489 | 0.2023 |
-| `linear_score_pairwise` | 120,032 | 0.9530 | 0.1072 |
-| `logistic_regression_pairwise` | 120,032 | 0.9676 | 0.0774 |
+| Baseline | Rows | Accuracy | Balanced accuracy | Log loss | Recall (a_better) | Recall (b_better) | Macro F1 | AUROC |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `random_non_tie` | 121,738 | 0.5006 | 0.5006 | 0.6931 | 0.5015 | 0.4998 | 0.5006 | 0.5000 |
+| `majority_non_tie` | 121,738 | 0.5016 | 0.5000 | 0.6931 | 0.0000 | 1.0000 |  | 0.5000 |
+| `lru_score_pairwise` | 121,738 | 0.9225 | 0.9225 | 0.2426 | 0.9222 | 0.9229 | 0.9225 | 0.9654 |
+| `predictor_score_pairwise` | 121,738 | 0.5016 | 0.5000 | 0.6931 | 0.0000 | 1.0000 |  | 0.5000 |
+| `linear_score_pairwise` | 121,738 | 0.9490 | 0.9490 | 0.1161 | 0.9460 | 0.9519 | 0.9490 | 0.9913 |
+| `logistic_regression_pairwise` | 121,738 | 0.9660 | 0.9660 | 0.0824 | 0.9659 | 0.9661 | 0.9660 | 0.9950 |
 
 ## Split-level results
 
-| Baseline | Split | Rows | Positive rate | Accuracy | Log loss |
-| --- | --- | --- | --- | --- | --- |
-| `random_non_tie` | `train` | 74,141 | 0.0590 | 0.4992 | 0.6931 |
-| `random_non_tie` | `val` | 44,080 | 0.0225 | 0.5002 | 0.6931 |
-| `random_non_tie` | `test` | 1,811 | 0.4219 | 0.4815 | 0.6931 |
-| `majority_non_tie` | `train` | 74,141 | 0.0590 | 0.9410 | 0.2243 |
-| `majority_non_tie` | `val` | 44,080 | 0.0225 | 0.9775 | 0.1232 |
-| `majority_non_tie` | `test` | 1,811 | 0.4219 | 0.5781 | 1.2288 |
-| `lru_score_pairwise` | `train` | 74,141 | 0.0590 | 0.9521 | 0.1519 |
-| `lru_score_pairwise` | `val` | 44,080 | 0.0225 | 0.9843 | 0.0710 |
-| `lru_score_pairwise` | `test` | 1,811 | 0.4219 | 0.6637 | 0.8425 |
-| `predictor_score_pairwise` | `train` | 74,141 | 0.0590 | 0.9410 | 0.2243 |
-| `predictor_score_pairwise` | `val` | 44,080 | 0.0225 | 0.9775 | 0.1232 |
-| `predictor_score_pairwise` | `test` | 1,811 | 0.4219 | 0.5781 | 1.2288 |
-| `linear_score_pairwise` | `train` | 74,141 | 0.0590 | 0.9447 | 0.1194 |
-| `linear_score_pairwise` | `val` | 44,080 | 0.0225 | 0.9823 | 0.0654 |
-| `linear_score_pairwise` | `test` | 1,811 | 0.4219 | 0.5837 | 0.6208 |
-| `logistic_regression_pairwise` | `train` | 74,141 | 0.0590 | 0.9607 | 0.0904 |
-| `logistic_regression_pairwise` | `val` | 44,080 | 0.0225 | 0.9897 | 0.0373 |
-| `logistic_regression_pairwise` | `test` | 1,811 | 0.4219 | 0.7151 | 0.5191 |
+| Baseline | Split | Rows | Positive rate | Accuracy | Balanced accuracy | Log loss | Recall (a_better) | Recall (b_better) | Macro F1 | AUROC |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `random_non_tie` | `train` | 75,311 | 0.4970 | 0.5030 | 0.5030 | 0.6931 | 0.5055 | 0.5006 | 0.5030 | 0.5000 |
+| `random_non_tie` | `val` | 44,216 | 0.5000 | 0.4971 | 0.4971 | 0.6931 | 0.4954 | 0.4988 | 0.4971 | 0.5000 |
+| `random_non_tie` | `test` | 2,211 | 0.5147 | 0.4903 | 0.4903 | 0.6931 | 0.4886 | 0.4921 | 0.4902 | 0.5000 |
+| `majority_non_tie` | `train` | 75,311 | 0.4970 | 0.5030 | 0.5000 | 0.6931 | 0.0000 | 1.0000 |  | 0.5000 |
+| `majority_non_tie` | `val` | 44,216 | 0.5000 | 0.5000 | 0.5000 | 0.6932 | 0.0000 | 1.0000 |  | 0.5000 |
+| `majority_non_tie` | `test` | 2,211 | 0.5147 | 0.4853 | 0.5000 | 0.6933 | 0.0000 | 1.0000 |  | 0.5000 |
+| `lru_score_pairwise` | `train` | 75,311 | 0.4970 | 0.9141 | 0.9141 | 0.2642 | 0.9142 | 0.9141 | 0.9141 | 0.9587 |
+| `lru_score_pairwise` | `val` | 44,216 | 0.5000 | 0.9508 | 0.9508 | 0.1715 | 0.9505 | 0.9512 | 0.9508 | 0.9861 |
+| `lru_score_pairwise` | `test` | 2,211 | 0.5147 | 0.6427 | 0.6429 | 0.9285 | 0.6344 | 0.6514 | 0.6427 | 0.6856 |
+| `predictor_score_pairwise` | `train` | 75,311 | 0.4970 | 0.5030 | 0.5000 | 0.6931 | 0.0000 | 1.0000 |  | 0.5000 |
+| `predictor_score_pairwise` | `val` | 44,216 | 0.5000 | 0.5000 | 0.5000 | 0.6932 | 0.0000 | 1.0000 |  | 0.5000 |
+| `predictor_score_pairwise` | `test` | 2,211 | 0.5147 | 0.4853 | 0.5000 | 0.6933 | 0.0000 | 1.0000 |  | 0.5000 |
+| `linear_score_pairwise` | `train` | 75,311 | 0.4970 | 0.9430 | 0.9430 | 0.1273 | 0.9406 | 0.9453 | 0.9430 | 0.9896 |
+| `linear_score_pairwise` | `val` | 44,216 | 0.5000 | 0.9735 | 0.9735 | 0.0753 | 0.9715 | 0.9755 | 0.9735 | 0.9957 |
+| `linear_score_pairwise` | `test` | 2,211 | 0.5147 | 0.6621 | 0.6632 | 0.5512 | 0.6283 | 0.6980 | 0.6621 | 0.7563 |
+| `logistic_regression_pairwise` | `train` | 75,311 | 0.4970 | 0.9598 | 0.9598 | 0.0942 | 0.9601 | 0.9595 | 0.9598 | 0.9938 |
+| `logistic_regression_pairwise` | `val` | 44,216 | 0.5000 | 0.9896 | 0.9896 | 0.0391 | 0.9892 | 0.9899 | 0.9896 | 0.9977 |
+| `logistic_regression_pairwise` | `test` | 2,211 | 0.5147 | 0.7078 | 0.7079 | 0.5494 | 0.7056 | 0.7102 | 0.7077 | 0.7816 |
 
 ## Notes on class imbalance
 
-- train split positive rate (label_a_better=1) is 0.0590.
-- val split positive rate (label_a_better=1) is 0.0225.
-- test split positive rate (label_a_better=1) is 0.4219.
-- Positive rate varies substantially across splits, consistent with the tie-heavy, imbalanced nature of the shipped pairwise sample; headline accuracy numbers should always be read alongside log loss and split-level breakdowns.
+- train split positive rate (label_a_better=1) is 0.4970.
+- val split positive rate (label_a_better=1) is 0.5000.
+- test split positive rate (label_a_better=1) is 0.5147.
 
 ## Limitations
 
