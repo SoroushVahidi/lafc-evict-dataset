@@ -155,6 +155,10 @@ def test_build_preview_release_and_validator(tmp_path: Path) -> None:
 
     manifest = json.loads((release_dir / "metadata" / "release_manifest.json").read_text(encoding="utf-8"))
     assert manifest["release_type"] == "real_data_preview"
+    assert manifest["dataset_name"] == "lafc-evict"
+    assert manifest["dataset_repo"] == "SoroushVahidi/lafc-evict"
+    assert manifest["release_title"] == "LAFC-Evict v0.2 Real-Data Preview"
+    assert manifest["readiness"] == "READY_FOR_PUBLIC_PREVIEW_UPLOAD"
     assert manifest["included_families"] == ["wiki2018"]
     assert sorted(manifest["data_files"]) == [
         "data/cross_family_evict_value_v1.parquet",
@@ -216,7 +220,7 @@ def test_build_v0_2_preview_cli_and_hf_dry_run(tmp_path: Path) -> None:
             "--release-dir",
             str(release_dir),
             "--repo-id",
-            "SoroushVahidi/lafc-evict-sample",
+            "SoroushVahidi/lafc-evict",
             "--repo-type",
             "dataset",
             "--allow-public",

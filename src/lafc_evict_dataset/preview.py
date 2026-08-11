@@ -18,7 +18,7 @@ from .publication import TOKEN_LIKE_PATTERNS, render_hf_dataset_card_metadata
 
 PREVIEW_VERSION = "v0.2"
 PREVIEW_RELEASE_TYPE = "real_data_preview"
-PREVIEW_DATASET_REPO = "SoroushVahidi/lafc-evict-sample"
+PREVIEW_DATASET_REPO = "SoroushVahidi/lafc-evict"
 PREVIEW_RELEASE_NAME = "lafc-evict-v0.2-preview"
 PREVIEW_SEED = "lafc-evict-sample-v0.2-preview-seed-20260811"
 PSEUDONYM_SALT = "lafc-evict-v0.2-public-preview-object-id-v1"
@@ -382,11 +382,11 @@ def write_provenance_summary(output_path: Path) -> None:
 
 def render_preview_readme(*, stats: dict[str, object], dataset_repo: str) -> str:
     metadata = render_hf_dataset_card_metadata(
-        dataset_name="lafc-evict-sample",
+        dataset_name="lafc-evict",
         release_type=PREVIEW_RELEASE_TYPE,
         candidate_row_count=int(stats["totals"]["row_count"]),
-        license_id="other",
-        pretty_name="LAFC-Evict Sample v0.2 Real-Data Preview",
+        license_id="cc0-1.0",
+        pretty_name="LAFC-Evict v0.2 Real-Data Preview",
         extra_tags=("parquet", "preview", "real-data-preview"),
         configs=(
             ("cross_family_evict_value_v1", (("train", "data/cross_family_evict_value_v1.parquet"),)),
@@ -394,15 +394,15 @@ def render_preview_readme(*, stats: dict[str, object], dataset_repo: str) -> str
         ),
     )
     body = f"""
-# LAFC-Evict Sample v0.2 Real-Data Preview
+# LAFC-Evict v0.2 Real-Data Preview
 
-This is a local staging release for a proposed Hugging Face dataset update to `{dataset_repo}`. It has not been uploaded.
+This is a local staging release for a proposed Hugging Face dataset repository `{dataset_repo}`. It has not been uploaded.
 
 Version history:
 
-- v0.1 synthetic sample: publication workflow dry run built from `examples/tiny_candidate_rows.csv`.
+- `SoroushVahidi/lafc-evict-sample` v0.1 synthetic sample: publication workflow dry run built from `examples/tiny_candidate_rows.csv`.
 - v0.1-open / current-contract preserved: historical real release artifacts retained under local `release/` namespaces.
-- v0.2 preview: small real derived-data preview using Wikimedia pageview-derived rows only, pending final release review.
+- v0.2 preview: small real derived-data preview using Wikimedia pageview-derived rows only.
 - Future v1.0/full release: broader curated dataset after storage, licensing, and provenance review.
 
 The preview contains derived candidate-row features and counterfactual labels. It does not include raw trace rows, raw Wikimedia page titles, machine-local paths, model files, or experiment logs. Object identifiers are deterministic release pseudonyms.
@@ -413,53 +413,53 @@ Read `dataset_card.md`, `RELEASE_NOTES_v0_2.md`, `metadata/release_manifest.json
 
 
 def render_dataset_card(*, dataset_repo: str) -> str:
-    return f"""# LAFC-Evict Sample v0.2 Real-Data Preview
+    return f"""# LAFC-Evict v0.2 Real-Data Preview
 
-This is a proposed small real-data preview for `{dataset_repo}`. It is prepared locally and is not ready for public upload until final license and attribution wording is reviewed.
+This is a small real-data preview for the proposed `{dataset_repo}` Hugging Face dataset repository.
 
-The preview includes only Wikimedia pageview-derived rows. Upstream pageviews are public Wikimedia dumps; the rows here are derived cache-eviction supervision examples, not raw pageview logs. Object identifiers are pseudonymized.
+The preview includes only Wikimedia pageview-derived rows. Upstream pageviews are public Wikimedia Analytics datasets available under the Creative Commons CC0 1.0 public domain dedication. The rows here are derived cache-eviction supervision examples, not raw pageview logs. Object identifiers are pseudonymized.
 
-The existing v0.1 sample remains a synthetic workflow dry run and is not suitable for scientific benchmarking. This v0.2 preview is intended to demonstrate the real derived schema at small scale. It is not the full benchmark release.
+The existing `SoroushVahidi/lafc-evict-sample` v0.1 repository remains a synthetic workflow dry run and is not suitable for scientific benchmarking. This v0.2 preview is intended to demonstrate the real derived schema at small scale. It is not the full benchmark release.
 
 ## Configs
 
 - `cross_family_evict_value_v1`: finite-horizon eviction-loss candidate rows from the corrected cross-family dataset.
 - `objective_ablation_scalar`: scalar multi-target objective-ablation candidate rows.
 
-## Wiki2018 Attribution Draft
+## Wiki2018 Provenance and Attribution
 
-Known factual provenance: this preview uses derived rows generated from the `wiki2018` family, described locally as a Wikimedia public pageviews derived proxy trace with upstream source `https://dumps.wikimedia.org/other/pageviews/`. The preview is not a redistribution of raw pageview dumps and does not expose raw page titles.
+Known factual provenance: this preview uses derived rows generated from the `wiki2018` family, described locally as a Wikimedia public pageviews derived proxy trace with upstream source `https://dumps.wikimedia.org/other/pageviews/`. Wikimedia's pageviews readme states that pageview statistics are compiled using the current pageview definition and that all Analytics datasets are available under the Creative Commons CC0 dedication. The preview is not a redistribution of raw pageview dumps and does not expose raw page titles.
 
-Attribution wording: LAFC-Evict v0.2 preview includes derived cache-eviction supervision examples generated from Wikimedia public pageview data. Wikimedia pageview data is made available by the Wikimedia Foundation at `https://dumps.wikimedia.org/other/pageviews/`. Wikimedia and the Wikimedia Foundation do not endorse this derived dataset.
+Attribution wording: LAFC-Evict v0.2 preview includes derived cache-eviction supervision examples generated from Wikimedia public pageview data. Wikimedia pageview data is made available by the Wikimedia Foundation at `https://dumps.wikimedia.org/other/pageviews/` under the Creative Commons CC0 1.0 public domain dedication. Wikimedia and the Wikimedia Foundation do not endorse this derived dataset.
 
-License/terms statement: local evidence supports treating Wiki2018 as allowed with attribution for a local preview, but no formal license is asserted for the upstream pageview-derived source. Dataset metadata therefore uses `license: other`.
+License/terms statement: the upstream Wikimedia Analytics pageview data is CC0. This derived LAFC-Evict preview is released under CC0 1.0 as a dataset. Attribution is included as scholarly provenance and to avoid user confusion, not because CC0 imposes an attribution requirement.
 
-Caveat: public upload still needs final attribution/license wording review before publication.
+Caveat: this statement is based on Wikimedia's public documentation and is not legal advice.
 
 ## Limitations
 
 - Only `wiki2018` is included.
 - Brightkite, CitiBike, CloudPhysics, MetaCDN, MetaKV, and Twemcache are excluded pending redistribution review.
 - This package is a preview, not the full LAFC-Evict release.
-- License metadata remains conservative (`other`) until final attribution/license text is approved.
+- Dataset metadata uses `license: cc0-1.0`; code in the canonical publication repository remains separately licensed.
 """
 
 
 def render_release_notes() -> str:
     return """# v0.2 Preview Release Notes
 
-This proposed update transitions the Hugging Face sample package from a synthetic-only v0.1 workflow smoke test to a small real derived-data preview.
+This proposed update introduces the first real-data preview in the `SoroushVahidi/lafc-evict` Hugging Face dataset repository while preserving the existing synthetic-only `SoroushVahidi/lafc-evict-sample` repository as historical publication workflow evidence.
 
 Changes:
 
 - Adds real Wikimedia pageview-derived candidate-row examples.
-- Preserves v0.1 synthetic sample history.
+- Preserves v0.1 synthetic sample history in the separate sample repository.
 - Preserves v0.1-open / current-contract preserved real release artifacts in the canonical local repository.
 - Uses two Parquet configs: `cross_family_evict_value_v1` and `objective_ablation_scalar`.
 - Pseudonymizes object identifiers.
 - Excludes Brightkite, CitiBike, Twemcache, MetaKV, MetaCDN, and CloudPhysics until final redistribution review.
 
-Do not upload until final Wiki2018 attribution/license wording is reviewed.
+The preview uses Wikimedia Analytics pageview data documented as CC0. Attribution and non-endorsement wording are included in the dataset card and provenance metadata.
 """
 
 
@@ -528,14 +528,14 @@ def write_release_manifest(
         }
     )
     manifest = {
-        "dataset_name": "lafc-evict-sample",
+        "dataset_name": "lafc-evict",
         "dataset_repo": dataset_repo,
         "version": "0.2-preview",
         "release_type": PREVIEW_RELEASE_TYPE,
-        "release_title": "LAFC-Evict Sample v0.2 Real-Data Preview",
+        "release_title": "LAFC-Evict v0.2 Real-Data Preview",
         "schema_version": "lafc-evict-preview-v0.2",
         "upload_status": "NOT_UPLOADED",
-        "readiness": "READY_AFTER_LICENSE_REVIEW",
+        "readiness": "READY_FOR_PUBLIC_PREVIEW_UPLOAD",
         "row_counts": {
             "total_rows": int(stats["totals"]["row_count"]),
             **{
@@ -560,8 +560,8 @@ def write_release_manifest(
         },
         "governance_artifacts": governance_artifacts,
         "license_provenance_status": {
-            "wiki2018": "NEEDS_EXTERNAL_LICENSE_VERIFICATION",
-            "public_upload_blocker": "Final Wiki2018 attribution/license wording review is not complete.",
+            "wiki2018": "APPROVED_WITH_ATTRIBUTION_AND_CAVEAT",
+            "basis": "Wikimedia pageviews and Analytics API documentation identify Analytics datasets/pageview data as CC0.",
         },
         "file_inventory": file_inventory,
     }

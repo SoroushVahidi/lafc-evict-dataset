@@ -29,8 +29,9 @@
   "selected_families": [
     {
       "family": "wiki2018",
-      "redistribution_status": "ALLOWED_WITH_ATTRIBUTION_LOCALLY_NEEDS_FINAL_WORDING_REVIEW",
-      "public_upload_status": "NEEDS_EXTERNAL_LICENSE_VERIFICATION"
+      "redistribution_status": "CC0_ANALYTICS_DATA_PUBLIC_DERIVED_PREVIEW_OK",
+      "public_upload_status": "APPROVED_WITH_ATTRIBUTION_AND_CAVEAT",
+      "license_basis": "Wikimedia pageviews readme and Analytics API access policy identify Analytics datasets/pageview data as CC0."
     }
   ],
   "warning": "This selector output is a release-governance aid based on repository metadata. It is not legal advice."

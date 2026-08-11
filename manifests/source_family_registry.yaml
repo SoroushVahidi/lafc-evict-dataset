@@ -62,8 +62,9 @@ families:
     required_citation: true
     review_status: needs_review
     recommended_for_v0_2_preview: true
-    v0_2_preview_redistribution_status: ALLOWED_WITH_ATTRIBUTION_LOCALLY_NEEDS_FINAL_WORDING_REVIEW
-    v0_2_preview_public_upload_status: NEEDS_EXTERNAL_LICENSE_VERIFICATION
+    v0_2_preview_redistribution_status: CC0_ANALYTICS_DATA_PUBLIC_DERIVED_PREVIEW_OK
+    v0_2_preview_public_upload_status: APPROVED_WITH_ATTRIBUTION_AND_CAVEAT
+    v0_2_preview_license_basis: Wikimedia pageviews readme and Analytics API access policy identify Analytics datasets/pageview data as CC0.
 
   - family: citibike
     source_name: Citi Bike trip-data derived trace family
