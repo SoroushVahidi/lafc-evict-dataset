@@ -38,6 +38,14 @@ DEFAULT_CROSS_FAMILY_ROWS_PER_CAPACITY = 900_000
 DEFAULT_SHARDS_PER_CAPACITY = 4
 EXCLUDED_FAMILIES = ("brightkite", "citibike", "cloudphysics", "metacdn", "metakv", "twemcache")
 PREVIEW_CONFIGS = ("cross_family_evict_value_v1", "objective_ablation_scalar")
+WIKI2018_ATTRIBUTION_TEXT = (
+    "LAFC-Evict v0.2 preview includes derived cache-eviction supervision examples generated from "
+    "Wikimedia public pageview data. Wikimedia pageview data is made available by the Wikimedia "
+    "Foundation at `https://dumps.wikimedia.org/other/pageviews/` under the Creative Commons CC0 "
+    "1.0 public domain dedication. This LAFC-Evict preview does not redistribute raw pageview dump "
+    "rows or raw page titles; object identifiers are deterministic public pseudonyms. Wikimedia and "
+    "the Wikimedia Foundation do not endorse this derived dataset."
+)
 FORBIDDEN_LITERAL_PATTERNS = (
     "/home/soroush",
     "sv96",
@@ -396,7 +404,7 @@ def render_preview_readme(*, stats: dict[str, object], dataset_repo: str) -> str
     body = f"""
 # LAFC-Evict v0.2 Real-Data Preview
 
-This is a local staging release for a proposed Hugging Face dataset repository `{dataset_repo}`. It has not been uploaded.
+This is the first public real-data preview for the `{dataset_repo}` Hugging Face dataset repository.
 
 Version history:
 
@@ -407,7 +415,15 @@ Version history:
 
 The preview contains derived candidate-row features and counterfactual labels. It does not include raw trace rows, raw Wikimedia page titles, machine-local paths, model files, or experiment logs. Object identifiers are deterministic release pseudonyms.
 
-Read `dataset_card.md`, `RELEASE_NOTES_v0_2.md`, `metadata/release_manifest.json`, `metadata/sampling_manifest.json`, and `metadata/provenance_summary.csv` before upload consideration.
+## Wiki2018 Provenance and Attribution
+
+{WIKI2018_ATTRIBUTION_TEXT}
+
+License/terms statement: the upstream Wikimedia Analytics pageview data is CC0. This derived LAFC-Evict preview is released under CC0 1.0 as a dataset. Attribution is included as scholarly provenance and to avoid user confusion, not because CC0 imposes an attribution requirement.
+
+Caveat: this statement is based on Wikimedia's public documentation and is not legal advice.
+
+Read `dataset_card.md`, `RELEASE_NOTES_v0_2.md`, `metadata/release_manifest.json`, `metadata/sampling_manifest.json`, and `metadata/provenance_summary.csv` for release details.
 """
     return metadata + "\n" + body.strip() + "\n"
 
@@ -430,7 +446,7 @@ The existing `SoroushVahidi/lafc-evict-sample` v0.1 repository remains a synthet
 
 Known factual provenance: this preview uses derived rows generated from the `wiki2018` family, described locally as a Wikimedia public pageviews derived proxy trace with upstream source `https://dumps.wikimedia.org/other/pageviews/`. Wikimedia's pageviews readme states that pageview statistics are compiled using the current pageview definition and that all Analytics datasets are available under the Creative Commons CC0 dedication. The preview is not a redistribution of raw pageview dumps and does not expose raw page titles.
 
-Attribution wording: LAFC-Evict v0.2 preview includes derived cache-eviction supervision examples generated from Wikimedia public pageview data. Wikimedia pageview data is made available by the Wikimedia Foundation at `https://dumps.wikimedia.org/other/pageviews/` under the Creative Commons CC0 1.0 public domain dedication. Wikimedia and the Wikimedia Foundation do not endorse this derived dataset.
+Attribution wording: {WIKI2018_ATTRIBUTION_TEXT}
 
 License/terms statement: the upstream Wikimedia Analytics pageview data is CC0. This derived LAFC-Evict preview is released under CC0 1.0 as a dataset. Attribution is included as scholarly provenance and to avoid user confusion, not because CC0 imposes an attribution requirement.
 

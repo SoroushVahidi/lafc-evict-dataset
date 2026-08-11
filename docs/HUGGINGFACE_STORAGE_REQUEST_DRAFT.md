@@ -2,7 +2,7 @@
 
 Draft date: 2026-08-11
 
-Do not send yet. Publish the small public preview first, then adapt this with the final repository URL and early usage metrics.
+Do not send yet. The small public preview has been published; add any early usage metrics before sending if they become available.
 
 ## Intended Contact
 
@@ -20,13 +20,17 @@ I am Soroush Vahidi, preparing the LAFC-Evict dataset for reproducible research 
 
 We are first publishing a small public preview at:
 
-`TODO: https://huggingface.co/datasets/SoroushVahidi/lafc-evict`
+https://huggingface.co/datasets/SoroushVahidi/lafc-evict
+
+Current public revision: `b77413fef197e808aed9cfa708878064a5c00493`.
+
+Canonical GitHub publication tooling: https://github.com/SoroushVahidi/lafc-evict-dataset
 
 The preview is intentionally compact and community-reviewable:
 
 - public dataset repository;
 - Parquet format;
-- approximately 134 MB;
+- 140,145,059 bytes in the staged release package, with 140,106,094 bytes of Parquet payload;
 - 4.8M derived rows;
 - two configs, `cross_family_evict_value_v1` and `objective_ablation_scalar`;
 - Wiki2018-only source scope;
