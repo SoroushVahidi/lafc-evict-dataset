@@ -9,6 +9,8 @@ families:
     notes: Candidate for lafc-evict-v0.1-open if final redistribution and attribution checks stay clear.
     required_citation: true
     review_status: needs_review
+    recommended_for_v0_2_preview: false
+    v0_2_preview_redistribution_status: UNCLEAR
 
   - family: metakv
     source_name: MetaKV trace family via open cache trace collection
@@ -20,6 +22,8 @@ families:
     notes: Candidate for lafc-evict-v0.1-open if final redistribution and attribution checks stay clear.
     required_citation: true
     review_status: needs_review
+    recommended_for_v0_2_preview: false
+    v0_2_preview_redistribution_status: UNCLEAR
 
   - family: metacdn
     source_name: MetaCDN trace family via open cache trace collection
@@ -31,6 +35,8 @@ families:
     notes: Candidate for lafc-evict-v0.1-open if final redistribution and attribution checks stay clear.
     required_citation: true
     review_status: needs_review
+    recommended_for_v0_2_preview: false
+    v0_2_preview_redistribution_status: UNCLEAR
 
   - family: cloudphysics
     source_name: CloudPhysics / open cache trace collection block I/O family
@@ -42,6 +48,8 @@ families:
     notes: Candidate for lafc-evict-v0.1-open if the specific open trace collection provenance and attribution terms are confirmed.
     required_citation: true
     review_status: needs_review
+    recommended_for_v0_2_preview: false
+    v0_2_preview_redistribution_status: UNCLEAR
 
   - family: wiki2018
     source_name: Wikimedia public pageviews derived proxy trace
@@ -53,6 +61,9 @@ families:
     notes: Pageview-derived proxy trace for request mixtures; not a byte-for-byte CDN trace and should be described that way.
     required_citation: true
     review_status: needs_review
+    recommended_for_v0_2_preview: true
+    v0_2_preview_redistribution_status: ALLOWED_WITH_ATTRIBUTION_LOCALLY_NEEDS_FINAL_WORDING_REVIEW
+    v0_2_preview_public_upload_status: NEEDS_EXTERNAL_LICENSE_VERIFICATION
 
   - family: citibike
     source_name: Citi Bike trip-data derived trace family
@@ -64,6 +75,8 @@ families:
     notes: Exclude from lafc-evict-v0.1-open until redistribution and privacy review are complete.
     required_citation: true
     review_status: blocked_pending_review
+    recommended_for_v0_2_preview: false
+    v0_2_preview_redistribution_status: UNCLEAR
 
   - family: brightkite
     source_name: Brightkite / SNAP-derived trace family
@@ -75,3 +88,5 @@ families:
     notes: Exclude from lafc-evict-v0.1-open until license and privacy review are complete.
     required_citation: true
     review_status: blocked_pending_review
+    recommended_for_v0_2_preview: false
+    v0_2_preview_redistribution_status: UNCLEAR

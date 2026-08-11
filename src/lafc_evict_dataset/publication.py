@@ -254,15 +254,19 @@ def render_hf_dataset_card_metadata(
     dataset_name: str,
     release_type: str,
     candidate_row_count: int,
+    license_id: str = HF_DATASET_LICENSE,
+    pretty_name: str | None = None,
+    extra_tags: tuple[str, ...] = (),
+    configs: tuple[tuple[str, tuple[tuple[str, str], ...]], ...] | None = None,
 ) -> str:
-    pretty_name = pretty_name_for_release(dataset_name, release_type)
+    pretty_name = pretty_name or pretty_name_for_release(dataset_name, release_type)
     size_category = size_category_for_row_count(candidate_row_count)
-    tags = dataset_tags_for_release(release_type)
+    tags = tuple(dict.fromkeys((*dataset_tags_for_release(release_type), *extra_tags)))
 
     lines = [
         "---",
         f'pretty_name: {json.dumps(pretty_name)}',
-        f'license: {json.dumps(HF_DATASET_LICENSE)}',
+        f'license: {json.dumps(license_id)}',
         "tags:",
         *[f"- {json.dumps(tag)}" for tag in tags],
         "task_categories:",
@@ -270,16 +274,17 @@ def render_hf_dataset_card_metadata(
         "size_categories:",
         f"- {json.dumps(size_category)}",
         "configs:",
-        "- config_name: default",
-        "  data_files:",
     ]
-    for split, path in HF_DEFAULT_CONFIG_DATA_FILES:
-        lines.extend(
-            [
-                f"  - split: {json.dumps(split)}",
-                f"    path: {json.dumps(path)}",
-            ]
-        )
+    config_entries = configs or (("default", HF_DEFAULT_CONFIG_DATA_FILES),)
+    for config_name, data_files in config_entries:
+        lines.extend([f"- config_name: {json.dumps(config_name)}", "  data_files:"])
+        for split, path in data_files:
+            lines.extend(
+                [
+                    f"  - split: {json.dumps(split)}",
+                    f"    path: {json.dumps(path)}",
+                ]
+            )
     lines.append("---")
     return "\n".join(lines)
 
@@ -425,13 +430,16 @@ def expected_hf_remote_paths(inventory: ReleaseInventory) -> tuple[str, ...]:
         "metadata/release_manifest.json",
         "metadata/checksums.sha256",
         "metadata/validation_report.md",
-        "data/candidate_rows/",
-        "data/decision_view/",
     ]
-    if inventory.has_pairwise_view:
-        paths.append("data/pairwise_view/")
-    elif inventory.has_pairwise_sample:
-        paths.append("data/pairwise_sample/")
+    manifest_data_files = inventory.release_manifest.get("data_files", [])
+    if isinstance(manifest_data_files, list) and manifest_data_files:
+        paths.extend(str(path) for path in manifest_data_files)
+    else:
+        paths.extend(["data/candidate_rows/", "data/decision_view/"])
+        if inventory.has_pairwise_view:
+            paths.append("data/pairwise_view/")
+        elif inventory.has_pairwise_sample:
+            paths.append("data/pairwise_sample/")
     return tuple(paths)
 
 

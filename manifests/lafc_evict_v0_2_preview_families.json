@@ -1,0 +1,37 @@
+{
+  "excluded_families": [
+    {
+      "family": "brightkite",
+      "reason": "UNCLEAR redistribution and privacy status for public v0.2 preview"
+    },
+    {
+      "family": "citibike",
+      "reason": "UNCLEAR redistribution and privacy status for public v0.2 preview"
+    },
+    {
+      "family": "cloudphysics",
+      "reason": "UNCLEAR redistribution status for public v0.2 preview"
+    },
+    {
+      "family": "metacdn",
+      "reason": "UNCLEAR redistribution status for public v0.2 preview"
+    },
+    {
+      "family": "metakv",
+      "reason": "UNCLEAR redistribution status for public v0.2 preview"
+    },
+    {
+      "family": "twemcache",
+      "reason": "UNCLEAR redistribution status for public v0.2 preview"
+    }
+  ],
+  "release_scope": "v0.2-preview",
+  "selected_families": [
+    {
+      "family": "wiki2018",
+      "redistribution_status": "ALLOWED_WITH_ATTRIBUTION_LOCALLY_NEEDS_FINAL_WORDING_REVIEW",
+      "public_upload_status": "NEEDS_EXTERNAL_LICENSE_VERIFICATION"
+    }
+  ],
+  "warning": "This selector output is a release-governance aid based on repository metadata. It is not legal advice."
+}
