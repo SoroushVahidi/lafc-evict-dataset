@@ -1,9 +1,14 @@
+# `redistribution_status` preserves historical governance vocabulary.
+# `publication_clearance` is the explicit public-release gate: only
+# `cleared_for_public_release` may be included in a public release.
+
 families:
   - family: twemcache
     source_name: Twitter cache trace / Twemcache open trace collection
     source_url: https://github.com/twitter/cache-trace
     upstream_license: open_trace_collection_needs_citation_review
     redistribution_status: eligible_pending_final_review
+    publication_clearance: not_cleared_pending_final_review
     recommended_for_v0_1_open: true
     privacy_risk: low
     notes: Candidate for lafc-evict-v0.1-open if final redistribution and attribution checks stay clear.
@@ -17,6 +22,7 @@ families:
     source_url: https://github.com/cacheMon/cache_dataset
     upstream_license: open_trace_collection_needs_citation_review
     redistribution_status: eligible_pending_final_review
+    publication_clearance: not_cleared_pending_final_review
     recommended_for_v0_1_open: true
     privacy_risk: low
     notes: Candidate for lafc-evict-v0.1-open if final redistribution and attribution checks stay clear.
@@ -30,6 +36,7 @@ families:
     source_url: https://github.com/cacheMon/cache_dataset
     upstream_license: open_trace_collection_needs_citation_review
     redistribution_status: eligible_pending_final_review
+    publication_clearance: not_cleared_pending_final_review
     recommended_for_v0_1_open: true
     privacy_risk: low
     notes: Candidate for lafc-evict-v0.1-open if final redistribution and attribution checks stay clear.
@@ -43,6 +50,7 @@ families:
     source_url: https://github.com/cacheMon/cache_dataset
     upstream_license: open_trace_collection_needs_citation_review
     redistribution_status: eligible_pending_final_review
+    publication_clearance: not_cleared_pending_final_review
     recommended_for_v0_1_open: true
     privacy_risk: low
     notes: Candidate for lafc-evict-v0.1-open if the specific open trace collection provenance and attribution terms are confirmed.
@@ -56,6 +64,7 @@ families:
     source_url: https://dumps.wikimedia.org/other/pageviews/
     upstream_license: wikimedia_public_pageviews_with_attribution
     redistribution_status: eligible_pending_final_review
+    publication_clearance: cleared_for_public_release
     recommended_for_v0_1_open: true
     privacy_risk: low
     notes: Pageview-derived proxy trace for request mixtures; not a byte-for-byte CDN trace and should be described that way.
@@ -71,6 +80,7 @@ families:
     source_url: https://citibikenyc.com/system-data
     upstream_license: source_terms_require_review
     redistribution_status: blocked_pending_review
+    publication_clearance: blocked
     recommended_for_v0_1_open: false
     privacy_risk: medium
     notes: Exclude from lafc-evict-v0.1-open until redistribution and privacy review are complete.
@@ -84,6 +94,7 @@ families:
     source_url: https://snap.stanford.edu/data/loc-brightkite.html
     upstream_license: source_terms_and_privacy_require_review
     redistribution_status: blocked_pending_review
+    publication_clearance: blocked
     recommended_for_v0_1_open: false
     privacy_risk: medium
     notes: Exclude from lafc-evict-v0.1-open until license and privacy review are complete.

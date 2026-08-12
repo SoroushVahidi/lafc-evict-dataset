@@ -1,5 +1,9 @@
 # V0.3/V1.0 Data Inventory
 
+The original inventory predates the local v0.3 build. The current candidate is
+also recorded as DT-14 in `publication/v0_3_v1_asset_inventory.json`: it is a
+Wiki2018-only, 22,356,992-row, locally validated, unpublished candidate.
+
 **Status:** INTERNAL planning document. Contains local absolute paths for
 engineer usability; do not copy paths verbatim into public-facing metadata.
 Read-only audit only -- nothing was moved, deleted, copied, compressed, or

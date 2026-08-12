@@ -10,7 +10,7 @@ Soroush Vahidi.
 Available at SSRN 6636732.  
 Status: public preprint; manuscript under peer review.
 
-The paper describes the learning-augmented caching setting and the experiments that motivated this dataset release. This repository provides dataset-release artifacts, schemas, validation tools, benchmark views, and reproducibility utilities. When using the data artifact, cite both the paper/preprint and the dataset release DOI once the DOI is available.
+The paper describes the learning-augmented caching setting and the experiments that motivated this dataset release. This repository provides dataset-release artifacts, schemas, validation tools, benchmark views, and reproducibility utilities. When using the data artifact, cite both the paper/preprint and the current dataset release DOI.
 
 ## Inputs
 
@@ -21,7 +21,11 @@ Supported inputs for release export:
 - a directory containing candidate-row CSV or Parquet shards,
 - a manifest JSON that lists shard paths.
 
-## Build the real public release (`lafc-evict-v0.1-open`)
+## Reproduce historical v0.1-open staging
+
+The commands in this section reproduce historical local staging artifacts, not
+the current public release. The current published v0.2 payload is represented
+by its release-local manifests and host records.
 
 Dry-run first:
 

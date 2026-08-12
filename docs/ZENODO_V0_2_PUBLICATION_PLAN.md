@@ -185,7 +185,9 @@ No Parquet payload change is needed for DOI preparation. A future schema polish 
 
 - `scripts/create_zenodo_deposit.py`: READY_TO_CREATE_DRAFT. The legacy bundle workflow remains dry-run-first, and the v0.2 path now consumes explicit metadata and file-manifest inputs. The v0.2 draft path rejects `--publish` and requires `--create-draft --upload --verify --no-publish` before any write.
 - `src/lafc_evict_dataset/publication.py`: READY_TO_CREATE_DRAFT. The v0.2 path validates metadata, exact 15-file inventory, byte sizes, SHA-256, MD5, release security scan, Wiki2018 attribution, CC0 metadata, preview validation, and post-upload draft state/files/metadata.
-- `publication/ZENODO_METADATA_TEMPLATE.json`: STALE for v0.2 because it uses `MIT`, version `0.1`, and generic draft text.
+- `publication/ZENODO_METADATA_TEMPLATE.json`: generic placeholder template;
+  use the version-specific v0.2 metadata and file manifests for the published
+  record.
 - `tests/test_publication_dry_runs.py`: READY_TO_REUSE for no-network dry-run safety.
 - `tests/test_publication_bundle.py`: READY_TO_REUSE for the older publication-bundle path.
 - New-version support: MISSING.

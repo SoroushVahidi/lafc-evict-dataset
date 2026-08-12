@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "title": "LAFC-Evict release",
+    "title": "REPLACE_WITH_RELEASE_TITLE",
     "upload_type": "dataset",
-    "description": "Draft LAFC-Evict release metadata.",
+    "description": "REPLACE_WITH_RELEASE_DESCRIPTION",
     "creators": [
       {
         "name": "Vahidi, Soroush"
@@ -15,9 +15,9 @@
         "resource_type": "publication-preprint"
       }
     ],
-    "keywords": [],
-    "version": "0.1",
-    "license": "MIT",
-    "notes": "Associated paper/preprint: Decision-aligned eviction-value prediction for robust learning-augmented caching. Status: public preprint; manuscript under peer review."
+    "keywords": ["cache eviction", "learning-augmented algorithms", "dataset"],
+    "version": "REPLACE_WITH_RELEASE_VERSION",
+    "license": "REPLACE_WITH_DATASET_LICENSE",
+    "notes": "Generic template only. Use a version-specific metadata file and verify license, scope, provenance, and DOI fields before any Zenodo action."
   }
 }

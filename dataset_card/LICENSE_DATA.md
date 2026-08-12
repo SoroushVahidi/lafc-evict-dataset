@@ -14,17 +14,18 @@ The machine-readable source-family registry in `manifests/source_family_registry
 
 | Trace family | Current status | Redistribution note |
 | --- | --- | --- |
-| `twemcache` | eligible_pending_final_review | Candidate for `lafc-evict-v0.1-open`; citation and final review still required. |
-| `metakv` | eligible_pending_final_review | Candidate for `lafc-evict-v0.1-open`; citation and final review still required. |
-| `metacdn` | eligible_pending_final_review | Candidate for `lafc-evict-v0.1-open`; citation and final review still required. |
-| `cloudphysics` | eligible_pending_final_review | Candidate for `lafc-evict-v0.1-open` if the open trace collection provenance is confirmed; citation still required. |
-| `wiki2018` | eligible_pending_final_review | Candidate for `lafc-evict-v0.1-open` if derived from Wikimedia public pageviews; cite as a pageview-derived proxy, not a byte-for-byte CDN trace. |
+| `twemcache` | eligible_pending_final_review; not publication-cleared | Internal candidate only; citation and final review still required. |
+| `metakv` | eligible_pending_final_review; not publication-cleared | Internal candidate only; citation and final review still required. |
+| `metacdn` | eligible_pending_final_review; not publication-cleared | Internal candidate only; citation and final review still required. |
+| `cloudphysics` | eligible_pending_final_review; not publication-cleared | Internal candidate only; provenance and attribution review still required. |
+| `wiki2018` | cleared for v0.2 published preview | Wikimedia pageview-derived proxy; attribution and caveat wording required. |
 | `citibike` | blocked_pending_review | Excluded from `lafc-evict-v0.1-open` until redistribution and privacy review are complete. |
 | `brightkite` | blocked_pending_review | Excluded from `lafc-evict-v0.1-open` until license and privacy review are complete. |
 
 ## Release guidance
 
-- `lafc-evict-v0.1-open` should initially include only the license-clean/open-trace families selected by `manifests/source_family_registry.yaml` and `manifests/lafc_evict_v0_1_open_families.json`.
-- CitiBike and Brightkite remain excluded from `lafc-evict-v0.1-open` until review is complete.
+- The published v0.2 release includes only `wiki2018`.
+- The v0.1-open trees are historical unpublished local artifacts.
+- `cloudphysics`, `metacdn`, `metakv`, and `twemcache` remain excluded from public releases until final review and explicit clearance.
 - `lafc-evict-full-heavy_r1` remains an internal or reproducibility target until redistribution questions are resolved.
 - `lafc-evict-sample` may remain fully synthetic and license-clean.

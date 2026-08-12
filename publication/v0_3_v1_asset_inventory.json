@@ -147,6 +147,24 @@
       "format": "json_and_patches",
       "class": "G_historical_backup_metadata_only",
       "contains_candidate_rows": false
+    },
+    {
+      "asset_id": "DT-14",
+      "label": "lafc-evict-dataset:release/lafc-evict-v0.3-candidate",
+      "size_bytes_approx": 69720081,
+      "size_human": "66.5 MiB on disk",
+      "format": "parquet",
+      "class": "E_local_validated_candidate_unpublished",
+      "trace_families": ["wiki2018"],
+      "configs": ["cross_family_evict_value_v1", "objective_ablation_scalar"],
+      "candidate_row_count": 22356992,
+      "rows_per_config": 11178496,
+      "source_file_count": 80,
+      "published": false,
+      "upload_status": "NOT_UPLOADED",
+      "validation_status": "passed",
+      "security_scan": "passed",
+      "notes": "Built locally from existing source trees; no publication action performed."
     }
   ],
   "trace_families_confirmed_complete_list": ["wiki2018", "brightkite", "citibike", "cloudphysics", "metacdn", "metakv", "twemcache"],

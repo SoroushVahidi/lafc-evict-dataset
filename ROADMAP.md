@@ -1,33 +1,33 @@
 # LAFC-Evict Release Roadmap
 
-## Milestones
+## Done
 
-- [x] scaffold created
-- [x] scaffold audited
-- [x] synthetic sample release dry-run
-- [x] source-family release governance
-- [x] memory-safe real release builder for `lafc-evict-v0.1-open`
-- [ ] next: run full real release build for `lafc-evict-v0.1-open`
+- [x] v0.1 synthetic workflow sample published separately
+- [x] v0.2 published preview uploaded to Hugging Face
+- [x] v0.2 DOI-backed archival representation published on Zenodo
+- [x] v0.2 integrity and Wiki2018 provenance validation
+- [x] v0.3 Wiki2018-only candidate built and locally validated
 
-## Priority 0: Licensing and scope
+## Current
 
-1. Complete upstream license and redistribution review for each trace family.
-2. Select the first public release subset for `lafc-evict-v0.1-open` using only registry-approved license-clean/open traces.
-3. Keep CitiBike and Brightkite out of the first public release unless review clears them.
+- Review v0.3 candidate metadata and publication readiness.
+- Complete provenance review for additional families before including them in a
+  public release.
+- Keep the published v0.2 scientific payload immutable.
 
-## Priority 1: Release build
+## Future
 
-1. Dry-run and then build `lafc-evict-v0.1-open` with `scripts/build_real_release.py` using the Wulver candidate-row manifest.
-2. Validate the release with `scripts/validate_real_release.py`.
-3. Generate and verify SHA256 checksums.
+- Possible v0.3 publication, only after separate approval and final gates.
+- v1.0 stable/full release after explicit provenance clearance.
+- Expanded configs where scientifically justified and independently validated.
 
-## Priority 2: Hosting and metadata
+## Guardrails
 
-1. Prepare the Hugging Face dataset card and hosted files.
-2. Prepare the Zenodo deposition and final DOI metadata.
-3. Finalize `CITATION.cff`, release manifest values, and version tags.
+- No upload or Zenodo publication is implied by this roadmap.
+- Brightkite and CitiBike remain blocked; cloudphysics, metacdn, metakv, and
+  twemcache remain uncleared pending review.
 
-## Priority 3: Benchmark usability
+## Benchmark usability
 
 1. Add a baseline benchmark notebook for candidate, decision, and pairwise views.
 2. Add example release manifests for hosted dataset snapshots.

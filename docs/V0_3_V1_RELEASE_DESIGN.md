@@ -1,9 +1,10 @@
 # V0.3/V1.0 Release Design
 
-**Status:** INTERNAL planning document (design proposal, not yet built or
-approved). See `V0_3_V1_DATA_INVENTORY.md` for the evidence this design is
-based on and `V0_3_V1_PROVENANCE_GAPS.md` for why the recommended v0.3 scope
-is currently limited to `wiki2018`.
+**Status:** INTERNAL planning document. The v0.3 candidate has now been built
+and locally validated, but is not uploaded or approved for publication. v1.0
+remains planning-only. See `V0_3_V1_DATA_INVENTORY.md` for the evidence this
+design is based on and `V0_3_V1_PROVENANCE_GAPS.md` for why the recommended
+v0.3 scope is currently limited to `wiki2018`.
 
 ---
 
@@ -18,7 +19,7 @@ is currently limited to `wiki2018`.
 - Size: 134 MB, 2 flat Parquet files.
 - Status: **done, published** (Hugging Face + Zenodo `10.5281/zenodo.21895844`).
 
-### Tier B -- Expanded curated release (proposed v0.3)
+### Tier B -- Expanded curated release (v0.3 candidate)
 
 - Purpose: the first release with enough real, multi-config candidate-level
   data to let an external researcher actually train and evaluate an
@@ -44,6 +45,7 @@ is currently limited to `wiki2018`.
   `candidate_rows`, that is roughly 240 MB before Parquet compaction gains
   from single-family partitioning, so revise down after a real build,
   not up).
+- Current state: **built locally and validated, not uploaded**.
 - Whether v0.3 is worthwhile: **yes** -- it does not require new generation
   compute (DT-1/DT-8 already exist), only pseudonymization + a filtered
   rebuild + provenance sign-off for a family that is already

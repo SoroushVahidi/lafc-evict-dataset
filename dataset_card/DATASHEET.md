@@ -31,11 +31,15 @@ The release pipeline assumes existing generated candidate rows are already avail
 - claims that the default `v1` labels are globally optimal,
 - redistribution of upstream traces without trace-family review.
 
-The first public release should therefore be restricted to license-clean/open-trace families only. CitiBike and Brightkite require review before redistribution.
+The published v0.2 release is restricted to the Wiki2018-derived family. The
+other non-blocked families remain pending final review, while CitiBike and
+Brightkite remain blocked before redistribution.
 
 ## Distribution
 
-GitHub hosts only the lightweight release scaffold. Large release artifacts should be distributed through a dataset host with checksums and manifest metadata.
+This repository hosts lightweight publication code and metadata. Large release
+artifacts are distributed through dataset hosts with checksums and manifest
+metadata; the current hosts are Hugging Face and Zenodo.
 
 ## Maintenance
 

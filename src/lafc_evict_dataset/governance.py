@@ -12,6 +12,7 @@ REQUIRED_REGISTRY_FIELDS: Final[tuple[str, ...]] = (
     "source_url",
     "upstream_license",
     "redistribution_status",
+    "publication_clearance",
     "recommended_for_v0_1_open",
     "privacy_risk",
     "notes",

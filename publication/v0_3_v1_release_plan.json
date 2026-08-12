@@ -2,7 +2,7 @@
   "document_type": "v0_3_v1_release_plan",
   "status": "INTERNAL_PLANNING_DRAFT_NOT_APPROVED",
   "plan_date": "2026-08-11",
-  "note": "Design proposal only. Nothing described here has been built, uploaded, or published. See docs/V0_3_V1_RELEASE_DESIGN.md for full rationale.",
+  "note": "v0.3 now has a local validated candidate but no publication action. v1.0 remains a design proposal only. See docs/V0_3_V1_RELEASE_DESIGN.md for full rationale.",
   "tiers": [
     {
       "tier": "A",
@@ -20,21 +20,29 @@
     {
       "tier": "B",
       "version": "0.3",
-      "status": "PROPOSED_NOT_BUILT",
+      "status": "BUILT_LOCAL_VALIDATED_CANDIDATE",
+      "canonical_local_source": "release/lafc-evict-v0.3-candidate",
       "families": ["wiki2018"],
       "families_blocked_pending_review": ["cloudphysics", "metacdn", "metakv", "twemcache"],
       "families_excluded": ["brightkite", "citibike"],
-      "configs": ["cross_family_evict_value_v1_expanded", "objective_ablation_scalar_expanded", "objective_ablation_pairwise"],
-      "estimated_size_bytes_low": 157286400,
-      "estimated_size_bytes_high": 419430400,
+      "configs": ["cross_family_evict_value_v1", "objective_ablation_scalar"],
+      "rows": 22356992,
+      "rows_per_config": 11178496,
+      "size_bytes": 69720081,
+      "source_file_count": 80,
+      "schema_version": "lafc-evict-preview-v0.3",
+      "validation_status": "passed",
+      "publication_status": "NOT_UPLOADED",
+      "estimated_size_bytes_low": 69720081,
+      "estimated_size_bytes_high": 69720081,
       "worthwhile": true,
       "worthwhile_reason": "reuses_already_built_source_data_DT8_filtered_to_wiki2018_no_new_generation_compute_required",
-      "blockers": ["pseudonymization_not_yet_applied_to_DT8", "decision_view_schema_oversized_needs_narrowing", "split_column_dtype_inconsistency_found_in_DT7_DT8"]
+      "outstanding_review": ["publication_approval", "final_metadata_review", "optional_pairwise_config_decision"]
     },
     {
       "tier": "C",
       "version": "1.0",
-      "status": "PROPOSED_NOT_BUILT",
+      "status": "PLANNING_ONLY",
       "families": ["wiki2018"],
       "families_conditional": ["cloudphysics", "metacdn", "metakv", "twemcache"],
       "families_conditional_note": "included only if each independently reaches an explicit APPROVED_* redistribution status; otherwise permanently excluded and documented, not silently dropped",
@@ -93,6 +101,12 @@
   ],
   "must_not_delay_paper": true,
   "no_upload_performed": true,
+  "v0_3_candidate_validation": {
+    "release_root": "release/lafc-evict-v0.3-candidate",
+    "validation_report": "passed",
+    "security_scan": "passed",
+    "upload_status": "NOT_UPLOADED"
+  },
   "no_deposition_or_repo_created": true,
   "no_v0_2_modification_performed": true
 }

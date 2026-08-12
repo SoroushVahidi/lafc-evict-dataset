@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: "LAFC-Evict: Counterfactual Supervision for Learned Cache Eviction"
+title: "LAFC-Evict: Learning-Augmented Cache Eviction Dataset"
 message: "If you use this repository, please cite it using the metadata below."
 type: software
 authors:
@@ -7,12 +7,12 @@ authors:
     given-names: "Soroush"
 repository-code: "https://github.com/SoroushVahidi/lafc-evict-dataset"
 abstract: >-
-  Standalone release scaffold for the LAFC-Evict public dataset package,
-  including schema definitions, release scripts, and benchmark-view builders.
-version: "0.1.0"
-date-released: "2026-06-27"
-doi: "TODO"
-license: "MIT"
+  Published v0.2 preview of the LAFC-Evict derived cache-eviction supervision
+  dataset, including release metadata, schemas, and benchmark views.
+version: "0.2"
+date-released: "2026-08-11"
+doi: "10.5281/zenodo.21895844"
+license: "CC0-1.0"
 preferred-citation:
   type: article
   title: "Decision-aligned eviction-value prediction for robust learning-augmented caching"
@@ -20,7 +20,7 @@ preferred-citation:
     - family-names: "Vahidi"
       given-names: "Soroush"
   year: 2026
-  doi: "TODO"
+  doi: "10.5281/zenodo.21895844"
   url: "https://ssrn.com/abstract=6636732"
 keywords:
   - "cache eviction"

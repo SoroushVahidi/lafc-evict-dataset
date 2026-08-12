@@ -24,7 +24,9 @@ Processed traces are standardized outputs produced by preprocessing scripts from
 
 These processed traces are generated artifacts, but they are still trace-derived and may remain subject to upstream redistribution constraints.
 
-For the first intended real release, `lafc-evict-v0.1-open`, only families selected by the registry should be considered in scope.
+The current public release is the Wiki2018-only v0.2 published preview. The
+historical `v0.1-open` trees are unpublished local staging artifacts. Only
+families with explicit publication clearance may enter a public release.
 
 ## 3. Generated features
 
@@ -53,3 +55,10 @@ Benchmark tasks are repository-defined views built from generated candidate rows
 - pairwise candidate comparison rows.
 
 These benchmark tasks are authored in this project and are distinct from the upstream traces.
+
+## 6. Current release boundary
+
+Wiki2018 is currently cleared for the published derived preview with
+attribution and caveat requirements. CloudPhysics, MetaCDN, MetaKV, and
+Twemcache remain `eligible_pending_final_review` but are not publication
+cleared. CitiBike and Brightkite remain blocked pending license/privacy review.

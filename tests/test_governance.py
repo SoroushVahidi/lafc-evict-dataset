@@ -59,6 +59,19 @@ def test_citibike_and_brightkite_are_excluded_with_reasons() -> None:
     assert "blocked_pending_review" in excluded["brightkite"]
 
 
+def test_publication_clearance_is_explicit_and_fail_closed() -> None:
+    registry = load_source_family_registry(_registry_path())
+    clearance = {str(entry["family"]): str(entry["publication_clearance"]) for entry in registry}
+
+    assert clearance["wiki2018"] == "cleared_for_public_release"
+    assert all(
+        clearance[family] == "not_cleared_pending_final_review"
+        for family in ("cloudphysics", "metacdn", "metakv", "twemcache")
+    )
+    assert clearance["brightkite"] == "blocked"
+    assert clearance["citibike"] == "blocked"
+
+
 def test_selector_output_contains_exclusion_reasons(tmp_path: Path) -> None:
     output_path = tmp_path / "lafc_evict_v0_1_open_families.json"
     result = subprocess.run(

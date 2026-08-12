@@ -1,4 +1,11 @@
-# Current Release Status: `lafc-evict-v0.1-open`
+# HISTORICAL - NOT CURRENT PUBLIC RELEASE
+
+# Historical Release Status: `lafc-evict-v0.1-open`
+
+The current public release is documented in
+`docs/LAFC_EVICT_PUBLICATION_STATE.md`. This file preserves the historical
+local v0.1-open validation record and must not be read as current publication
+state.
 
 ## Current local release paths
 

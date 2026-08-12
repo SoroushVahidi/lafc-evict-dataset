@@ -1,5 +1,10 @@
 # Schema
 
+This document defines stable column semantics. Release-specific fields, dtypes,
+and file inventories are authoritative in each release's
+`metadata/schema.json` and `metadata/release_manifest.json`; the v0.2
+published preview is the current public schema instance.
+
 The canonical base row represents one candidate victim at one full-cache miss eviction decision, for one capacity and one finite horizon.
 
 ## Base columns

@@ -1,4 +1,23 @@
-# LAFC-Evict Dataset Release Scaffold
+# LAFC-Evict Dataset Publication Repository
+
+This is the canonical publication repository for LAFC-Evict.
+
+## Current public release
+
+**LAFC-Evict v0.2 published preview** is current.
+
+- Hugging Face: https://huggingface.co/datasets/SoroushVahidi/lafc-evict
+- Zenodo: https://doi.org/10.5281/zenodo.21895844
+- Concept DOI: https://doi.org/10.5281/zenodo.21895843
+- Scope: Wiki2018-only pseudonymized derived supervision
+- Configs: `cross_family_evict_value_v1` and `objective_ablation_scalar`
+- Rows: 4.8M
+- License: CC0 1.0
+
+The v0.3 candidate exists locally and is validated but not published. v1.0 is
+planning-only. See
+[`docs/LAFC_EVICT_PUBLICATION_STATE.md`](docs/LAFC_EVICT_PUBLICATION_STATE.md)
+for the authoritative release hierarchy.
 
 This repository is a standalone, conservative package for preparing the public release of **LAFC-Evict: Counterfactual Supervision for Learned Cache Eviction**.
 
@@ -14,11 +33,11 @@ Soroush Vahidi.
 Available at SSRN 6636732.  
 Status: public preprint; manuscript under peer review.
 
-The paper describes the learning-augmented caching setting and the experiments that motivated this dataset release. This repository provides dataset-release artifacts, schemas, validation tools, benchmark views, and reproducibility utilities. When using the data artifact, cite both the paper/preprint and the dataset release DOI once the DOI is available.
+The paper describes the learning-augmented caching setting and the experiments that motivated this dataset release. This repository provides dataset-release artifacts, schemas, validation tools, benchmark views, and reproducibility utilities. When using the data artifact, cite both the paper/preprint and the current dataset release DOI.
 
-## Scope
+## Repository boundaries
 
-The current `v0.1` scaffold focuses on:
+The publication repository focuses on:
 
 - a canonical candidate-row schema,
 - export of existing generated candidate rows into release-ready Parquet partitions,
@@ -28,7 +47,10 @@ The current `v0.1` scaffold focuses on:
 - validation and checksum utilities,
 - conservative release documentation for provenance, licensing, schema, and limitations.
 
-Large release artifacts are expected to be hosted later on a dataset host such as Hugging Face or Zenodo rather than committed to GitHub.
+Large release artifacts remain outside Git history and are represented by
+manifests and host records. Scientific/source data live in
+`/home/soroush/Augmented-caching`; KBS reviewer outputs live in
+`/home/soroush/Augmented-caching-kbs-second-revision`.
 
 ## Scientific framing
 
@@ -42,9 +64,10 @@ LAFC-Evict distinguishes five layers:
 
 This repository does **not** claim authorship of upstream raw traces. The main `v1` label is **finite-horizon counterfactual LRU-continuation miss count after forcing one candidate eviction**, not an offline-optimal target.
 
-The first public release should be restricted to **license-clean/open-trace** families only. In particular, **CitiBike** and **Brightkite** require redistribution review before they should appear in any public non-synthetic release.
-
-The intended first real public subset is **`lafc-evict-v0.1-open`**, selected through the machine-readable source-family registry in `manifests/source_family_registry.yaml`. That registry is a release-governance tool, not legal advice.
+The published v0.2 release contains only `wiki2018`. `cloudphysics`, `metacdn`,
+`metakv`, and `twemcache` are not yet cleared for public release. `brightkite`
+and `citibike` remain blocked. The registry is a release-governance tool, not
+legal advice.
 
 ## Repository layout
 
@@ -55,6 +78,8 @@ manifests/      Release-manifest and source-trace templates
 scripts/        Export, validation, checksum, and benchmark-view builders
 src/            Standalone Python package
 tests/          Pytest coverage for schema, views, validation, and checksums
+publication/    Publication-state records, host manifests, and procedures
+release/        Ignored local release payloads and validation artifacts
 ```
 
 ## Quick start
@@ -72,7 +97,10 @@ python scripts/build_real_release.py \
 
 The memory-safe real-release builder defaults to dry-run. Pass `--overwrite` to materialize release artifacts. It uses DuckDB for out-of-core CSV shard ingestion and Parquet export, so it does not load the full selected subset into pandas memory.
 
-`lafc-evict-v0.1-open` is the first real public release target. It includes only the selected open trace families from `manifests/lafc_evict_v0_1_open_families.json` and excludes CitiBike and Brightkite. Full pairwise materialization is intentionally not part of the default real release because it can grow quadratically with decision size; use `--pairwise-sample` for a capped sample or derive pairwise tasks from candidate rows.
+The v0.1-open commands below reproduce historical local staging artifacts;
+they do not describe the current public release. Full pairwise materialization
+is intentionally not part of the default real release because it can grow
+quadratically with decision size.
 
 Legacy export (loads all shards into pandas memory; not safe for the full real release):
 

@@ -1,8 +1,9 @@
 # V0.3/V1.0 Build Plan
 
-**Status:** INTERNAL planning document. Nothing in this document has been
-executed. No large data was moved, copied, deleted, compressed, or
-regenerated to produce it.
+**Status:** INTERNAL planning document. A Wiki2018-only v0.3 candidate now
+exists at `release/lafc-evict-v0.3-candidate/`. It passed local validation and
+security scanning but has not been uploaded or approved for publication. No
+v1.0 build or publication action has occurred.
 
 ---
 
