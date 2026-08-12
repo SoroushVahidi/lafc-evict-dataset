@@ -1,6 +1,6 @@
 # Zenodo v0.2 Draft Review
 
-Status: `UNPUBLISHED_DRAFT_READY_FOR_HUMAN_REVIEW`
+Status: `UNPUBLISHED_DRAFT_NOT_READY_TO_PUBLISH`
 
 - Deposition ID: `21895844`
 - Draft URL: https://zenodo.org/deposit/21895844
@@ -17,6 +17,8 @@ Status: `UNPUBLISHED_DRAFT_READY_FOR_HUMAN_REVIEW`
 - Related identifiers: Hugging Face dataset (`isIdenticalTo`), GitHub repository (`isDocumentedBy`), and SSRN preprint (`isSupplementTo`)
 - DOI status: `10.5281/zenodo.21895844` is reserved in the unpublished draft metadata; it is not published
 - Zenodo state: `unsubmitted`; `submitted=false`
+
+Publication hold: Zenodo stores these files with flat basenames. The uploaded `README.md` and `release_manifest.json` refer to local bundle paths such as `metadata/release_manifest.json` and `data/cross_family_evict_value_v1.parquet`; those paths do not exist in the Zenodo draft. Repair requires replacing the affected uploaded text files or rebuilding the package. No remote file deletion or replacement was attempted.
 
 ## Human Review Checklist
 
