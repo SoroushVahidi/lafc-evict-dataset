@@ -1,0 +1,48 @@
+{
+  "metadata": {
+    "access_right": "open",
+    "creators": [
+      {
+        "affiliation": "New Jersey Institute of Technology",
+        "name": "Vahidi, Soroush"
+      }
+    ],
+    "description": "<p>LAFC-Evict v0.2 is a public real-data preview dataset for learning-augmented cache eviction research. It contains derived candidate-row features and finite-horizon counterfactual supervision labels for cache-eviction decisions.</p><p>This v0.2 preview contains 4,800,000 rows across two Parquet configurations: <code>cross_family_evict_value_v1</code> and <code>objective_ablation_scalar</code>. It includes only Wikimedia pageview-derived rows from the <code>wiki2018</code> family. It does not include raw trace rows, raw Wikimedia page titles, model files, experiment logs, or machine-local filesystem paths. Object identifiers are deterministic public pseudonyms.</p><p>Hugging Face remains the interactive ML-ready distribution endpoint. This Zenodo record is intended as a frozen archival copy with DOI/versioning support.</p><p>Wiki2018 provenance: Wikimedia pageview data is made available by the Wikimedia Foundation at https://dumps.wikimedia.org/other/pageviews/ under the Creative Commons CC0 1.0 public domain dedication. This LAFC-Evict preview does not redistribute raw pageview dump rows or raw page titles. Wikimedia and the Wikimedia Foundation do not endorse this derived dataset.</p>",
+    "keywords": [
+      "cache eviction",
+      "caching",
+      "learning-augmented algorithms",
+      "machine learning for systems",
+      "online algorithms",
+      "counterfactual supervision",
+      "cache replacement",
+      "systems",
+      "parquet",
+      "benchmark dataset"
+    ],
+    "language": "eng",
+    "license": "cc0-1.0",
+    "notes": "This record should archive the exact LAFC-Evict v0.2 preview payload currently published on Hugging Face. The Hugging Face repository revision verified for v0.2 was b77413fef197e808aed9cfa708878064a5c00493. Code, manifests, and reproducibility utilities are maintained separately in the GitHub repository. The source_fold and source_relpath fields record the local cross-family/objective-ablation fold layout used to select generated Wiki2018 shards; some values therefore contain brightkite as a fold label even though the released rows have trace_family=wiki2018 and source filenames are Wiki2018 pageview-derived shards.",
+    "publication_date": "2026-08-11",
+    "related_identifiers": [
+      {
+        "identifier": "https://huggingface.co/datasets/SoroushVahidi/lafc-evict",
+        "relation": "isIdenticalTo",
+        "resource_type": "dataset"
+      },
+      {
+        "identifier": "https://github.com/SoroushVahidi/Augmented-caching",
+        "relation": "isDocumentedBy",
+        "resource_type": "software"
+      },
+      {
+        "identifier": "https://ssrn.com/abstract=6636732",
+        "relation": "isSupplementTo",
+        "resource_type": "publication-preprint"
+      }
+    ],
+    "title": "LAFC-Evict: Learning-Augmented Cache Eviction Dataset",
+    "upload_type": "dataset",
+    "version": "v0.2"
+  }
+}

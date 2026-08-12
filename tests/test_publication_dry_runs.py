@@ -11,7 +11,12 @@ import pytest
 
 from lafc_evict_dataset.publication import (
     execute_zenodo_deposit,
+    execute_zenodo_v0_2_draft,
+    load_zenodo_file_manifest,
+    plan_zenodo_v0_2_draft,
+    render_zenodo_v0_2_dry_run,
     safe_zenodo_bundle_filenames,
+    verify_zenodo_uploaded_draft,
 )
 
 
@@ -138,6 +143,88 @@ class _FakeZenodoSession:
         )
 
 
+class _FakeZenodoV02Session:
+    def __init__(self, manifest_path: Path, metadata_path: Path) -> None:
+        self.calls: list[tuple[str, str]] = []
+        self.uploaded_urls: list[str] = []
+        self.metadata_payload: dict[str, object] | None = None
+        self.file_manifest = load_zenodo_file_manifest(manifest_path)
+        self.metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+
+    def post(self, url: str, **kwargs: object) -> _FakeResponse:
+        self.calls.append(("POST", url))
+        return _FakeResponse(
+            201,
+            {
+                "id": 24680,
+                "links": {
+                    "bucket": "https://zenodo.org/api/files/bucket-v02",
+                    "latest_draft": "https://zenodo.org/api/deposit/depositions/24680",
+                    "html": "https://zenodo.org/deposit/24680",
+                },
+            },
+        )
+
+    def put(self, url: str, **kwargs: object) -> _FakeResponse:
+        self.calls.append(("PUT", url))
+        if url.endswith("/api/deposit/depositions/24680"):
+            payload = kwargs.get("json")
+            assert isinstance(payload, dict)
+            self.metadata_payload = payload
+            return _FakeResponse(
+                200,
+                {
+                    "id": 24680,
+                    "links": {
+                        "bucket": "https://zenodo.org/api/files/bucket-v02",
+                        "latest_draft": "https://zenodo.org/api/deposit/depositions/24680",
+                        "html": "https://zenodo.org/deposit/24680",
+                    },
+                    "metadata": payload.get("metadata", {}),
+                },
+            )
+        self.uploaded_urls.append(url)
+        return _FakeResponse(200, {"filename": url.split("/api/files/bucket-v02/", 1)[1]})
+
+    def get(self, url: str, **kwargs: object) -> _FakeResponse:
+        self.calls.append(("GET", url))
+        metadata = self.metadata_payload or self.metadata
+        return _FakeResponse(
+            200,
+            {
+                "id": 24680,
+                "conceptrecid": "13579",
+                "doi": None,
+                "submitted": False,
+                "state": "unsubmitted",
+                "links": {
+                    "self": "https://zenodo.org/api/deposit/depositions/24680",
+                    "html": "https://zenodo.org/deposit/24680",
+                    "latest_draft": "https://zenodo.org/api/deposit/depositions/24680",
+                    "latest_draft_html": "https://zenodo.org/deposit/24680",
+                },
+                "files": [
+                    {
+                        "filename": entry.path,
+                        "filesize": entry.bytes,
+                        "checksum": f"md5:{entry.md5}",
+                    }
+                    for entry in self.file_manifest.files
+                ],
+                "metadata": metadata.get("metadata", {}),
+            },
+        )
+
+
+def _v0_2_paths() -> tuple[Path, Path, Path]:
+    repo = _repo_root()
+    return (
+        repo / "publication" / "zenodo_v0_2_metadata_draft.json",
+        repo / "release" / "lafc-evict-v0.2-preview",
+        repo / "publication" / "zenodo_v0_2_file_manifest.json",
+    )
+
+
 def test_huggingface_dry_run_succeeds_without_token(tmp_path: Path) -> None:
     release_dir, _ = _build_release_and_bundle(tmp_path)
     result = subprocess.run(
@@ -180,6 +267,142 @@ def test_zenodo_dry_run_succeeds_without_token(tmp_path: Path) -> None:
     assert payload["target"] == "sandbox"
     assert payload["files"] == list(safe_zenodo_bundle_filenames(bundle_dir))
     assert all(not name.startswith("release::") for name in payload["files"])
+
+
+def test_zenodo_v0_2_manifest_plan_validates_exact_files() -> None:
+    metadata_path, release_dir, manifest_path = _v0_2_paths()
+    plan = plan_zenodo_v0_2_draft(
+        metadata_path=metadata_path,
+        release_dir=release_dir,
+        manifest_path=manifest_path,
+    )
+
+    assert plan.target == "production"
+    assert plan.file_manifest.expected_file_count == 15
+    assert plan.file_manifest.expected_total_bytes == 140145059
+    assert [entry.path for entry in plan.file_manifest.files] == [
+        path.relative_to(release_dir).as_posix()
+        for path in sorted(release_dir.rglob("*"))
+        if path.is_file()
+    ]
+
+
+def test_zenodo_v0_2_dry_run_reports_no_write_actions() -> None:
+    metadata_path, release_dir, manifest_path = _v0_2_paths()
+    plan = plan_zenodo_v0_2_draft(
+        metadata_path=metadata_path,
+        release_dir=release_dir,
+        manifest_path=manifest_path,
+    )
+    payload = render_zenodo_v0_2_dry_run(plan)
+
+    assert payload["mode"] == "dry_run"
+    assert payload["target"] == "production"
+    assert payload["manifest"]["file_count"] == 15
+    assert payload["manifest"]["total_bytes"] == 140145059
+    assert payload["safety"] == {
+        "no_deposition_created": True,
+        "no_files_uploaded": True,
+        "no_doi_published": True,
+        "no_quota_allocated": True,
+    }
+    assert payload["explicit_statement"] == [
+        "NO DEPOSITION CREATED",
+        "NO FILES UPLOADED",
+        "NO DOI PUBLISHED",
+        "NO QUOTA ALLOCATED",
+    ]
+    assert "ZENODO" not in json.dumps(payload)
+
+
+def test_zenodo_v0_2_cli_dry_run_uses_manifest_without_token() -> None:
+    metadata_path, release_dir, manifest_path = _v0_2_paths()
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(_repo_root() / "scripts" / "create_zenodo_deposit.py"),
+            "--metadata",
+            str(metadata_path),
+            "--release-dir",
+            str(release_dir),
+            "--manifest",
+            str(manifest_path),
+            "--dry-run",
+        ],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    payload = json.loads(result.stdout)
+    assert payload["target"] == "production"
+    assert payload["manifest"]["file_count"] == 15
+    assert payload["safety"]["no_deposition_created"] is True
+    assert "NO DEPOSITION CREATED" in result.stdout
+
+
+def test_zenodo_v0_2_create_draft_requires_no_publish_flag() -> None:
+    metadata_path, release_dir, manifest_path = _v0_2_paths()
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(_repo_root() / "scripts" / "create_zenodo_deposit.py"),
+            "--metadata",
+            str(metadata_path),
+            "--release-dir",
+            str(release_dir),
+            "--manifest",
+            str(manifest_path),
+            "--create-draft",
+            "--upload",
+            "--verify",
+        ],
+        env={**os.environ, "ZENODO_API_TOKEN": "test-token"},
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 1
+    assert "requires --upload --verify --no-publish" in result.stderr
+
+
+def test_zenodo_v0_2_execute_creates_unpublished_verified_draft_with_mock(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    metadata_path, release_dir, manifest_path = _v0_2_paths()
+    session = _FakeZenodoV02Session(manifest_path, metadata_path)
+    monkeypatch.setenv("ZENODO_API_TOKEN", "production-token")
+    monkeypatch.delenv("ZENODO_SANDBOX_TOKEN", raising=False)
+    monkeypatch.delenv("ZENODO_TOKEN", raising=False)
+
+    result = execute_zenodo_v0_2_draft(
+        metadata_path=metadata_path,
+        release_dir=release_dir,
+        manifest_path=manifest_path,
+        session=session,
+    )
+
+    assert session.calls[0] == ("POST", "https://zenodo.org/api/deposit/depositions")
+    assert result.target == "production"
+    assert result.deposition_id == 24680
+    assert result.concept_record_id == "13579"
+    assert result.submitted is False
+    assert result.state == "unsubmitted"
+    assert result.doi is None
+    assert len(result.uploaded_filenames) == 15
+    assert len(session.uploaded_urls) == 15
+    assert all("/actions/publish" not in url for _, url in session.calls)
+    assert any(url.endswith("/data/cross_family_evict_value_v1.parquet") for url in session.uploaded_urls)
+
+
+def test_zenodo_v0_2_draft_verification_rejects_published_payload() -> None:
+    _, _, manifest_path = _v0_2_paths()
+    manifest = load_zenodo_file_manifest(manifest_path)
+    with pytest.raises(ValueError, match="submitted=false"):
+        verify_zenodo_uploaded_draft(
+            draft_payload={"submitted": True, "state": "done", "files": []},
+            file_manifest=manifest,
+            metadata={"metadata": {}},
+        )
 
 
 def test_zenodo_dry_run_makes_no_network_calls(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
@@ -265,7 +488,13 @@ def test_huggingface_execute_fails_without_token_or_auth(tmp_path: Path) -> None
 
 def test_zenodo_execute_fails_without_token(tmp_path: Path) -> None:
     _, bundle_dir = _build_release_and_bundle(tmp_path)
-    env = {**os.environ, "ZENODO_SANDBOX_TOKEN": "", "ZENODO_TOKEN": ""}
+    env = {
+        **os.environ,
+        "ZENODO_API_TOKEN": "",
+        "ZENODO_ACCESS_TOKEN": "",
+        "ZENODO_SANDBOX_TOKEN": "",
+        "ZENODO_TOKEN": "",
+    }
     result = subprocess.run(
         [
             sys.executable,
@@ -281,7 +510,7 @@ def test_zenodo_execute_fails_without_token(tmp_path: Path) -> None:
         check=False,
     )
     assert result.returncode == 1
-    assert "requires ZENODO_SANDBOX_TOKEN or ZENODO_TOKEN" in result.stderr
+    assert "requires a configured Zenodo token environment variable" in result.stderr
 
 
 def test_zenodo_execute_uses_sandbox_base_url_by_default(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -324,9 +553,11 @@ def test_zenodo_execute_creates_updates_uploads_and_does_not_publish(
 def test_zenodo_execute_fails_clearly_without_token(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     _, bundle_dir = _build_release_and_bundle(tmp_path)
     monkeypatch.delenv("ZENODO_SANDBOX_TOKEN", raising=False)
+    monkeypatch.delenv("ZENODO_API_TOKEN", raising=False)
+    monkeypatch.delenv("ZENODO_ACCESS_TOKEN", raising=False)
     monkeypatch.delenv("ZENODO_TOKEN", raising=False)
 
-    with pytest.raises(ValueError, match="ZENODO_SANDBOX_TOKEN or ZENODO_TOKEN"):
+    with pytest.raises(ValueError, match="configured Zenodo token"):
         execute_zenodo_deposit(bundle_dir, session=_FakeZenodoSession())
 
 
@@ -397,7 +628,7 @@ def test_zenodo_publish_flag_is_rejected(tmp_path: Path) -> None:
         check=False,
     )
     assert result.returncode == 1
-    assert "--publish is disabled for this workflow." in result.stderr
+    assert "--publish is disabled for draft creation." in result.stderr
 
 
 def test_github_execute_fails_without_token_or_gh_auth(tmp_path: Path) -> None:

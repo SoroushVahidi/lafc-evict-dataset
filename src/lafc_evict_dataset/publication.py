@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import os
 import re
 import subprocess
@@ -110,6 +111,52 @@ class ZenodoExecutionResult:
     prereserved_doi: str | None
     state: str | None
     submitted: bool | None
+
+
+@dataclass(frozen=True)
+class ZenodoManifestFile:
+    path: str
+    bytes: int
+    sha256: str
+    md5: str
+    role: str
+
+
+@dataclass(frozen=True)
+class ZenodoFileManifest:
+    manifest_version: str
+    dataset: str
+    version: str
+    release_root_name: str
+    expected_file_count: int
+    expected_total_bytes: int
+    files: tuple[ZenodoManifestFile, ...]
+
+
+@dataclass(frozen=True)
+class ZenodoDraftPlan:
+    target: str
+    metadata_path: Path
+    manifest_path: Path
+    release_dir: Path
+    metadata: dict[str, object]
+    file_manifest: ZenodoFileManifest
+    operations: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class ZenodoDraftExecutionResult:
+    target: str
+    deposition_id: int
+    concept_record_id: str | None
+    metadata_title: str
+    uploaded_filenames: tuple[str, ...]
+    links: dict[str, str]
+    doi: str | None
+    prereserved_doi: str | None
+    state: str | None
+    submitted: bool | None
+    total_bytes: int
 
 
 class ResponseLike(Protocol):
@@ -424,6 +471,244 @@ def write_json(path: str | Path, payload: dict[str, object]) -> Path:
     return output_path
 
 
+def _hash_file(path: Path, algorithm: str) -> str:
+    digest = hashlib.new(algorithm)
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def sha256_file_publication(path: Path) -> str:
+    return _hash_file(path, "sha256")
+
+
+def md5_file_publication(path: Path) -> str:
+    return _hash_file(path, "md5")
+
+
+def load_zenodo_metadata(path: str | Path) -> dict[str, object]:
+    metadata_path = Path(path)
+    payload = json.loads(metadata_path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("Zenodo metadata payload must be a JSON object.")
+    validate_zenodo_v0_2_metadata(payload)
+    return payload
+
+
+def validate_zenodo_v0_2_metadata(payload: dict[str, object]) -> None:
+    metadata = payload.get("metadata")
+    if not isinstance(metadata, dict):
+        raise ValueError("Zenodo metadata payload must contain a metadata object.")
+
+    required_text = {
+        "title": "LAFC-Evict: Learning-Augmented Cache Eviction Dataset",
+        "upload_type": "dataset",
+        "version": "v0.2",
+        "license": "cc0-1.0",
+        "access_right": "open",
+        "language": "eng",
+    }
+    for key, expected in required_text.items():
+        if metadata.get(key) != expected:
+            raise ValueError(f"Zenodo metadata {key!r} must be {expected!r}.")
+
+    creators = metadata.get("creators")
+    if not isinstance(creators, list) or not creators:
+        raise ValueError("Zenodo metadata must include at least one creator.")
+    first_creator = creators[0]
+    if not isinstance(first_creator, dict):
+        raise ValueError("Zenodo metadata creator entries must be objects.")
+    if first_creator.get("name") != "Vahidi, Soroush":
+        raise ValueError("Zenodo metadata creator must be Vahidi, Soroush.")
+    if first_creator.get("affiliation") != "New Jersey Institute of Technology":
+        raise ValueError("Zenodo metadata creator affiliation must be New Jersey Institute of Technology.")
+
+    description = str(metadata.get("description", ""))
+    if "Wikimedia" not in description or "CC0" not in description or "raw page titles" not in description:
+        raise ValueError("Zenodo metadata description must include Wiki2018 attribution and raw-title caveat.")
+
+    keywords = metadata.get("keywords")
+    if not isinstance(keywords, list) or len(keywords) < 5:
+        raise ValueError("Zenodo metadata must include a non-trivial keyword list.")
+
+    related = metadata.get("related_identifiers")
+    if not isinstance(related, list):
+        raise ValueError("Zenodo metadata related_identifiers must be a list.")
+    expected_relations = {
+        "https://huggingface.co/datasets/SoroushVahidi/lafc-evict": "isIdenticalTo",
+        "https://github.com/SoroushVahidi/Augmented-caching": "isDocumentedBy",
+    }
+    seen: dict[str, str] = {}
+    for item in related:
+        if isinstance(item, dict):
+            seen[str(item.get("identifier", ""))] = str(item.get("relation", ""))
+    for identifier, relation in expected_relations.items():
+        if seen.get(identifier) != relation:
+            raise ValueError(f"Zenodo metadata must relate {identifier} as {relation}.")
+
+    serialized = json.dumps(payload, sort_keys=True)
+    forbidden = [
+        "ZENODO_API_TOKEN",
+        "ZENODO_ACCESS_TOKEN",
+        "ZENODO_TOKEN",
+        "Bearer ",
+        "access_token=",
+        "/home/",
+        "/mmfs",
+        "wulver",
+    ]
+    for marker in forbidden:
+        if marker.lower() in serialized.lower():
+            raise ValueError(f"Zenodo metadata contains forbidden marker: {marker}")
+
+
+def load_zenodo_file_manifest(path: str | Path) -> ZenodoFileManifest:
+    manifest_path = Path(path)
+    payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("Zenodo file manifest must be a JSON object.")
+    files_payload = payload.get("files")
+    if not isinstance(files_payload, list):
+        raise ValueError("Zenodo file manifest must contain a files list.")
+    files: list[ZenodoManifestFile] = []
+    for item in files_payload:
+        if not isinstance(item, dict):
+            raise ValueError("Zenodo file manifest entries must be objects.")
+        files.append(
+            ZenodoManifestFile(
+                path=str(item["path"]),
+                bytes=int(item["bytes"]),
+                sha256=str(item["sha256"]),
+                md5=str(item["md5"]),
+                role=str(item["role"]),
+            )
+        )
+    manifest = ZenodoFileManifest(
+        manifest_version=str(payload.get("manifest_version", "")),
+        dataset=str(payload.get("dataset", "")),
+        version=str(payload.get("version", "")),
+        release_root_name=str(payload.get("release_root_name", "")),
+        expected_file_count=int(payload.get("expected_file_count", -1)),
+        expected_total_bytes=int(payload.get("expected_total_bytes", -1)),
+        files=tuple(files),
+    )
+    validate_zenodo_file_manifest_structure(manifest)
+    return manifest
+
+
+def validate_zenodo_file_manifest_structure(manifest: ZenodoFileManifest) -> None:
+    if manifest.manifest_version != "zenodo-file-manifest-v1":
+        raise ValueError("Unsupported Zenodo file manifest version.")
+    if manifest.dataset != "lafc-evict":
+        raise ValueError("Zenodo file manifest dataset must be lafc-evict.")
+    if manifest.version != "v0.2":
+        raise ValueError("Zenodo file manifest version must be v0.2.")
+    if manifest.release_root_name != "lafc-evict-v0.2-preview":
+        raise ValueError("Zenodo file manifest release root must be lafc-evict-v0.2-preview.")
+    if manifest.expected_file_count != 15:
+        raise ValueError("Zenodo v0.2 manifest must contain exactly 15 files.")
+    if len(manifest.files) != manifest.expected_file_count:
+        raise ValueError("Zenodo file manifest file count does not match expected_file_count.")
+    if len({entry.path for entry in manifest.files}) != len(manifest.files):
+        raise ValueError("Zenodo file manifest contains duplicate paths.")
+    if sum(entry.bytes for entry in manifest.files) != manifest.expected_total_bytes:
+        raise ValueError("Zenodo file manifest byte total does not match expected_total_bytes.")
+    for entry in manifest.files:
+        if entry.path.startswith("/") or ".." in Path(entry.path).parts:
+            raise ValueError(f"Unsafe Zenodo manifest path: {entry.path}")
+        if not re.fullmatch(r"[0-9a-f]{64}", entry.sha256):
+            raise ValueError(f"Invalid SHA-256 for {entry.path}")
+        if not re.fullmatch(r"[0-9a-f]{32}", entry.md5):
+            raise ValueError(f"Invalid MD5 for {entry.path}")
+
+
+def validate_zenodo_v0_2_release_package(
+    *,
+    release_dir: str | Path,
+    metadata_path: str | Path,
+    manifest_path: str | Path,
+) -> ZenodoDraftPlan:
+    release_path = Path(release_dir).resolve()
+    metadata_file = Path(metadata_path).resolve()
+    manifest_file = Path(manifest_path).resolve()
+    metadata = load_zenodo_metadata(metadata_file)
+    manifest = load_zenodo_file_manifest(manifest_file)
+
+    actual_files = tuple(sorted(path.relative_to(release_path).as_posix() for path in release_path.rglob("*") if path.is_file()))
+    expected_files = tuple(entry.path for entry in manifest.files)
+    if actual_files != expected_files:
+        raise ValueError(
+            "Release file inventory does not match Zenodo manifest. "
+            f"Expected {len(expected_files)} files, found {len(actual_files)} files."
+        )
+
+    for entry in manifest.files:
+        path = release_path / entry.path
+        if not path.exists():
+            raise FileNotFoundError(f"Missing Zenodo upload file: {entry.path}")
+        size = path.stat().st_size
+        if size != entry.bytes:
+            raise ValueError(f"Size mismatch for {entry.path}: {size} vs {entry.bytes}")
+        sha256 = sha256_file_publication(path)
+        if sha256 != entry.sha256:
+            raise ValueError(f"SHA-256 mismatch for {entry.path}: {sha256} vs {entry.sha256}")
+        md5 = md5_file_publication(path)
+        if md5 != entry.md5:
+            raise ValueError(f"MD5 mismatch for {entry.path}: {md5} vs {entry.md5}")
+
+    release_manifest = json.loads((release_path / "metadata" / "release_manifest.json").read_text(encoding="utf-8"))
+    if release_manifest.get("dataset_name") != "lafc-evict":
+        raise ValueError("Release manifest dataset_name must be lafc-evict.")
+    if release_manifest.get("version") != "0.2-preview":
+        raise ValueError("Release manifest version must be 0.2-preview.")
+    if release_manifest.get("included_families") != ["wiki2018"]:
+        raise ValueError("Release manifest must include only wiki2018.")
+
+    security_scan = json.loads((release_path / "metadata" / "security_scan.json").read_text(encoding="utf-8"))
+    if security_scan.get("passed") is not True or security_scan.get("findings") not in ([], ()):
+        raise ValueError("Release security scan must pass with no findings.")
+
+    readme = (release_path / "README.md").read_text(encoding="utf-8")
+    dataset_card = (release_path / "dataset_card.md").read_text(encoding="utf-8")
+    if 'license: "cc0-1.0"' not in readme:
+        raise ValueError("Release README must declare Hugging Face license metadata as cc0-1.0.")
+    if "Wikimedia pageview data is made available by the Wikimedia Foundation" not in readme + dataset_card:
+        raise ValueError("Wiki2018 attribution text is missing from release documentation.")
+
+    source_manifest = json.loads((release_path / "metadata" / "sampling_manifest.json").read_text(encoding="utf-8"))
+    source_entries = source_manifest.get("source_entries", [])
+    if not isinstance(source_entries, list) or not source_entries:
+        raise ValueError("Sampling manifest must contain source_entries.")
+    for entry in source_entries:
+        if not isinstance(entry, dict):
+            raise ValueError("Sampling manifest source entry must be an object.")
+        rel_path = str(entry.get("source_relpath", ""))
+        if rel_path.startswith("/") or "/wiki2018_pageviews_en_50k__" not in f"/{rel_path}":
+            raise ValueError(f"Unexpected v0.2 source_relpath: {rel_path}")
+
+    from lafc_evict_dataset.preview import validate_preview_release
+
+    preview_errors = validate_preview_release(release_path)
+    if preview_errors:
+        raise ValueError("Preview release validation failed: " + "; ".join(preview_errors))
+
+    return ZenodoDraftPlan(
+        target="production",
+        metadata_path=metadata_file,
+        manifest_path=manifest_file,
+        release_dir=release_path,
+        metadata=metadata,
+        file_manifest=manifest,
+        operations=(
+            "POST /api/deposit/depositions",
+            "PUT /api/deposit/depositions/{id}",
+            "PUT {bucket_url}/{relative_path} for each manifest file",
+            "GET /api/deposit/depositions/{id}",
+        ),
+    )
+
+
 def expected_hf_remote_paths(inventory: ReleaseInventory) -> tuple[str, ...]:
     paths = [
         "README.md",
@@ -626,10 +911,85 @@ def plan_zenodo_upload(
     )
 
 
+def plan_zenodo_v0_2_draft(
+    *,
+    metadata_path: str | Path,
+    release_dir: str | Path,
+    manifest_path: str | Path,
+    production: bool = True,
+) -> ZenodoDraftPlan:
+    plan = validate_zenodo_v0_2_release_package(
+        release_dir=release_dir,
+        metadata_path=metadata_path,
+        manifest_path=manifest_path,
+    )
+    return ZenodoDraftPlan(
+        target="production" if production else "sandbox",
+        metadata_path=plan.metadata_path,
+        manifest_path=plan.manifest_path,
+        release_dir=plan.release_dir,
+        metadata=plan.metadata,
+        file_manifest=plan.file_manifest,
+        operations=plan.operations,
+    )
+
+
+def render_zenodo_v0_2_dry_run(plan: ZenodoDraftPlan) -> dict[str, object]:
+    metadata = plan.metadata["metadata"] if isinstance(plan.metadata.get("metadata"), dict) else {}
+    return {
+        "mode": "dry_run",
+        "target": plan.target,
+        "metadata": {
+            "title": metadata.get("title"),
+            "upload_type": metadata.get("upload_type"),
+            "version": metadata.get("version"),
+            "license": metadata.get("license"),
+            "access_right": metadata.get("access_right"),
+            "creators": metadata.get("creators"),
+            "related_identifiers": metadata.get("related_identifiers"),
+        },
+        "manifest": {
+            "path": str(plan.manifest_path),
+            "release_dir": str(plan.release_dir),
+            "file_count": plan.file_manifest.expected_file_count,
+            "total_bytes": plan.file_manifest.expected_total_bytes,
+            "files": [
+                {
+                    "path": entry.path,
+                    "bytes": entry.bytes,
+                    "sha256": entry.sha256,
+                    "md5": entry.md5,
+                    "role": entry.role,
+                }
+                for entry in plan.file_manifest.files
+            ],
+        },
+        "would_run": list(plan.operations),
+        "safety": {
+            "no_deposition_created": True,
+            "no_files_uploaded": True,
+            "no_doi_published": True,
+            "no_quota_allocated": True,
+        },
+        "explicit_statement": [
+            "NO DEPOSITION CREATED",
+            "NO FILES UPLOADED",
+            "NO DOI PUBLISHED",
+            "NO QUOTA ALLOCATED",
+        ],
+    }
+
+
 def zenodo_api_token() -> str | None:
     sandbox_token = os.environ.get("ZENODO_SANDBOX_TOKEN")
     if sandbox_token:
         return sandbox_token
+    api_token = os.environ.get("ZENODO_API_TOKEN")
+    if api_token:
+        return api_token
+    access_token = os.environ.get("ZENODO_ACCESS_TOKEN")
+    if access_token:
+        return access_token
     token = os.environ.get("ZENODO_TOKEN")
     if token:
         return token
@@ -711,7 +1071,7 @@ def execute_zenodo_deposit(
 
     token = zenodo_api_token()
     if not token:
-        raise ValueError("Execute mode requires ZENODO_SANDBOX_TOKEN or ZENODO_TOKEN.")
+        raise ValueError("Execute mode requires a configured Zenodo token environment variable.")
 
     bundle_dir = bundle_dir.resolve()
     metadata_path = bundle_dir / "zenodo_metadata.json"
@@ -793,6 +1153,168 @@ def execute_zenodo_deposit(
         prereserved_doi=prereserved_doi,
         state=str(verified.get("state")) if verified.get("state") is not None else None,
         submitted=bool(verified.get("submitted")) if verified.get("submitted") is not None else None,
+    )
+
+
+def _zenodo_file_payload(file_payload: dict[str, object]) -> tuple[str | None, int | None, str | None]:
+    filename = file_payload.get("filename") or file_payload.get("key")
+    size = file_payload.get("filesize") or file_payload.get("size")
+    checksum = file_payload.get("checksum")
+    return (
+        str(filename) if filename is not None else None,
+        int(size) if size is not None else None,
+        str(checksum) if checksum is not None else None,
+    )
+
+
+def verify_zenodo_uploaded_draft(
+    *,
+    draft_payload: dict[str, object],
+    file_manifest: ZenodoFileManifest,
+    metadata: dict[str, object],
+) -> None:
+    if draft_payload.get("submitted") is not False:
+        raise ValueError("Zenodo draft verification expected submitted=false.")
+    state = draft_payload.get("state")
+    if state not in {"unsubmitted", "inprogress"}:
+        raise ValueError(f"Zenodo draft has unexpected state: {state}")
+    if draft_payload.get("doi"):
+        raise ValueError("Zenodo draft unexpectedly has a registered DOI.")
+
+    verified_metadata = draft_payload.get("metadata")
+    expected_metadata = metadata.get("metadata")
+    if not isinstance(verified_metadata, dict) or not isinstance(expected_metadata, dict):
+        raise ValueError("Zenodo draft metadata response is missing metadata objects.")
+    for field in ["title", "upload_type", "version", "license", "access_right"]:
+        if verified_metadata.get(field) != expected_metadata.get(field):
+            raise ValueError(f"Zenodo draft metadata mismatch for {field}.")
+
+    files_payload = draft_payload.get("files")
+    if not isinstance(files_payload, list):
+        raise ValueError("Zenodo draft response must include a files list.")
+    if len(files_payload) != file_manifest.expected_file_count:
+        raise ValueError(
+            f"Zenodo draft file count mismatch: {len(files_payload)} vs {file_manifest.expected_file_count}"
+        )
+
+    expected = {entry.path: entry for entry in file_manifest.files}
+    observed: dict[str, tuple[int | None, str | None]] = {}
+    for file_payload in files_payload:
+        if not isinstance(file_payload, dict):
+            raise ValueError("Zenodo draft file entries must be objects.")
+        filename, size, checksum = _zenodo_file_payload(file_payload)
+        if filename is None:
+            raise ValueError("Zenodo draft file entry is missing filename/key.")
+        observed[filename] = (size, checksum)
+
+    if set(observed) != set(expected):
+        raise ValueError("Zenodo draft uploaded filenames do not match the manifest exactly.")
+    for path, entry in expected.items():
+        size, checksum = observed[path]
+        if size != entry.bytes:
+            raise ValueError(f"Zenodo draft size mismatch for {path}: {size} vs {entry.bytes}")
+        if checksum:
+            normalized = checksum.lower()
+            if normalized.startswith("md5:"):
+                normalized = normalized.split(":", 1)[1]
+            if normalized != entry.md5 and normalized != entry.sha256:
+                raise ValueError(f"Zenodo draft checksum mismatch for {path}: {checksum}")
+
+
+def execute_zenodo_v0_2_draft(
+    *,
+    metadata_path: str | Path,
+    release_dir: str | Path,
+    manifest_path: str | Path,
+    production: bool = True,
+    session: SessionLike | None = None,
+) -> ZenodoDraftExecutionResult:
+    if session is None:
+        try:
+            import requests
+        except ImportError as exc:
+            raise RuntimeError("Draft creation requires the optional 'requests' dependency.") from exc
+
+        session = requests.Session()
+
+    token = zenodo_api_token()
+    if not token:
+        raise ValueError("Draft creation requires ZENODO_API_TOKEN, ZENODO_ACCESS_TOKEN, ZENODO_TOKEN, or ZENODO_SANDBOX_TOKEN.")
+
+    plan = plan_zenodo_v0_2_draft(
+        metadata_path=metadata_path,
+        release_dir=release_dir,
+        manifest_path=manifest_path,
+        production=production,
+    )
+    base_url = zenodo_base_url(sandbox=not production)
+
+    created = _request_json(
+        session,
+        "post",
+        f"{base_url}/api/deposit/depositions",
+        token=token,
+        json_payload={},
+    )
+    deposition_id = int(created["id"])
+    latest_draft_url = str(created.get("links", {}).get("latest_draft", f"{base_url}/api/deposit/depositions/{deposition_id}"))
+    updated = _request_json(
+        session,
+        "put",
+        latest_draft_url,
+        token=token,
+        json_payload=plan.metadata,
+    )
+
+    bucket_url = str(updated.get("links", {}).get("bucket") or created.get("links", {}).get("bucket", ""))
+    if not bucket_url:
+        raise RuntimeError("Zenodo deposition response did not include a bucket upload URL.")
+
+    uploaded_filenames: list[str] = []
+    for entry in plan.file_manifest.files:
+        path = plan.release_dir / entry.path
+        with path.open("rb") as handle:
+            _request_json(
+                session,
+                "put",
+                f"{bucket_url}/{entry.path}",
+                token=token,
+                data=handle,
+            )
+        uploaded_filenames.append(entry.path)
+
+    verified = _request_json(session, "get", latest_draft_url, token=token)
+    verify_zenodo_uploaded_draft(
+        draft_payload=verified,
+        file_manifest=plan.file_manifest,
+        metadata=plan.metadata,
+    )
+
+    verified_metadata = verified.get("metadata", {})
+    links_payload = verified.get("links", {})
+    safe_links = {
+        key: str(value)
+        for key, value in links_payload.items()
+        if key in {"self", "html", "latest_draft", "latest_draft_html"}
+    }
+    prereserved_doi = None
+    if isinstance(verified_metadata, dict):
+        prereserve = verified_metadata.get("prereserve_doi", {})
+        if isinstance(prereserve, dict):
+            prereserved_doi = str(prereserve.get("doi")) if prereserve.get("doi") else None
+
+    return ZenodoDraftExecutionResult(
+        target=plan.target,
+        deposition_id=int(verified.get("id", deposition_id)),
+        concept_record_id=str(verified.get("conceptrecid")) if verified.get("conceptrecid") is not None else None,
+        metadata_title=str(verified_metadata.get("title", "")) if isinstance(verified_metadata, dict) else "",
+        uploaded_filenames=tuple(uploaded_filenames),
+        links=safe_links,
+        doi=str(verified.get("doi")) if verified.get("doi") else None,
+        prereserved_doi=prereserved_doi,
+        state=str(verified.get("state")) if verified.get("state") is not None else None,
+        submitted=bool(verified.get("submitted")) if verified.get("submitted") is not None else None,
+        total_bytes=plan.file_manifest.expected_total_bytes,
     )
 
 

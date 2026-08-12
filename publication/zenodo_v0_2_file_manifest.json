@@ -1,0 +1,115 @@
+{
+  "dataset": "lafc-evict",
+  "expected_file_count": 15,
+  "expected_total_bytes": 140145059,
+  "files": [
+    {
+      "bytes": 2617,
+      "md5": "c333ce1ac160f60b4d1cdd1bc8c17534",
+      "path": "README.md",
+      "role": "primary_readme",
+      "sha256": "3520fa4c5138eb25b3522962aedff41e94dc645ee782ad4d3a3374c0c7906652"
+    },
+    {
+      "bytes": 960,
+      "md5": "8061430209d5e19be94e93f39be8d4e8",
+      "path": "RELEASE_NOTES_v0_2.md",
+      "role": "release_documentation",
+      "sha256": "6597f4db43e5a2ef79da7f8193d2fd72bda8f4c2e2e0b9ea93fbf458e1a7e374"
+    },
+    {
+      "bytes": 66875136,
+      "md5": "0cda2e76f2acc06438042c6e9cc7f588",
+      "path": "data/cross_family_evict_value_v1.parquet",
+      "role": "data_payload",
+      "sha256": "38ae87b88bf8367d41f0dc8638eaf12fa5416b559d24c7023f39b9f1c7b6bb8f"
+    },
+    {
+      "bytes": 73230958,
+      "md5": "6d699e0aff74e4e9190fdec1d973f9b8",
+      "path": "data/objective_ablation_scalar.parquet",
+      "role": "data_payload",
+      "sha256": "90a2cb7913e234323190810906644e110f5c9ebeaaea47203857f61b822757f9"
+    },
+    {
+      "bytes": 2788,
+      "md5": "46030e4f2f919d226c3dcb5f7abebc69",
+      "path": "dataset_card.md",
+      "role": "distribution_metadata",
+      "sha256": "19472085705c5447c5c6a040082ba120034f28f285c77cfa4d83e895c2c32f93"
+    },
+    {
+      "bytes": 1335,
+      "md5": "d0b3b3156169138557185587558548ed",
+      "path": "metadata/checksums.sha256",
+      "role": "release_metadata",
+      "sha256": "d2592d79ffd44cc8c7d50d5cb574f76e8e8b5e37156f1d0f92efcec4b1bfeca7"
+    },
+    {
+      "bytes": 1245,
+      "md5": "fbd34233c9e0e690d03abbb911c9d7c5",
+      "path": "metadata/lafc_evict_v0_2_preview_families.json",
+      "role": "release_metadata",
+      "sha256": "64cff7ee03f4ee8ce3f2959ed7f88e1ff6c308ab43efeaf2bf1c5f46fb72be0d"
+    },
+    {
+      "bytes": 1489,
+      "md5": "47e7ebabf6f6027d18b6c5692fa651e8",
+      "path": "metadata/provenance_summary.csv",
+      "role": "release_metadata",
+      "sha256": "f3b5e738189be705286264f2c3e414f66aea182ccad2b11541d28bcd71c47221"
+    },
+    {
+      "bytes": 2347,
+      "md5": "407e1c0d747741940dcc50c2d07b7cd0",
+      "path": "metadata/release_manifest.json",
+      "role": "release_metadata",
+      "sha256": "77403730b6d6181744de7dc9694958daa07e2033540f90f8cdd14e72add4ee84"
+    },
+    {
+      "bytes": 9537,
+      "md5": "9a9a7727619599dd0da3b04ae8e82010",
+      "path": "metadata/sampling_manifest.json",
+      "role": "release_metadata",
+      "sha256": "ba70c79ff4a39e8415913ff1bd54aa8c4dcb5cb7dc2880460143277a3dab539e"
+    },
+    {
+      "bytes": 7290,
+      "md5": "efe0741a436a50fe1cb742b37a7de037",
+      "path": "metadata/schema.json",
+      "role": "release_metadata",
+      "sha256": "54cdde9f8aa60639af0c653570051f0e66c5beb44c213784b45f0be87623a199"
+    },
+    {
+      "bytes": 39,
+      "md5": "af25ffe429161b9de5e1b5b228be1ab3",
+      "path": "metadata/security_scan.json",
+      "role": "release_metadata",
+      "sha256": "49fb8eb3f7a3eeae5cf509025b5759003751abf57b629f033cc9ebbb65639151"
+    },
+    {
+      "bytes": 4355,
+      "md5": "e64f66e0720f2609bd851ad12713d0ce",
+      "path": "metadata/source_family_registry.yaml",
+      "role": "release_metadata",
+      "sha256": "422a8e0dae8dd0662659b4b493d32d5d1c08dea4bd8efa4627b5f6c807deba04"
+    },
+    {
+      "bytes": 4804,
+      "md5": "a58bad6d3124d42d7ecb9973d4ae4f99",
+      "path": "metadata/statistics.json",
+      "role": "release_metadata",
+      "sha256": "5026d670bb4e4bcc11db470be2234081d7ba7230dfe602eff163bc668ea5bc4c"
+    },
+    {
+      "bytes": 159,
+      "md5": "e3b5b962643db2f884d91e435f576547",
+      "path": "metadata/validation_report.md",
+      "role": "release_metadata",
+      "sha256": "5aa70ab1b7f366128e0f30874b5a0ac20aa9e20f6ccabfacd3e53b898d85fb00"
+    }
+  ],
+  "manifest_version": "zenodo-file-manifest-v1",
+  "release_root_name": "lafc-evict-v0.2-preview",
+  "version": "v0.2"
+}
