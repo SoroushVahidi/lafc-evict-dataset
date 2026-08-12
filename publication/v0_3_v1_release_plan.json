@@ -1,0 +1,98 @@
+{
+  "document_type": "v0_3_v1_release_plan",
+  "status": "INTERNAL_PLANNING_DRAFT_NOT_APPROVED",
+  "plan_date": "2026-08-11",
+  "note": "Design proposal only. Nothing described here has been built, uploaded, or published. See docs/V0_3_V1_RELEASE_DESIGN.md for full rationale.",
+  "tiers": [
+    {
+      "tier": "A",
+      "version": "0.2",
+      "status": "DONE_PUBLISHED",
+      "families": ["wiki2018"],
+      "configs": ["cross_family_evict_value_v1", "objective_ablation_scalar"],
+      "size_bytes": 140145802,
+      "published_targets": {
+        "huggingface": "https://huggingface.co/datasets/SoroushVahidi/lafc-evict",
+        "zenodo_version_doi": "10.5281/zenodo.21895844",
+        "zenodo_concept_doi": "10.5281/zenodo.21895843"
+      }
+    },
+    {
+      "tier": "B",
+      "version": "0.3",
+      "status": "PROPOSED_NOT_BUILT",
+      "families": ["wiki2018"],
+      "families_blocked_pending_review": ["cloudphysics", "metacdn", "metakv", "twemcache"],
+      "families_excluded": ["brightkite", "citibike"],
+      "configs": ["cross_family_evict_value_v1_expanded", "objective_ablation_scalar_expanded", "objective_ablation_pairwise"],
+      "estimated_size_bytes_low": 157286400,
+      "estimated_size_bytes_high": 419430400,
+      "worthwhile": true,
+      "worthwhile_reason": "reuses_already_built_source_data_DT8_filtered_to_wiki2018_no_new_generation_compute_required",
+      "blockers": ["pseudonymization_not_yet_applied_to_DT8", "decision_view_schema_oversized_needs_narrowing", "split_column_dtype_inconsistency_found_in_DT7_DT8"]
+    },
+    {
+      "tier": "C",
+      "version": "1.0",
+      "status": "PROPOSED_NOT_BUILT",
+      "families": ["wiki2018"],
+      "families_conditional": ["cloudphysics", "metacdn", "metakv", "twemcache"],
+      "families_conditional_note": "included only if each independently reaches an explicit APPROVED_* redistribution status; otherwise permanently excluded and documented, not silently dropped",
+      "families_excluded_pending_review": ["brightkite", "citibike"],
+      "configs": ["cross_family_evict_value_v1", "objective_ablation_scalar", "objective_ablation_pairwise", "decision_view"],
+      "estimated_size_bytes_low": 2147483648,
+      "estimated_size_bytes_high": 6442450944,
+      "stopping_conditions": [
+        "schema_version_frozen_and_stable_across_a_released_v0_3_and_v1_0",
+        "full_quality_gate_pass_on_exact_files_to_publish",
+        "every_included_family_status_explicitly_APPROVED_not_eligible_pending_final_review"
+      ]
+    }
+  ],
+  "hf_configs_proposed": [
+    {"name": "cross_family_evict_value_v1", "purpose": "primary candidate-level supervision", "config_explosion_avoided": true},
+    {"name": "objective_ablation_scalar", "purpose": "4-objective scalar comparison"},
+    {"name": "objective_ablation_pairwise", "purpose": "capped pairwise comparison rows", "cap": "max_pairs_per_decision_configurable"},
+    {"name": "decision_view", "purpose": "one row per decision, summary stats", "tier": "v1.0_only"}
+  ],
+  "schema_changes_proposed": [
+    "add_schema_version_field_in_row_data",
+    "rename_candidate_page_id_to_candidate_object_pseudonym",
+    "pseudonymize_all_families_before_release_not_just_wiki2018",
+    "evaluate_float32_narrowing_for_feature_columns",
+    "category_encode_trace_family_split_dataset_source",
+    "add_release_version_field",
+    "fix_split_column_dtype_inconsistency_string_vs_dictionary"
+  ],
+  "quality_gates": [
+    "schema_validation", "row_count_validation", "uniqueness_decision_id_x_candidate_pseudonym",
+    "decision_candidate_consistency", "no_leakage_train_test_or_held_out_family",
+    "no_nan_inf_in_targets_or_required_features", "target_domain_validation_y_loss_nonneg",
+    "capacity_candidate_count_consistency", "family_consistency", "source_provenance_completeness",
+    "license_status_gate_fail_closed_on_non_approved_family", "privacy_scan", "local_path_scan",
+    "token_secret_scan", "duplicate_detection", "deterministic_build_manifest", "sha256_manifest"
+  ],
+  "hosting_plan": {
+    "huggingface": {"role": "primary_interactive_ml_ready_host", "v0_3_fit": "within_normal_free_tier", "v1_0_fit": "likely_within_normal_free_tier_reverify_at_build_time"},
+    "zenodo": {"role": "doi_backed_archival_snapshot", "v0_3_fit": "within_standard_allowance", "v1_0_fit": "likely_within_standard_allowance_reverify_at_build_time", "versioning": "must_use_existing_concept_doi_10.5281/zenodo.21895843_new_version_workflow"},
+    "github": {"role": "code_manifests_documentation_only", "large_payload_policy": "release_directory_not_fully_git_tracked_verify_gitignore_coverage_for_new_v0_3_dir_before_building"}
+  },
+  "must_release_for_paper_reproducibility": [
+    "objective_ablation_scalar_config_backing_KBS_R2_Major_2_84_of_84_FINAL_VALIDATED_result"
+  ],
+  "useful_research_dataset_extension": [
+    "cross_family_evict_value_v1_config_backing_KBS_R2_Major_1_pending_synthesis"
+  ],
+  "optional_future_data": [
+    "wulver_only_corrected_42_of_42_evict_value_v1_comparison_csv_as_a_results_artifact_not_training_data",
+    "continuation_policy_c0_c1_c2_supervision_data_not_ready_campaign_still_running"
+  ],
+  "do_not_release": [
+    "brightkite_candidate_rows_pending_license_and_privacy_review",
+    "citibike_candidate_rows_pending_license_and_privacy_review"
+  ],
+  "must_not_delay_paper": true,
+  "no_upload_performed": true,
+  "no_deposition_or_repo_created": true,
+  "no_v0_2_modification_performed": true
+}

@@ -1,0 +1,162 @@
+{
+  "document_type": "v0_3_v1_asset_inventory",
+  "status": "INTERNAL_PLANNING_DRAFT",
+  "audit_date": "2026-08-11",
+  "audit_scope": "local_workstation_only_no_wulver_contact",
+  "note": "Paths below are repo-relative labels, not local filesystem paths. See docs/V0_3_V1_DATA_INVENTORY.md for the full narrative audit this file summarizes.",
+  "assets": [
+    {
+      "asset_id": "DT-1",
+      "label": "Augmented-caching:data/derived/evict_value_v1_wulver_heavy_r1",
+      "size_bytes_approx": 103079215104,
+      "size_human": "96 GB",
+      "format": "csv",
+      "class": "C_generated_supervision_intermediate",
+      "trace_families": ["wiki2018", "brightkite", "citibike", "cloudphysics", "metacdn", "metakv", "twemcache"],
+      "capacities": [32, 64, 128, 256],
+      "horizons": [4, 8, 16],
+      "row_count": 323043072,
+      "shard_count": 662,
+      "release_ready": false,
+      "release_blockers": ["contains_raw_nonpseudonymized_identifiers_for_wiki2018", "includes_license_blocked_families"]
+    },
+    {
+      "asset_id": "DT-2",
+      "label": "Augmented-caching-fairness:data/derived/evict_value_v1_cross_family_v1",
+      "size_bytes_approx": 99857989632,
+      "size_human": "93 GB",
+      "format": "csv",
+      "class": "C_generated_supervision_intermediate",
+      "trace_families": ["wiki2018", "brightkite", "citibike", "cloudphysics", "metacdn", "metakv", "twemcache"],
+      "purpose": "leave_one_family_out_cross_family_folds",
+      "feeds": "KBS_R2_Major_1",
+      "release_ready": false,
+      "release_blockers": ["provenance_review_incomplete_for_most_families", "not_yet_pseudonymized"]
+    },
+    {
+      "asset_id": "DT-3",
+      "label": "Augmented-caching-fairness:data/derived/evict_value_v1_fair_v1",
+      "size_bytes_approx": 3113851289,
+      "size_human": "2.9 GB",
+      "format": "csv",
+      "class": "C_generated_supervision_intermediate",
+      "release_ready": false
+    },
+    {
+      "asset_id": "DT-4",
+      "label": "Augmented-caching-objective-ablation:data/derived/supervision_objective_ablation_v1",
+      "size_bytes_approx": 129922760704,
+      "size_human": "121 GB",
+      "format": "csv",
+      "class": "C_generated_supervision_intermediate",
+      "trace_families": ["wiki2018", "brightkite", "citibike", "cloudphysics", "metacdn", "metakv", "twemcache"],
+      "objectives": ["eviction_loss", "next_arrival", "reuse_distance", "pairwise"],
+      "purpose": "objective_ablation_scalar_and_pairwise_views",
+      "feeds": "KBS_R2_Major_2",
+      "release_ready": false,
+      "release_blockers": ["provenance_review_incomplete_for_most_families", "not_yet_pseudonymized"]
+    },
+    {
+      "asset_id": "DT-5",
+      "label": "Augmented-caching:data/raw",
+      "size_bytes_approx": 837812224,
+      "size_human": "799 MB",
+      "format": "source_native",
+      "class": "A_B_original_and_normalized_source"
+    },
+    {
+      "asset_id": "DT-7",
+      "label": "lafc-evict-dataset:release/lafc-evict-v0.1-open",
+      "size_bytes_approx": 1181116006,
+      "size_human": "1.1 GB",
+      "format": "parquet",
+      "class": "F_superseded_duplicate",
+      "duplicate_of": "DT-8",
+      "duplicate_classification": "EXACT_CONFIRMED_for_candidate_rows_only",
+      "release_ready": false,
+      "notes": "candidate_rows byte-identical to DT-8 (spot-checked SHA-256); decision_view is a smaller, earlier/incomplete build, not a duplicate; whole tree documented locally as the stale repo-local release"
+    },
+    {
+      "asset_id": "DT-8",
+      "label": "lafc-evict-dataset:release/lafc-evict-v0.1-open-current-contract-preserved",
+      "size_bytes_approx": 2899102924,
+      "size_human": "2.7 GB",
+      "format": "parquet",
+      "class": "E_final_candidate_unpublished",
+      "candidate_row_count": 277995072,
+      "decision_row_count": 2363286,
+      "pairwise_sample_row_count": 1000000,
+      "trace_families": ["cloudphysics", "metacdn", "metakv", "twemcache", "wiki2018"],
+      "excluded_families": ["brightkite", "citibike"],
+      "published": false,
+      "release_ready": false,
+      "release_blockers": ["raw_wiki2018_page_titles_not_pseudonymized", "cloudphysics_metacdn_metakv_twemcache_provenance_review_incomplete"]
+    },
+    {
+      "asset_id": "DT-9",
+      "label": "lafc-evict-dataset:release/lafc-evict-v0.2-preview",
+      "size_bytes_approx": 140509184,
+      "size_human": "134 MB",
+      "format": "parquet",
+      "class": "E_final_published",
+      "trace_families": ["wiki2018"],
+      "published": true,
+      "published_targets": ["huggingface", "zenodo"],
+      "verified_hashes": {
+        "cross_family_evict_value_v1.parquet": "38ae87b88bf8367d41f0dc8638eaf12fa5416b559d24c7023f39b9f1c7b6bb8f",
+        "objective_ablation_scalar.parquet": "90a2cb7913e234323190810906644e110f5c9ebeaaea47203857f61b822757f9"
+      }
+    },
+    {
+      "asset_id": "DT-10",
+      "label": "lafc-evict-dataset:release/lafc-evict-v0.2-zenodo-flat",
+      "size_bytes_approx": 140145802,
+      "size_human": "140,145,802 bytes (verified exact)",
+      "format": "parquet_flat",
+      "class": "E_final_published",
+      "published": true,
+      "published_targets": ["zenodo"],
+      "file_count": 15,
+      "duplicate_of": "DT-9",
+      "duplicate_classification": "INTENTIONAL_structural_flat_mirror_not_wasteful"
+    },
+    {
+      "asset_id": "DT-11",
+      "label": "lafc-evict-dataset:release/lafc-evict-sample-v0.1",
+      "size_bytes_approx": 241664,
+      "size_human": "236 KB",
+      "format": "mixed_synthetic",
+      "class": "E_final_synthetic_smoke_sample"
+    },
+    {
+      "asset_id": "DT-12",
+      "label": "Augmented-caching-kbs-second-revision:analysis/huggingface_dataset_preview_v0_2",
+      "size_bytes_approx": 140509184,
+      "size_human": "134 MB",
+      "format": "parquet",
+      "class": "F_exact_duplicate",
+      "duplicate_of": "DT-9",
+      "duplicate_classification": "EXACT_CONFIRMED",
+      "notes": "already gitignored in its own repo as of a prior polish pass, not deleted"
+    },
+    {
+      "asset_id": "DT-13",
+      "label": "Augmented-caching-preserve-20260808-104203",
+      "size_bytes_approx": 374341632,
+      "size_human": "357 MB",
+      "format": "json_and_patches",
+      "class": "G_historical_backup_metadata_only",
+      "contains_candidate_rows": false
+    }
+  ],
+  "trace_families_confirmed_complete_list": ["wiki2018", "brightkite", "citibike", "cloudphysics", "metacdn", "metakv", "twemcache"],
+  "total_large_trees_bytes_approx": 341000000000,
+  "duplication_summary": {
+    "confirmed_reclaimable_bytes_approx": 1342177280,
+    "confirmed_reclaimable_human": "~1.25 GB",
+    "note": "the three ~100GB+ trees (DT-1, DT-2+DT-3, DT-4) are independent generated datasets, not duplicates of each other"
+  },
+  "no_deletion_performed": true,
+  "no_upload_performed": true,
+  "no_regeneration_performed": true
+}
