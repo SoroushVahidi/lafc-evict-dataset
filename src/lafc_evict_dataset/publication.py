@@ -980,10 +980,11 @@ def render_zenodo_v0_2_dry_run(plan: ZenodoDraftPlan) -> dict[str, object]:
     }
 
 
-def zenodo_api_token() -> str | None:
-    sandbox_token = os.environ.get("ZENODO_SANDBOX_TOKEN")
-    if sandbox_token:
-        return sandbox_token
+def zenodo_api_token(*, sandbox: bool | None = None) -> str | None:
+    if sandbox is True:
+        sandbox_token = os.environ.get("ZENODO_SANDBOX_TOKEN")
+        if sandbox_token:
+            return sandbox_token
     api_token = os.environ.get("ZENODO_API_TOKEN")
     if api_token:
         return api_token
@@ -993,6 +994,10 @@ def zenodo_api_token() -> str | None:
     token = os.environ.get("ZENODO_TOKEN")
     if token:
         return token
+    if sandbox is not False:
+        sandbox_token = os.environ.get("ZENODO_SANDBOX_TOKEN")
+        if sandbox_token:
+            return sandbox_token
     return None
 
 
@@ -1069,7 +1074,7 @@ def execute_zenodo_deposit(
 
         session = requests.Session()
 
-    token = zenodo_api_token()
+    token = zenodo_api_token(sandbox=sandbox)
     if not token:
         raise ValueError("Execute mode requires a configured Zenodo token environment variable.")
 
@@ -1167,6 +1172,11 @@ def _zenodo_file_payload(file_payload: dict[str, object]) -> tuple[str | None, i
     )
 
 
+def zenodo_remote_filename(path: str) -> str:
+    """Zenodo deposition buckets expose a flat file namespace."""
+    return Path(path).name
+
+
 def verify_zenodo_uploaded_draft(
     *,
     draft_payload: dict[str, object],
@@ -1186,7 +1196,11 @@ def verify_zenodo_uploaded_draft(
     if not isinstance(verified_metadata, dict) or not isinstance(expected_metadata, dict):
         raise ValueError("Zenodo draft metadata response is missing metadata objects.")
     for field in ["title", "upload_type", "version", "license", "access_right"]:
-        if verified_metadata.get(field) != expected_metadata.get(field):
+        observed_value = verified_metadata.get(field)
+        expected_value = expected_metadata.get(field)
+        if field == "license" and {observed_value, expected_value} <= {"cc-zero", "cc0-1.0"}:
+            continue
+        if observed_value != expected_value:
             raise ValueError(f"Zenodo draft metadata mismatch for {field}.")
 
     files_payload = draft_payload.get("files")
@@ -1197,7 +1211,9 @@ def verify_zenodo_uploaded_draft(
             f"Zenodo draft file count mismatch: {len(files_payload)} vs {file_manifest.expected_file_count}"
         )
 
-    expected = {entry.path: entry for entry in file_manifest.files}
+    expected = {zenodo_remote_filename(entry.path): entry for entry in file_manifest.files}
+    if len(expected) != len(file_manifest.files):
+        raise ValueError("Zenodo manifest contains duplicate remote basenames.")
     observed: dict[str, tuple[int | None, str | None]] = {}
     for file_payload in files_payload:
         if not isinstance(file_payload, dict):
@@ -1209,16 +1225,16 @@ def verify_zenodo_uploaded_draft(
 
     if set(observed) != set(expected):
         raise ValueError("Zenodo draft uploaded filenames do not match the manifest exactly.")
-    for path, entry in expected.items():
-        size, checksum = observed[path]
+    for remote_name, entry in expected.items():
+        size, checksum = observed[remote_name]
         if size != entry.bytes:
-            raise ValueError(f"Zenodo draft size mismatch for {path}: {size} vs {entry.bytes}")
+            raise ValueError(f"Zenodo draft size mismatch for {entry.path}: {size} vs {entry.bytes}")
         if checksum:
             normalized = checksum.lower()
             if normalized.startswith("md5:"):
                 normalized = normalized.split(":", 1)[1]
             if normalized != entry.md5 and normalized != entry.sha256:
-                raise ValueError(f"Zenodo draft checksum mismatch for {path}: {checksum}")
+                raise ValueError(f"Zenodo draft checksum mismatch for {entry.path}: {checksum}")
 
 
 def execute_zenodo_v0_2_draft(
@@ -1227,6 +1243,7 @@ def execute_zenodo_v0_2_draft(
     release_dir: str | Path,
     manifest_path: str | Path,
     production: bool = True,
+    deposition_id: int | None = None,
     session: SessionLike | None = None,
 ) -> ZenodoDraftExecutionResult:
     if session is None:
@@ -1237,7 +1254,7 @@ def execute_zenodo_v0_2_draft(
 
         session = requests.Session()
 
-    token = zenodo_api_token()
+    token = zenodo_api_token(sandbox=not production)
     if not token:
         raise ValueError("Draft creation requires ZENODO_API_TOKEN, ZENODO_ACCESS_TOKEN, ZENODO_TOKEN, or ZENODO_SANDBOX_TOKEN.")
 
@@ -1249,14 +1266,25 @@ def execute_zenodo_v0_2_draft(
     )
     base_url = zenodo_base_url(sandbox=not production)
 
-    created = _request_json(
-        session,
-        "post",
-        f"{base_url}/api/deposit/depositions",
-        token=token,
-        json_payload={},
-    )
-    deposition_id = int(created["id"])
+    created: dict[str, Any]
+    if deposition_id is None:
+        created = _request_json(
+            session,
+            "post",
+            f"{base_url}/api/deposit/depositions",
+            token=token,
+            json_payload={},
+        )
+        deposition_id = int(created["id"])
+    else:
+        created = _request_json(
+            session,
+            "get",
+            f"{base_url}/api/deposit/depositions/{deposition_id}",
+            token=token,
+        )
+        if created.get("submitted") is not False or created.get("state") not in {"unsubmitted", "inprogress"}:
+            raise ValueError("Existing Zenodo deposition is not an unpublished editable draft.")
     latest_draft_url = str(created.get("links", {}).get("latest_draft", f"{base_url}/api/deposit/depositions/{deposition_id}"))
     updated = _request_json(
         session,
@@ -1270,14 +1298,38 @@ def execute_zenodo_v0_2_draft(
     if not bucket_url:
         raise RuntimeError("Zenodo deposition response did not include a bucket upload URL.")
 
+    existing_payload = _request_json(session, "get", latest_draft_url, token=token)
+    existing_files = existing_payload.get("files", [])
+    existing_by_name: dict[str, tuple[int | None, str | None]] = {}
+    if isinstance(existing_files, list):
+        for file_payload in existing_files:
+            if isinstance(file_payload, dict):
+                filename, size, checksum = _zenodo_file_payload(file_payload)
+                if filename is not None:
+                    existing_by_name[filename] = (size, checksum)
+
+    expected_remote_names = {zenodo_remote_filename(entry.path) for entry in plan.file_manifest.files}
+    unexpected_existing = set(existing_by_name) - expected_remote_names
+    if unexpected_existing:
+        raise ValueError(f"Existing Zenodo draft contains unexpected files: {sorted(unexpected_existing)}")
+
     uploaded_filenames: list[str] = []
     for entry in plan.file_manifest.files:
         path = plan.release_dir / entry.path
+        remote_name = zenodo_remote_filename(entry.path)
+        existing = existing_by_name.get(remote_name)
+        if existing is not None:
+            existing_size, existing_checksum = existing
+            normalized_checksum = (existing_checksum or "").lower().removeprefix("md5:")
+            if existing_size != entry.bytes or normalized_checksum not in {entry.md5, entry.sha256}:
+                raise ValueError(f"Existing Zenodo draft file conflicts with manifest: {entry.path}")
+            uploaded_filenames.append(entry.path)
+            continue
         with path.open("rb") as handle:
             _request_json(
                 session,
                 "put",
-                f"{bucket_url}/{entry.path}",
+                f"{bucket_url}/{remote_name}",
                 token=token,
                 data=handle,
             )

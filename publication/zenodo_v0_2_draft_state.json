@@ -1,0 +1,19 @@
+{
+  "deposition_id": 21895844,
+  "concept_record_id": "21895843",
+  "draft_url": "https://zenodo.org/deposit/21895844",
+  "api_self_url": "https://zenodo.org/api/deposit/depositions/21895844",
+  "created_at_utc": "2026-08-12T00:10:56.030583+00:00",
+  "metadata_version": "v0.2",
+  "source_git_sha": "8fb97e8c68b80c2451dc49e0010b725702c24304",
+  "file_manifest_sha256": "520902868bda192c892add41c37bbe34e1fd8d33161fb5505d5a61840fbc493a",
+  "metadata_draft_sha256": "c3aba1d9ed2993a1cdd04e398d9011a8a396f378df0ed823b46a0bd9cf947d0a8a",
+  "file_count": 15,
+  "total_bytes": 140145059,
+  "verification_status": "passed",
+  "zenodo_state": "unsubmitted",
+  "submitted": false,
+  "published": false,
+  "reserved_doi": "10.5281/zenodo.21895844",
+  "reserved_doi_is_published": false
+}

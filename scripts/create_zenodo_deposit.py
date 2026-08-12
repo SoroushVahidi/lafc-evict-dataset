@@ -41,6 +41,7 @@ def main() -> None:
     parser.add_argument("--upload", action="store_true", help="Upload manifest files in the v0.2 workflow.")
     parser.add_argument("--verify", action="store_true", help="Verify draft files and metadata after upload in the v0.2 workflow.")
     parser.add_argument("--no-publish", action="store_true", help="Required for v0.2 draft creation; publication is a separate gate.")
+    parser.add_argument("--deposition-id", type=int, help="Resume an existing unpublished v0.2 draft; never creates a second deposition.")
     parser.add_argument("--publish", action="store_true")
     args = parser.parse_args()
 
@@ -91,6 +92,7 @@ def main() -> None:
                 release_dir=args.release_dir,
                 manifest_path=args.manifest,
                 production=not args.sandbox,
+                deposition_id=args.deposition_id,
             )
             print(
                 json.dumps(

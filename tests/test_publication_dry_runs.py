@@ -16,6 +16,7 @@ from lafc_evict_dataset.publication import (
     plan_zenodo_v0_2_draft,
     render_zenodo_v0_2_dry_run,
     safe_zenodo_bundle_filenames,
+    zenodo_remote_filename,
     verify_zenodo_uploaded_draft,
 )
 
@@ -150,6 +151,7 @@ class _FakeZenodoV02Session:
         self.metadata_payload: dict[str, object] | None = None
         self.file_manifest = load_zenodo_file_manifest(manifest_path)
         self.metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+        self.draft_get_count = 0
 
     def post(self, url: str, **kwargs: object) -> _FakeResponse:
         self.calls.append(("POST", url))
@@ -188,6 +190,7 @@ class _FakeZenodoV02Session:
 
     def get(self, url: str, **kwargs: object) -> _FakeResponse:
         self.calls.append(("GET", url))
+        self.draft_get_count += 1
         metadata = self.metadata_payload or self.metadata
         return _FakeResponse(
             200,
@@ -203,9 +206,9 @@ class _FakeZenodoV02Session:
                     "latest_draft": "https://zenodo.org/api/deposit/depositions/24680",
                     "latest_draft_html": "https://zenodo.org/deposit/24680",
                 },
-                "files": [
+                "files": [] if self.draft_get_count == 1 else [
                     {
-                        "filename": entry.path,
+                        "filename": zenodo_remote_filename(entry.path),
                         "filesize": entry.bytes,
                         "checksum": f"md5:{entry.md5}",
                     }
@@ -391,7 +394,7 @@ def test_zenodo_v0_2_execute_creates_unpublished_verified_draft_with_mock(
     assert len(result.uploaded_filenames) == 15
     assert len(session.uploaded_urls) == 15
     assert all("/actions/publish" not in url for _, url in session.calls)
-    assert any(url.endswith("/data/cross_family_evict_value_v1.parquet") for url in session.uploaded_urls)
+    assert any(url.endswith("/cross_family_evict_value_v1.parquet") for url in session.uploaded_urls)
 
 
 def test_zenodo_v0_2_draft_verification_rejects_published_payload() -> None:
