@@ -2,7 +2,15 @@
 
 Audit timestamp: `2026-08-12T00:36:28Z`
 
-Recommendation: `READY_TO_PUBLISH_ZENODO_V0_2`
+Prepublication recommendation: `READY_TO_PUBLISH_ZENODO_V0_2`
+
+Post-publication result: `ZENODO_V0_2_PUBLISHED_AND_VERIFIED`
+
+Published version DOI: `10.5281/zenodo.21895844`
+
+Concept DOI: `10.5281/zenodo.21895843`
+
+Public record: https://zenodo.org/records/21895844
 
 ## Identity and State
 
@@ -12,9 +20,12 @@ Recommendation: `READY_TO_PUBLISH_ZENODO_V0_2`
 - Zenodo deposition: `21895844`
 - Draft URL: https://zenodo.org/deposit/21895844
 - Environment: production (`https://zenodo.org`)
-- State: `unsubmitted`; `submitted=false`
-- Published DOI: none
-- Reserved DOI: `10.5281/zenodo.21895844`, reserved only
+- Final state: `done`; `submitted=true`
+- Published version DOI: `10.5281/zenodo.21895844`
+- Concept DOI: `10.5281/zenodo.21895843`
+
+After the final gate, the record is published with `submitted=true` and the
+version DOI above.
 
 ## Flat-Layout Repair
 
@@ -96,5 +107,6 @@ Passed checks:
 - Publication/release test suite: 28 tests.
 - `git diff --check` and secret scan.
 
-The deposition remains unpublished. The next separately authorized task may
-publish deposition `21895844`; this task did not call the publish endpoint.
+The publish action was executed exactly once
+for deposition `21895844`; no new deposition or version was created.
+The next project action should return to the KBS reviewer work.

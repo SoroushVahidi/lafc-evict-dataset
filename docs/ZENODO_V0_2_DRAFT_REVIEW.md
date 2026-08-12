@@ -1,9 +1,12 @@
 # Zenodo v0.2 Draft Review
 
-Status: `UNPUBLISHED_DRAFT_READY_TO_PUBLISH`
+Status: `PUBLISHED_AND_PUBLICLY_VERIFIED`
 
 - Deposition ID: `21895844`
 - Draft URL: https://zenodo.org/deposit/21895844
+- Public record URL: https://zenodo.org/records/21895844
+- Version DOI: `10.5281/zenodo.21895844`
+- Concept DOI: `10.5281/zenodo.21895843`
 - Concept record ID: `21895843`
 - Title: `LAFC-Evict: Learning-Augmented Cache Eviction Dataset`
 - Version: `v0.2`
@@ -15,8 +18,9 @@ Status: `UNPUBLISHED_DRAFT_READY_TO_PUBLISH`
 - Total size: 140,145,802 bytes after the flat-layout documentation repair
 - Checksums: all remote MD5 values match the local manifest; local SHA-256 values remain canonical
 - Related identifiers: Hugging Face dataset (`isIdenticalTo`), GitHub repository (`isDocumentedBy`), and SSRN preprint (`isSupplementTo`)
-- DOI status: `10.5281/zenodo.21895844` is reserved in the unpublished draft metadata; it is not published
-- Zenodo state: `unsubmitted`; `submitted=false`
+- DOI status: `10.5281/zenodo.21895844` is the published version DOI
+- Zenodo state: `done`; `submitted=true`
+- Publication state: published; `submitted=true`
 - Flat-layout repair: replaced only `README.md`, `release_manifest.json`, and `checksums.sha256` in the existing draft; Parquet files were untouched.
 
 The README and release manifest now use Zenodo-root basenames. Any `data/...` references are explicitly identified as Hugging Face's organized layout, and source provenance paths in `sampling_manifest.json` remain unchanged as provenance values.

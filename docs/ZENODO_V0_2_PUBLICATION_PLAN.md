@@ -1,6 +1,6 @@
 # Zenodo v0.2 Publication Plan
 
-Status: deposition `21895844` exists as an unpublished draft. The final flat-layout audit is recorded in `docs/ZENODO_V0_2_FINAL_PREPUBLICATION_AUDIT.md`; publication still requires a separate explicit approval task.
+Status: deposition `21895844` is published and publicly verified. The version DOI is `10.5281/zenodo.21895844`; the concept DOI is `10.5281/zenodo.21895843`.
 
 ## Scope
 
@@ -107,7 +107,8 @@ The Parquet files are byte-identical to the canonical release. Only
 `README.md`, `release_manifest.json`, and `checksums.sha256` differ from the
 Hugging Face-oriented package, to make archive paths valid at the Zenodo root.
 The existing draft was repaired in place by replacing only those three files;
-it remains `unsubmitted` with `submitted=false`.
+it was then published after final verification. The public record remains
+flat and contains the same 15-file package.
 
 ## Integrity Plan
 
