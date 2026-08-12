@@ -1,6 +1,6 @@
 # Zenodo v0.2 Draft Review
 
-Status: `UNPUBLISHED_DRAFT_NOT_READY_TO_PUBLISH`
+Status: `UNPUBLISHED_DRAFT_READY_TO_PUBLISH`
 
 - Deposition ID: `21895844`
 - Draft URL: https://zenodo.org/deposit/21895844
@@ -12,13 +12,14 @@ Status: `UNPUBLISHED_DRAFT_NOT_READY_TO_PUBLISH`
 - License: CC0 1.0 (`cc-zero` in Zenodo's normalized response)
 - Access: open
 - Files: 15
-- Total size: 140,145,059 bytes
+- Total size: 140,145,802 bytes after the flat-layout documentation repair
 - Checksums: all remote MD5 values match the local manifest; local SHA-256 values remain canonical
 - Related identifiers: Hugging Face dataset (`isIdenticalTo`), GitHub repository (`isDocumentedBy`), and SSRN preprint (`isSupplementTo`)
 - DOI status: `10.5281/zenodo.21895844` is reserved in the unpublished draft metadata; it is not published
 - Zenodo state: `unsubmitted`; `submitted=false`
+- Flat-layout repair: replaced only `README.md`, `release_manifest.json`, and `checksums.sha256` in the existing draft; Parquet files were untouched.
 
-Publication hold: Zenodo stores these files with flat basenames. The uploaded `README.md` and `release_manifest.json` refer to local bundle paths such as `metadata/release_manifest.json` and `data/cross_family_evict_value_v1.parquet`; those paths do not exist in the Zenodo draft. Repair requires replacing the affected uploaded text files or rebuilding the package. No remote file deletion or replacement was attempted.
+The README and release manifest now use Zenodo-root basenames. Any `data/...` references are explicitly identified as Hugging Face's organized layout, and source provenance paths in `sampling_manifest.json` remain unchanged as provenance values.
 
 ## Human Review Checklist
 

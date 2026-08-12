@@ -1,74 +1,100 @@
 # LAFC-Evict v0.2 Final Zenodo Prepublication Audit
 
-Audit timestamp: `2026-08-12T00:23:36Z`
+Audit timestamp: `2026-08-12T00:36:28Z`
 
-Recommendation: `NOT_READY_TO_PUBLISH_ZENODO_V0_2`
+Recommendation: `READY_TO_PUBLISH_ZENODO_V0_2`
 
 ## Identity and State
 
 - Repository: `/home/soroush/lafc-evict-dataset`
-- Source Git SHA for the archived package: `8fb97e8c68b80c2451dc49e0010b725702c24304`
-- Audit repository HEAD: `eb06e15b1ef44b2b8c2e47880e28e3b46197aa2e`
-- Branch: `master`, clean and synchronized with `origin/master`
+- Canonical scientific source SHA: `8fb97e8c68b80c2451dc49e0010b725702c24304`
+- Audit repository HEAD before this record update: `94a3851aedeee214ab9e3bdf10714192c2de448d`
 - Zenodo deposition: `21895844`
 - Draft URL: https://zenodo.org/deposit/21895844
-- Zenodo environment: production (`https://zenodo.org`), authenticated read-only inspection returned HTTP 200
+- Environment: production (`https://zenodo.org`)
 - State: `unsubmitted`; `submitted=false`
 - Published DOI: none
 - Reserved DOI: `10.5281/zenodo.21895844`, reserved only
 
-## Metadata Audit
+## Flat-Layout Repair
 
-The draft metadata is internally consistent for title, v0.2 version, dataset resource type, creator (`Vahidi, Soroush`), New Jersey Institute of Technology affiliation, open access, CC0 license, English language, keywords, publication date, description, and related identifiers. Zenodo's response normalizes `cc0-1.0` to `cc-zero` and adds `scheme=url`; both are expected.
+The selected strategy was a Zenodo-specific flat 15-file package. The
+canonical Hugging Face package was not changed. Only three existing files in
+deposition `21895844` were replaced in place:
 
-The description accurately identifies a 4,800,000-row derived cache-eviction supervision preview with configurations `cross_family_evict_value_v1` and `objective_ablation_scalar`, Wikimedia pageview-derived `wiki2018` provenance, deterministic pseudonyms, raw-data exclusions, and non-endorsement wording. No ORCID was invented.
+- `README.md`
+- `release_manifest.json`
+- `checksums.sha256`
 
-Related identifiers were reachable and semantically acceptable for the coordinated dataset/code/preprint context:
+The two Parquet files and the other 12 files were not replaced. Zenodo's
+official deposition-file API permits deleting files only from unpublished
+depositions and uploading replacements to the same bucket. The draft remained
+unsubmitted throughout.
 
-- Hugging Face dataset: `isIdenticalTo` for the same v0.2 scientific payload and configurations.
-- GitHub repository: `isDocumentedBy`.
-- SSRN preprint: `isSupplementTo`.
+## Integrity and Equivalence
 
-## Integrity and Scientific Checks
+- Final remote file count: 15.
+- Final remote total: 140,145,802 bytes.
+- Every remote file was read back and matched the local flat manifest's MD5
+  and SHA-256.
+- `cross_family_evict_value_v1.parquet`: 2,700,000 rows; SHA-256
+  `38ae87b88bf8367d41f0dc8638eaf12fa5416b559d24c7023f39b9f1c7b6bb8f`.
+- `objective_ablation_scalar.parquet`: 2,100,000 rows; SHA-256
+  `90a2cb7913e234323190810906644e110f5c9ebeaaea47203857f61b822757f9`.
+- Parquet bytes, schemas, row counts, configuration names, and provenance
+  columns are unchanged from the canonical release.
+- Local flat manifest: `publication/zenodo_v0_2_flat_file_manifest.json`.
 
-- Exact remote file count: 15.
-- Exact remote total: 140,145,059 bytes.
-- Every remote MD5 matched the local manifest.
-- Local SHA-256 manifest passed for all 15 files.
-- `cross_family_evict_value_v1.parquet`: 2,700,000 rows; SHA-256 `38ae87b88bf8367d41f0dc8638eaf12fa5416b559d24c7023f39b9f1c7b6bb8f`.
-- `objective_ablation_scalar.parquet`: 2,100,000 rows; SHA-256 `90a2cb7913e234323190810906644e110f5c9ebeaaea47203857f61b822757f9`.
-- Combined row count: 4,800,000.
-- Schemas, configuration names, provenance columns, pseudonymization fields, and absence of local paths/secrets were verified.
+## Path-Reference Audit
 
-## Cross-Publication and Provenance Checks
+All archive-internal paths now resolve as Zenodo-root basenames. The release
+manifest declares `archive_layout: zenodo_flat`; its inventory, data files,
+and governance artifacts contain no directory separators. The checksum file
+also contains only root-level filenames. The README explicitly identifies
+the `data/...` paths in its YAML as Hugging Face layout references and uses
+Zenodo-root names for its own file references. `sampling_manifest.source_relpath`
+values remain unchanged because they are source provenance paths, not archive
+references.
 
-The public Hugging Face dataset is reachable, public, at revision `b77413fef197e808aed9cfa708878064a5c00493`. Its Parquet files have matching sizes and the same v0.2 configurations and row counts. The GitHub repository is reachable and documents the learning-augmented caching research code. Wikimedia attribution, CC0 wording, raw-pageview/title exclusions, and non-endorsement wording are consistent across the release and draft metadata.
+## Metadata, Provenance, and Cross-Publication Audit
 
-The `brightkite` values in `source_fold` and `source_relpath` are documented fold-layout labels; released rows have `trace_family=wiki2018` and Wiki2018 source filenames. This is not a scientific payload defect.
+Title, v0.2 version, dataset resource type, creator (`Vahidi, Soroush`), NJIT
+affiliation, open access, English language, CC0 license, publication date,
+keywords, and description remain correct. Zenodo's `cc-zero` normalization
+and `scheme=url` additions are expected.
 
-## Security and Professionalism
+The description accurately states the 4,800,000-row derived cache-eviction
+supervision preview, both configurations, Wiki2018 pageview-derived scope,
+deterministic pseudonyms, raw-data exclusions, Wikimedia attribution, and
+non-endorsement. No ORCID was invented.
 
-The uploaded textual files and Parquet string columns had no token, credential, private URL, local absolute path, Wulver path, reviewer note, debug material, or accidental internal secret finding. No token was recorded in local audit files.
+The Hugging Face dataset is public at revision
+`b77413fef197e808aed9cfa708878064a5c00493`; its Parquet sizes, hashes,
+configurations, and row counts match. GitHub is reachable and documents the
+source code and generation tooling. Related identifiers remain semantically
+appropriate: HF `isIdenticalTo`, GitHub `isDocumentedBy`, and SSRN
+`isSupplementTo`.
 
-## Publication Blocker
+The `brightkite` values in `source_fold` and `source_relpath` remain
+documented fold-layout provenance labels; released rows have
+`trace_family=wiki2018` and Wiki2018 source filenames.
 
-Zenodo deposition buckets are flat. The remote inventory contains basenames such as `cross_family_evict_value_v1.parquet`, `schema.json`, and `release_manifest.json`; it does not contain `data/` or `metadata/` directories. However:
+## Security and Checks
 
-- `README.md` instructs readers to read `metadata/release_manifest.json`, `metadata/sampling_manifest.json`, and `metadata/provenance_summary.csv`.
-- `release_manifest.json` records `data/...` and `metadata/...` paths as its file inventory.
+The final flat package and Parquet string columns contain no tokens,
+credentials, private URLs, local absolute paths, Wulver paths, reviewer
+notes, debug material, or temporary secrets.
 
-Those references are correct for the canonical local/Hugging Face bundle but false or ambiguous after Zenodo flattening. This violates the archive-structure requirement for publication. No remote file deletion or replacement was attempted. The exact repair is to prepare a flat-safe archive package, update the affected documentation/manifests to use the Zenodo basenames or preserve directory structure in a single archive, then replace the draft package before publication.
+Passed checks:
 
-No automatic Zenodo metadata correction was made because metadata-only changes cannot repair the uploaded-file path defect.
+- Release validator.
+- Flat-package file-count, path, size, MD5, and SHA-256 validation.
+- Canonical Parquet byte/schema/row equivalence.
+- Remote read-back of all 15 files.
+- JSON validation.
+- Security/privacy scan.
+- Publication/release test suite: 28 tests.
+- `git diff --check` and secret scan.
 
-## Checks Run
-
-- Release validator: passed.
-- All 15 SHA-256 checks: passed.
-- Remote file count, sizes, and MD5 checks: passed.
-- Parquet row count/schema/provenance audit: passed.
-- HF/GitHub URL and HF file-size checks: passed.
-- JSON validation: passed for tracked JSON records.
-- Security/privacy scan: passed.
-- Publication test suite previously passed: 28 tests.
-- No Zenodo publish endpoint was called.
+The deposition remains unpublished. The next separately authorized task may
+publish deposition `21895844`; this task did not call the publish endpoint.

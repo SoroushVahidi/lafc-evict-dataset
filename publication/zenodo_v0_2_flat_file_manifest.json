@@ -1,0 +1,116 @@
+{
+  "manifest_version": "zenodo-flat-file-manifest-v1",
+  "dataset": "lafc-evict",
+  "version": "v0.2",
+  "archive_layout": "zenodo_flat",
+  "release_root_name": "lafc-evict-v0.2-zenodo-flat",
+  "expected_file_count": 15,
+  "expected_total_bytes": 140145802,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3337,
+      "sha256": "eadd21abd2ec4d61cca1ac5d04041f3953b4079093122929b5481c558faed185",
+      "md5": "22443eac20d768daba871ba9bd310de0",
+      "role": "primary_readme"
+    },
+    {
+      "path": "RELEASE_NOTES_v0_2.md",
+      "bytes": 960,
+      "sha256": "6597f4db43e5a2ef79da7f8193d2fd72bda8f4c2e2e0b9ea93fbf458e1a7e374",
+      "md5": "8061430209d5e19be94e93f39be8d4e8",
+      "role": "release_documentation"
+    },
+    {
+      "path": "checksums.sha256",
+      "bytes": 1244,
+      "sha256": "59e7a61b8533a75371cc377e32468d0997cafc984b7c8c914e83cd0aa33c593a",
+      "md5": "13aa5fafd8ac11c93a10634bbb1e0142",
+      "role": "release_metadata"
+    },
+    {
+      "path": "cross_family_evict_value_v1.parquet",
+      "bytes": 66875136,
+      "sha256": "38ae87b88bf8367d41f0dc8638eaf12fa5416b559d24c7023f39b9f1c7b6bb8f",
+      "md5": "0cda2e76f2acc06438042c6e9cc7f588",
+      "role": "data_payload"
+    },
+    {
+      "path": "dataset_card.md",
+      "bytes": 2788,
+      "sha256": "19472085705c5447c5c6a040082ba120034f28f285c77cfa4d83e895c2c32f93",
+      "md5": "46030e4f2f919d226c3dcb5f7abebc69",
+      "role": "distribution_metadata"
+    },
+    {
+      "path": "lafc_evict_v0_2_preview_families.json",
+      "bytes": 1245,
+      "sha256": "64cff7ee03f4ee8ce3f2959ed7f88e1ff6c308ab43efeaf2bf1c5f46fb72be0d",
+      "md5": "fbd34233c9e0e690d03abbb911c9d7c5",
+      "role": "release_metadata"
+    },
+    {
+      "path": "objective_ablation_scalar.parquet",
+      "bytes": 73230958,
+      "sha256": "90a2cb7913e234323190810906644e110f5c9ebeaaea47203857f61b822757f9",
+      "md5": "6d699e0aff74e4e9190fdec1d973f9b8",
+      "role": "data_payload"
+    },
+    {
+      "path": "provenance_summary.csv",
+      "bytes": 1489,
+      "sha256": "f3b5e738189be705286264f2c3e414f66aea182ccad2b11541d28bcd71c47221",
+      "md5": "47e7ebabf6f6027d18b6c5692fa651e8",
+      "role": "release_metadata"
+    },
+    {
+      "path": "release_manifest.json",
+      "bytes": 2461,
+      "sha256": "aec274ed06c8fbca30751841e63f2a473cb1470c544e72c3bc31589769fdee4e",
+      "md5": "792946f9da5627a9069c63b8d43dd01c",
+      "role": "release_metadata"
+    },
+    {
+      "path": "sampling_manifest.json",
+      "bytes": 9537,
+      "sha256": "ba70c79ff4a39e8415913ff1bd54aa8c4dcb5cb7dc2880460143277a3dab539e",
+      "md5": "9a9a7727619599dd0da3b04ae8e82010",
+      "role": "release_metadata"
+    },
+    {
+      "path": "schema.json",
+      "bytes": 7290,
+      "sha256": "54cdde9f8aa60639af0c653570051f0e66c5beb44c213784b45f0be87623a199",
+      "md5": "efe0741a436a50fe1cb742b37a7de037",
+      "role": "release_metadata"
+    },
+    {
+      "path": "security_scan.json",
+      "bytes": 39,
+      "sha256": "49fb8eb3f7a3eeae5cf509025b5759003751abf57b629f033cc9ebbb65639151",
+      "md5": "af25ffe429161b9de5e1b5b228be1ab3",
+      "role": "release_metadata"
+    },
+    {
+      "path": "source_family_registry.yaml",
+      "bytes": 4355,
+      "sha256": "422a8e0dae8dd0662659b4b493d32d5d1c08dea4bd8efa4627b5f6c807deba04",
+      "md5": "e64f66e0720f2609bd851ad12713d0ce",
+      "role": "release_metadata"
+    },
+    {
+      "path": "statistics.json",
+      "bytes": 4804,
+      "sha256": "5026d670bb4e4bcc11db470be2234081d7ba7230dfe602eff163bc668ea5bc4c",
+      "md5": "a58bad6d3124d42d7ecb9973d4ae4f99",
+      "role": "release_metadata"
+    },
+    {
+      "path": "validation_report.md",
+      "bytes": 159,
+      "sha256": "5aa70ab1b7f366128e0f30874b5a0ac20aa9e20f6ccabfacd3e53b898d85fb00",
+      "md5": "e3b5b962643db2f884d91e435f576547",
+      "role": "release_metadata"
+    }
+  ]
+}

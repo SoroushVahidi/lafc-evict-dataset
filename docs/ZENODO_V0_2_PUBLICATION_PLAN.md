@@ -1,6 +1,6 @@
 # Zenodo v0.2 Publication Plan
 
-Status: local planning draft only. Do not create a Zenodo deposition, upload files, reserve a DOI, publish, delete, or allocate storage quota without a separate explicit approval task.
+Status: deposition `21895844` exists as an unpublished draft. The final flat-layout audit is recorded in `docs/ZENODO_V0_2_FINAL_PREPUBLICATION_AUDIT.md`; publication still requires a separate explicit approval task.
 
 ## Scope
 
@@ -92,6 +92,23 @@ This avoids a repackaging step and keeps Zenodo identical to the Hugging Face pr
 
 The file manifest records, for each file, the release-relative path, byte size, SHA-256, MD5, and role. The future upload helper uploads only manifest-listed files and fails if the release directory has missing, changed, or extra files.
 
+## Final Zenodo Flat Package
+
+Zenodo deposition buckets are flat, so the existing draft uses a Zenodo-specific
+copy rather than changing the Hugging Face package:
+
+```text
+release/lafc-evict-v0.2-zenodo-flat/
+publication/zenodo_v0_2_flat_file_manifest.json
+```
+
+The flat package contains 15 root-level files totaling 140,145,802 bytes.
+The Parquet files are byte-identical to the canonical release. Only
+`README.md`, `release_manifest.json`, and `checksums.sha256` differ from the
+Hugging Face-oriented package, to make archive paths valid at the Zenodo root.
+The existing draft was repaired in place by replacing only those three files;
+it remains `unsubmitted` with `submitted=false`.
+
 ## Integrity Plan
 
 Before upload:
@@ -174,9 +191,11 @@ No Parquet payload change is needed for DOI preparation. A future schema polish 
 - Post-upload checksum/size verification: READY_FOR_DRAFT. The draft verifier compares file names, sizes, and Zenodo-reported MD5/SHA-256 where exposed.
 - Concept DOI/version DOI local recording: DOCUMENTED_FOR_FUTURE_PUBLISH. Do not record DOI fields until a separate publish gate has completed.
 
-## Next Task Command Sequence
+## Historical Gate A Command Sequence
 
-Do not run these in this planning task. They are for the next explicitly approved task.
+These commands document the already-completed draft workflow. Do not run the
+creation command again. The next separately approved task is the publication
+gate after reviewing the final audit.
 
 Dry-run:
 
