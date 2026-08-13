@@ -1,18 +1,23 @@
 cff-version: 1.2.0
 title: "LAFC-Evict: Learning-Augmented Cache Eviction Dataset"
-message: "If you use this repository, please cite it using the metadata below."
-type: software
+message: "If you use this repository or dataset, please cite LAFC-Evict and the associated research work."
+type: dataset
 authors:
   - family-names: "Vahidi"
     given-names: "Soroush"
+    affiliation: "New Jersey Institute of Technology"
 repository-code: "https://github.com/SoroushVahidi/lafc-evict-dataset"
 abstract: >-
-  Published v0.2 preview of the LAFC-Evict derived cache-eviction supervision
-  dataset, including release metadata, schemas, and benchmark views.
-version: "0.2"
-date-released: "2026-08-11"
-doi: "10.5281/zenodo.21895844"
+  LAFC-Evict v0.3 is a wiki2018-only derived dataset for learning-augmented
+  cache-eviction research. It contains 22,356,992 candidate-level rows across
+  finite-horizon eviction-value and scalar objective-ablation configurations.
+version: "0.3"
+date-released: "2026-08-12"
 license: "CC0-1.0"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21895843"
+    description: "Zenodo concept DOI; the v0.3 version DOI will be added after publication."
 preferred-citation:
   type: article
   title: "Decision-aligned eviction-value prediction for robust learning-augmented caching"
@@ -20,9 +25,15 @@ preferred-citation:
     - family-names: "Vahidi"
       given-names: "Soroush"
   year: 2026
-  doi: "10.5281/zenodo.21895844"
   url: "https://ssrn.com/abstract=6636732"
+  notes: >-
+    No independent DOI has been verified for this preprint as of this
+    release; do not cite the LAFC-Evict dataset's Zenodo DOI as this
+    article's DOI. Cite the dataset itself using the `identifiers` DOI
+    above (Zenodo concept DOI 10.5281/zenodo.21895843).
 keywords:
   - "cache eviction"
-  - "dataset release"
+  - "caching"
+  - "learning-augmented algorithms"
   - "counterfactual supervision"
+  - "dataset"

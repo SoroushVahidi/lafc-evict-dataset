@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "title": "LAFC-Evict: Learning-Augmented Cache Eviction Dataset",
+    "upload_type": "dataset",
+    "publication_date": "2026-08-12",
+    "version": "v0.3",
+    "description": "LAFC-Evict v0.3 is the expanded wiki2018-only derived cache-eviction dataset. It contains 22,356,992 self-contained candidate-level rows across the cross_family_evict_value_v1 and objective_ablation_scalar configurations. The release contains derived features and labels, not raw Wikimedia pageview rows or page titles. Object identifiers are deterministic public pseudonyms. Wikimedia Analytics pageview data are documented under the Creative Commons CC0 1.0 public-domain dedication. Wikimedia and the Wikimedia Foundation do not endorse this derived dataset. Brightkite, Citi Bike, CloudPhysics, MetaCDN, MetaKV, Twemcache, SPEC CPU2006, raw traces, private traces, model files, and experiment logs are excluded. The Hugging Face release and this Zenodo archive contain byte-identical scientific Parquet payloads; this Zenodo package is the flat archival layout.",
+    "license": "cc-zero",
+    "access_right": "open",
+    "creators": [
+      {"name": "Vahidi, Soroush", "affiliation": "New Jersey Institute of Technology"}
+    ],
+    "keywords": [
+      "cache eviction",
+      "caching",
+      "learning-augmented algorithms",
+      "counterfactual supervision",
+      "Parquet",
+      "dataset"
+    ],
+    "related_identifiers": [
+      {"identifier": "https://doi.org/10.5281/zenodo.21895843", "relation": "isVersionOf", "resource_type": "dataset"},
+      {"identifier": "https://huggingface.co/datasets/SoroushVahidi/lafc-evict", "relation": "isIdenticalTo", "resource_type": "dataset"},
+      {"identifier": "https://github.com/SoroushVahidi/lafc-evict-dataset", "relation": "isDocumentedBy", "resource_type": "software"},
+      {"identifier": "https://ssrn.com/abstract=6636732", "relation": "isSupplementTo", "resource_type": "publication-preprint"}
+    ],
+    "notes": "Do not add a version DOI before Zenodo creates it. The existing concept DOI is 10.5281/zenodo.21895843; the published v0.2 version DOI is 10.5281/zenodo.21895844.",
+    "language": "eng"
+  }
+}

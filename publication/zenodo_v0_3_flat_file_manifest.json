@@ -1,0 +1,130 @@
+{
+  "manifest_version": "zenodo-flat-file-manifest-v1",
+  "dataset": "lafc-evict",
+  "version": "v0.3",
+  "archive_layout": "zenodo_flat",
+  "release_root_name": "lafc-evict-v0.3-zenodo-flat",
+  "expected_file_count": 17,
+  "expected_total_bytes": 69753638,
+  "files": [
+    {
+      "path": "CITATION.cff",
+      "bytes": 1406,
+      "sha256": "fd0799bd875bf86baa819c1413a13bfc3db78a648d1bdb6f498cc974ac574d8d",
+      "md5": "a5db6e20350cf6bb06c506d730f5dfea",
+      "role": "release_metadata"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 554,
+      "sha256": "05a20df4b5cf8dab23d03736729af6b248f332b530436e79bae02e0123bb8eb9",
+      "md5": "1167ef73a5893547a6519aaa635634ed",
+      "role": "release_metadata"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7943,
+      "sha256": "4038f477bd158bdc821682b220de3636b6abfee0e6397908633545fcb198cfcf",
+      "md5": "988c6700bb4f00954771c9804f733b3a",
+      "role": "release_metadata"
+    },
+    {
+      "path": "RELEASE_NOTES_v0_3.md",
+      "bytes": 3407,
+      "sha256": "e0e533604170161d77b200cfb06898e00b9a3ba579bae02fc195999513255269",
+      "md5": "d35df2f54ad12bc4aced4216b6f68365",
+      "role": "release_metadata"
+    },
+    {
+      "path": "checksums.md5",
+      "bytes": 814,
+      "sha256": "fdce3149c39392ffb50f01326727f1d157de1c2aafa582d19d79d675700f633e",
+      "md5": "be0edcf50b704ab70938d4cd00cfb47e",
+      "role": "checksums"
+    },
+    {
+      "path": "checksums.sha256",
+      "bytes": 1294,
+      "sha256": "0faeecaca5f87e210c930dd0ef1b514f8ae97dab8726c6daedb763fa9e2da052",
+      "md5": "5ff678dd240ed78057358117a7665d47",
+      "role": "checksums"
+    },
+    {
+      "path": "cross_family_evict_value_v1.parquet",
+      "bytes": 26265985,
+      "sha256": "07db7324ca1c31c49fe04029690643c04419401dc6c8c4d33e887df8c3275206",
+      "md5": "b6eb2172006d9f7159bffe6520ce8b88",
+      "role": "data_payload"
+    },
+    {
+      "path": "dataset_card.md",
+      "bytes": 24145,
+      "sha256": "75d16df7d34157f47d4579697710b70afa48aae78d9e31b1bf86781ce34fa758",
+      "md5": "db05d52c235448eff2fb1c15b8636be2",
+      "role": "release_metadata"
+    },
+    {
+      "path": "objective_ablation_scalar.parquet",
+      "bytes": 43395233,
+      "sha256": "31d6cc2c41857d85dc818f4185175ac96085c06abdf58693831b1a4f1f8f8320",
+      "md5": "881d6d22d35ff37c7b45e0409e4c012e",
+      "role": "data_payload"
+    },
+    {
+      "path": "provenance_summary.csv",
+      "bytes": 1650,
+      "sha256": "d41e557b8d4e1c46c30c65b9afdb6dbb026311ff40f7a0c82f7bc6d03c240b5a",
+      "md5": "c99fc26e8513eff42472ff106dc1da7c",
+      "role": "release_metadata"
+    },
+    {
+      "path": "release_manifest.json",
+      "bytes": 3310,
+      "sha256": "5bc287df43cc5a61745c228a92d54323b3d724a6161af5a69d62a4bcbcc1675e",
+      "md5": "84954451345df9b03ced7cb98818eb21",
+      "role": "release_metadata"
+    },
+    {
+      "path": "sampling_manifest.json",
+      "bytes": 33652,
+      "sha256": "ec279aa5351c5391514c4dde8a7a84881fc96f1015cc6809b65b2887f65d7eee",
+      "md5": "de06af8b0d9fdabd2477f8a49462048d",
+      "role": "release_metadata"
+    },
+    {
+      "path": "schema.json",
+      "bytes": 7325,
+      "sha256": "d6482fd26ee9dd0ce2f4db50a7c5b27ee144e7b073e493d2440b35bf8eb8321a",
+      "md5": "522edf3363c506c52b4a4e8d5a2c5509",
+      "role": "release_metadata"
+    },
+    {
+      "path": "security_scan.json",
+      "bytes": 682,
+      "sha256": "4ee433ce9a3589035842d3107dac93067b352c8755426cf697b0e088bb1b407b",
+      "md5": "986dcb1800afa08342a064d19875a5b0",
+      "role": "release_metadata"
+    },
+    {
+      "path": "statistics.json",
+      "bytes": 4446,
+      "sha256": "a11cd4e0ee7bfd9849c791403f3d6831ecc31048a8d14e0cd9a7e82f7b8fc726",
+      "md5": "16fec30f8b49a96b7fe9ee84d25257a7",
+      "role": "release_metadata"
+    },
+    {
+      "path": "transformation_manifest.json",
+      "bytes": 1629,
+      "sha256": "4f7119f5db56122b82ab9eb1d8a2dddd91fd2680412a7fc90599fcf616e5dc8b",
+      "md5": "f9b15c658a69033ea7c3ae8c7abe9252",
+      "role": "release_metadata"
+    },
+    {
+      "path": "validation_report.md",
+      "bytes": 163,
+      "sha256": "27cecbc52ab8bddf23e72ba0d1b793a3abf47f2189ccb5f06b853f1061b70496",
+      "md5": "42995e3febc1df5811cabc03601861c2",
+      "role": "release_metadata"
+    }
+  ]
+}
