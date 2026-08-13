@@ -5,20 +5,32 @@ of truth is `publication/LAFC_EVICT_PUBLICATION_STATE.json`.
 
 ## Current public release
 
-**LAFC-Evict v0.2 published preview** is the current public release.
+**Publication is currently split across platforms.**
 
-- Hugging Face: https://huggingface.co/datasets/SoroushVahidi/lafc-evict
-- Zenodo version DOI: https://doi.org/10.5281/zenodo.21895844
-- Zenodo concept DOI: https://doi.org/10.5281/zenodo.21895843
-- Scope: Wiki2018-only, pseudonymized derived supervision
-- Configs: `cross_family_evict_value_v1` and `objective_ablation_scalar`
-- Rows: 4,800,000
-- Dataset license: CC0 1.0
+- **Hugging Face** now serves **LAFC-Evict v0.3**:
+  <https://huggingface.co/datasets/SoroushVahidi/lafc-evict>
+  (revision `2113cc4d1edee57275d769d8760da77ed67c875d`). The prior v0.2
+  revision (`b77413fef197e808aed9cfa708878064a5c00493`) remains fully
+  accessible and pinnable for reproducibility.
+- **Zenodo** still serves **LAFC-Evict v0.2** as the current version:
+  version DOI <https://doi.org/10.5281/zenodo.21895844>, concept DOI
+  <https://doi.org/10.5281/zenodo.21895843>. A v0.3 Zenodo version has
+  **not** been created — the configured Zenodo credential returned HTTP 403
+  on all deposition-management calls. See
+  `publication/LAFC_EVICT_PUBLICATION_STATE.json` (`releases[].zenodo_block_detail`
+  on the v0.3 entry) for the exact failure evidence. Do not cite a v0.3
+  Zenodo DOI until this record is updated with one.
 
-The nested package at `release/lafc-evict-v0.2-preview/` is the HF-oriented
-source. `release/lafc-evict-v0.2-zenodo-flat/` is the same scientific payload
-in the flat layout required by the Zenodo record. Their Parquet payloads are
-byte-identical.
+v0.3 scope: Wiki2018-only, pseudonymized derived supervision. Configs:
+`cross_family_evict_value_v1` and `objective_ablation_scalar`. Rows:
+22,356,992. Dataset license: CC0 1.0. Novelty/documentation gate: passed
+(see `reports/v0_3_novelty_audit_20260812/`).
+
+The nested package at `release/lafc-evict-v0.3-candidate/` is the HF-oriented
+source, already published. `release/lafc-evict-v0.3-zenodo-flat/` is the same
+scientific payload in the flat layout required by Zenodo, prepared and
+verified locally but not yet uploaded. Their Parquet payloads are
+byte-identical to each other and to what is now live on Hugging Face.
 
 ## Historical and future releases
 
@@ -27,8 +39,9 @@ byte-identical.
 - **v0.1-open:** historical unpublished real-data staging generation.
 - **v0.1-open-current-contract-preserved:** preserved, locally validated,
   unpublished v0.1-open build.
-- **v0.3 candidate:** locally built and validated Wiki2018-only expansion;
-  not uploaded or published.
+- **v0.2 published preview:** the previous public release (4,800,000 rows).
+  Remains published and pinnable on both Hugging Face and Zenodo for
+  reproducibility; not deleted or altered by the v0.3 publication.
 - **v1.0:** future stable/full release; planning only and conditional on
   explicit provenance clearance for every included family.
 

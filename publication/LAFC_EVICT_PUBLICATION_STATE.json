@@ -1,11 +1,11 @@
 {
   "document_type": "lafc_evict_publication_state",
   "document_version": 1,
-  "last_verified": "2026-08-12",
+  "last_verified": "2026-08-13",
   "canonical_publication_repository": "/home/soroush/lafc-evict-dataset",
   "scientific_source_repository": "/home/soroush/Augmented-caching",
   "kbs_reviewer_repository": "/home/soroush/Augmented-caching-kbs-second-revision",
-  "current_public_release": "v0.2 published preview",
+  "current_public_release": "v0.3 on Hugging Face; v0.2 remains the current published version on Zenodo pending v0.3 Zenodo authentication",
   "releases": [
     {
       "version": "v0.1",
@@ -117,27 +117,42 @@
     },
     {
       "version": "v0.3",
-      "display_name": "v0.3 candidate",
+      "display_name": "v0.3",
       "scope": "Expanded Wiki2018-only candidate-level supervision",
-      "status": "BUILT_LOCAL_VALIDATED_CANDIDATE",
-      "published": false,
-      "publication_hosts": [],
+      "status": "PARTIALLY_PUBLISHED_HF_ONLY",
+      "published": true,
+      "publication_hosts": ["huggingface"],
       "hf_repo": "SoroushVahidi/lafc-evict",
+      "hf_revision": "2113cc4d1edee57275d769d8760da77ed67c875d",
+      "hf_previous_revision_v0_2": "b77413fef197e808aed9cfa708878064a5c00493",
+      "zenodo_record": null,
+      "version_doi": null,
+      "concept_doi": "10.5281/zenodo.21895843",
       "canonical_local_source": "release/lafc-evict-v0.3-candidate",
+      "canonical_local_zenodo_flat_source": "release/lafc-evict-v0.3-zenodo-flat",
       "configs": {
         "cross_family_evict_value_v1": 11178496,
         "objective_ablation_scalar": 11178496
       },
       "rows": 22356992,
       "total_bytes": 69720081,
+      "scientific_payload_hashes": {
+        "data/cross_family_evict_value_v1.parquet": "07db7324ca1c31c49fe04029690643c04419401dc6c8c4d33e887df8c3275206",
+        "data/objective_ablation_scalar.parquet": "31d6cc2c41857d85dc818f4185175ac96085c06abdf58693831b1a4f1f8f8320"
+      },
       "schema_version": "lafc-evict-preview-v0.3",
       "included_families": ["wiki2018"],
       "excluded_families": ["brightkite", "citibike", "cloudphysics", "metacdn", "metakv", "twemcache"],
       "license_state": "CC0_1.0_for_wiki2018_derived_candidate",
       "provenance_state": "wiki2018_cleared_with_attribution_and_caveat",
       "supersedes": "v0.2",
-      "upload_status": "NOT_UPLOADED",
-      "notes": "80 source files; validation and security scan passed; publication approval and any upload remain outstanding."
+      "upload_status": "HF_PUBLISHED_AND_VERIFIED_ZENODO_BLOCKED",
+      "publication_date_hf": "2026-08-13",
+      "novelty_documentation_gate": "PASSED",
+      "novelty_documentation_gate_evidence": "reports/v0_3_novelty_audit_20260812/NOVELTY_AUDIT_REPORT.md, reports/v0_3_novelty_audit_20260812/DOCUMENTATION_REMEDIATION_REPORT.md",
+      "zenodo_status": "BLOCKED_ZENODO_AUTH_PERMISSION_FAILURE",
+      "zenodo_block_detail": "Configured ZENODO_TOKEN authenticates (network reachable, public record reads succeed) but returns HTTP 403 Permission denied on GET /api/deposit/depositions and GET /api/deposit/depositions/21895844, tried with both query-param and Bearer-header auth. Token lacks deposit read/write scope, is expired, or belongs to an account without access to this record. Not remediated by this task per explicit stop-on-auth-failure instruction; a valid deposit-scoped production token is required before v0.3 can be created as a new Zenodo version under concept 21895843.",
+      "notes": "v0.3 is live on Hugging Face (verified: exact 16-file payload, independently re-hashed Parquet, HF backend-confirmed row/column counts, live sample row read). The v0.2 Hugging Face revision remains fully preserved and independently pinnable at hf_previous_revision_v0_2. Zenodo still serves v0.2 as the current version; v0.3 has not been created there. Do not treat this dataset as fully published on Zenodo until a v0.3 version DOI is recorded here."
     },
     {
       "version": "v1.0",
