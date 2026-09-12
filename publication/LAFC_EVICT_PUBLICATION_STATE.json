@@ -1,11 +1,12 @@
 {
   "document_type": "lafc_evict_publication_state",
-  "document_version": 1,
-  "last_verified": "2026-08-13",
-  "canonical_publication_repository": "/home/soroush/lafc-evict-dataset",
-  "scientific_source_repository": "/home/soroush/Augmented-caching",
-  "kbs_reviewer_repository": "/home/soroush/Augmented-caching-kbs-second-revision",
+  "document_version": 2,
+  "last_verified": "2026-09-12",
+  "canonical_publication_repository": "github.com/SoroushVahidi/lafc-evict-dataset (branch: master)",
+  "scientific_source_repository": "github.com/SoroushVahidi/Augmented-caching (branch: main)",
+  "kbs_reviewer_repository": "github.com/SoroushVahidi/Augmented-caching, branch kbs/second-revision-science (KBS second-revision reviewer materials; not a separate GitHub repository)",
   "current_public_release": "v0.3 on Hugging Face; v0.2 remains the current published version on Zenodo pending v0.3 Zenodo authentication",
+  "aws_open_data_status": "AWS Open Data Sponsorship Program: Step 2 (Registry/documentation/tutorial) privately drafted and reviewed; Steps 3-4 (terms, dedicated account) reported complete by the dataset owner; Step 5 (S3 bucket via CloudFormation) NOT yet executed. No version of LAFC-Evict has been published to AWS Open Data as of this update. Do not treat AWS as a publication host until this field is updated with a live bucket ARN.",
   "releases": [
     {
       "version": "v0.1",
@@ -135,11 +136,19 @@
         "objective_ablation_scalar": 11178496
       },
       "rows": 22356992,
-      "total_bytes": 69720081,
+      "total_bytes": 111209202,
+      "scientific_payload_bytes": 111115113,
       "scientific_payload_hashes": {
-        "data/cross_family_evict_value_v1.parquet": "07db7324ca1c31c49fe04029690643c04419401dc6c8c4d33e887df8c3275206",
-        "data/objective_ablation_scalar.parquet": "31d6cc2c41857d85dc818f4185175ac96085c06abdf58693831b1a4f1f8f8320"
+        "data/cross_family_evict_value_v1.parquet": "48333e600800a5f566ca9f4026b4738f04ca2f6dab1b811e5be71e8322e2bbce",
+        "data/objective_ablation_scalar.parquet": "8465f959bed4effd6d8a0a7b616cfd5f145a37778de9817564499fa662eaf0d3"
       },
+      "zenodo_flat_payload_bytes": 69753638,
+      "zenodo_flat_scientific_payload_bytes": 69661218,
+      "zenodo_flat_payload_hashes": {
+        "cross_family_evict_value_v1.parquet": "07db7324ca1c31c49fe04029690643c04419401dc6c8c4d33e887df8c3275206",
+        "objective_ablation_scalar.parquet": "31d6cc2c41857d85dc818f4185175ac96085c06abdf58693831b1a4f1f8f8320"
+      },
+      "zenodo_flat_vs_candidate_reconciliation": "Independently re-verified 2026-09-12 (DuckDB EXCEPT, both directions, both configs): row counts, column names/order, dtypes, and every scientific/provenance value are identical between release/lafc-evict-v0.3-candidate and release/lafc-evict-v0.3-zenodo-flat. The packages differ ONLY in the row-level `release_version` tag column (candidate package correctly reads 'v0.3' on every row; zenodo-flat still reads the stale pre-finalization tag 'v0.3-candidate' on every row, never refreshed after the candidate package's final rebuild) and in Parquet row-group sizing (candidate: 112 row groups; zenodo-flat: 11 row groups; same codec/writer version), which explains the file-size difference. The previously recorded scientific_payload_hashes/total_bytes on this entry (now moved to the zenodo_flat_* fields above) actually belonged to the zenodo-flat package, not the candidate package named in canonical_local_source -- this has been corrected. release/lafc-evict-v0.3-candidate remains canonical for AWS/HF; the zenodo-flat package's release_version tag should be corrected before it is ever used to publish a Zenodo v0.3 version.",
       "schema_version": "lafc-evict-preview-v0.3",
       "included_families": ["wiki2018"],
       "excluded_families": ["brightkite", "citibike", "cloudphysics", "metacdn", "metakv", "twemcache"],

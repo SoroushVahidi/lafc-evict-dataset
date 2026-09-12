@@ -6,14 +6,19 @@
 
 ## Current public release
 
-The current public release is the **v0.2 published preview**, available on
-Hugging Face and archived on Zenodo:
+The current public release is **v0.3** (corrected 2026-09-12; this section
+previously said v0.2), available on Hugging Face:
 
-- https://huggingface.co/datasets/SoroushVahidi/lafc-evict
-- https://doi.org/10.5281/zenodo.21895844
+- https://huggingface.co/datasets/SoroushVahidi/lafc-evict (v0.3, revision
+  `2113cc4d1edee57275d769d8760da77ed67c875d`, published 2026-08-13)
 
 It contains Wiki2018-derived pseudonymized supervision, two configs, and
-4,800,000 rows under CC0 1.0.
+22,356,992 rows under CC0 1.0. The prior **v0.2 published preview** (4,800,000
+rows) remains published and pinnable for reproducibility on both Hugging Face
+and Zenodo (https://doi.org/10.5281/zenodo.21895844 — this DOI identifies
+v0.2 only; **Zenodo does not yet have a v0.3 version** due to an unresolved
+deposit-token permission error, tracked in
+`publication/LAFC_EVICT_PUBLICATION_STATE.json`).
 
 ## Associated Paper / Preprint
 
@@ -69,9 +74,12 @@ data remain in `Augmented-caching`.
 
 ## Current public scope
 
-The published v0.2 release contains only Wiki2018-derived rows. CloudPhysics,
-MetaCDN, MetaKV, and Twemcache are not currently cleared for public release.
-CitiBike and Brightkite remain blocked.
+The published v0.3 release (like v0.2 before it) contains only Wiki2018-derived
+rows. CloudPhysics, MetaCDN, MetaKV, and Twemcache are not currently cleared
+for public release. CitiBike and Brightkite remain blocked. A separate,
+substantially larger internal multi-family research build exists (see
+`RELEASE_SCOPE.md`, `lafc-evict-full-heavy_r1`) but is not part of any public
+release and is not in scope for the AWS Open Data submission.
 
 ## Intended benchmark views
 
@@ -79,10 +87,13 @@ CitiBike and Brightkite remain blocked.
 - decision-level evaluation,
 - pairwise preference evaluation within each eviction decision.
 
-## Current status
+## Current status (updated 2026-09-12)
 
 The v0.1-open trees are historical unpublished local staging artifacts. The
-v0.3 tree is a locally validated candidate and is not published. Future
+**v0.3 tree is published** on Hugging Face (this section previously said it
+was "a locally validated candidate and is not published" — corrected). A
+local AWS Open Data Step 5 staging freeze of the v0.3 payload exists at
+`release/aws-open-data-v0.3-staging/` (git-ignored, not uploaded). Future
 releases still require:
 
 - upstream trace-license review,

@@ -2,6 +2,25 @@
 
 This repository is designed to export a release from an **existing generated candidate-row dataset**. It does not require committing raw traces to GitHub.
 
+## Generator repository (added 2026-09-12)
+
+Candidate-row generation itself — the cache simulator and the feature/label
+computation code referenced throughout this documentation (the source for
+`iter_multi_label_candidate_rows`, `_next_arrival_and_reuse_distance_fast`,
+and the `build_evict_*_dataset*.py` scripts) — lives in a **separate**
+repository, not in this one:
+
+- **Generator:** [`github.com/SoroushVahidi/Augmented-caching`](https://github.com/SoroushVahidi/Augmented-caching), branch `main`.
+- **Packaging/release (this repository):** [`github.com/SoroushVahidi/lafc-evict-dataset`](https://github.com/SoroushVahidi/lafc-evict-dataset), branch `master`.
+
+Pipeline: raw/cache access traces → (`Augmented-caching`) cache simulation
+and candidate-row generation → (`lafc-evict-dataset`, this repository)
+family filtering, pseudonymization, packaging, and validation → a public
+release. The generator repository is public because its *code* is public
+research software — this does not mean every trace family it can process is
+cleared for redistribution; see `RELEASE_SCOPE.md` and `LICENSE_DATA.md` for
+which families are actually cleared.
+
 ## Associated Paper / Preprint
 
 This dataset release accompanies the public preprint/manuscript:  
