@@ -27,10 +27,21 @@ v0.3 scope: Wiki2018-only, pseudonymized derived supervision. Configs:
 (see `reports/v0_3_novelty_audit_20260812/`).
 
 The nested package at `release/lafc-evict-v0.3-candidate/` is the HF-oriented
-source, already published. `release/lafc-evict-v0.3-zenodo-flat/` is the same
-scientific payload in the flat layout required by Zenodo, prepared and
-verified locally but not yet uploaded. Their Parquet payloads are
-byte-identical to each other and to what is now live on Hugging Face.
+source, already published, independently re-hash-verified against the live
+Hugging Face payload (2026-09-12). `release/lafc-evict-v0.3-zenodo-flat/` is
+the same scientific payload in the flat layout required by Zenodo, prepared
+locally but not yet uploaded. **Correction (2026-09-12):** the two packages
+are NOT byte-identical. Row counts, columns, dtypes, and every scientific/
+provenance value are identical (verified via DuckDB `EXCEPT` in both
+directions), but the packages differ in the row-level `release_version` tag
+(candidate correctly reads `v0.3`; zenodo-flat still reads a stale
+pre-finalization `v0.3-candidate` tag) and in Parquet row-group sizing, which
+is why their file sizes differ (~111 MB vs. ~70 MB). See
+`publication/LAFC_EVICT_PUBLICATION_STATE.json`
+(`releases[].zenodo_flat_vs_candidate_reconciliation` on the v0.3 entry) for
+full detail. `release/lafc-evict-v0.3-candidate/` remains canonical for any
+future publication (AWS or Zenodo); the zenodo-flat package's tag should be
+corrected before it is ever uploaded.
 
 ## Historical and future releases
 
@@ -47,9 +58,9 @@ byte-identical to each other and to what is now live on Hugging Face.
 
 ## Repository ownership
 
-- Canonical publication repository: `/home/soroush/lafc-evict-dataset`
-- Scientific/source-data repository: `/home/soroush/Augmented-caching`
-- KBS reviewer repository: `/home/soroush/Augmented-caching-kbs-second-revision`
+- Canonical publication repository: `github.com/SoroushVahidi/lafc-evict-dataset` (branch `master`)
+- Scientific/source-data repository: `github.com/SoroushVahidi/Augmented-caching` (branch `main`; dataset-generation scripts are in this repository's `scripts/` and `src/`)
+- KBS reviewer repository: `github.com/SoroushVahidi/Augmented-caching`, branch `kbs/second-revision-science` (a branch/worktree of the same repository, not a separate GitHub repository)
 
 The publication repository owns release manifests, cards, validation, checksums,
 and host records. The source and KBS repositories own research inputs and
