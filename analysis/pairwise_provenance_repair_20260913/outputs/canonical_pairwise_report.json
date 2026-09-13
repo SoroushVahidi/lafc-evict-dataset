@@ -1,0 +1,125 @@
+{
+  "source": "/tmp/claude-1000/-home-soroush/8a66210e-4d63-4b01-b3ba-10065c25f134/scratchpad/pairwise_repair/generated/pairwise_sample.parquet",
+  "label": "canonical_regenerated_post_fix",
+  "summary": {
+    "n_rows": 1000000,
+    "n_ties": 878262,
+    "tie_fraction": 0.878262,
+    "n_strict_pairs": 121738,
+    "strict_fraction": 0.121738,
+    "n_a_better": 60673,
+    "n_b_better": 61065,
+    "direction_balance_a_better_share": 0.49838998504986115,
+    "direction_balance_b_better_share": 0.5016100149501388,
+    "n_unique_decisions_in_sample": 118506
+  },
+  "decision_contribution": {
+    "n_decisions_with_ge1_strict_pair": 19005,
+    "fraction_with_ge1_strict_pair": 0.16037162675307579,
+    "n_decisions_only_tied_pairs": 99501,
+    "fraction_only_tied_pairs": 0.8396283732469242
+  },
+  "strict_density_top5": [
+    {
+      "trace_family": "metacdn",
+      "capacity": 64,
+      "horizon": 16,
+      "n_pairs": 12096,
+      "n_ties": 994.0,
+      "n_strict": 11102.0,
+      "strict_fraction": 0.9178240740740741
+    },
+    {
+      "trace_family": "metacdn",
+      "capacity": 32,
+      "horizon": 16,
+      "n_pairs": 12280,
+      "n_ties": 1094.0,
+      "n_strict": 11186.0,
+      "strict_fraction": 0.9109120521172639
+    },
+    {
+      "trace_family": "metacdn",
+      "capacity": 128,
+      "horizon": 16,
+      "n_pairs": 12056,
+      "n_ties": 1262.0,
+      "n_strict": 10794.0,
+      "strict_fraction": 0.8953218314532183
+    },
+    {
+      "trace_family": "metacdn",
+      "capacity": 32,
+      "horizon": 8,
+      "n_pairs": 12344,
+      "n_ties": 2168.0,
+      "n_strict": 10176.0,
+      "strict_fraction": 0.8243681140635126
+    },
+    {
+      "trace_family": "metacdn",
+      "capacity": 64,
+      "horizon": 8,
+      "n_pairs": 11816,
+      "n_ties": 2100.0,
+      "n_strict": 9716.0,
+      "strict_fraction": 0.8222748815165877
+    }
+  ],
+  "strict_density_bottom5": [
+    {
+      "trace_family": "wiki2018",
+      "capacity": 64,
+      "horizon": 4,
+      "n_pairs": 21816,
+      "n_ties": 21816.0,
+      "n_strict": 0.0,
+      "strict_fraction": 0.0
+    },
+    {
+      "trace_family": "wiki2018",
+      "capacity": 256,
+      "horizon": 16,
+      "n_pairs": 20528,
+      "n_ties": 20528.0,
+      "n_strict": 0.0,
+      "strict_fraction": 0.0
+    },
+    {
+      "trace_family": "wiki2018",
+      "capacity": 128,
+      "horizon": 8,
+      "n_pairs": 20224,
+      "n_ties": 20224.0,
+      "n_strict": 0.0,
+      "strict_fraction": 0.0
+    },
+    {
+      "trace_family": "wiki2018",
+      "capacity": 64,
+      "horizon": 16,
+      "n_pairs": 21568,
+      "n_ties": 21568.0,
+      "n_strict": 0.0,
+      "strict_fraction": 0.0
+    },
+    {
+      "trace_family": "wiki2018",
+      "capacity": 32,
+      "horizon": 16,
+      "n_pairs": 20952,
+      "n_ties": 20952.0,
+      "n_strict": 0.0,
+      "strict_fraction": 0.0
+    }
+  ],
+  "comparison_to_prior_stale_based_audit": {
+    "prior_tie_fraction": 0.879968,
+    "canonical_tie_fraction": 0.878262,
+    "prior_direction_balance_a_share": 0.051103039189549455,
+    "canonical_direction_balance_a_share": 0.49838998504986115,
+    "prior_decisions_with_strict_fraction": 0.15886542757196442,
+    "canonical_decisions_with_strict_fraction": 0.16037162675307579,
+    "note": "The prior audit's direction-balance numbers (5.1%/94.9%) were an artifact of the stale file's pre-1f5f272-and-pre-3b49189 construction, not a real property of the benchmark. The canonical numbers below (tie fraction ~87.8%, balanced ~49.8%/50.2% direction split) match the manuscript's own committed table exactly and should be treated as the correct characterization going forward. The qualitative conclusion (heavily tie-dominated) is unchanged; the direction-balance and exact tie-fraction figures should be corrected."
+  }
+}

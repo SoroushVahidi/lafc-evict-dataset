@@ -1,0 +1,43 @@
+{
+  "A_stale": {
+    "n_rows": 1000000,
+    "n_ties": 879968,
+    "n_a_better": 6134,
+    "n_b_better": 113898,
+    "sha256": "99697a0d20acc643848db6bcb71656b32fad939b004cbe56f2b69b3a418bcb18",
+    "size_bytes": 6165425,
+    "path": "/home/soroush/projects/lafc-evict-dataset/repo/release/lafc-evict-v0.1-open-current-contract-preserved/data/pairwise_sample/pairwise_sample.parquet"
+  },
+  "B_regenerated": {
+    "n_rows": 1000000,
+    "n_ties": 878262,
+    "n_a_better": 60673,
+    "n_b_better": 61065,
+    "sha256": "1d770c6999ac999673b46805a6ca173e24b116793b35405d2d211cae7b9eda02",
+    "size_bytes": 11367843,
+    "path": "/tmp/claude-1000/-home-soroush/8a66210e-4d63-4b01-b3ba-10065c25f134/scratchpad/pairwise_repair/generated/pairwise_sample.parquet"
+  },
+  "C_manuscript": {
+    "n_a_better": 60673,
+    "n_b_better": 61065,
+    "n_ties": 878262,
+    "n_rows": 1000000,
+    "path": "/home/soroush/projects/lafc-evict-dataset/repo/paper/sigmod2027/results/metadata_tables/table_pairwise_sample_label_summary.csv",
+    "note": "aggregate counts only -- row-level pair identities were never committed to git (release/ is gitignored)"
+  },
+  "comparison": {
+    "A_vs_B_identical_bytes": false,
+    "A_vs_B_tie_count_diff": 1706,
+    "B_vs_C_tie_count_diff": 0,
+    "A_vs_C_tie_count_diff": 1706,
+    "B_matches_C_exactly": true,
+    "A_matches_C_exactly": false
+  },
+  "pair_identity_overlap_A_vs_B": {
+    "a_unordered_pairs": 1000000,
+    "b_unordered_pairs": 1000000,
+    "overlap_unordered_pairs": 52368,
+    "overlap_fraction_of_a": 0.052368,
+    "same_unordered_pair_sample": false
+  }
+}
