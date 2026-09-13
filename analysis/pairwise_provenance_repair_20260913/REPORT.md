@@ -178,7 +178,7 @@ BRANCH: analysis/sigmod-target-discriminativeness-20260913
 
 BASE_COMMIT: fbbeedb02ffedf571cf6a08a9a7418467d857cea
 TARGET_AUDIT_COMMIT: 668d179f62bb495b2686280e7db6a8f0713f0633
-PAIRWISE_REPAIR_COMMIT: (recorded after this report's commit — see final git log)
+PAIRWISE_REPAIR_COMMIT: 4c5b6437 (this commit adds this report itself; run `git log --oneline -1 -- analysis/pairwise_provenance_repair_20260913/` to reconfirm)
 
 TARGET_AUDIT_WAS_PREVIOUSLY_COMMITTED:
 YES
