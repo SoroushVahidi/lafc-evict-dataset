@@ -1,10 +1,14 @@
 # V0.3/V1.0 Release Design
 
-**Status:** INTERNAL planning document. The v0.3 candidate has now been built
-and locally validated, but is not uploaded or approved for publication. v1.0
+**Status:** HISTORICAL internal planning document. This file preserves the
+pre-publication v0.3/v1.0 design context. Current handoff state supersedes its
+old "not uploaded" wording: v0.3 is now public on Hugging Face and AWS Open
+Data for `wiki2018` only, while Zenodo remains at the DOI-backed v0.2 release.
+See `CURRENT_PROJECT_STATUS_AND_HANDOFF.md` and
+`LAFC_EVICT_PUBLICATION_STATE.md` before taking publication action. v1.0
 remains planning-only. See `V0_3_V1_DATA_INVENTORY.md` for the evidence this
 design is based on and `V0_3_V1_PROVENANCE_GAPS.md` for why the recommended
-v0.3 scope is currently limited to `wiki2018`.
+v0.3 scope is limited to `wiki2018`.
 
 ---
 
@@ -45,7 +49,10 @@ v0.3 scope is currently limited to `wiki2018`.
   `candidate_rows`, that is roughly 240 MB before Parquet compaction gains
   from single-family partitioning, so revise down after a real build,
   not up).
-- Current state: **built locally and validated, not uploaded**.
+- Historical state at the time this design was written: **built locally and
+  validated, not uploaded**. Current superseding status: v0.3 is public on
+  Hugging Face and AWS Open Data for `wiki2018` only; Zenodo remains at the
+  DOI-backed v0.2 release.
 - Whether v0.3 is worthwhile: **yes** -- it does not require new generation
   compute (DT-1/DT-8 already exist), only pseudonymization + a filtered
   rebuild + provenance sign-off for a family that is already

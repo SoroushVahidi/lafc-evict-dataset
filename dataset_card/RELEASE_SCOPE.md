@@ -22,15 +22,16 @@ Historical unpublished real-data staging generation.
 
 ## Published `lafc-evict-v0.3-candidate` (current public release, as of 2026-08-13)
 
-Expanded Wiki2018-only candidate. **Published on Hugging Face** (this section
-previously said "not uploaded or published" — corrected 2026-09-12; that
-statement was stale). Same two configurations as v0.2, 22,356,992 total
-rows, full inclusion of every available wiki2018 shard (no down-sampling).
+Expanded Wiki2018-only candidate. **Published on Hugging Face and AWS Open
+Data** (this section previously said "not uploaded or published" -- corrected
+2026-09-12; the AWS public-hosting status was added in the final handoff
+documentation). Same two configurations as v0.2, 22,356,992 total rows, full
+inclusion of every available wiki2018 shard (no down-sampling).
 The `release/lafc-evict-v0.3-candidate/` and `release/lafc-evict-v0.3-zenodo-flat/`
 local packages are scientifically identical (verified via DuckDB `EXCEPT`,
 2026-09-12); they differ only in an internal `release_version` row tag
 (zenodo-flat still carries a stale pre-finalization value) and Parquet
-row-group sizing — see `publication/LAFC_EVICT_PUBLICATION_STATE.json` for
+row-group sizing -- see `publication/LAFC_EVICT_PUBLICATION_STATE.json` for
 the full reconciliation record. `release/lafc-evict-v0.3-candidate/` is
 canonical.
 
@@ -45,7 +46,7 @@ Internal or pre-release heavy version.
 - This is the family of internal builds (5 trace families, up to ~278M
   candidate rows / ~788K decisions) used in the SIGMOD 2027 submission's
   benchmark description. It is **not** part of the public v0.3 release and
-  is **not** in scope for the AWS Open Data submission — do not conflate the
+  is **not** in scope for the AWS Open Data submission -- do not conflate the
   two when citing or reusing this dataset (added 2026-09-12).
 
 ## `lafc-evict-sample`

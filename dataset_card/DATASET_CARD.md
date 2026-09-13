@@ -15,7 +15,7 @@ previously said v0.2), available on Hugging Face:
 It contains Wiki2018-derived pseudonymized supervision, two configs, and
 22,356,992 rows under CC0 1.0. The prior **v0.2 published preview** (4,800,000
 rows) remains published and pinnable for reproducibility on both Hugging Face
-and Zenodo (https://doi.org/10.5281/zenodo.21895844 — this DOI identifies
+and Zenodo (https://doi.org/10.5281/zenodo.21895844 -- this DOI identifies
 v0.2 only; **Zenodo does not yet have a v0.3 version** due to an unresolved
 deposit-token permission error, tracked in
 `publication/LAFC_EVICT_PUBLICATION_STATE.json`).
@@ -91,10 +91,11 @@ release and is not in scope for the AWS Open Data submission.
 
 The v0.1-open trees are historical unpublished local staging artifacts. The
 **v0.3 tree is published** on Hugging Face (this section previously said it
-was "a locally validated candidate and is not published" — corrected). A
-local AWS Open Data Step 5 staging freeze of the v0.3 payload exists at
-`release/aws-open-data-v0.3-staging/` (git-ignored, not uploaded). Future
-releases still require:
+was "a locally validated candidate and is not published" -- corrected). The
+wiki2018-only v0.3 payload is also publicly hosted through AWS Open Data in
+bucket `lafc-evict-open-data` (`us-west-2`); AWS Open Data Registry PR #3335
+is pending maintainer activity unless later repository documentation proves it
+merged. Future releases still require:
 
 - upstream trace-license review,
 - redistribution review per trace family,

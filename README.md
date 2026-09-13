@@ -4,20 +4,28 @@ This is the canonical publication repository for LAFC-Evict.
 
 ## Current public release
 
-**LAFC-Evict v0.2 published preview** is current.
+**LAFC-Evict v0.3** is the current public preview release.
 
 - Hugging Face: https://huggingface.co/datasets/SoroushVahidi/lafc-evict
-- Zenodo: https://doi.org/10.5281/zenodo.21895844
-- Concept DOI: https://doi.org/10.5281/zenodo.21895843
+- Hugging Face revision: `2113cc4d1edee57275d769d8760da77ed67c875d`
+- AWS Open Data bucket: `lafc-evict-open-data` (`us-west-2`)
 - Scope: Wiki2018-only pseudonymized derived supervision
 - Configs: `cross_family_evict_value_v1` and `objective_ablation_scalar`
-- Rows: 4.8M
+- Rows: 22,356,992
 - License: CC0 1.0
 
-The v0.3 candidate exists locally and is validated but not published. v1.0 is
-planning-only. See
+Zenodo remains on the DOI-backed **v0.2** release:
+https://doi.org/10.5281/zenodo.21895844. Concept DOI:
+https://doi.org/10.5281/zenodo.21895843. No v0.3 Zenodo DOI is documented.
+
+The current public release is not the full scientific research build. The
+canonical scientific dataset used in the SIGMOD-scale analyses spans five
+families (`cloudphysics`, `metacdn`, `metakv`, `twemcache`, `wiki2018`),
+277,995,072 candidate rows, and 2,363,286 decisions. See
+[`docs/CURRENT_PROJECT_STATUS_AND_HANDOFF.md`](docs/CURRENT_PROJECT_STATUS_AND_HANDOFF.md)
+for the authoritative project state and
 [`docs/LAFC_EVICT_PUBLICATION_STATE.md`](docs/LAFC_EVICT_PUBLICATION_STATE.md)
-for the authoritative release hierarchy.
+for the release hierarchy.
 
 This repository is a standalone, conservative package for preparing the public release of **LAFC-Evict: Counterfactual Supervision for Learned Cache Eviction**.
 
@@ -64,10 +72,11 @@ LAFC-Evict distinguishes five layers:
 
 This repository does **not** claim authorship of upstream raw traces. The main `v1` label is **finite-horizon counterfactual LRU-continuation miss count after forcing one candidate eviction**, not an offline-optimal target.
 
-The published v0.2 release contains only `wiki2018`. `cloudphysics`, `metacdn`,
-`metakv`, and `twemcache` are not yet cleared for public release. `brightkite`
-and `citibike` remain blocked. The registry is a release-governance tool, not
-legal advice.
+The published v0.3 public release contains only `wiki2018`. `cloudphysics`,
+`metacdn`, `metakv`, and `twemcache` are part of the internal canonical
+scientific dataset but are not yet cleared for public release. `brightkite` and
+`citibike` remain blocked. The registry is a release-governance tool, not legal
+advice.
 
 ## Repository layout
 

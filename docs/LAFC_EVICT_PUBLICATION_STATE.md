@@ -12,10 +12,17 @@ of truth is `publication/LAFC_EVICT_PUBLICATION_STATE.json`.
   (revision `2113cc4d1edee57275d769d8760da77ed67c875d`). The prior v0.2
   revision (`b77413fef197e808aed9cfa708878064a5c00493`) remains fully
   accessible and pinnable for reproducibility.
+- **AWS Open Data** publicly hosts the **v0.3 wiki2018-only payload** in
+  bucket `lafc-evict-open-data`, region `us-west-2`: 18 objects,
+  approximately 106.1 MiB, CC0 1.0, with anonymous public download previously
+  verified PASS. AWS Open Data Registry PR #3335 is pending maintainer
+  activity unless later local documentation proves it merged. The known fork
+  branch is `add-lafc-evict-dataset`; known PR head:
+  `e12ac8f90714daf2bc88987725cc2a48b916cd59`.
 - **Zenodo** still serves **LAFC-Evict v0.2** as the current version:
   version DOI <https://doi.org/10.5281/zenodo.21895844>, concept DOI
   <https://doi.org/10.5281/zenodo.21895843>. A v0.3 Zenodo version has
-  **not** been created — the configured Zenodo credential returned HTTP 403
+  **not** been created -- the configured Zenodo credential returned HTTP 403
   on all deposition-management calls. See
   `publication/LAFC_EVICT_PUBLICATION_STATE.json` (`releases[].zenodo_block_detail`
   on the v0.3 entry) for the exact failure evidence. Do not cite a v0.3
@@ -40,8 +47,8 @@ is why their file sizes differ (~111 MB vs. ~70 MB). See
 `publication/LAFC_EVICT_PUBLICATION_STATE.json`
 (`releases[].zenodo_flat_vs_candidate_reconciliation` on the v0.3 entry) for
 full detail. `release/lafc-evict-v0.3-candidate/` remains canonical for any
-future publication (AWS or Zenodo); the zenodo-flat package's tag should be
-corrected before it is ever uploaded.
+future reuse of the nested package; the zenodo-flat package's tag should be
+corrected before it is ever uploaded to Zenodo.
 
 ## Historical and future releases
 
@@ -83,7 +90,7 @@ governance record, not legal advice.
 
 ## Hosting boundary
 
-HF and Zenodo publication state recorded here is authoritative for LAFC-Evict.
-CyVerse, Harvard Dataverse, AWS, and other external hosting exploration is
-outside this repository's authoritative state unless a concrete LAFC-Evict
-publication record is created.
+HF, AWS Open Data, and Zenodo publication state recorded here is authoritative
+for LAFC-Evict. CyVerse, Harvard Dataverse, and other external hosting
+exploration is outside this repository's authoritative state unless a concrete
+LAFC-Evict publication record is created.
