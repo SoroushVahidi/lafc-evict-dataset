@@ -1,0 +1,25 @@
+{
+  "determinism_checks": [
+    {
+      "family": "metacdn",
+      "policy": "lru",
+      "reproducible": true
+    },
+    {
+      "family": "metacdn",
+      "policy": "random(seed=0)",
+      "reproducible": true
+    },
+    {
+      "family": "twemcache",
+      "policy": "lru",
+      "reproducible": true
+    },
+    {
+      "family": "twemcache",
+      "policy": "random(seed=0)",
+      "reproducible": true
+    }
+  ],
+  "notes": []
+}

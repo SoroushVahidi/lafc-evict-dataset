@@ -1,0 +1,228 @@
+{
+  "artifact": "LAFC-Evict closed-loop cache-policy pilot",
+  "freeze_task": "documentation/provenance freeze only; no experiment rerun",
+  "lafc_evict_dataset_repository": {
+    "path": "/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-pilot-20260913",
+    "branch": "experiment/closed-loop-pilot-20260913",
+    "commit_before_freeze": "a85fe5eb4907d8312bb7f87b22047301c547993c"
+  },
+  "augmented_caching_repository": {
+    "path": "/home/soroush/projects/augmented-caching/repo",
+    "branch_at_freeze_inspection": "chore/repository-polish",
+    "head_commit_at_freeze_inspection": "ceb36705b59d0d16db55d0fc0bfb63a5c7a2a6a1",
+    "working_tree_status_at_freeze_inspection": "DIRTY",
+    "exact_working_tree_state_at_pilot_runtime": "UNKNOWN"
+  },
+  "run_script": {
+    "path": "analysis/closed_loop_pilot_20260913/scripts/run_pilot.py",
+    "sha256": "4a80279e6b80c05fc8daa4cd06b28efe75c6c89f047e91a4f1a6bddbc47b0e84",
+    "original_command_observed": "python3 analysis/closed_loop_pilot_20260913/scripts/run_pilot.py",
+    "stdout_log": null,
+    "stderr_log": null
+  },
+  "generated_outputs": {
+    "generation_completed_at_from_output_mtime": "2026-09-13T18:46:12-04:00",
+    "files": [
+      {
+        "path": "analysis/closed_loop_pilot_20260913/outputs/run_results.csv",
+        "sha256": "81bd86d0550f6db2a03836bb899bc3c3026cc210f1f49be981dca317e2725428"
+      },
+      {
+        "path": "analysis/closed_loop_pilot_20260913/outputs/summary.csv",
+        "sha256": "fd5ab07aa565d3af5d198600f527513d8cbc8a95ffeab8a4e1db14219aa76279"
+      },
+      {
+        "path": "analysis/closed_loop_pilot_20260913/outputs/sanity_checks.json",
+        "sha256": "f1abe70549cdf88d5a7b29256c050bc80da06ffd6831a4ce558d65c69f957c11"
+      }
+    ]
+  },
+  "source_output_filenames": [
+    "analysis/closed_loop_pilot_20260913/outputs/run_results.csv",
+    "analysis/closed_loop_pilot_20260913/outputs/summary.csv",
+    "analysis/closed_loop_pilot_20260913/outputs/sanity_checks.json"
+  ],
+  "simulator_paths": [
+    "/home/soroush/projects/augmented-caching/repo/src/lafc/runner/run_policy.py",
+    "/home/soroush/projects/augmented-caching/repo/src/lafc/simulator/cache_state.py",
+    "/home/soroush/projects/augmented-caching/repo/src/lafc/simulator/request_trace.py",
+    "/home/soroush/projects/augmented-caching/repo/src/lafc/types.py"
+  ],
+  "policy_implementation_paths": {
+    "lru": "/home/soroush/projects/augmented-caching/repo/src/lafc/policies/lru.py",
+    "sieve": "/home/soroush/projects/augmented-caching/repo/src/lafc/policies/sieve.py",
+    "evict_value_v1": "/home/soroush/projects/augmented-caching/repo/src/lafc/policies/evict_value_v1.py",
+    "mru": "analysis/closed_loop_pilot_20260913/scripts/run_pilot.py::MRUPolicy",
+    "random": "analysis/closed_loop_pilot_20260913/scripts/run_pilot.py::UniformRandomPolicy"
+  },
+  "raw_processed_traces": {
+    "metacdn": {
+      "trace_name": "metacdn_cdn_202303_head_50k",
+      "path": "/home/soroush/projects/augmented-caching/repo/data/processed/metacdn/trace.jsonl",
+      "sha256": "7301f02e1373cb7e06f1ed2c417a8ebe16581319354780f811c8d032391f4e73",
+      "requests": 50000
+    },
+    "twemcache": {
+      "trace_name": "twemcache_cluster26_sample100_50k",
+      "path": "/home/soroush/projects/augmented-caching/repo/data/processed/twemcache/trace.jsonl",
+      "sha256": "62df27062ce2595c843fd91e01d26c9783ff8f165f6b26e983696eda7ada0bb9",
+      "requests": 50000
+    }
+  },
+  "learned_model": {
+    "policy": "evict_value_v1",
+    "path": "/home/soroush/projects/augmented-caching/repo/models/evict_value_wulver_v1_best_heavy_r1.pkl",
+    "sha256": "0c9e8a48066f8bb80bfab31b023c9785ca5b955f408d50c18008dbcc314ea61b",
+    "model_identifier": "wulver_h4_random_forest",
+    "selection_rule": "validation mean regret",
+    "selection_config_path": "/home/soroush/projects/augmented-caching/repo/analysis/manuscript_canonical/evict_value_wulver_v1_best_config_heavy_r1.json",
+    "sklearn_version_warning": "Loading the artifact during freeze inspection emitted InconsistentVersionWarning messages for DecisionTreeRegressor and RandomForestRegressor: artifact serialized with scikit-learn 1.9.0, inspected with scikit-learn 1.8.0.",
+    "retrained_during_freeze": false
+  },
+  "experiment_scope": {
+    "families": [
+      "metacdn",
+      "twemcache"
+    ],
+    "capacity": 32,
+    "random_seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "policies": [
+      "lru",
+      "mru",
+      "random",
+      "sieve",
+      "evict_value_v1"
+    ]
+  },
+  "temporal_splits": {
+    "split_mode": "trace_chunk",
+    "chunk_size": 4096,
+    "metacdn": {
+      "train_chunks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        11,
+        12
+      ],
+      "validation_chunks": [
+        0,
+        6,
+        7,
+        9,
+        10
+      ],
+      "test_chunks": [],
+      "scored_split_label": "val",
+      "scored_windows_inclusive": [
+        [
+          0,
+          4095
+        ],
+        [
+          24576,
+          32767
+        ],
+        [
+          36864,
+          45055
+        ]
+      ],
+      "scored_requests": 20480,
+      "split_caveat": "validation-window evidence; not independent test-window evidence and not an unseen trace"
+    },
+    "twemcache": {
+      "train_chunks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9,
+        11,
+        12
+      ],
+      "validation_chunks": [
+        7
+      ],
+      "test_chunks": [
+        8,
+        10
+      ],
+      "scored_split_label": "test",
+      "scored_windows_inclusive": [
+        [
+          32768,
+          36863
+        ],
+        [
+          40960,
+          45055
+        ]
+      ],
+      "scored_requests": 8192,
+      "split_caveat": "temporally held-out test-window evidence within the same continuous trace; not an unseen trace"
+    }
+  },
+  "scoring_protocol": {
+    "full_trace_replay": "Each policy replays the full 50,000-request trace continuously.",
+    "unscored_requests": "Unscored requests affect cache state but do not contribute to scored metrics.",
+    "warmup": "No separate leading warmup interval; scoring is by split windows.",
+    "same_interval_per_family": "Every policy within a family uses the same scored windows.",
+    "metric_identity": "hits + misses = scored_requests for every evaluated run."
+  },
+  "closed_loop_semantics": {
+    "raw_processed_jsonl_traces": true,
+    "policy_updates_own_cache_state_after_actions": true,
+    "not_candidate_table_replay": true,
+    "candidate_table_replay_note": "The pilot does not replay the 277M candidate table."
+  },
+  "leakage_gate": {
+    "metacdn": {
+      "evict_value_v1_status": "BLOCKED_LEAKAGE_RISK",
+      "reason": "MetaCDN has no test chunks; scored evaluation uses validation chunks that participated in model selection."
+    },
+    "twemcache": {
+      "evict_value_v1_status": "EVALUATED",
+      "reason": "Scored chunks are test chunks 8 and 10; training and validation chunks are separate under the trace-chunk split used by the pilot."
+    }
+  },
+  "offline_comparison_source": {
+    "source": "analysis/sigmod_target_discriminativeness_20260913/outputs/phase4_stratified_family_capacity_horizon.csv and phase8_lru_mru_stratified.csv",
+    "capacity": 32,
+    "horizon": 16,
+    "sieve": "NOT_COMPARABLE_FROM_EXISTING_OFFLINE_STATE",
+    "evict_value_v1": "NOT_COMPARABLE_FROM_EXISTING_OFFLINE_STATE"
+  },
+  "unavailable_provenance": {
+    "exact_shell_environment": "UNKNOWN",
+    "complete_stdout_stderr_logs": "UNKNOWN",
+    "exact_augmented_caching_dirty_diff_at_pilot_runtime": "UNKNOWN"
+  }
+}
