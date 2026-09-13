@@ -35,17 +35,23 @@ no unique needed content before removal.
 
 | Item | Type | Reason |
 |---|---|---|
-| `worktree-agent-a667cf3501eaf0ea3` | branch/worktree | Historical Elsevier source at `3cbcb88`; superseded by `manuscript/performance-evaluation-template-20260913`. |
-| `worktree-closed-loop-feasibility-20260913` | branch/worktree | Side feasibility branch at `34e9dcc`; later integrated in `integration/closed-loop-feasibility-20260913` and descendants. |
-| `/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-pilot-integration` | worktree | Clean integration worktree; content appears preserved by pilot/design lineage. |
 | `sigmod-placeholder-cleanup-20260629` | branch | Historical manuscript cleanup branch; review before deleting. |
 | `sigmod-table-layout-pass-20260629` | branch | Historical table-layout branch; review before deleting. |
+| Other historical SIGMOD branches | branch | Keep unless a future audit demonstrates preservation and low risk. |
 
-## Manual-Review Cleanup Candidate
+## Completed Cleanup
 
-| Path | Status | Recommendation |
+Completed during Query 3 on 2026-09-13.
+
+| Item | Action | Verification |
 |---|---|---|
-| `publication/.env.example.azure-cleanup-backup-20260903-213025` | Untracked in the primary checkout | Manual-review cleanup candidate. Do not commit or delete automatically. |
+| `/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/agent-a667cf3501eaf0ea3` | Removed worktree | Worktree was clean; introduced Performance Evaluation paths are preserved in `manuscript/performance-evaluation-template-20260913` at `471b3c4`, which also contains later acknowledgments/funding updates. |
+| `worktree-agent-a667cf3501eaf0ea3` | Deleted local branch | Historical Elsevier source at `3cbcb88`; superseded by the manuscript branch above; no remote branch observed. |
+| `/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-feasibility-20260913` | Removed worktree | Worktree was clean; `analysis/closed_loop_feasibility_20260913/` content matches preserved integrated lineage. |
+| `worktree-closed-loop-feasibility-20260913` | Deleted local branch | Side feasibility branch at `34e9dcc`; content preserved in `integration/closed-loop-feasibility-20260913` at `a85fe5e` and descendants. |
+| `/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-pilot-integration` | Removed worktree | Redundant clean checkout of `integration/closed-loop-feasibility-20260913`; branch preserved. |
+| `publication/.env.example.azure-cleanup-backup-20260903-213025` | Deleted untracked file | Byte-identical to tracked `publication/.env.example`; no unique configuration preserved there. |
+| Primary checkout generated caches | Deleted ignored cache/build metadata | Removed `.pytest_cache/`, `.ruff_cache/`, Python `__pycache__/` directories, and `src/lafc_evict_dataset.egg-info/`; release/report payloads were left untouched. |
 
 ## Do Not Touch
 
@@ -87,12 +93,10 @@ Performance Evaluation template reconciliation
 
 ## Query 3 Cleanup Preparation
 
-Recommended next cleanup/organization actions, after review:
+Query 3 completed the safe cleanup items above. Remaining recommendations:
 
-1. Validate that superseded worktrees have no unique uncommitted content.
-2. Decide durable handling for the regenerated pairwise Parquet currently under
-   `/tmp`.
-3. Re-check public-release docs for any remaining stale historical wording that
-   lacks a current-status pointer.
-4. Prepare a final validation pass over branch/worktree cleanliness before any
-   optional branch/worktree removal.
+1. Do not remove additional historical branches without a fresh preservation
+   audit.
+2. Preserve the tracked canonical pairwise artifact as analysis evidence; do
+   not promote it into a public release without a separate release decision.
+3. Prepare a final validation pass over branch/worktree cleanliness in Query 4.

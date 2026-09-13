@@ -50,6 +50,27 @@ The Performance Evaluation manuscript branch remains separate at
 `471b3c43031d5ab08b98a5ccd26cc48cab687182`. Do not merge it into the final
 polish branch without an explicit integration plan.
 
+Current relevant worktrees after Query 3 cleanup:
+
+- `/home/soroush/projects/lafc-evict-dataset/repo`:
+  `analysis/sigmod-target-discriminativeness-20260913`
+- `/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/final-handoff-20260914`:
+  `polish/final-handoff-20260914`
+- `/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-production-design-20260913`:
+  `experiment/closed-loop-production-design-20260913`
+- `/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-pilot-20260913`:
+  `experiment/closed-loop-pilot-20260913`
+- `/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/manuscript-pe-template-20260913`:
+  `manuscript/performance-evaluation-template-20260913`
+
+Removed during Query 3 after clean/preservation checks:
+
+- worktree and local branch `worktree-agent-a667cf3501eaf0ea3`
+- worktree and local branch `worktree-closed-loop-feasibility-20260913`
+- redundant worktree `closed-loop-pilot-integration`
+
+The provenance branch `integration/closed-loop-feasibility-20260913` was kept.
+
 ## 2. What LAFC-Evict Is
 
 LAFC-Evict provides a reusable supervised decision surface between raw cache
@@ -206,19 +227,25 @@ Current state:
 
 - old shipped sample is historical/noncanonical
 - regenerated sample is canonical with respect to current decision selection
-- regenerated parquet currently exists outside durable Git storage and requires
-  a later preservation/release decision
+- regenerated parquet is durably preserved as tracked Git analysis evidence
 
-Current temporary path:
+Durable path:
+`analysis/pairwise_provenance_repair_20260913/artifacts/pairwise_sample_regenerated_canonical.parquet`
+
+Durable size: `11,367,843` bytes
+
+Storage mode: `TRACKED_IN_GIT`
+
+The temporary source path used during repair was:
 `/tmp/claude-1000/-home-soroush/8a66210e-4d63-4b01-b3ba-10065c25f134/scratchpad/pairwise_repair/generated/pairwise_sample.parquet`
 
-Current temporary size: `11,367,843` bytes
-
-DURABILITY_ACTION_REQUIRED: this file lives under `/tmp` and must not be
-treated as durable. The regeneration script exists at
+The regeneration script exists at
 `analysis/pairwise_provenance_repair_20260913/scripts/regenerate_pairwise_v2.py`
-and is documented in the pairwise repair report. Do not blindly add the
-Parquet file to Git; make a deliberate preservation/release decision first.
+and is documented in the pairwise repair report. The durable artifact manifest
+is `analysis/pairwise_provenance_repair_20260913/ARTIFACT_MANIFEST.md`.
+
+Do not promote this analysis sample into a public release without a separate
+release decision.
 
 ## 8. Predictor Feature Issue
 
@@ -294,7 +321,7 @@ Split wording:
 - MetaCDN: validation-window evidence
 - Twemcache: temporally held-out test-window evidence
 
-Do not describe either as an independent held-out trace.
+Do not describe either as a separately held-out raw trace.
 
 ## 10. Production Closed-Loop Design
 

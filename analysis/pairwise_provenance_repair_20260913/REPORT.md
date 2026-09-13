@@ -1,5 +1,12 @@
 # Pairwise-Sample Provenance Repair Report
 
+**Final-polish preservation update (2026-09-13):** this report preserves the
+original repair narrative. The regenerated canonical analysis sample that this
+report initially kept outside Git has now been durably preserved at
+`analysis/pairwise_provenance_repair_20260913/artifacts/pairwise_sample_regenerated_canonical.parquet`.
+See `ARTIFACT_MANIFEST.md` for the current durable artifact location, SHA256,
+size, counts, and historical-vs-canonical distinction.
+
 Date: 2026-09-13
 Scope: provenance investigation and regeneration only. No manuscript claims changed. No file inside `release/` (or anywhere else previously tracked) was modified. No HPC job launched. No public artifact touched.
 

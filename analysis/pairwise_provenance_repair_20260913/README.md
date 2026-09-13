@@ -8,6 +8,12 @@ traces the exact root cause, regenerates a verified canonical replacement,
 and reruns the pairwise information-content analysis on it. **No manuscript
 file was edited. No file inside `release/` was modified, moved, or deleted.**
 
+**Final-polish preservation update (2026-09-13):** the regenerated canonical
+analysis sample has now been durably preserved in Git at
+`analysis/pairwise_provenance_repair_20260913/artifacts/pairwise_sample_regenerated_canonical.parquet`.
+See `ARTIFACT_MANIFEST.md` for the exact SHA256, size, counts, and
+historical-vs-canonical distinction.
+
 See `REPORT.md` for the full write-up. Summary of the finding:
 
 - The on-disk `release/lafc-evict-v0.1-open-current-contract-preserved/data/pairwise_sample/pairwise_sample.parquet`
@@ -29,9 +35,9 @@ See `REPORT.md` for the full write-up. Summary of the finding:
 
 ## Reproduce
 
-The large regenerated parquet is **not** committed to git (per instructions,
-and consistent with `release/` itself being gitignored). It is regenerated
-deterministically from data + code already in this repo:
+The regenerated parquet is now committed to git as a durable analysis-evidence
+artifact. It can also be regenerated deterministically from data + code already
+in this repo:
 
 ```bash
 python3 analysis/pairwise_provenance_repair_20260913/scripts/regenerate_pairwise_v2.py
@@ -40,8 +46,9 @@ python3 analysis/pairwise_provenance_repair_20260913/scripts/rerun_pairwise_audi
 ```
 
 The first script writes to `generated/pairwise_sample.parquet` next to itself
-(gitignored path recommended — see note in the script). The other two read
-that file plus the stale release file plus the manuscript's committed CSV.
+(gitignored scratch output recommended -- see note in the script). The other
+two read that file plus the stale release file plus the manuscript's committed
+CSV.
 
 **Note on `regenerate_pairwise_v2.py`**: this is a provably-equivalent,
 filter-pushed-down reformulation of
@@ -60,16 +67,20 @@ membership before or after the join cannot change which pairs survive.
 
 ## Files
 
-- `REPORT.md` — full findings (Phases 1–8)
-- `scripts/regenerate_pairwise.py` — verbatim call to the unmodified
+- `REPORT.md` -- full findings (Phases 1-8)
+- `ARTIFACT_MANIFEST.md` -- durable artifact manifest added during final
+  repository polish
+- `artifacts/pairwise_sample_regenerated_canonical.parquet` -- canonical
+  regenerated analysis sample, tracked in Git
+- `scripts/regenerate_pairwise.py` -- verbatim call to the unmodified
   generator (kept for reference; impractically slow, do not run without a
   long timeout)
-- `scripts/regenerate_pairwise_v2.py` — the practical, equivalent version
+- `scripts/regenerate_pairwise_v2.py` -- the practical, equivalent version
   actually used
-- `scripts/compare_pairwise_states.py` — stale vs. regenerated vs. manuscript
+- `scripts/compare_pairwise_states.py` -- stale vs. regenerated vs. manuscript
   comparison (Phase 2)
-- `scripts/rerun_pairwise_audit_canonical.py` — Phase 5 re-audit on the
+- `scripts/rerun_pairwise_audit_canonical.py` -- Phase 5 re-audit on the
   canonical sample, with a before/after comparison to the prior (stale-file-
   based) audit
 - `outputs/canonical_pairwise_report.json`, `outputs/canonical_pairwise_strict_density.csv`,
-  `outputs/pairwise_three_state_comparison.json` — machine-readable results
+  `outputs/pairwise_three_state_comparison.json` -- machine-readable results
