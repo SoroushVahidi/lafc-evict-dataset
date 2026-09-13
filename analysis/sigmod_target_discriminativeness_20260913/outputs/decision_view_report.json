@@ -1,0 +1,389 @@
+{
+  "decision_view_row_count": 2363286,
+  "decision_view_path": "/home/soroush/projects/lafc-evict-dataset/repo/release/lafc-evict-v0.1-open-current-contract-preserved/data/decision_view/decision_view.parquet",
+  "dimensions": {
+    "capacity": [
+      32,
+      64,
+      128,
+      256
+    ],
+    "horizon": [
+      4,
+      8,
+      16
+    ],
+    "trace_family": [
+      "cloudphysics",
+      "metacdn",
+      "metakv",
+      "twemcache",
+      "wiki2018"
+    ],
+    "split": [
+      "test",
+      "train",
+      "val"
+    ],
+    "dataset_source": [
+      "cloudphysics",
+      "metacdn",
+      "metakv",
+      "twemcache",
+      "wiki2018"
+    ]
+  },
+  "tie_count_equals_optimal_candidate_count_everywhere": true,
+  "tie_count_optimal_candidate_count_mismatch_rows": 0,
+  "regret_sum_is_integer_valued_everywhere": true,
+  "regret_sum_non_integer_rows": 0,
+  "phase2_reviewer_reproduction": {
+    "random_optimal_probability": {
+      "decision_weighted_mean_of_per_decision_prob": 0.9912418754543462,
+      "candidate_weighted_pooled": 0.9943795298644719,
+      "reviewer_reported": 0.9912,
+      "reconciliation_report_value": 0.9912418754543462,
+      "matches_reconciliation_report": true
+    },
+    "random_expected_regret": {
+      "decision_weighted_mean_of_per_decision_regret_mean": 0.008826200441884731,
+      "candidate_weighted_pooled": 0.005650017421891565,
+      "reviewer_reported": 0.0088,
+      "reconciliation_report_value": 0.008826200441884731,
+      "matches_reconciliation_report": true
+    },
+    "mean_optimal_set_size": 116.96959614705965,
+    "std_optimal_set_size": 85.12130941791486,
+    "min_optimal_set_size": 16,
+    "max_optimal_set_size": 256,
+    "mean_candidate_count": 117.63073618681784,
+    "methodology": "Both reviewer numbers are DECISION-WEIGHTED means over all 2,363,286 decisions in decision_view.parquet -- a population statistic, not a sample estimate. No seed/sampling procedure is involved because decision_view already IS the full population of decisions (candidate_count and optimal_candidate_count are exact per-decision counts). 'Optimal' means membership in the tied argmin set (regret==0), i.e. ties count as optimal. Regret is raw miss-count regret (y_loss - min_y_loss within the decision), unweighted by candidate count beyond the per-decision mean itself."
+  },
+  "phase3_discriminativeness": {
+    "decision_weighted": {
+      "n_decisions": 2363286,
+      "all_tied_fraction": 0.676601985540472,
+      "unique_winner_fraction": 0.0,
+      "mean_optimal_set_fraction": 0.9912418754543462,
+      "median_optimal_set_fraction": 1.0,
+      "mean_random_regret_decision_weighted": 0.008826200441884731,
+      "median_random_regret_decision_weighted": 0.0,
+      "p90_random_regret": 0.03125,
+      "p95_random_regret": 0.04633901339824459,
+      "p99_random_regret": 0.09388560728168079,
+      "fraction_loss_range_ge_1": 0.323398014459528,
+      "fraction_loss_range_ge_2": 0.001468294569510419,
+      "max_observed_loss_range": 4.0,
+      "mean_prob_regret_ge_1_decision_weighted": 0.008758124545653806
+    },
+    "candidate_weighted": {
+      "n_candidates": 277995072,
+      "n_optimal_candidates": 276432609,
+      "random_optimal_probability_candidate_weighted": 0.9943795298644719,
+      "prob_regret_ge_1_candidate_weighted": 0.005620470135528158,
+      "mean_random_regret_candidate_weighted": 0.005650017421891565
+    },
+    "note_regret_ge_2": "Exact P(regret>=2) at the per-candidate level cannot be derived from decision_view alone (only mean/std/max/sum of regret are stored per decision, not the full histogram). See outputs/candidate_regret_histogram.json for the exact value computed from a full candidate_rows scan.",
+    "explanation_decision_vs_candidate_weighted": "Decision-weighted statistics give every decision equal weight regardless of how many candidates it has (mean over 2,363,286 per-decision probabilities/regrets). Candidate-weighted statistics pool all ~278M candidate rows together, so decisions with larger candidate pools (which, per table_candidate_count_stats, range 32-256 and differ systematically by capacity) contribute proportionally more mass. The two agree closely here (0.99124 vs candidate-weighted, see phase3_candidate_weighted) because optimal-set fraction does not vary sharply with candidate_count in this dataset, but they are not identical and must not be conflated -- averaging per-decision ratios is NOT the same as pooling numerators/denominators across decisions."
+  },
+  "phase4_stratified_matrix_rows": 60,
+  "phase4_most_discriminative_cells": [
+    {
+      "trace_family": "twemcache",
+      "capacity": 32,
+      "horizon": 16,
+      "n_decisions": 37849,
+      "mean_optimal_set_fraction": 0.9347340748764829,
+      "all_tied_fraction": 0.24270126027107716,
+      "mean_random_regret": 0.06696428571428571
+    },
+    {
+      "trace_family": "metacdn",
+      "capacity": 32,
+      "horizon": 16,
+      "n_decisions": 29348,
+      "mean_optimal_set_fraction": 0.9404484547498978,
+      "all_tied_fraction": 0.012164372359274908,
+      "mean_random_regret": 0.06007010699195857
+    },
+    {
+      "trace_family": "metacdn",
+      "capacity": 32,
+      "horizon": 8,
+      "n_decisions": 29348,
+      "mean_optimal_set_fraction": 0.9543229095679433,
+      "all_tied_fraction": 0.07424696742537822,
+      "mean_random_regret": 0.04585171902685021
+    },
+    {
+      "trace_family": "twemcache",
+      "capacity": 64,
+      "horizon": 16,
+      "n_decisions": 34748,
+      "mean_optimal_set_fraction": 0.9554965393691723,
+      "all_tied_fraction": 0.1443536318637044,
+      "mean_random_regret": 0.045000791412455395
+    },
+    {
+      "trace_family": "twemcache",
+      "capacity": 32,
+      "horizon": 8,
+      "n_decisions": 37849,
+      "mean_optimal_set_fraction": 0.9626468004438691,
+      "all_tied_fraction": 0.3687283679885862,
+      "mean_random_regret": 0.03775859335781659
+    }
+  ],
+  "phase4_least_discriminative_cells": [
+    {
+      "trace_family": "wiki2018",
+      "capacity": 64,
+      "horizon": 4,
+      "n_decisions": 49936,
+      "mean_optimal_set_fraction": 1.0,
+      "all_tied_fraction": 1.0,
+      "mean_random_regret": 0.0
+    },
+    {
+      "trace_family": "wiki2018",
+      "capacity": 32,
+      "horizon": 16,
+      "n_decisions": 49968,
+      "mean_optimal_set_fraction": 1.0,
+      "all_tied_fraction": 1.0,
+      "mean_random_regret": 0.0
+    },
+    {
+      "trace_family": "wiki2018",
+      "capacity": 32,
+      "horizon": 8,
+      "n_decisions": 49968,
+      "mean_optimal_set_fraction": 1.0,
+      "all_tied_fraction": 1.0,
+      "mean_random_regret": 0.0
+    },
+    {
+      "trace_family": "wiki2018",
+      "capacity": 32,
+      "horizon": 4,
+      "n_decisions": 49968,
+      "mean_optimal_set_fraction": 1.0,
+      "all_tied_fraction": 1.0,
+      "mean_random_regret": 0.0
+    },
+    {
+      "trace_family": "wiki2018",
+      "capacity": 128,
+      "horizon": 16,
+      "n_decisions": 49872,
+      "mean_optimal_set_fraction": 1.0,
+      "all_tied_fraction": 1.0,
+      "mean_random_regret": 0.0
+    }
+  ],
+  "phase5_nontrivial_subsets": {
+    "not_all_tied": {
+      "n_decisions": 764282,
+      "fraction_of_total_decisions": 0.323398014459528,
+      "candidate_row_coverage": 94502528,
+      "fraction_of_total_candidate_rows": 0.33994317712221894,
+      "mean_random_regret": 0.027292067505842083,
+      "median_random_regret": 0.015625,
+      "mean_optimal_set_fraction": 0.972918434393326,
+      "trace_family_distribution": {
+        "cloudphysics": 110339,
+        "metacdn": 306338,
+        "metakv": 61011,
+        "twemcache": 286594
+      },
+      "capacity_distribution": {
+        "32": 176214,
+        "64": 190213,
+        "128": 196569,
+        "256": 201286
+      },
+      "horizon_distribution": {
+        "4": 204934,
+        "8": 259443,
+        "16": 299905
+      }
+    },
+    "unique_optimal_victim": {
+      "n_decisions": 0,
+      "fraction_of_total_decisions": 0.0,
+      "candidate_row_coverage": null,
+      "fraction_of_total_candidate_rows": 0.0,
+      "mean_random_regret": null,
+      "median_random_regret": null,
+      "mean_optimal_set_fraction": null,
+      "trace_family_distribution": {},
+      "capacity_distribution": {},
+      "horizon_distribution": {}
+    },
+    "optimal_set_fraction_le_0.5": {
+      "n_decisions": 52,
+      "fraction_of_total_decisions": 2.200326156038668e-05,
+      "candidate_row_coverage": 1664,
+      "fraction_of_total_candidate_rows": 5.985717617325245e-06,
+      "mean_random_regret": 0.5486778846153846,
+      "median_random_regret": 0.53125,
+      "mean_optimal_set_fraction": 0.5,
+      "trace_family_distribution": {
+        "cloudphysics": 26,
+        "twemcache": 26
+      },
+      "capacity_distribution": {
+        "32": 52
+      },
+      "horizon_distribution": {
+        "16": 52
+      }
+    },
+    "loss_range_ge_1": {
+      "n_decisions": 764282,
+      "fraction_of_total_decisions": 0.323398014459528,
+      "candidate_row_coverage": 94502528,
+      "fraction_of_total_candidate_rows": 0.33994317712221894,
+      "mean_random_regret": 0.027292067505842083,
+      "median_random_regret": 0.015625,
+      "mean_optimal_set_fraction": 0.972918434393326,
+      "trace_family_distribution": {
+        "cloudphysics": 110339,
+        "metacdn": 306338,
+        "metakv": 61011,
+        "twemcache": 286594
+      },
+      "capacity_distribution": {
+        "32": 176214,
+        "64": 190213,
+        "128": 196569,
+        "256": 201286
+      },
+      "horizon_distribution": {
+        "4": 204934,
+        "8": 259443,
+        "16": 299905
+      }
+    },
+    "loss_range_ge_2": {
+      "n_decisions": 3470,
+      "fraction_of_total_decisions": 0.001468294569510419,
+      "candidate_row_coverage": 223840,
+      "fraction_of_total_candidate_rows": 0.0008051941294844248,
+      "mean_random_regret": 0.23893304214697406,
+      "median_random_regret": 0.21875,
+      "mean_optimal_set_fraction": 0.8074308807636887,
+      "trace_family_distribution": {
+        "cloudphysics": 337,
+        "metacdn": 716,
+        "metakv": 13,
+        "twemcache": 2404
+      },
+      "capacity_distribution": {
+        "32": 1821,
+        "64": 1025,
+        "128": 467,
+        "256": 157
+      },
+      "horizon_distribution": {
+        "4": 247,
+        "8": 839,
+        "16": 2384
+      }
+    },
+    "random_expected_regret_ge_0.1": {
+      "n_decisions": 16298,
+      "fraction_of_total_decisions": 0.006896329940599657,
+      "candidate_row_coverage": 662112,
+      "fraction_of_total_candidate_rows": 0.002381740061924551,
+      "mean_random_regret": 0.1715658171248006,
+      "median_random_regret": 0.125,
+      "mean_optimal_set_fraction": 0.8376895362927966,
+      "trace_family_distribution": {
+        "cloudphysics": 1135,
+        "metacdn": 2710,
+        "metakv": 26,
+        "twemcache": 12427
+      },
+      "capacity_distribution": {
+        "32": 12687,
+        "64": 3250,
+        "128": 346,
+        "256": 15
+      },
+      "horizon_distribution": {
+        "4": 370,
+        "8": 3341,
+        "16": 12587
+      }
+    },
+    "random_expected_regret_ge_0.5": {
+      "n_decisions": 285,
+      "fraction_of_total_decisions": 0.0001205947989367347,
+      "candidate_row_coverage": 9216,
+      "fraction_of_total_candidate_rows": 3.315166680364751e-05,
+      "mean_random_regret": 0.5451206140350877,
+      "median_random_regret": 0.53125,
+      "mean_optimal_set_fraction": 0.562061403508772,
+      "trace_family_distribution": {
+        "cloudphysics": 35,
+        "metacdn": 13,
+        "twemcache": 237
+      },
+      "capacity_distribution": {
+        "32": 282,
+        "64": 3
+      },
+      "horizon_distribution": {
+        "16": 285
+      }
+    },
+    "random_expected_regret_ge_1": {
+      "n_decisions": 0,
+      "fraction_of_total_decisions": 0.0,
+      "candidate_row_coverage": null,
+      "fraction_of_total_candidate_rows": 0.0,
+      "mean_random_regret": null,
+      "median_random_regret": null,
+      "mean_optimal_set_fraction": null,
+      "trace_family_distribution": {},
+      "capacity_distribution": {},
+      "horizon_distribution": {}
+    }
+  },
+  "phase6_horizon_effect": [
+    {
+      "horizon": 4,
+      "n_decisions": 787762,
+      "all_tied_fraction": 0.739852899733676,
+      "mean_optimal_set_fraction": 0.9950118976289793,
+      "unique_winner_fraction": 0.0,
+      "mean_random_regret": 0.0049962940900932,
+      "mean_loss_range": 0.26046445500036813,
+      "max_loss_range": 3.0,
+      "n_distinct_optimal_set_sizes_seen": 20
+    },
+    {
+      "horizon": 8,
+      "n_decisions": 787762,
+      "all_tied_fraction": 0.6706581429416499,
+      "mean_optimal_set_fraction": 0.99177205290113,
+      "unique_winner_fraction": 0.0,
+      "mean_random_regret": 0.008266748673774566,
+      "mean_loss_range": 0.3304335573434616,
+      "max_loss_range": 3.0,
+      "n_distinct_optimal_set_sizes_seen": 36
+    },
+    {
+      "horizon": 16,
+      "n_decisions": 787762,
+      "all_tied_fraction": 0.6192949139460903,
+      "mean_optimal_set_fraction": 0.9869416758329292,
+      "unique_winner_fraction": 0.0,
+      "mean_random_regret": 0.013215558561786429,
+      "mean_loss_range": 0.38385324501562657,
+      "max_loss_range": 4.0,
+      "n_distinct_optimal_set_sizes_seen": 68
+    }
+  ]
+}

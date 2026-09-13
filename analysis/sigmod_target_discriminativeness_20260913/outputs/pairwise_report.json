@@ -1,0 +1,145 @@
+{
+  "pairwise_sample_row_count": 1000000,
+  "reviewer_tie_reproduction": {
+    "n_ties": 879968,
+    "n_rows": 1000000,
+    "tie_fraction": 0.879968,
+    "reviewer_reported": "878,262 / 1,000,000",
+    "matches_reviewer_number_exactly": false
+  },
+  "strict_preference": {
+    "n_strict_pairs": 120032,
+    "strict_fraction": 0.120032,
+    "n_a_better": 6134,
+    "n_b_better": 113898,
+    "direction_balance_a_better_share": 0.051103039189549455,
+    "direction_balance_b_better_share": 0.9488969608104505
+  },
+  "decision_contribution": {
+    "n_unique_decisions_in_sample": 118635,
+    "n_decisions_contributing_ge1_strict_pair": 18847,
+    "fraction_decisions_contributing_ge1_strict_pair": 0.15886542757196442,
+    "n_decisions_contributing_only_tied_pairs": 99788,
+    "fraction_decisions_only_tied_pairs": 0.8411345724280356,
+    "mean_pairs_sampled_per_decision": 8.429215661482699,
+    "mean_strict_pairs_per_decision_among_contributors": 6.368758953679631
+  },
+  "strict_pair_density_top5": [
+    {
+      "trace_family": "metacdn",
+      "capacity": 64,
+      "horizon": 16,
+      "n_pairs": 11752,
+      "n_ties": 877.0,
+      "n_strict": 10875.0,
+      "strict_fraction": 0.9253744043567053
+    },
+    {
+      "trace_family": "metacdn",
+      "capacity": 32,
+      "horizon": 16,
+      "n_pairs": 13080,
+      "n_ties": 1051.0,
+      "n_strict": 12029.0,
+      "strict_fraction": 0.9196483180428134
+    },
+    {
+      "trace_family": "metacdn",
+      "capacity": 128,
+      "horizon": 16,
+      "n_pairs": 11432,
+      "n_ties": 1253.0,
+      "n_strict": 10179.0,
+      "strict_fraction": 0.8903953813855843
+    },
+    {
+      "trace_family": "metacdn",
+      "capacity": 256,
+      "horizon": 16,
+      "n_pairs": 11288,
+      "n_ties": 2014.0,
+      "n_strict": 9274.0,
+      "strict_fraction": 0.8215804394046775
+    },
+    {
+      "trace_family": "metacdn",
+      "capacity": 64,
+      "horizon": 8,
+      "n_pairs": 12496,
+      "n_ties": 2277.0,
+      "n_strict": 10219.0,
+      "strict_fraction": 0.8177816901408451
+    }
+  ],
+  "strict_pair_density_bottom5": [
+    {
+      "trace_family": "wiki2018",
+      "capacity": 128,
+      "horizon": 4,
+      "n_pairs": 21184,
+      "n_ties": 21184.0,
+      "n_strict": 0.0,
+      "strict_fraction": 0.0
+    },
+    {
+      "trace_family": "wiki2018",
+      "capacity": 256,
+      "horizon": 16,
+      "n_pairs": 21192,
+      "n_ties": 21192.0,
+      "n_strict": 0.0,
+      "strict_fraction": 0.0
+    },
+    {
+      "trace_family": "wiki2018",
+      "capacity": 64,
+      "horizon": 8,
+      "n_pairs": 21304,
+      "n_ties": 21304.0,
+      "n_strict": 0.0,
+      "strict_fraction": 0.0
+    },
+    {
+      "trace_family": "wiki2018",
+      "capacity": 128,
+      "horizon": 16,
+      "n_pairs": 20760,
+      "n_ties": 20760.0,
+      "n_strict": 0.0,
+      "strict_fraction": 0.0
+    },
+    {
+      "trace_family": "wiki2018",
+      "capacity": 32,
+      "horizon": 8,
+      "n_pairs": 20768,
+      "n_ties": 20768.0,
+      "n_strict": 0.0,
+      "strict_fraction": 0.0
+    }
+  ],
+  "quadratic_expansion_effect": {
+    "full_pairwise_universe_size_if_materialized": 24791643360,
+    "shipped_pairwise_sample_size": 1000000,
+    "shipped_sample_coverage_of_full_universe": 4.0336172373851054e-05,
+    "mean_pairs_per_decision_full_universe": 10490.32718003661,
+    "min_pairs_per_decision_full_universe": 496,
+    "max_pairs_per_decision_full_universe": 32640,
+    "ratio_max_to_min_pairs_per_decision": 65.80645161290323,
+    "interpretation": "If the full pairwise universe were used instead of the capped 1,000,000-row sample, a decision with candidate_count=256 would contribute (256*255/2)=32,640 pairs versus (32*31/2)=496 pairs for a candidate_count=32 decision -- a 65.8x weighting disparity purely from candidate-pool size, which correlates with capacity. This would systematically overweight large-capacity decisions in any pairwise-trained or pairwise-evaluated model relative to a decision-level view. The shipped 1,000,000-row sample avoids this by sampling pairs directly rather than materializing the full universe, but reports using the sample should still confirm the sample's own capacity/family mix (Table tab:pairwise-sample-summary) is not itself skewed relative to decision-level population shares."
+  },
+  "sample_vs_population_capacity_mix": {
+    "pairwise_sample_pct": {
+      "32": 26.08,
+      "64": 25.24,
+      "128": 24.78,
+      "256": 23.9
+    },
+    "decision_population_pct": {
+      "32": 25.95,
+      "64": 25.35,
+      "128": 24.66,
+      "256": 24.04
+    }
+  }
+}
