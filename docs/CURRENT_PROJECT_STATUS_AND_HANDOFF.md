@@ -418,6 +418,9 @@ researchers can train, compare, and diagnose supervised eviction objectives on
 the same decisions without independently regenerating the counterfactual
 labels.
 
+This layer supports training, comparison, diagnostics, and
+target-discriminativeness analysis.
+
 Closed-loop evaluation remains mandatory because eviction is sequential and
 policy actions change future cache states.
 

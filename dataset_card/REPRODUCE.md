@@ -29,7 +29,12 @@ Soroush Vahidi.
 Available at SSRN 6636732.  
 Status: public preprint; manuscript under peer review.
 
-The paper describes the learning-augmented caching setting and the experiments that motivated this dataset release. This repository provides dataset-release artifacts, schemas, validation tools, benchmark views, and reproducibility utilities. When using the data artifact, cite both the paper/preprint and the current dataset release DOI.
+The paper describes the learning-augmented caching setting and the experiments
+that motivated this dataset release. This repository provides dataset-release
+artifacts, schemas, validation tools, benchmark views, and reproducibility
+utilities. When using the data artifact, cite the paper/preprint and the
+specific host/version used; cite the Zenodo DOI only for DOI-backed Zenodo
+versions. As of this handoff, v0.3 has no documented Zenodo DOI.
 
 ## Inputs
 
