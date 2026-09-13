@@ -1,0 +1,72 @@
+{
+  "audit_date": "2026-09-13",
+  "scope": "read-only inspection; no experiments launched, no data regenerated, no manuscript edits",
+  "repositories": {
+    "lafc-evict-dataset": {
+      "local_path": "/home/soroush/projects/lafc-evict-dataset/repo",
+      "branch": "analysis/sigmod-target-discriminativeness-20260913",
+      "commit": "76d562f90cc2bdd5bcb89b6e4eb44e305f430615",
+      "role": "dataset/benchmark packaging repo; no simulator or policy code",
+      "key_files": {
+        "feature_schema": "src/lafc_evict_dataset/schema.py:22-49 (FEATURE_COLUMNS, 26 columns)",
+        "linear_score_training": "scripts/sigmod2027/run_value_regression_baseline.py",
+        "linear_score_artifact": "paper/sigmod2027/results/baselines/value_regression/linear_regression_y_loss.json",
+        "best_candidate_runner": "scripts/sigmod2027/run_best_candidate_baseline.py",
+        "pairwise_feature_baseline": "scripts/sigmod2027/run_feature_pairwise_baseline.py",
+        "manuscript_baselines_section": "paper/sigmod2027/latex/sections/07_tasks_baselines.tex",
+        "manuscript_limitations_section": "paper/sigmod2027/latex/sections/09_limitations_ethics.tex",
+        "prior_audit_target_discriminativeness": "analysis/sigmod_target_discriminativeness_20260913/REPORT.md",
+        "prior_audit_pairwise_provenance": "analysis/pairwise_provenance_repair_20260913/REPORT.md"
+      }
+    },
+    "Augmented-caching": {
+      "local_path": "/home/soroush/projects/augmented-caching/repo",
+      "branch": "chore/repository-polish",
+      "commit": "ceb36705b59d0d16db55d0fc0bfb63a5c7a2a6a1",
+      "role": "upstream research repo; contains the actual cache simulator, policies, feature/label generation for candidate rows",
+      "key_files": {
+        "cache_state": "src/lafc/simulator/cache_state.py",
+        "policy_base_class": "src/lafc/policies/base.py",
+        "replay_loop": "src/lafc/runner/run_policy.py (POLICY_REGISTRY lines 90-132; run_policy() lines 140-197)",
+        "trace_loader": "src/lafc/simulator/request_trace.py",
+        "lru_policy": "src/lafc/policies/lru.py",
+        "sieve_policy": "src/lafc/policies/sieve.py",
+        "evict_value_v1_policy": "src/lafc/policies/evict_value_v1.py",
+        "evict_value_features": "src/lafc/evict_value_features_v1.py (EVICT_VALUE_V1_FEATURE_COLUMNS, 26 features)",
+        "evict_value_label_construction": "src/lafc/evict_value_dataset_v1.py:17-30,84-116 (_simulate_lru_misses, future[:h] horizon rollout)",
+        "evict_value_model": "src/lafc/evict_value_model_v1.py",
+        "evict_value_training_script": "scripts/experiments/canonical/train_evict_value_wulver_v1.py",
+        "evict_value_checkpoint": "models/evict_value_v1_hist_gb.pkl",
+        "policy_comparison_script": "scripts/experiments/canonical/run_policy_comparison_wulver_v1.py",
+        "lightweight_fallback_scorer": "src/lafc/learned_gate/lightweight_estimator.py:8-27 (_linear_score, sigmoid fallback, NOT the manuscript linear_score)",
+        "processed_traces": {
+          "cloudphysics": "data/processed/cloudphysics/trace.jsonl (50000 lines, 17M)",
+          "metacdn": "data/processed/metacdn/trace.jsonl (50000 lines, 29M)",
+          "metakv": "data/processed/metakv/trace.jsonl (50000 lines, 22M)",
+          "twemcache": "data/processed/twemcache/trace.jsonl (50000 lines, 27M)",
+          "wiki2018": "data/processed/wiki2018/trace.jsonl (50000 lines, 8.4M)"
+        },
+        "raw_traces": "data/raw/{cloudphysics,metacdn,metakv,twemcache,wiki2018}/*.csv + manifest.json"
+      },
+      "unmerged_worktrees": {
+        "3l-cache": {"path": "/home/soroush/projects/augmented-caching/worktrees/3l-cache", "branch": "feat/3l-cache-baseline", "commit": "e351e70ea3239f62ac0a9d45475eccf0c21b0aeb", "file": "src/lafc/policies/three_l_cache.py (633 lines)"},
+        "cacheus": {"path": "/home/soroush/projects/augmented-caching/worktrees/cacheus", "branch": "feat/cacheus-baseline", "commit": "5a54b333e7b65743ec0cf2e0210e2d7eed6d45d1", "file": "src/lafc/policies/cacheus.py (official third-party CACHEUS class wrapper)"},
+        "halp": {"path": "/home/soroush/projects/augmented-caching/worktrees/halp", "branch": "feat/halp-baseline", "commit": "b32cb68cc88234220457136127915540fa17a638", "file": "src/lafc/policies/halp.py (270 lines)"}
+      }
+    }
+  },
+  "policy_inventory": {
+    "LRU": {"status": "IMPLEMENTED_AND_READY", "path": "src/lafc/policies/lru.py"},
+    "MRU": {"status": "NOT_IMPLEMENTED", "note": "zero hits in any branch's git history; trivial to add (LRU with reversed eviction order)"},
+    "uniform_random": {"status": "NOT_IMPLEMENTED", "note": "random used internally in adaptive_query.py/lrb.py but no standalone policy class; trivial to add"},
+    "LFU": {"status": "NOT_IMPLEMENTED", "note": "CR-LFU exists only bundled inside third-party CACHEUS class, not exposed standalone"},
+    "SIEVE": {"status": "IMPLEMENTED_AND_READY", "path": "src/lafc/policies/sieve.py"},
+    "S3-FIFO": {"status": "NOT_IMPLEMENTED", "note": "zero matches anywhere in any branch"},
+    "3L-Cache": {"status": "IMPLEMENTED_BUT_NEEDS_ADAPTER", "note": "complete + tested on unmerged worktrees/3l-cache; needs merge into main line"},
+    "CACHEUS": {"status": "IMPLEMENTED_BUT_NEEDS_ADAPTER", "note": "official-source wrapper, complete + tested on unmerged worktrees/cacheus; known upstream crash at capacity=1"},
+    "HALP": {"status": "IMPLEMENTED_BUT_NEEDS_ADAPTER", "note": "complete + tested on unmerged worktrees/halp; has explicit no-future-leakage test"},
+    "evict_value_v1_learned_policy": {"status": "IMPLEMENTED_AND_READY", "path": "src/lafc/policies/evict_value_v1.py + models/evict_value_v1_hist_gb.pkl", "note": "genuine closed-loop learned policy (HistGradientBoostingRegressor); distinct from manuscript linear_score"},
+    "manuscript_linear_score": {"status": "IMPLEMENTED_BUT_NEEDS_ADAPTER", "note": "only exists as an offline candidate-ranking model in lafc-evict-dataset (streaming ridge regression fit on released candidate_rows); never wired into the Augmented-caching closed-loop simulator; would need a thin adapter policy to plug its coefficients into src/lafc/policies/base.py"},
+    "released_predictor_field": {"status": "BUG_OR_UNFINISHED", "note": "candidate_predictor_score and 13 related bucket/confidence/gap columns are hard-coded constants across all 277,995,072 released candidate rows; candidate_is_predictor_victim is bit-identical to candidate_is_lru_victim; distinct from both evict_value_v1 and manuscript linear_score"}
+  }
+}
