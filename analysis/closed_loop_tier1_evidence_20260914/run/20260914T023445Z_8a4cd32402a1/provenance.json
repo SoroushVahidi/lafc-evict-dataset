@@ -1,0 +1,260 @@
+{
+  "command_line": "scripts/run_tier1.py --run",
+  "end_time_utc": "2026-09-14T02:35:09Z",
+  "environment": {
+    "hostname": "al-khwarizmi",
+    "pid": 3555875,
+    "platform": "Linux-7.0.0-29-generic-x86_64-with-glibc2.39",
+    "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "user": "soroush"
+  },
+  "experiment_plan_summary": {
+    "capacities": [
+      32,
+      128
+    ],
+    "cells": 10,
+    "executions_by_policy": {
+      "lru": 10,
+      "mru": 10,
+      "random": 200,
+      "sieve": 10
+    },
+    "families": [
+      "cloudphysics",
+      "metacdn",
+      "metakv",
+      "twemcache",
+      "wiki2018"
+    ],
+    "offline_horizon_primary": 16,
+    "offline_horizons_are_comparison_only_not_executions": true,
+    "offline_horizons_secondary": [
+      4,
+      8,
+      16
+    ],
+    "policies": [
+      "lru",
+      "mru",
+      "random",
+      "sieve"
+    ],
+    "random_seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "total_executions": 230
+  },
+  "inputs": {
+    "cloudphysics": {
+      "actual_sha256": "fedb3d31ee3c1dd847d25f967392cdf0fdec1e9c1fbb6808772e281bc8d4fb57",
+      "evidence_label": "temporally held-out test window(s)",
+      "exists": true,
+      "expected_sha256": "fedb3d31ee3c1dd847d25f967392cdf0fdec1e9c1fbb6808772e281bc8d4fb57",
+      "learned_policy_classification_informational_only": "LEARNED_POLICY_SAFE_TEST",
+      "path": "/home/soroush/projects/augmented-caching/repo/data/processed/cloudphysics/trace.jsonl",
+      "scored_split_label": "test",
+      "scored_windows": [
+        [
+          16384,
+          20479
+        ],
+        [
+          20480,
+          24575
+        ]
+      ],
+      "sha256_matches": true,
+      "size_bytes": 17472871,
+      "split_caveat": "Test windows are temporal windows within one continuous trace, not an unseen trace.",
+      "trace_name": "cloudphysics_alibaba_block_head_50k"
+    },
+    "metacdn": {
+      "actual_sha256": "7301f02e1373cb7e06f1ed2c417a8ebe16581319354780f811c8d032391f4e73",
+      "evidence_label": "validation-window evidence (no independent test chunks)",
+      "exists": true,
+      "expected_sha256": "7301f02e1373cb7e06f1ed2c417a8ebe16581319354780f811c8d032391f4e73",
+      "learned_policy_classification_informational_only": "BLOCKED_LEAKAGE_RISK",
+      "path": "/home/soroush/projects/augmented-caching/repo/data/processed/metacdn/trace.jsonl",
+      "scored_split_label": "validation",
+      "scored_windows": [
+        [
+          0,
+          4095
+        ],
+        [
+          24576,
+          32767
+        ],
+        [
+          36864,
+          45055
+        ]
+      ],
+      "sha256_matches": true,
+      "size_bytes": 29973762,
+      "split_caveat": "MetaCDN has NO test-split chunks at these capacities. Scored windows are VALIDATION chunks and must be reported as validation-window evidence, never as test-window evidence and never as an unseen trace. Learned-policy scoring here would be circular (validation participated in model selection) and is BLOCKED_LEAKAGE_RISK -- out of scope for Tier 1, which contains no learned policy.",
+      "trace_name": "metacdn_cdn_202303_head_50k"
+    },
+    "metakv": {
+      "actual_sha256": "4c229e841d546cd57a2edb6e3ddc53461ff4dc03d366e9d24e4239a89db7e0de",
+      "evidence_label": "temporally held-out test window(s)",
+      "exists": true,
+      "expected_sha256": "4c229e841d546cd57a2edb6e3ddc53461ff4dc03d366e9d24e4239a89db7e0de",
+      "learned_policy_classification_informational_only": "LEARNED_POLICY_SAFE_TEST",
+      "path": "/home/soroush/projects/augmented-caching/repo/data/processed/metakv/trace.jsonl",
+      "scored_split_label": "test",
+      "scored_windows": [
+        [
+          0,
+          4095
+        ]
+      ],
+      "sha256_matches": true,
+      "size_bytes": 22392344,
+      "split_caveat": "Test window is the first chunk of the trace ([0,4095]); there is no leading unscored warmup before scoring begins, though the full trace still replays continuously beforehand within this window. Report this first-window/no-leading-warmup caveat alongside any metakv result.",
+      "trace_name": "metakv_kvcache_202206_head_50k"
+    },
+    "twemcache": {
+      "actual_sha256": "62df27062ce2595c843fd91e01d26c9783ff8f165f6b26e983696eda7ada0bb9",
+      "evidence_label": "temporally held-out test window(s)",
+      "exists": true,
+      "expected_sha256": "62df27062ce2595c843fd91e01d26c9783ff8f165f6b26e983696eda7ada0bb9",
+      "learned_policy_classification_informational_only": "LEARNED_POLICY_SAFE_TEST",
+      "path": "/home/soroush/projects/augmented-caching/repo/data/processed/twemcache/trace.jsonl",
+      "scored_split_label": "test",
+      "scored_windows": [
+        [
+          32768,
+          36863
+        ],
+        [
+          40960,
+          45055
+        ]
+      ],
+      "sha256_matches": true,
+      "size_bytes": 27775024,
+      "split_caveat": "Test windows are temporal windows within one continuous trace, not an unseen trace. This is the strongest pilot learned-policy cell, but Tier 1 itself runs no learned policy here.",
+      "trace_name": "twemcache_cluster26_sample100_50k"
+    },
+    "wiki2018": {
+      "actual_sha256": "3813084bebfcf463ac22a685494b46aea45aded55d314411c9fbb058b5d67608",
+      "evidence_label": "temporally held-out test window(s); offline-degenerate negative control",
+      "exists": true,
+      "expected_sha256": "3813084bebfcf463ac22a685494b46aea45aded55d314411c9fbb058b5d67608",
+      "learned_policy_classification_informational_only": "LEARNED_POLICY_SAFE_TEST",
+      "path": "/home/soroush/projects/augmented-caching/repo/data/processed/wiki2018/trace.jsonl",
+      "scored_split_label": "test",
+      "scored_windows": [
+        [
+          24576,
+          28671
+        ]
+      ],
+      "sha256_matches": true,
+      "size_bytes": 8751706,
+      "split_caveat": "wiki2018 is the offline-degenerate control family: prior offline audit found all candidates tied, zero random regret, and no unique winner in every capacity/horizon cell. Learned-policy evaluation on wiki2018 is explicitly DEFERRED by the production design (safe test chunks exist but offline labels are fully degenerate); Tier 1 runs no learned policy on any family, including this one.",
+      "trace_name": "wiki2018_pageviews_en_50k"
+    }
+  },
+  "lafc_evict": {
+    "branch": "experiment/closed-loop-tier1-harness-20260913",
+    "git_status_short": "",
+    "harness_script_sha256": "e03523449bbda0f26853f9d88eef54f0b85c8d58100a306f75d600e3d401b9a8",
+    "head": "8a4cd32402a1c053af5db17c26cf05ee88842d8c",
+    "path": "/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-tier1-harness-20260913"
+  },
+  "resume": false,
+  "retry_failed": false,
+  "run_id": "20260914T023445Z_8a4cd32402a1",
+  "run_state": "complete",
+  "simulator": {
+    "actual_branch": "chore/repository-polish",
+    "actual_head": "ceb36705b59d0d16db55d0fc0bfb63a5c7a2a6a1",
+    "all_dependency_files_clean": true,
+    "branch_matches_expected": true,
+    "dependency_file_status": {
+      "src/lafc/policies/base.py": {
+        "clean_relative_to_head": true,
+        "exists": true,
+        "git_status_line": "",
+        "sha256": "ff958dc938a9b6ab819da14f99a5a4eb9240682ab0f0c2c9d65fede67f699860"
+      },
+      "src/lafc/policies/lru.py": {
+        "clean_relative_to_head": true,
+        "exists": true,
+        "git_status_line": "",
+        "sha256": "f8b8d0a03a9493940f7bf1dd478373b6f672dfff8bed0827b683c286159e3429"
+      },
+      "src/lafc/policies/sieve.py": {
+        "clean_relative_to_head": true,
+        "exists": true,
+        "git_status_line": "",
+        "sha256": "0646822f9fd283824911e61041a5fa79d9430d41eb0a63c2e66c56bfd11257d0"
+      },
+      "src/lafc/runner/run_policy.py": {
+        "clean_relative_to_head": true,
+        "exists": true,
+        "git_status_line": "",
+        "sha256": "efa56c850984d666a10d19b85267bab6975b2d9ae4fb3e834c45c018ea81f555"
+      },
+      "src/lafc/simulator/cache_state.py": {
+        "clean_relative_to_head": true,
+        "exists": true,
+        "git_status_line": "",
+        "sha256": "77c91d7e72044d98e09a664eeaaf19bdcb899e799b59079d0934a8b393196c3c"
+      },
+      "src/lafc/simulator/request_trace.py": {
+        "clean_relative_to_head": true,
+        "exists": true,
+        "git_status_line": "",
+        "sha256": "74954f778cef26cb470b659ac48a3e42306023495829684fc71b369ba5c989c6"
+      },
+      "src/lafc/types.py": {
+        "clean_relative_to_head": true,
+        "exists": true,
+        "git_status_line": "",
+        "sha256": "7f61e55143406abc5fcff58d484c6736206563ef9bee2b80c645de65b98c10ad"
+      }
+    },
+    "expected_branch": "chore/repository-polish",
+    "expected_head": "ceb36705b59d0d16db55d0fc0bfb63a5c7a2a6a1",
+    "git_status_porcelain_full": "M docs/README.md\n M docs/archival/refs/README.md\n M docs/archival/reports/README.md\n M docs/baselines.md\n M docs/canonical_experiments.md\n M docs/external_baselines.md\n M docs/kbs_manuscript_workflow.md\n M docs/lrb_method_spec.md\n M scripts/validation/revision_readiness.py\n M scripts/validation/revision_status.py\n M tests/test_datasets.py\n M tests/test_decision_aligned_targets_package.py\n M tests/test_evict_decision_aligned_v1.py\n M tests/test_evict_value_failure_slice_audit.py\n M tests/test_evict_value_pairwise_v1.py\n M tests/test_evict_value_v1.py\n M tests/test_evict_value_v2_decision_aligned.py\n M tests/test_family_winner_selection.py\n M tests/test_fifo_reinsertion.py\n M tests/test_hybrid_fallback_experiment.py\n M tests/test_offline_teacher_vs_heuristic_experiment.py\n M tests/test_offline_teacher_vs_heuristic_mediumscale.py\n M tests/test_pairwise_vs_pointwise_experiment.py\n M tests/test_revision_readiness.py\n M tests/test_revision_status.py\n M tests/test_sieve.py\n?? \"ystemctl --user status kerberos-renew.service\"",
+    "head_matches_expected": true,
+    "note": "This repository is intentionally, pre-existingly dirty overall. Only dependency_file_status entries gate Tier-1 validity; general dirtiness is recorded here for provenance and is never a rejection reason on its own, and this harness never cleans/resets/stashes/commits in this repository.",
+    "path": "/home/soroush/projects/augmented-caching/repo",
+    "tracked_working_tree_diff": {
+      "bytes": 58089,
+      "path": "/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-tier1-harness-20260913/analysis/closed_loop_production_tier1_20260913/outputs/20260914T023445Z_8a4cd32402a1/augmented_caching_working_tree.diff",
+      "saved": true,
+      "sha256": "66539a089c9f0097ded4976957fb0e848b90ea4db22d05fd99a16a7e60bbd0fa"
+    },
+    "untracked_file_names": [
+      "\"ystemctl --user status kerberos-renew.service\""
+    ],
+    "untracked_file_sha256": {
+      "\"ystemctl --user status kerberos-renew.service\"": null
+    }
+  },
+  "start_time_utc": "2026-09-14T02:34:45Z"
+}

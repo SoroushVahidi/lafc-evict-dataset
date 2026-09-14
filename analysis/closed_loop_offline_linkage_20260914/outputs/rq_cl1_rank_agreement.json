@@ -1,0 +1,782 @@
+{
+  "by_horizon": {
+    "4": {
+      "mru_vs_lru": {
+        "counts": {
+          "both_tied": 2,
+          "concordant": 7,
+          "discordant": 1
+        },
+        "n_cells": 10,
+        "rows": [
+          {
+            "capacity": 32,
+            "classification": "discordant",
+            "closed_loop_gap": 0.0162353515625,
+            "family": "cloudphysics",
+            "horizon": 4,
+            "offline_gap": -0.0014825044170508317
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.0428466796875,
+            "family": "cloudphysics",
+            "horizon": 4,
+            "offline_gap": 0.00020999580008399833
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.2743164062500001,
+            "family": "metacdn",
+            "horizon": 4,
+            "offline_gap": 0.1927899686520376
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.30156249999999996,
+            "family": "metacdn",
+            "horizon": 4,
+            "offline_gap": 0.19698009608785175
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.07421875,
+            "family": "metakv",
+            "horizon": 4,
+            "offline_gap": 0.06349915860328145
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.0625,
+            "family": "metakv",
+            "horizon": 4,
+            "offline_gap": 0.06345097210481826
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.2037353515625,
+            "family": "twemcache",
+            "horizon": 4,
+            "offline_gap": 0.04261671378371952
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.3287353515625,
+            "family": "twemcache",
+            "horizon": 4,
+            "offline_gap": 0.05132232729604103
+          },
+          {
+            "capacity": 32,
+            "classification": "both_tied",
+            "closed_loop_gap": 0.0,
+            "family": "wiki2018",
+            "horizon": 4,
+            "offline_gap": 0.0
+          },
+          {
+            "capacity": 128,
+            "classification": "both_tied",
+            "closed_loop_gap": 0.0,
+            "family": "wiki2018",
+            "horizon": 4,
+            "offline_gap": 0.0
+          }
+        ]
+      },
+      "random_vs_lru": {
+        "counts": {
+          "both_tied": 2,
+          "concordant": 6,
+          "discordant": 2
+        },
+        "n_cells": 10,
+        "rows": [
+          {
+            "capacity": 32,
+            "classification": "discordant",
+            "closed_loop_gap": 0.002801513671874978,
+            "family": "cloudphysics",
+            "horizon": 4,
+            "offline_gap": -0.00034460612091549736
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.008135986328124956,
+            "family": "cloudphysics",
+            "horizon": 4,
+            "offline_gap": 0.0007640237820243594
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.031159667968750027,
+            "family": "metacdn",
+            "horizon": 4,
+            "offline_gap": 0.02742094861660079
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.016347656249999898,
+            "family": "metacdn",
+            "horizon": 4,
+            "offline_gap": 0.008454252158364338
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.0034667968749999556,
+            "family": "metakv",
+            "horizon": 4,
+            "offline_gap": 0.0038134005574253257
+          },
+          {
+            "capacity": 128,
+            "classification": "discordant",
+            "closed_loop_gap": -0.015124511718749956,
+            "family": "metakv",
+            "horizon": 4,
+            "offline_gap": 0.0010124716029163146
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.031481933593749956,
+            "family": "twemcache",
+            "horizon": 4,
+            "offline_gap": 0.010477489497741023
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.04827880859375,
+            "family": "twemcache",
+            "horizon": 4,
+            "offline_gap": 0.005937700352620612
+          },
+          {
+            "capacity": 32,
+            "classification": "both_tied",
+            "closed_loop_gap": 0.0,
+            "family": "wiki2018",
+            "horizon": 4,
+            "offline_gap": 0.0
+          },
+          {
+            "capacity": 128,
+            "classification": "both_tied",
+            "closed_loop_gap": 0.0,
+            "family": "wiki2018",
+            "horizon": 4,
+            "offline_gap": 0.0
+          }
+        ]
+      }
+    },
+    "8": {
+      "mru_vs_lru": {
+        "counts": {
+          "both_tied": 2,
+          "concordant": 7,
+          "discordant": 1
+        },
+        "n_cells": 10,
+        "rows": [
+          {
+            "capacity": 32,
+            "classification": "discordant",
+            "closed_loop_gap": 0.0162353515625,
+            "family": "cloudphysics",
+            "horizon": 8,
+            "offline_gap": -0.0023963770029040844
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.0428466796875,
+            "family": "cloudphysics",
+            "horizon": 8,
+            "offline_gap": 0.000986980260394792
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.2743164062500001,
+            "family": "metacdn",
+            "horizon": 8,
+            "offline_gap": 0.26199400299850073
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.30156249999999996,
+            "family": "metacdn",
+            "horizon": 8,
+            "offline_gap": 0.26886536863779215
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.07421875,
+            "family": "metakv",
+            "horizon": 8,
+            "offline_gap": 0.07009886411442995
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.0625,
+            "family": "metakv",
+            "horizon": 8,
+            "offline_gap": 0.0702134404057481
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.2037353515625,
+            "family": "twemcache",
+            "horizon": 8,
+            "offline_gap": 0.06351554862744062
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.3287353515625,
+            "family": "twemcache",
+            "horizon": 8,
+            "offline_gap": 0.08001282256771919
+          },
+          {
+            "capacity": 32,
+            "classification": "both_tied",
+            "closed_loop_gap": 0.0,
+            "family": "wiki2018",
+            "horizon": 8,
+            "offline_gap": 0.0
+          },
+          {
+            "capacity": 128,
+            "classification": "both_tied",
+            "closed_loop_gap": 0.0,
+            "family": "wiki2018",
+            "horizon": 8,
+            "offline_gap": 0.0
+          }
+        ]
+      },
+      "random_vs_lru": {
+        "counts": {
+          "both_tied": 2,
+          "concordant": 6,
+          "discordant": 2
+        },
+        "n_cells": 10,
+        "rows": [
+          {
+            "capacity": 32,
+            "classification": "discordant",
+            "closed_loop_gap": 0.002801513671874978,
+            "family": "cloudphysics",
+            "horizon": 8,
+            "offline_gap": -0.0005388040454093138
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.008135986328124956,
+            "family": "cloudphysics",
+            "horizon": 8,
+            "offline_gap": 0.001539859827803444
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.031159667968750027,
+            "family": "metacdn",
+            "horizon": 8,
+            "offline_gap": 0.038423614897096905
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.016347656249999898,
+            "family": "metacdn",
+            "horizon": 8,
+            "offline_gap": 0.012807104089152187
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.0034667968749999556,
+            "family": "metakv",
+            "horizon": 8,
+            "offline_gap": 0.004096878944047118
+          },
+          {
+            "capacity": 128,
+            "classification": "discordant",
+            "closed_loop_gap": -0.015124511718749956,
+            "family": "metakv",
+            "horizon": 8,
+            "offline_gap": 0.0011691095863271344
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.031481933593749956,
+            "family": "twemcache",
+            "horizon": 8,
+            "offline_gap": 0.01823363893365743
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.04827880859375,
+            "family": "twemcache",
+            "horizon": 8,
+            "offline_gap": 0.010847842202276007
+          },
+          {
+            "capacity": 32,
+            "classification": "both_tied",
+            "closed_loop_gap": 0.0,
+            "family": "wiki2018",
+            "horizon": 8,
+            "offline_gap": 0.0
+          },
+          {
+            "capacity": 128,
+            "classification": "both_tied",
+            "closed_loop_gap": 0.0,
+            "family": "wiki2018",
+            "horizon": 8,
+            "offline_gap": 0.0
+          }
+        ]
+      }
+    },
+    "16": {
+      "mru_vs_lru": {
+        "counts": {
+          "both_tied": 2,
+          "concordant": 7,
+          "discordant": 1
+        },
+        "n_cells": 10,
+        "rows": [
+          {
+            "capacity": 32,
+            "classification": "discordant",
+            "closed_loop_gap": 0.0162353515625,
+            "family": "cloudphysics",
+            "horizon": 16,
+            "offline_gap": -0.0026603846388172465
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.0428466796875,
+            "family": "cloudphysics",
+            "horizon": 16,
+            "offline_gap": 0.004094918101637967
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.2743164062500001,
+            "family": "metacdn",
+            "horizon": 16,
+            "offline_gap": 0.30349597928308575
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.30156249999999996,
+            "family": "metacdn",
+            "horizon": 16,
+            "offline_gap": 0.31495863887584435
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.07421875,
+            "family": "metakv",
+            "horizon": 16,
+            "offline_gap": 0.07054585612116113
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.0625,
+            "family": "metakv",
+            "horizon": 16,
+            "offline_gap": 0.07090025359256129
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.2037353515625,
+            "family": "twemcache",
+            "horizon": 16,
+            "offline_gap": 0.08948717271262122
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.3287353515625,
+            "family": "twemcache",
+            "horizon": 16,
+            "offline_gap": 0.12040391088315436
+          },
+          {
+            "capacity": 32,
+            "classification": "both_tied",
+            "closed_loop_gap": 0.0,
+            "family": "wiki2018",
+            "horizon": 16,
+            "offline_gap": 0.0
+          },
+          {
+            "capacity": 128,
+            "classification": "both_tied",
+            "closed_loop_gap": 0.0,
+            "family": "wiki2018",
+            "horizon": 16,
+            "offline_gap": 0.0
+          }
+        ]
+      },
+      "random_vs_lru": {
+        "counts": {
+          "both_tied": 2,
+          "concordant": 6,
+          "discordant": 2
+        },
+        "n_cells": 10,
+        "rows": [
+          {
+            "capacity": 32,
+            "classification": "discordant",
+            "closed_loop_gap": 0.002801513671874978,
+            "family": "cloudphysics",
+            "horizon": 16,
+            "offline_gap": -0.0006593844560427303
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.008135986328124956,
+            "family": "cloudphysics",
+            "horizon": 16,
+            "offline_gap": 0.0030941568668626626
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.031159667968750027,
+            "family": "metacdn",
+            "horizon": 16,
+            "offline_gap": 0.04562278519830994
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.016347656249999898,
+            "family": "metacdn",
+            "horizon": 16,
+            "offline_gap": 0.017411972148972294
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.0034667968749999556,
+            "family": "metakv",
+            "horizon": 16,
+            "offline_gap": 0.0040820887673538074
+          },
+          {
+            "capacity": 128,
+            "classification": "discordant",
+            "closed_loop_gap": -0.015124511718749956,
+            "family": "metakv",
+            "horizon": 16,
+            "offline_gap": 0.0012886002218934912
+          },
+          {
+            "capacity": 32,
+            "classification": "concordant",
+            "closed_loop_gap": 0.031481933593749956,
+            "family": "twemcache",
+            "horizon": 16,
+            "offline_gap": 0.028310688525456415
+          },
+          {
+            "capacity": 128,
+            "classification": "concordant",
+            "closed_loop_gap": 0.04827880859375,
+            "family": "twemcache",
+            "horizon": 16,
+            "offline_gap": 0.018272409440615485
+          },
+          {
+            "capacity": 32,
+            "classification": "both_tied",
+            "closed_loop_gap": 0.0,
+            "family": "wiki2018",
+            "horizon": 16,
+            "offline_gap": 0.0
+          },
+          {
+            "capacity": 128,
+            "classification": "both_tied",
+            "closed_loop_gap": 0.0,
+            "family": "wiki2018",
+            "horizon": 16,
+            "offline_gap": 0.0
+          }
+        ]
+      }
+    }
+  },
+  "per_cell_3item_tau_b": [
+    {
+      "capacity": 32,
+      "family": "cloudphysics",
+      "horizon": 4,
+      "note": "",
+      "tau_b": -1.0
+    },
+    {
+      "capacity": 32,
+      "family": "cloudphysics",
+      "horizon": 8,
+      "note": "",
+      "tau_b": -1.0
+    },
+    {
+      "capacity": 32,
+      "family": "cloudphysics",
+      "horizon": 16,
+      "note": "",
+      "tau_b": -1.0
+    },
+    {
+      "capacity": 128,
+      "family": "cloudphysics",
+      "horizon": 4,
+      "note": "",
+      "tau_b": 0.33333333333333337
+    },
+    {
+      "capacity": 128,
+      "family": "cloudphysics",
+      "horizon": 8,
+      "note": "",
+      "tau_b": 0.33333333333333337
+    },
+    {
+      "capacity": 128,
+      "family": "cloudphysics",
+      "horizon": 16,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 32,
+      "family": "metacdn",
+      "horizon": 4,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 32,
+      "family": "metacdn",
+      "horizon": 8,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 32,
+      "family": "metacdn",
+      "horizon": 16,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 128,
+      "family": "metacdn",
+      "horizon": 4,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 128,
+      "family": "metacdn",
+      "horizon": 8,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 128,
+      "family": "metacdn",
+      "horizon": 16,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 32,
+      "family": "metakv",
+      "horizon": 4,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 32,
+      "family": "metakv",
+      "horizon": 8,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 32,
+      "family": "metakv",
+      "horizon": 16,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 128,
+      "family": "metakv",
+      "horizon": 4,
+      "note": "",
+      "tau_b": 0.33333333333333337
+    },
+    {
+      "capacity": 128,
+      "family": "metakv",
+      "horizon": 8,
+      "note": "",
+      "tau_b": 0.33333333333333337
+    },
+    {
+      "capacity": 128,
+      "family": "metakv",
+      "horizon": 16,
+      "note": "",
+      "tau_b": 0.33333333333333337
+    },
+    {
+      "capacity": 32,
+      "family": "twemcache",
+      "horizon": 4,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 32,
+      "family": "twemcache",
+      "horizon": 8,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 32,
+      "family": "twemcache",
+      "horizon": 16,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 128,
+      "family": "twemcache",
+      "horizon": 4,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 128,
+      "family": "twemcache",
+      "horizon": 8,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 128,
+      "family": "twemcache",
+      "horizon": 16,
+      "note": "",
+      "tau_b": 1.0
+    },
+    {
+      "capacity": 32,
+      "family": "wiki2018",
+      "horizon": 4,
+      "note": "undefined (one side is fully tied across all 3 policies)",
+      "tau_b": NaN
+    },
+    {
+      "capacity": 32,
+      "family": "wiki2018",
+      "horizon": 8,
+      "note": "undefined (one side is fully tied across all 3 policies)",
+      "tau_b": NaN
+    },
+    {
+      "capacity": 32,
+      "family": "wiki2018",
+      "horizon": 16,
+      "note": "undefined (one side is fully tied across all 3 policies)",
+      "tau_b": NaN
+    },
+    {
+      "capacity": 128,
+      "family": "wiki2018",
+      "horizon": 4,
+      "note": "undefined (one side is fully tied across all 3 policies)",
+      "tau_b": NaN
+    },
+    {
+      "capacity": 128,
+      "family": "wiki2018",
+      "horizon": 8,
+      "note": "undefined (one side is fully tied across all 3 policies)",
+      "tau_b": NaN
+    },
+    {
+      "capacity": 128,
+      "family": "wiki2018",
+      "horizon": 16,
+      "note": "undefined (one side is fully tied across all 3 policies)",
+      "tau_b": NaN
+    }
+  ],
+  "pooled_across_horizons_SECONDARY": {
+    "mru_vs_lru": {
+      "counts": {
+        "both_tied": 6,
+        "concordant": 21,
+        "discordant": 3
+      },
+      "n_rows": 30,
+      "note": "pseudo-replicated: each (family,capacity) closed-loop value appears once per horizon (x3); do not treat as 30 independent observations"
+    },
+    "random_vs_lru": {
+      "counts": {
+        "both_tied": 6,
+        "concordant": 18,
+        "discordant": 6
+      },
+      "n_rows": 30,
+      "note": "pseudo-replicated: each (family,capacity) closed-loop value appears once per horizon (x3); do not treat as 30 independent observations"
+    }
+  }
+}

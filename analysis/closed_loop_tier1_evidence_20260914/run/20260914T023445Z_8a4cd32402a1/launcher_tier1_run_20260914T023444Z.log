@@ -1,0 +1,491 @@
+2026-09-13 22:34:45,102 INFO Tier-1 production run started: run_id=20260914T023445Z_8a4cd32402a1
+2026-09-13 22:34:45,467 INFO Running cloudphysics|32|lru|none
+2026-09-13 22:34:45,563 INFO Execution complete: cloudphysics|32|lru|none scored_requests=8192 miss_ratio=0.983643 runtime_sec=0.0732
+2026-09-13 22:34:45,563 INFO Running cloudphysics|32|mru|none
+2026-09-13 22:34:45,649 INFO Execution complete: cloudphysics|32|mru|none scored_requests=8192 miss_ratio=0.999878 runtime_sec=0.0720
+2026-09-13 22:34:45,649 INFO Running cloudphysics|32|sieve|none
+2026-09-13 22:34:45,803 INFO Execution complete: cloudphysics|32|sieve|none scored_requests=8192 miss_ratio=0.985596 runtime_sec=0.1323
+2026-09-13 22:34:45,803 INFO Running cloudphysics|32|random|0
+2026-09-13 22:34:45,898 INFO Execution complete: cloudphysics|32|random|0 scored_requests=8192 miss_ratio=0.986572 runtime_sec=0.0810
+2026-09-13 22:34:45,898 INFO Running cloudphysics|32|random|1
+2026-09-13 22:34:45,993 INFO Execution complete: cloudphysics|32|random|1 scored_requests=8192 miss_ratio=0.984619 runtime_sec=0.0814
+2026-09-13 22:34:45,993 INFO Running cloudphysics|32|random|2
+2026-09-13 22:34:46,087 INFO Execution complete: cloudphysics|32|random|2 scored_requests=8192 miss_ratio=0.986816 runtime_sec=0.0808
+2026-09-13 22:34:46,087 INFO Running cloudphysics|32|random|3
+2026-09-13 22:34:46,179 INFO Execution complete: cloudphysics|32|random|3 scored_requests=8192 miss_ratio=0.985474 runtime_sec=0.0795
+2026-09-13 22:34:46,179 INFO Running cloudphysics|32|random|4
+2026-09-13 22:34:46,270 INFO Execution complete: cloudphysics|32|random|4 scored_requests=8192 miss_ratio=0.987549 runtime_sec=0.0780
+2026-09-13 22:34:46,270 INFO Running cloudphysics|32|random|5
+2026-09-13 22:34:46,362 INFO Execution complete: cloudphysics|32|random|5 scored_requests=8192 miss_ratio=0.986816 runtime_sec=0.0789
+2026-09-13 22:34:46,362 INFO Running cloudphysics|32|random|6
+2026-09-13 22:34:46,453 INFO Execution complete: cloudphysics|32|random|6 scored_requests=8192 miss_ratio=0.986450 runtime_sec=0.0783
+2026-09-13 22:34:46,453 INFO Running cloudphysics|32|random|7
+2026-09-13 22:34:46,545 INFO Execution complete: cloudphysics|32|random|7 scored_requests=8192 miss_ratio=0.985107 runtime_sec=0.0783
+2026-09-13 22:34:46,545 INFO Running cloudphysics|32|random|8
+2026-09-13 22:34:46,660 INFO Execution complete: cloudphysics|32|random|8 scored_requests=8192 miss_ratio=0.985962 runtime_sec=0.0903
+2026-09-13 22:34:46,660 INFO Running cloudphysics|32|random|9
+2026-09-13 22:34:46,754 INFO Execution complete: cloudphysics|32|random|9 scored_requests=8192 miss_ratio=0.986816 runtime_sec=0.0816
+2026-09-13 22:34:46,754 INFO Running cloudphysics|32|random|10
+2026-09-13 22:34:46,851 INFO Execution complete: cloudphysics|32|random|10 scored_requests=8192 miss_ratio=0.986694 runtime_sec=0.0833
+2026-09-13 22:34:46,851 INFO Running cloudphysics|32|random|11
+2026-09-13 22:34:46,944 INFO Execution complete: cloudphysics|32|random|11 scored_requests=8192 miss_ratio=0.985229 runtime_sec=0.0810
+2026-09-13 22:34:46,945 INFO Running cloudphysics|32|random|12
+2026-09-13 22:34:47,046 INFO Execution complete: cloudphysics|32|random|12 scored_requests=8192 miss_ratio=0.987183 runtime_sec=0.0876
+2026-09-13 22:34:47,046 INFO Running cloudphysics|32|random|13
+2026-09-13 22:34:47,141 INFO Execution complete: cloudphysics|32|random|13 scored_requests=8192 miss_ratio=0.987915 runtime_sec=0.0825
+2026-09-13 22:34:47,141 INFO Running cloudphysics|32|random|14
+2026-09-13 22:34:47,234 INFO Execution complete: cloudphysics|32|random|14 scored_requests=8192 miss_ratio=0.987915 runtime_sec=0.0792
+2026-09-13 22:34:47,234 INFO Running cloudphysics|32|random|15
+2026-09-13 22:34:47,329 INFO Execution complete: cloudphysics|32|random|15 scored_requests=8192 miss_ratio=0.987183 runtime_sec=0.0825
+2026-09-13 22:34:47,330 INFO Running cloudphysics|32|random|16
+2026-09-13 22:34:47,422 INFO Execution complete: cloudphysics|32|random|16 scored_requests=8192 miss_ratio=0.985962 runtime_sec=0.0799
+2026-09-13 22:34:47,422 INFO Running cloudphysics|32|random|17
+2026-09-13 22:34:47,515 INFO Execution complete: cloudphysics|32|random|17 scored_requests=8192 miss_ratio=0.985107 runtime_sec=0.0794
+2026-09-13 22:34:47,515 INFO Running cloudphysics|32|random|18
+2026-09-13 22:34:47,606 INFO Execution complete: cloudphysics|32|random|18 scored_requests=8192 miss_ratio=0.986328 runtime_sec=0.0790
+2026-09-13 22:34:47,606 INFO Running cloudphysics|32|random|19
+2026-09-13 22:34:47,697 INFO Execution complete: cloudphysics|32|random|19 scored_requests=8192 miss_ratio=0.987183 runtime_sec=0.0775
+2026-09-13 22:34:47,697 INFO Running cloudphysics|128|lru|none
+2026-09-13 22:34:47,778 INFO Execution complete: cloudphysics|128|lru|none scored_requests=8192 miss_ratio=0.956055 runtime_sec=0.0669
+2026-09-13 22:34:47,778 INFO Running cloudphysics|128|mru|none
+2026-09-13 22:34:47,859 INFO Execution complete: cloudphysics|128|mru|none scored_requests=8192 miss_ratio=0.998901 runtime_sec=0.0690
+2026-09-13 22:34:47,860 INFO Running cloudphysics|128|sieve|none
+2026-09-13 22:34:48,130 INFO Execution complete: cloudphysics|128|sieve|none scored_requests=8192 miss_ratio=0.969849 runtime_sec=0.2479
+2026-09-13 22:34:48,130 INFO Running cloudphysics|128|random|0
+2026-09-13 22:34:48,232 INFO Execution complete: cloudphysics|128|random|0 scored_requests=8192 miss_ratio=0.965210 runtime_sec=0.0893
+2026-09-13 22:34:48,232 INFO Running cloudphysics|128|random|1
+2026-09-13 22:34:48,326 INFO Execution complete: cloudphysics|128|random|1 scored_requests=8192 miss_ratio=0.966309 runtime_sec=0.0808
+2026-09-13 22:34:48,326 INFO Running cloudphysics|128|random|2
+2026-09-13 22:34:48,421 INFO Execution complete: cloudphysics|128|random|2 scored_requests=8192 miss_ratio=0.963379 runtime_sec=0.0809
+2026-09-13 22:34:48,421 INFO Running cloudphysics|128|random|3
+2026-09-13 22:34:48,514 INFO Execution complete: cloudphysics|128|random|3 scored_requests=8192 miss_ratio=0.964722 runtime_sec=0.0807
+2026-09-13 22:34:48,515 INFO Running cloudphysics|128|random|4
+2026-09-13 22:34:48,609 INFO Execution complete: cloudphysics|128|random|4 scored_requests=8192 miss_ratio=0.964111 runtime_sec=0.0808
+2026-09-13 22:34:48,609 INFO Running cloudphysics|128|random|5
+2026-09-13 22:34:48,701 INFO Execution complete: cloudphysics|128|random|5 scored_requests=8192 miss_ratio=0.961304 runtime_sec=0.0793
+2026-09-13 22:34:48,701 INFO Running cloudphysics|128|random|6
+2026-09-13 22:34:48,794 INFO Execution complete: cloudphysics|128|random|6 scored_requests=8192 miss_ratio=0.961548 runtime_sec=0.0799
+2026-09-13 22:34:48,794 INFO Running cloudphysics|128|random|7
+2026-09-13 22:34:48,889 INFO Execution complete: cloudphysics|128|random|7 scored_requests=8192 miss_ratio=0.964233 runtime_sec=0.0809
+2026-09-13 22:34:48,889 INFO Running cloudphysics|128|random|8
+2026-09-13 22:34:48,982 INFO Execution complete: cloudphysics|128|random|8 scored_requests=8192 miss_ratio=0.964966 runtime_sec=0.0803
+2026-09-13 22:34:48,982 INFO Running cloudphysics|128|random|9
+2026-09-13 22:34:49,074 INFO Execution complete: cloudphysics|128|random|9 scored_requests=8192 miss_ratio=0.965454 runtime_sec=0.0788
+2026-09-13 22:34:49,074 INFO Running cloudphysics|128|random|10
+2026-09-13 22:34:49,167 INFO Execution complete: cloudphysics|128|random|10 scored_requests=8192 miss_ratio=0.964966 runtime_sec=0.0798
+2026-09-13 22:34:49,167 INFO Running cloudphysics|128|random|11
+2026-09-13 22:34:49,258 INFO Execution complete: cloudphysics|128|random|11 scored_requests=8192 miss_ratio=0.965576 runtime_sec=0.0777
+2026-09-13 22:34:49,258 INFO Running cloudphysics|128|random|12
+2026-09-13 22:34:49,351 INFO Execution complete: cloudphysics|128|random|12 scored_requests=8192 miss_ratio=0.963013 runtime_sec=0.0798
+2026-09-13 22:34:49,351 INFO Running cloudphysics|128|random|13
+2026-09-13 22:34:49,442 INFO Execution complete: cloudphysics|128|random|13 scored_requests=8192 miss_ratio=0.962280 runtime_sec=0.0781
+2026-09-13 22:34:49,442 INFO Running cloudphysics|128|random|14
+2026-09-13 22:34:49,545 INFO Execution complete: cloudphysics|128|random|14 scored_requests=8192 miss_ratio=0.963623 runtime_sec=0.0896
+2026-09-13 22:34:49,545 INFO Running cloudphysics|128|random|15
+2026-09-13 22:34:49,637 INFO Execution complete: cloudphysics|128|random|15 scored_requests=8192 miss_ratio=0.965942 runtime_sec=0.0796
+2026-09-13 22:34:49,637 INFO Running cloudphysics|128|random|16
+2026-09-13 22:34:49,731 INFO Execution complete: cloudphysics|128|random|16 scored_requests=8192 miss_ratio=0.964233 runtime_sec=0.0807
+2026-09-13 22:34:49,731 INFO Running cloudphysics|128|random|17
+2026-09-13 22:34:49,827 INFO Execution complete: cloudphysics|128|random|17 scored_requests=8192 miss_ratio=0.964355 runtime_sec=0.0829
+2026-09-13 22:34:49,827 INFO Running cloudphysics|128|random|18
+2026-09-13 22:34:49,922 INFO Execution complete: cloudphysics|128|random|18 scored_requests=8192 miss_ratio=0.963867 runtime_sec=0.0808
+2026-09-13 22:34:49,922 INFO Running cloudphysics|128|random|19
+2026-09-13 22:34:50,014 INFO Execution complete: cloudphysics|128|random|19 scored_requests=8192 miss_ratio=0.964722 runtime_sec=0.0789
+2026-09-13 22:34:50,201 INFO Running metacdn|32|lru|none
+2026-09-13 22:34:50,297 INFO Execution complete: metacdn|32|lru|none scored_requests=20480 miss_ratio=0.579150 runtime_sec=0.0705
+2026-09-13 22:34:50,297 INFO Running metacdn|32|mru|none
+2026-09-13 22:34:50,387 INFO Execution complete: metacdn|32|mru|none scored_requests=20480 miss_ratio=0.853467 runtime_sec=0.0763
+2026-09-13 22:34:50,387 INFO Running metacdn|32|sieve|none
+2026-09-13 22:34:50,526 INFO Execution complete: metacdn|32|sieve|none scored_requests=20480 miss_ratio=0.583838 runtime_sec=0.1136
+2026-09-13 22:34:50,526 INFO Running metacdn|32|random|0
+2026-09-13 22:34:50,618 INFO Execution complete: metacdn|32|random|0 scored_requests=20480 miss_ratio=0.609375 runtime_sec=0.0774
+2026-09-13 22:34:50,618 INFO Running metacdn|32|random|1
+2026-09-13 22:34:50,711 INFO Execution complete: metacdn|32|random|1 scored_requests=20480 miss_ratio=0.609961 runtime_sec=0.0780
+2026-09-13 22:34:50,712 INFO Running metacdn|32|random|2
+2026-09-13 22:34:50,784 INFO Execution complete: metacdn|32|random|2 scored_requests=20480 miss_ratio=0.611133 runtime_sec=0.0580
+2026-09-13 22:34:50,784 INFO Running metacdn|32|random|3
+2026-09-13 22:34:50,876 INFO Execution complete: metacdn|32|random|3 scored_requests=20480 miss_ratio=0.612305 runtime_sec=0.0772
+2026-09-13 22:34:50,876 INFO Running metacdn|32|random|4
+2026-09-13 22:34:50,968 INFO Execution complete: metacdn|32|random|4 scored_requests=20480 miss_ratio=0.610059 runtime_sec=0.0768
+2026-09-13 22:34:50,968 INFO Running metacdn|32|random|5
+2026-09-13 22:34:51,060 INFO Execution complete: metacdn|32|random|5 scored_requests=20480 miss_ratio=0.611328 runtime_sec=0.0772
+2026-09-13 22:34:51,060 INFO Running metacdn|32|random|6
+2026-09-13 22:34:51,132 INFO Execution complete: metacdn|32|random|6 scored_requests=20480 miss_ratio=0.610938 runtime_sec=0.0570
+2026-09-13 22:34:51,132 INFO Running metacdn|32|random|7
+2026-09-13 22:34:51,221 INFO Execution complete: metacdn|32|random|7 scored_requests=20480 miss_ratio=0.608545 runtime_sec=0.0740
+2026-09-13 22:34:51,221 INFO Running metacdn|32|random|8
+2026-09-13 22:34:51,311 INFO Execution complete: metacdn|32|random|8 scored_requests=20480 miss_ratio=0.611279 runtime_sec=0.0757
+2026-09-13 22:34:51,312 INFO Running metacdn|32|random|9
+2026-09-13 22:34:51,401 INFO Execution complete: metacdn|32|random|9 scored_requests=20480 miss_ratio=0.607715 runtime_sec=0.0746
+2026-09-13 22:34:51,401 INFO Running metacdn|32|random|10
+2026-09-13 22:34:51,491 INFO Execution complete: metacdn|32|random|10 scored_requests=20480 miss_ratio=0.611182 runtime_sec=0.0751
+2026-09-13 22:34:51,491 INFO Running metacdn|32|random|11
+2026-09-13 22:34:51,581 INFO Execution complete: metacdn|32|random|11 scored_requests=20480 miss_ratio=0.613232 runtime_sec=0.0761
+2026-09-13 22:34:51,582 INFO Running metacdn|32|random|12
+2026-09-13 22:34:51,673 INFO Execution complete: metacdn|32|random|12 scored_requests=20480 miss_ratio=0.611377 runtime_sec=0.0770
+2026-09-13 22:34:51,673 INFO Running metacdn|32|random|13
+2026-09-13 22:34:51,767 INFO Execution complete: metacdn|32|random|13 scored_requests=20480 miss_ratio=0.610693 runtime_sec=0.0779
+2026-09-13 22:34:51,767 INFO Running metacdn|32|random|14
+2026-09-13 22:34:51,841 INFO Execution complete: metacdn|32|random|14 scored_requests=20480 miss_ratio=0.610010 runtime_sec=0.0591
+2026-09-13 22:34:51,842 INFO Running metacdn|32|random|15
+2026-09-13 22:34:51,931 INFO Execution complete: metacdn|32|random|15 scored_requests=20480 miss_ratio=0.609424 runtime_sec=0.0747
+2026-09-13 22:34:51,931 INFO Running metacdn|32|random|16
+2026-09-13 22:34:52,022 INFO Execution complete: metacdn|32|random|16 scored_requests=20480 miss_ratio=0.609277 runtime_sec=0.0755
+2026-09-13 22:34:52,022 INFO Running metacdn|32|random|17
+2026-09-13 22:34:52,113 INFO Execution complete: metacdn|32|random|17 scored_requests=20480 miss_ratio=0.608398 runtime_sec=0.0764
+2026-09-13 22:34:52,113 INFO Running metacdn|32|random|18
+2026-09-13 22:34:52,208 INFO Execution complete: metacdn|32|random|18 scored_requests=20480 miss_ratio=0.609961 runtime_sec=0.0801
+2026-09-13 22:34:52,208 INFO Running metacdn|32|random|19
+2026-09-13 22:34:52,282 INFO Execution complete: metacdn|32|random|19 scored_requests=20480 miss_ratio=0.610010 runtime_sec=0.0589
+2026-09-13 22:34:52,282 INFO Running metacdn|128|lru|none
+2026-09-13 22:34:52,363 INFO Execution complete: metacdn|128|lru|none scored_requests=20480 miss_ratio=0.549023 runtime_sec=0.0664
+2026-09-13 22:34:52,363 INFO Running metacdn|128|mru|none
+2026-09-13 22:34:52,450 INFO Execution complete: metacdn|128|mru|none scored_requests=20480 miss_ratio=0.850586 runtime_sec=0.0726
+2026-09-13 22:34:52,451 INFO Running metacdn|128|sieve|none
+2026-09-13 22:34:52,652 INFO Execution complete: metacdn|128|sieve|none scored_requests=20480 miss_ratio=0.551025 runtime_sec=0.1765
+2026-09-13 22:34:52,652 INFO Running metacdn|128|random|0
+2026-09-13 22:34:52,742 INFO Execution complete: metacdn|128|random|0 scored_requests=20480 miss_ratio=0.562891 runtime_sec=0.0743
+2026-09-13 22:34:52,742 INFO Running metacdn|128|random|1
+2026-09-13 22:34:52,833 INFO Execution complete: metacdn|128|random|1 scored_requests=20480 miss_ratio=0.563574 runtime_sec=0.0767
+2026-09-13 22:34:52,833 INFO Running metacdn|128|random|2
+2026-09-13 22:34:52,925 INFO Execution complete: metacdn|128|random|2 scored_requests=20480 miss_ratio=0.564502 runtime_sec=0.0767
+2026-09-13 22:34:52,925 INFO Running metacdn|128|random|3
+2026-09-13 22:34:53,016 INFO Execution complete: metacdn|128|random|3 scored_requests=20480 miss_ratio=0.563037 runtime_sec=0.0758
+2026-09-13 22:34:53,016 INFO Running metacdn|128|random|4
+2026-09-13 22:34:53,086 INFO Execution complete: metacdn|128|random|4 scored_requests=20480 miss_ratio=0.566602 runtime_sec=0.0556
+2026-09-13 22:34:53,086 INFO Running metacdn|128|random|5
+2026-09-13 22:34:53,174 INFO Execution complete: metacdn|128|random|5 scored_requests=20480 miss_ratio=0.566357 runtime_sec=0.0733
+2026-09-13 22:34:53,174 INFO Running metacdn|128|random|6
+2026-09-13 22:34:53,264 INFO Execution complete: metacdn|128|random|6 scored_requests=20480 miss_ratio=0.564697 runtime_sec=0.0745
+2026-09-13 22:34:53,264 INFO Running metacdn|128|random|7
+2026-09-13 22:34:53,355 INFO Execution complete: metacdn|128|random|7 scored_requests=20480 miss_ratio=0.565332 runtime_sec=0.0757
+2026-09-13 22:34:53,355 INFO Running metacdn|128|random|8
+2026-09-13 22:34:53,445 INFO Execution complete: metacdn|128|random|8 scored_requests=20480 miss_ratio=0.565283 runtime_sec=0.0756
+2026-09-13 22:34:53,445 INFO Running metacdn|128|random|9
+2026-09-13 22:34:53,517 INFO Execution complete: metacdn|128|random|9 scored_requests=20480 miss_ratio=0.566553 runtime_sec=0.0564
+2026-09-13 22:34:53,517 INFO Running metacdn|128|random|10
+2026-09-13 22:34:53,604 INFO Execution complete: metacdn|128|random|10 scored_requests=20480 miss_ratio=0.567920 runtime_sec=0.0727
+2026-09-13 22:34:53,604 INFO Running metacdn|128|random|11
+2026-09-13 22:34:53,692 INFO Execution complete: metacdn|128|random|11 scored_requests=20480 miss_ratio=0.566846 runtime_sec=0.0728
+2026-09-13 22:34:53,692 INFO Running metacdn|128|random|12
+2026-09-13 22:34:53,781 INFO Execution complete: metacdn|128|random|12 scored_requests=20480 miss_ratio=0.563623 runtime_sec=0.0736
+2026-09-13 22:34:53,781 INFO Running metacdn|128|random|13
+2026-09-13 22:34:53,871 INFO Execution complete: metacdn|128|random|13 scored_requests=20480 miss_ratio=0.565918 runtime_sec=0.0747
+2026-09-13 22:34:53,871 INFO Running metacdn|128|random|14
+2026-09-13 22:34:53,961 INFO Execution complete: metacdn|128|random|14 scored_requests=20480 miss_ratio=0.565576 runtime_sec=0.0749
+2026-09-13 22:34:53,961 INFO Running metacdn|128|random|15
+2026-09-13 22:34:54,052 INFO Execution complete: metacdn|128|random|15 scored_requests=20480 miss_ratio=0.564844 runtime_sec=0.0768
+2026-09-13 22:34:54,052 INFO Running metacdn|128|random|16
+2026-09-13 22:34:54,145 INFO Execution complete: metacdn|128|random|16 scored_requests=20480 miss_ratio=0.566113 runtime_sec=0.0766
+2026-09-13 22:34:54,145 INFO Running metacdn|128|random|17
+2026-09-13 22:34:54,216 INFO Execution complete: metacdn|128|random|17 scored_requests=20480 miss_ratio=0.565039 runtime_sec=0.0565
+2026-09-13 22:34:54,217 INFO Running metacdn|128|random|18
+2026-09-13 22:34:54,311 INFO Execution complete: metacdn|128|random|18 scored_requests=20480 miss_ratio=0.565625 runtime_sec=0.0785
+2026-09-13 22:34:54,311 INFO Running metacdn|128|random|19
+2026-09-13 22:34:54,401 INFO Execution complete: metacdn|128|random|19 scored_requests=20480 miss_ratio=0.567090 runtime_sec=0.0755
+2026-09-13 22:34:54,574 INFO Running metakv|32|lru|none
+2026-09-13 22:34:54,675 INFO Execution complete: metakv|32|lru|none scored_requests=4096 miss_ratio=0.740967 runtime_sec=0.0791
+2026-09-13 22:34:54,675 INFO Running metakv|32|mru|none
+2026-09-13 22:34:54,770 INFO Execution complete: metakv|32|mru|none scored_requests=4096 miss_ratio=0.815186 runtime_sec=0.0824
+2026-09-13 22:34:54,770 INFO Running metakv|32|sieve|none
+2026-09-13 22:34:54,911 INFO Execution complete: metakv|32|sieve|none scored_requests=4096 miss_ratio=0.741211 runtime_sec=0.1185
+2026-09-13 22:34:54,911 INFO Running metakv|32|random|0
+2026-09-13 22:34:55,012 INFO Execution complete: metakv|32|random|0 scored_requests=4096 miss_ratio=0.743164 runtime_sec=0.0895
+2026-09-13 22:34:55,012 INFO Running metakv|32|random|1
+2026-09-13 22:34:55,085 INFO Execution complete: metakv|32|random|1 scored_requests=4096 miss_ratio=0.743652 runtime_sec=0.0617
+2026-09-13 22:34:55,085 INFO Running metakv|32|random|2
+2026-09-13 22:34:55,183 INFO Execution complete: metakv|32|random|2 scored_requests=4096 miss_ratio=0.746094 runtime_sec=0.0858
+2026-09-13 22:34:55,184 INFO Running metakv|32|random|3
+2026-09-13 22:34:55,285 INFO Execution complete: metakv|32|random|3 scored_requests=4096 miss_ratio=0.745361 runtime_sec=0.0892
+2026-09-13 22:34:55,285 INFO Running metakv|32|random|4
+2026-09-13 22:34:55,362 INFO Execution complete: metakv|32|random|4 scored_requests=4096 miss_ratio=0.741943 runtime_sec=0.0647
+2026-09-13 22:34:55,362 INFO Running metakv|32|random|5
+2026-09-13 22:34:55,463 INFO Execution complete: metakv|32|random|5 scored_requests=4096 miss_ratio=0.743896 runtime_sec=0.0894
+2026-09-13 22:34:55,463 INFO Running metakv|32|random|6
+2026-09-13 22:34:55,538 INFO Execution complete: metakv|32|random|6 scored_requests=4096 miss_ratio=0.744629 runtime_sec=0.0630
+2026-09-13 22:34:55,538 INFO Running metakv|32|random|7
+2026-09-13 22:34:55,636 INFO Execution complete: metakv|32|random|7 scored_requests=4096 miss_ratio=0.744385 runtime_sec=0.0856
+2026-09-13 22:34:55,636 INFO Running metakv|32|random|8
+2026-09-13 22:34:55,737 INFO Execution complete: metakv|32|random|8 scored_requests=4096 miss_ratio=0.743652 runtime_sec=0.0888
+2026-09-13 22:34:55,737 INFO Running metakv|32|random|9
+2026-09-13 22:34:55,813 INFO Execution complete: metakv|32|random|9 scored_requests=4096 miss_ratio=0.742676 runtime_sec=0.0629
+2026-09-13 22:34:55,813 INFO Running metakv|32|random|10
+2026-09-13 22:34:55,913 INFO Execution complete: metakv|32|random|10 scored_requests=4096 miss_ratio=0.744141 runtime_sec=0.0882
+2026-09-13 22:34:55,913 INFO Running metakv|32|random|11
+2026-09-13 22:34:55,987 INFO Execution complete: metakv|32|random|11 scored_requests=4096 miss_ratio=0.744629 runtime_sec=0.0628
+2026-09-13 22:34:55,988 INFO Running metakv|32|random|12
+2026-09-13 22:34:56,085 INFO Execution complete: metakv|32|random|12 scored_requests=4096 miss_ratio=0.744873 runtime_sec=0.0857
+2026-09-13 22:34:56,086 INFO Running metakv|32|random|13
+2026-09-13 22:34:56,185 INFO Execution complete: metakv|32|random|13 scored_requests=4096 miss_ratio=0.745361 runtime_sec=0.0872
+2026-09-13 22:34:56,185 INFO Running metakv|32|random|14
+2026-09-13 22:34:56,259 INFO Execution complete: metakv|32|random|14 scored_requests=4096 miss_ratio=0.745850 runtime_sec=0.0621
+2026-09-13 22:34:56,259 INFO Running metakv|32|random|15
+2026-09-13 22:34:56,359 INFO Execution complete: metakv|32|random|15 scored_requests=4096 miss_ratio=0.744629 runtime_sec=0.0874
+2026-09-13 22:34:56,359 INFO Running metakv|32|random|16
+2026-09-13 22:34:56,434 INFO Execution complete: metakv|32|random|16 scored_requests=4096 miss_ratio=0.743408 runtime_sec=0.0623
+2026-09-13 22:34:56,434 INFO Running metakv|32|random|17
+2026-09-13 22:34:56,531 INFO Execution complete: metakv|32|random|17 scored_requests=4096 miss_ratio=0.746094 runtime_sec=0.0852
+2026-09-13 22:34:56,531 INFO Running metakv|32|random|18
+2026-09-13 22:34:56,630 INFO Execution complete: metakv|32|random|18 scored_requests=4096 miss_ratio=0.745605 runtime_sec=0.0871
+2026-09-13 22:34:56,631 INFO Running metakv|32|random|19
+2026-09-13 22:34:56,705 INFO Execution complete: metakv|32|random|19 scored_requests=4096 miss_ratio=0.744629 runtime_sec=0.0624
+2026-09-13 22:34:56,706 INFO Running metakv|128|lru|none
+2026-09-13 22:34:56,795 INFO Execution complete: metakv|128|lru|none scored_requests=4096 miss_ratio=0.729004 runtime_sec=0.0775
+2026-09-13 22:34:56,795 INFO Running metakv|128|mru|none
+2026-09-13 22:34:56,888 INFO Execution complete: metakv|128|mru|none scored_requests=4096 miss_ratio=0.791504 runtime_sec=0.0812
+2026-09-13 22:34:56,889 INFO Running metakv|128|sieve|none
+2026-09-13 22:34:57,122 INFO Execution complete: metakv|128|sieve|none scored_requests=4096 miss_ratio=0.698242 runtime_sec=0.2118
+2026-09-13 22:34:57,123 INFO Running metakv|128|random|0
+2026-09-13 22:34:57,236 INFO Execution complete: metakv|128|random|0 scored_requests=4096 miss_ratio=0.714844 runtime_sec=0.0910
+2026-09-13 22:34:57,236 INFO Running metakv|128|random|1
+2026-09-13 22:34:57,352 INFO Execution complete: metakv|128|random|1 scored_requests=4096 miss_ratio=0.712158 runtime_sec=0.0940
+2026-09-13 22:34:57,352 INFO Running metakv|128|random|2
+2026-09-13 22:34:57,426 INFO Execution complete: metakv|128|random|2 scored_requests=4096 miss_ratio=0.711426 runtime_sec=0.0619
+2026-09-13 22:34:57,426 INFO Running metakv|128|random|3
+2026-09-13 22:34:57,525 INFO Execution complete: metakv|128|random|3 scored_requests=4096 miss_ratio=0.714844 runtime_sec=0.0865
+2026-09-13 22:34:57,525 INFO Running metakv|128|random|4
+2026-09-13 22:34:57,599 INFO Execution complete: metakv|128|random|4 scored_requests=4096 miss_ratio=0.714355 runtime_sec=0.0629
+2026-09-13 22:34:57,599 INFO Running metakv|128|random|5
+2026-09-13 22:34:57,697 INFO Execution complete: metakv|128|random|5 scored_requests=4096 miss_ratio=0.711914 runtime_sec=0.0854
+2026-09-13 22:34:57,697 INFO Running metakv|128|random|6
+2026-09-13 22:34:57,798 INFO Execution complete: metakv|128|random|6 scored_requests=4096 miss_ratio=0.716309 runtime_sec=0.0885
+2026-09-13 22:34:57,799 INFO Running metakv|128|random|7
+2026-09-13 22:34:57,874 INFO Execution complete: metakv|128|random|7 scored_requests=4096 miss_ratio=0.712646 runtime_sec=0.0641
+2026-09-13 22:34:57,874 INFO Running metakv|128|random|8
+2026-09-13 22:34:57,973 INFO Execution complete: metakv|128|random|8 scored_requests=4096 miss_ratio=0.715576 runtime_sec=0.0867
+2026-09-13 22:34:57,973 INFO Running metakv|128|random|9
+2026-09-13 22:34:58,048 INFO Execution complete: metakv|128|random|9 scored_requests=4096 miss_ratio=0.712158 runtime_sec=0.0624
+2026-09-13 22:34:58,048 INFO Running metakv|128|random|10
+2026-09-13 22:34:58,146 INFO Execution complete: metakv|128|random|10 scored_requests=4096 miss_ratio=0.714844 runtime_sec=0.0859
+2026-09-13 22:34:58,146 INFO Running metakv|128|random|11
+2026-09-13 22:34:58,247 INFO Execution complete: metakv|128|random|11 scored_requests=4096 miss_ratio=0.715088 runtime_sec=0.0884
+2026-09-13 22:34:58,247 INFO Running metakv|128|random|12
+2026-09-13 22:34:58,323 INFO Execution complete: metakv|128|random|12 scored_requests=4096 miss_ratio=0.713867 runtime_sec=0.0629
+2026-09-13 22:34:58,323 INFO Running metakv|128|random|13
+2026-09-13 22:34:58,420 INFO Execution complete: metakv|128|random|13 scored_requests=4096 miss_ratio=0.713867 runtime_sec=0.0860
+2026-09-13 22:34:58,420 INFO Running metakv|128|random|14
+2026-09-13 22:34:58,519 INFO Execution complete: metakv|128|random|14 scored_requests=4096 miss_ratio=0.713135 runtime_sec=0.0862
+2026-09-13 22:34:58,519 INFO Running metakv|128|random|15
+2026-09-13 22:34:58,593 INFO Execution complete: metakv|128|random|15 scored_requests=4096 miss_ratio=0.714600 runtime_sec=0.0619
+2026-09-13 22:34:58,593 INFO Running metakv|128|random|16
+2026-09-13 22:34:58,691 INFO Execution complete: metakv|128|random|16 scored_requests=4096 miss_ratio=0.716064 runtime_sec=0.0859
+2026-09-13 22:34:58,691 INFO Running metakv|128|random|17
+2026-09-13 22:34:58,792 INFO Execution complete: metakv|128|random|17 scored_requests=4096 miss_ratio=0.714600 runtime_sec=0.0878
+2026-09-13 22:34:58,792 INFO Running metakv|128|random|18
+2026-09-13 22:34:58,867 INFO Execution complete: metakv|128|random|18 scored_requests=4096 miss_ratio=0.713135 runtime_sec=0.0634
+2026-09-13 22:34:58,867 INFO Running metakv|128|random|19
+2026-09-13 22:34:58,967 INFO Execution complete: metakv|128|random|19 scored_requests=4096 miss_ratio=0.712158 runtime_sec=0.0873
+2026-09-13 22:34:59,120 INFO Running twemcache|32|lru|none
+2026-09-13 22:34:59,228 INFO Execution complete: twemcache|32|lru|none scored_requests=8192 miss_ratio=0.751099 runtime_sec=0.0843
+2026-09-13 22:34:59,228 INFO Running twemcache|32|mru|none
+2026-09-13 22:34:59,344 INFO Execution complete: twemcache|32|mru|none scored_requests=8192 miss_ratio=0.954834 runtime_sec=0.0932
+2026-09-13 22:34:59,344 INFO Running twemcache|32|sieve|none
+2026-09-13 22:34:59,479 INFO Execution complete: twemcache|32|sieve|none scored_requests=8192 miss_ratio=0.814697 runtime_sec=0.1117
+2026-09-13 22:34:59,479 INFO Running twemcache|32|random|0
+2026-09-13 22:34:59,589 INFO Execution complete: twemcache|32|random|0 scored_requests=8192 miss_ratio=0.780151 runtime_sec=0.0954
+2026-09-13 22:34:59,589 INFO Running twemcache|32|random|1
+2026-09-13 22:34:59,666 INFO Execution complete: twemcache|32|random|1 scored_requests=8192 miss_ratio=0.780762 runtime_sec=0.0630
+2026-09-13 22:34:59,666 INFO Running twemcache|32|random|2
+2026-09-13 22:34:59,783 INFO Execution complete: twemcache|32|random|2 scored_requests=8192 miss_ratio=0.786255 runtime_sec=0.0939
+2026-09-13 22:34:59,783 INFO Running twemcache|32|random|3
+2026-09-13 22:34:59,860 INFO Execution complete: twemcache|32|random|3 scored_requests=8192 miss_ratio=0.780518 runtime_sec=0.0631
+2026-09-13 22:34:59,860 INFO Running twemcache|32|random|4
+2026-09-13 22:34:59,936 INFO Execution complete: twemcache|32|random|4 scored_requests=8192 miss_ratio=0.785034 runtime_sec=0.0619
+2026-09-13 22:34:59,936 INFO Running twemcache|32|random|5
+2026-09-13 22:35:00,053 INFO Execution complete: twemcache|32|random|5 scored_requests=8192 miss_ratio=0.781494 runtime_sec=0.0919
+2026-09-13 22:35:00,053 INFO Running twemcache|32|random|6
+2026-09-13 22:35:00,170 INFO Execution complete: twemcache|32|random|6 scored_requests=8192 miss_ratio=0.781616 runtime_sec=0.0938
+2026-09-13 22:35:00,170 INFO Running twemcache|32|random|7
+2026-09-13 22:35:00,247 INFO Execution complete: twemcache|32|random|7 scored_requests=8192 miss_ratio=0.781738 runtime_sec=0.0620
+2026-09-13 22:35:00,247 INFO Running twemcache|32|random|8
+2026-09-13 22:35:00,364 INFO Execution complete: twemcache|32|random|8 scored_requests=8192 miss_ratio=0.786621 runtime_sec=0.0937
+2026-09-13 22:35:00,364 INFO Running twemcache|32|random|9
+2026-09-13 22:35:00,440 INFO Execution complete: twemcache|32|random|9 scored_requests=8192 miss_ratio=0.783569 runtime_sec=0.0623
+2026-09-13 22:35:00,441 INFO Running twemcache|32|random|10
+2026-09-13 22:35:00,558 INFO Execution complete: twemcache|32|random|10 scored_requests=8192 miss_ratio=0.783325 runtime_sec=0.0939
+2026-09-13 22:35:00,558 INFO Running twemcache|32|random|11
+2026-09-13 22:35:00,634 INFO Execution complete: twemcache|32|random|11 scored_requests=8192 miss_ratio=0.782593 runtime_sec=0.0620
+2026-09-13 22:35:00,634 INFO Running twemcache|32|random|12
+2026-09-13 22:35:00,750 INFO Execution complete: twemcache|32|random|12 scored_requests=8192 miss_ratio=0.779541 runtime_sec=0.0927
+2026-09-13 22:35:00,751 INFO Running twemcache|32|random|13
+2026-09-13 22:35:00,827 INFO Execution complete: twemcache|32|random|13 scored_requests=8192 miss_ratio=0.783081 runtime_sec=0.0632
+2026-09-13 22:35:00,828 INFO Running twemcache|32|random|14
+2026-09-13 22:35:00,946 INFO Execution complete: twemcache|32|random|14 scored_requests=8192 miss_ratio=0.783569 runtime_sec=0.0936
+2026-09-13 22:35:00,946 INFO Running twemcache|32|random|15
+2026-09-13 22:35:01,022 INFO Execution complete: twemcache|32|random|15 scored_requests=8192 miss_ratio=0.778564 runtime_sec=0.0624
+2026-09-13 22:35:01,022 INFO Running twemcache|32|random|16
+2026-09-13 22:35:01,139 INFO Execution complete: twemcache|32|random|16 scored_requests=8192 miss_ratio=0.781372 runtime_sec=0.0914
+2026-09-13 22:35:01,140 INFO Running twemcache|32|random|17
+2026-09-13 22:35:01,215 INFO Execution complete: twemcache|32|random|17 scored_requests=8192 miss_ratio=0.781616 runtime_sec=0.0620
+2026-09-13 22:35:01,215 INFO Running twemcache|32|random|18
+2026-09-13 22:35:01,331 INFO Execution complete: twemcache|32|random|18 scored_requests=8192 miss_ratio=0.781860 runtime_sec=0.0921
+2026-09-13 22:35:01,331 INFO Running twemcache|32|random|19
+2026-09-13 22:35:01,407 INFO Execution complete: twemcache|32|random|19 scored_requests=8192 miss_ratio=0.788330 runtime_sec=0.0633
+2026-09-13 22:35:01,407 INFO Running twemcache|128|lru|none
+2026-09-13 22:35:01,502 INFO Execution complete: twemcache|128|lru|none scored_requests=8192 miss_ratio=0.620483 runtime_sec=0.0803
+2026-09-13 22:35:01,502 INFO Running twemcache|128|mru|none
+2026-09-13 22:35:01,572 INFO Execution complete: twemcache|128|mru|none scored_requests=8192 miss_ratio=0.949219 runtime_sec=0.0565
+2026-09-13 22:35:01,572 INFO Running twemcache|128|sieve|none
+2026-09-13 22:35:01,823 INFO Execution complete: twemcache|128|sieve|none scored_requests=8192 miss_ratio=0.715332 runtime_sec=0.2280
+2026-09-13 22:35:01,823 INFO Running twemcache|128|random|0
+2026-09-13 22:35:01,938 INFO Execution complete: twemcache|128|random|0 scored_requests=8192 miss_ratio=0.672119 runtime_sec=0.0909
+2026-09-13 22:35:01,938 INFO Running twemcache|128|random|1
+2026-09-13 22:35:02,012 INFO Execution complete: twemcache|128|random|1 scored_requests=8192 miss_ratio=0.664551 runtime_sec=0.0606
+2026-09-13 22:35:02,012 INFO Running twemcache|128|random|2
+2026-09-13 22:35:02,085 INFO Execution complete: twemcache|128|random|2 scored_requests=8192 miss_ratio=0.669556 runtime_sec=0.0598
+2026-09-13 22:35:02,085 INFO Running twemcache|128|random|3
+2026-09-13 22:35:02,187 INFO Execution complete: twemcache|128|random|3 scored_requests=8192 miss_ratio=0.668579 runtime_sec=0.0885
+2026-09-13 22:35:02,187 INFO Running twemcache|128|random|4
+2026-09-13 22:35:02,304 INFO Execution complete: twemcache|128|random|4 scored_requests=8192 miss_ratio=0.665771 runtime_sec=0.0927
+2026-09-13 22:35:02,304 INFO Running twemcache|128|random|5
+2026-09-13 22:35:02,378 INFO Execution complete: twemcache|128|random|5 scored_requests=8192 miss_ratio=0.668335 runtime_sec=0.0600
+2026-09-13 22:35:02,378 INFO Running twemcache|128|random|6
+2026-09-13 22:35:02,495 INFO Execution complete: twemcache|128|random|6 scored_requests=8192 miss_ratio=0.668091 runtime_sec=0.0921
+2026-09-13 22:35:02,495 INFO Running twemcache|128|random|7
+2026-09-13 22:35:02,569 INFO Execution complete: twemcache|128|random|7 scored_requests=8192 miss_ratio=0.666016 runtime_sec=0.0605
+2026-09-13 22:35:02,569 INFO Running twemcache|128|random|8
+2026-09-13 22:35:02,686 INFO Execution complete: twemcache|128|random|8 scored_requests=8192 miss_ratio=0.669922 runtime_sec=0.0907
+2026-09-13 22:35:02,686 INFO Running twemcache|128|random|9
+2026-09-13 22:35:02,761 INFO Execution complete: twemcache|128|random|9 scored_requests=8192 miss_ratio=0.668335 runtime_sec=0.0606
+2026-09-13 22:35:02,761 INFO Running twemcache|128|random|10
+2026-09-13 22:35:02,877 INFO Execution complete: twemcache|128|random|10 scored_requests=8192 miss_ratio=0.669922 runtime_sec=0.0917
+2026-09-13 22:35:02,877 INFO Running twemcache|128|random|11
+2026-09-13 22:35:02,951 INFO Execution complete: twemcache|128|random|11 scored_requests=8192 miss_ratio=0.668579 runtime_sec=0.0599
+2026-09-13 22:35:02,951 INFO Running twemcache|128|random|12
+2026-09-13 22:35:03,067 INFO Execution complete: twemcache|128|random|12 scored_requests=8192 miss_ratio=0.671631 runtime_sec=0.0918
+2026-09-13 22:35:03,067 INFO Running twemcache|128|random|13
+2026-09-13 22:35:03,140 INFO Execution complete: twemcache|128|random|13 scored_requests=8192 miss_ratio=0.670776 runtime_sec=0.0595
+2026-09-13 22:35:03,140 INFO Running twemcache|128|random|14
+2026-09-13 22:35:03,255 INFO Execution complete: twemcache|128|random|14 scored_requests=8192 miss_ratio=0.666870 runtime_sec=0.0919
+2026-09-13 22:35:03,256 INFO Running twemcache|128|random|15
+2026-09-13 22:35:03,331 INFO Execution complete: twemcache|128|random|15 scored_requests=8192 miss_ratio=0.668579 runtime_sec=0.0611
+2026-09-13 22:35:03,331 INFO Running twemcache|128|random|16
+2026-09-13 22:35:03,447 INFO Execution complete: twemcache|128|random|16 scored_requests=8192 miss_ratio=0.671021 runtime_sec=0.0921
+2026-09-13 22:35:03,447 INFO Running twemcache|128|random|17
+2026-09-13 22:35:03,522 INFO Execution complete: twemcache|128|random|17 scored_requests=8192 miss_ratio=0.665039 runtime_sec=0.0602
+2026-09-13 22:35:03,522 INFO Running twemcache|128|random|18
+2026-09-13 22:35:03,637 INFO Execution complete: twemcache|128|random|18 scored_requests=8192 miss_ratio=0.672974 runtime_sec=0.0913
+2026-09-13 22:35:03,637 INFO Running twemcache|128|random|19
+2026-09-13 22:35:03,712 INFO Execution complete: twemcache|128|random|19 scored_requests=8192 miss_ratio=0.668579 runtime_sec=0.0611
+2026-09-13 22:35:03,857 INFO Running wiki2018|32|lru|none
+2026-09-13 22:35:03,985 INFO Execution complete: wiki2018|32|lru|none scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1053
+2026-09-13 22:35:03,985 INFO Running wiki2018|32|mru|none
+2026-09-13 22:35:04,063 INFO Execution complete: wiki2018|32|mru|none scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0664
+2026-09-13 22:35:04,063 INFO Running wiki2018|32|sieve|none
+2026-09-13 22:35:04,229 INFO Execution complete: wiki2018|32|sieve|none scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1430
+2026-09-13 22:35:04,229 INFO Running wiki2018|32|random|0
+2026-09-13 22:35:04,369 INFO Execution complete: wiki2018|32|random|0 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1158
+2026-09-13 22:35:04,369 INFO Running wiki2018|32|random|1
+2026-09-13 22:35:04,457 INFO Execution complete: wiki2018|32|random|1 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0766
+2026-09-13 22:35:04,457 INFO Running wiki2018|32|random|2
+2026-09-13 22:35:04,594 INFO Execution complete: wiki2018|32|random|2 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1152
+2026-09-13 22:35:04,594 INFO Running wiki2018|32|random|3
+2026-09-13 22:35:04,682 INFO Execution complete: wiki2018|32|random|3 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0757
+2026-09-13 22:35:04,682 INFO Running wiki2018|32|random|4
+2026-09-13 22:35:04,770 INFO Execution complete: wiki2018|32|random|4 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0758
+2026-09-13 22:35:04,770 INFO Running wiki2018|32|random|5
+2026-09-13 22:35:04,907 INFO Execution complete: wiki2018|32|random|5 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1160
+2026-09-13 22:35:04,907 INFO Running wiki2018|32|random|6
+2026-09-13 22:35:04,996 INFO Execution complete: wiki2018|32|random|6 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0777
+2026-09-13 22:35:04,996 INFO Running wiki2018|32|random|7
+2026-09-13 22:35:05,130 INFO Execution complete: wiki2018|32|random|7 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1117
+2026-09-13 22:35:05,130 INFO Running wiki2018|32|random|8
+2026-09-13 22:35:05,216 INFO Execution complete: wiki2018|32|random|8 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0739
+2026-09-13 22:35:05,216 INFO Running wiki2018|32|random|9
+2026-09-13 22:35:05,304 INFO Execution complete: wiki2018|32|random|9 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0766
+2026-09-13 22:35:05,304 INFO Running wiki2018|32|random|10
+2026-09-13 22:35:05,437 INFO Execution complete: wiki2018|32|random|10 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1114
+2026-09-13 22:35:05,437 INFO Running wiki2018|32|random|11
+2026-09-13 22:35:05,523 INFO Execution complete: wiki2018|32|random|11 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0745
+2026-09-13 22:35:05,524 INFO Running wiki2018|32|random|12
+2026-09-13 22:35:05,658 INFO Execution complete: wiki2018|32|random|12 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1121
+2026-09-13 22:35:05,658 INFO Running wiki2018|32|random|13
+2026-09-13 22:35:05,744 INFO Execution complete: wiki2018|32|random|13 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0744
+2026-09-13 22:35:05,744 INFO Running wiki2018|32|random|14
+2026-09-13 22:35:05,832 INFO Execution complete: wiki2018|32|random|14 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0758
+2026-09-13 22:35:05,833 INFO Running wiki2018|32|random|15
+2026-09-13 22:35:05,966 INFO Execution complete: wiki2018|32|random|15 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1107
+2026-09-13 22:35:05,966 INFO Running wiki2018|32|random|16
+2026-09-13 22:35:06,053 INFO Execution complete: wiki2018|32|random|16 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0747
+2026-09-13 22:35:06,053 INFO Running wiki2018|32|random|17
+2026-09-13 22:35:06,189 INFO Execution complete: wiki2018|32|random|17 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1149
+2026-09-13 22:35:06,189 INFO Running wiki2018|32|random|18
+2026-09-13 22:35:06,275 INFO Execution complete: wiki2018|32|random|18 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0748
+2026-09-13 22:35:06,276 INFO Running wiki2018|32|random|19
+2026-09-13 22:35:06,412 INFO Execution complete: wiki2018|32|random|19 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1145
+2026-09-13 22:35:06,412 INFO Running wiki2018|128|lru|none
+2026-09-13 22:35:06,489 INFO Execution complete: wiki2018|128|lru|none scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0655
+2026-09-13 22:35:06,489 INFO Running wiki2018|128|mru|none
+2026-09-13 22:35:06,564 INFO Execution complete: wiki2018|128|mru|none scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0640
+2026-09-13 22:35:06,564 INFO Running wiki2018|128|sieve|none
+2026-09-13 22:35:06,908 INFO Execution complete: wiki2018|128|sieve|none scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.3229
+2026-09-13 22:35:06,909 INFO Running wiki2018|128|random|0
+2026-09-13 22:35:06,996 INFO Execution complete: wiki2018|128|random|0 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0752
+2026-09-13 22:35:06,996 INFO Running wiki2018|128|random|1
+2026-09-13 22:35:07,130 INFO Execution complete: wiki2018|128|random|1 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1123
+2026-09-13 22:35:07,130 INFO Running wiki2018|128|random|2
+2026-09-13 22:35:07,221 INFO Execution complete: wiki2018|128|random|2 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0801
+2026-09-13 22:35:07,221 INFO Running wiki2018|128|random|3
+2026-09-13 22:35:07,360 INFO Execution complete: wiki2018|128|random|3 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1178
+2026-09-13 22:35:07,361 INFO Running wiki2018|128|random|4
+2026-09-13 22:35:07,448 INFO Execution complete: wiki2018|128|random|4 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0754
+2026-09-13 22:35:07,448 INFO Running wiki2018|128|random|5
+2026-09-13 22:35:07,537 INFO Execution complete: wiki2018|128|random|5 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0777
+2026-09-13 22:35:07,538 INFO Running wiki2018|128|random|6
+2026-09-13 22:35:07,672 INFO Execution complete: wiki2018|128|random|6 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1126
+2026-09-13 22:35:07,672 INFO Running wiki2018|128|random|7
+2026-09-13 22:35:07,762 INFO Execution complete: wiki2018|128|random|7 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0781
+2026-09-13 22:35:07,762 INFO Running wiki2018|128|random|8
+2026-09-13 22:35:07,900 INFO Execution complete: wiki2018|128|random|8 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1151
+2026-09-13 22:35:07,900 INFO Running wiki2018|128|random|9
+2026-09-13 22:35:07,987 INFO Execution complete: wiki2018|128|random|9 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0756
+2026-09-13 22:35:07,988 INFO Running wiki2018|128|random|10
+2026-09-13 22:35:08,074 INFO Execution complete: wiki2018|128|random|10 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0751
+2026-09-13 22:35:08,075 INFO Running wiki2018|128|random|11
+2026-09-13 22:35:08,208 INFO Execution complete: wiki2018|128|random|11 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1123
+2026-09-13 22:35:08,208 INFO Running wiki2018|128|random|12
+2026-09-13 22:35:08,297 INFO Execution complete: wiki2018|128|random|12 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0769
+2026-09-13 22:35:08,297 INFO Running wiki2018|128|random|13
+2026-09-13 22:35:08,434 INFO Execution complete: wiki2018|128|random|13 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1146
+2026-09-13 22:35:08,434 INFO Running wiki2018|128|random|14
+2026-09-13 22:35:08,520 INFO Execution complete: wiki2018|128|random|14 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0737
+2026-09-13 22:35:08,520 INFO Running wiki2018|128|random|15
+2026-09-13 22:35:08,606 INFO Execution complete: wiki2018|128|random|15 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0742
+2026-09-13 22:35:08,606 INFO Running wiki2018|128|random|16
+2026-09-13 22:35:08,740 INFO Execution complete: wiki2018|128|random|16 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1120
+2026-09-13 22:35:08,740 INFO Running wiki2018|128|random|17
+2026-09-13 22:35:08,828 INFO Execution complete: wiki2018|128|random|17 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0760
+2026-09-13 22:35:08,828 INFO Running wiki2018|128|random|18
+2026-09-13 22:35:08,963 INFO Execution complete: wiki2018|128|random|18 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.1143
+2026-09-13 22:35:08,963 INFO Running wiki2018|128|random|19
+2026-09-13 22:35:09,050 INFO Execution complete: wiki2018|128|random|19 scored_requests=4096 miss_ratio=1.000000 runtime_sec=0.0745
+2026-09-13 22:35:09,053 INFO Tier-1 production run finished: run_valid=True
+{
+  "n_complete": 230,
+  "n_failed": 0,
+  "n_planned": 230,
+  "output_files": {
+    "provenance.json": {
+      "bytes": 11047,
+      "sha256": "d47048745de1b716a1c5b843193dc0d33b01586dca92c4a9b9ea3dae28e88781"
+    },
+    "run_results.csv": {
+      "bytes": 37067,
+      "sha256": "30c38c16b383942048895c99624fa5aef47de11c5f2408cbecb4b642eb44d0f9"
+    },
+    "run_results.jsonl": {
+      "bytes": 101848,
+      "sha256": "06b6ad8e933ffbc8889f6e80b770e0a92280be7e654f92af246d45c0e61b2de3"
+    },
+    "sanity_checks.json": {
+      "bytes": 1564,
+      "sha256": "4d88f4444d4fade3339faa447dd8b3ba63f212099bdf4d4bf391a0851b791f32"
+    },
+    "summary.csv": {
+      "bytes": 4790,
+      "sha256": "e24ad3ce81136453fa6888422379cae8b5915fded2354423de2099edd5e9f269"
+    }
+  },
+  "run_id": "20260914T023445Z_8a4cd32402a1",
+  "run_valid": true
+}

@@ -1,0 +1,90 @@
+{
+  "freeze_purpose": "Durable byte-for-byte snapshot of the validated Tier-1 production closed-loop evidence, taken because analysis/closed_loop_production_tier1_20260913/outputs/ and logs/ are intentionally .gitignore'd in the harness worktree so future analysis has a stable, committed source of truth.",
+  "run_id": "20260914T023445Z_8a4cd32402a1",
+  "harness_branch": "experiment/closed-loop-tier1-harness-20260913",
+  "harness_commit": "8a4cd32402a1c053af5db17c26cf05ee88842d8c",
+  "freeze_timestamp_utc": "2026-09-14T02:43:00Z",
+  "freeze_performed_on_branch": "analysis/tier1-offline-closed-loop-linkage-20260914",
+  "validation_result_at_freeze_time": "TIER1_VALIDATE: PASS (all 14 gates PASS; 230/230 complete; 0 failed) -- re-verified independently again after freeze, see README.md",
+  "note_on_recomputation": "Every SHA256 below was independently recomputed from the on-disk source file at freeze time, NOT copied from any prior report's claimed value. The 5 values that a prior report also happened to state (run_results.csv, summary.csv, sanity_checks.json, provenance.json, run_results.jsonl) were cross-checked and found to match exactly.",
+  "files": [
+    {
+      "original_absolute_path": "/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-tier1-harness-20260913/analysis/closed_loop_production_tier1_20260913/outputs/20260914T023445Z_8a4cd32402a1/run_results.jsonl",
+      "frozen_relative_path": "run/20260914T023445Z_8a4cd32402a1/run_results.jsonl",
+      "bytes": 101848,
+      "sha256_before_copy": "06b6ad8e933ffbc8889f6e80b770e0a92280be7e654f92af246d45c0e61b2de3",
+      "sha256_after_copy": "06b6ad8e933ffbc8889f6e80b770e0a92280be7e654f92af246d45c0e61b2de3",
+      "byte_identical": true
+    },
+    {
+      "original_absolute_path": "/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-tier1-harness-20260913/analysis/closed_loop_production_tier1_20260913/outputs/20260914T023445Z_8a4cd32402a1/run_results.csv",
+      "frozen_relative_path": "run/20260914T023445Z_8a4cd32402a1/run_results.csv",
+      "bytes": 37067,
+      "sha256_before_copy": "30c38c16b383942048895c99624fa5aef47de11c5f2408cbecb4b642eb44d0f9",
+      "sha256_after_copy": "30c38c16b383942048895c99624fa5aef47de11c5f2408cbecb4b642eb44d0f9",
+      "byte_identical": true
+    },
+    {
+      "original_absolute_path": "/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-tier1-harness-20260913/analysis/closed_loop_production_tier1_20260913/outputs/20260914T023445Z_8a4cd32402a1/summary.csv",
+      "frozen_relative_path": "run/20260914T023445Z_8a4cd32402a1/summary.csv",
+      "bytes": 4790,
+      "sha256_before_copy": "e24ad3ce81136453fa6888422379cae8b5915fded2354423de2099edd5e9f269",
+      "sha256_after_copy": "e24ad3ce81136453fa6888422379cae8b5915fded2354423de2099edd5e9f269",
+      "byte_identical": true
+    },
+    {
+      "original_absolute_path": "/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-tier1-harness-20260913/analysis/closed_loop_production_tier1_20260913/outputs/20260914T023445Z_8a4cd32402a1/sanity_checks.json",
+      "frozen_relative_path": "run/20260914T023445Z_8a4cd32402a1/sanity_checks.json",
+      "bytes": 1564,
+      "sha256_before_copy": "4d88f4444d4fade3339faa447dd8b3ba63f212099bdf4d4bf391a0851b791f32",
+      "sha256_after_copy": "4d88f4444d4fade3339faa447dd8b3ba63f212099bdf4d4bf391a0851b791f32",
+      "byte_identical": true
+    },
+    {
+      "original_absolute_path": "/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-tier1-harness-20260913/analysis/closed_loop_production_tier1_20260913/outputs/20260914T023445Z_8a4cd32402a1/provenance.json",
+      "frozen_relative_path": "run/20260914T023445Z_8a4cd32402a1/provenance.json",
+      "bytes": 11047,
+      "sha256_before_copy": "d47048745de1b716a1c5b843193dc0d33b01586dca92c4a9b9ea3dae28e88781",
+      "sha256_after_copy": "d47048745de1b716a1c5b843193dc0d33b01586dca92c4a9b9ea3dae28e88781",
+      "byte_identical": true
+    },
+    {
+      "original_absolute_path": "/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-tier1-harness-20260913/analysis/closed_loop_production_tier1_20260913/outputs/20260914T023445Z_8a4cd32402a1/run_manifest.json",
+      "frozen_relative_path": "run/20260914T023445Z_8a4cd32402a1/run_manifest.json",
+      "bytes": 835,
+      "sha256_before_copy": "6afb436fb5e366cc023dc9ee0e2ea5cb87bde3340852ceca3262e1bdac296b82",
+      "sha256_after_copy": "6afb436fb5e366cc023dc9ee0e2ea5cb87bde3340852ceca3262e1bdac296b82",
+      "byte_identical": true,
+      "note": "Not supplied in the prior report (which predates this file's own use here); recomputed fresh. This file is self-referential (it records the SHA256 of the other output files) and cannot record its own hash, which is why this external EVIDENCE_MANIFEST.json exists."
+    },
+    {
+      "original_absolute_path": "/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-tier1-harness-20260913/analysis/closed_loop_production_tier1_20260913/outputs/20260914T023445Z_8a4cd32402a1/tier1_run.log",
+      "frozen_relative_path": "run/20260914T023445Z_8a4cd32402a1/tier1_run.log",
+      "bytes": 44113,
+      "sha256_before_copy": "24a05514c485ffe96c2ff24e9e140f2093e05f891912e6ab7c4995fa18451032",
+      "sha256_after_copy": "24a05514c485ffe96c2ff24e9e140f2093e05f891912e6ab7c4995fa18451032",
+      "byte_identical": true,
+      "note": "Harness-internal persistent log (see tier1_core.setup_logging), independent of the tmux launcher's own tee'd log below."
+    },
+    {
+      "original_absolute_path": "/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-tier1-harness-20260913/analysis/closed_loop_production_tier1_20260913/outputs/20260914T023445Z_8a4cd32402a1/augmented_caching_working_tree.diff",
+      "frozen_relative_path": "run/20260914T023445Z_8a4cd32402a1/augmented_caching_working_tree.diff",
+      "bytes": 58089,
+      "sha256_before_copy": "66539a089c9f0097ded4976957fb0e848b90ea4db22d05fd99a16a7e60bbd0fa",
+      "sha256_after_copy": "66539a089c9f0097ded4976957fb0e848b90ea4db22d05fd99a16a7e60bbd0fa",
+      "byte_identical": true,
+      "note": "Simulator (augmented-caching) tracked working-tree diff captured at run start, per the harness's simulator_provenance() -- reflects the secondary repo's pre-existing, unrelated dirty docs/tests, not anything produced by Tier 1 itself."
+    },
+    {
+      "original_absolute_path": "/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/closed-loop-tier1-harness-20260913/analysis/closed_loop_production_tier1_20260913/logs/tier1_run_20260914T023444Z.log",
+      "frozen_relative_path": "run/20260914T023445Z_8a4cd32402a1/launcher_tier1_run_20260914T023444Z.log",
+      "bytes": 44949,
+      "sha256_before_copy": "745cf68fbca877f26396c87d483a9391c5e7f2e609ec87211da5bfdfef4a7a55",
+      "sha256_after_copy": "745cf68fbca877f26396c87d483a9391c5e7f2e609ec87211da5bfdfef4a7a55",
+      "byte_identical": true,
+      "note": "tmux launch command's own 'tee -a' log, separate from the harness-internal tier1_run.log above. Slightly larger because tee captures a few extra shell/process lines around the Python process's own logging output. Renamed with a 'launcher_' prefix in the frozen copy to avoid colliding with the harness-internal log's identical basename pattern."
+    }
+  ],
+  "total_files": 9,
+  "total_bytes": 304338
+}

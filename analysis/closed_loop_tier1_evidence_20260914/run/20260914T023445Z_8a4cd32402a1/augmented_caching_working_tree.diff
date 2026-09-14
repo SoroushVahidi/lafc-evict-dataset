@@ -1,0 +1,1207 @@
+diff --git a/docs/README.md b/docs/README.md
+index 4df7bd5..f4e71d9 100644
+--- a/docs/README.md
++++ b/docs/README.md
+@@ -38,5 +38,5 @@ This directory contains detailed technical documentation for the Augmented Cachi
+ 
+ ## Historical and internal notes
+ 
+-- **[Archive](README.md)**: (This file)
++- **Archival Material**: See [docs/archival/](archival/) for historical reports and references.
+ - **Internal Notes**: See `docs/internal_*` for author-facing working notes and novelty guardrails.
+diff --git a/docs/archival/refs/README.md b/docs/archival/refs/README.md
+index fed93b0..1daf333 100644
+--- a/docs/archival/refs/README.md
++++ b/docs/archival/refs/README.md
+@@ -2,7 +2,7 @@
+ 
+ | File | Purpose |
+ |------|---------|
+-| [`related_work_table6.bib`](related_work_table6.bib) | BibTeX keys cited by [`../tables/manuscript/table6_related_work_learned_caching.tex`](../tables/manuscript/table6_related_work_learned_caching.tex) |
++| [`related_work_table6.bib`](related_work_table6.bib) | BibTeX keys cited by [`../../../tables/manuscript/table6_related_work_learned_caching.tex`](../../../tables/manuscript/table6_related_work_learned_caching.tex) |
+ 
+ **Usage:** merge these entries into your main manuscript `.bib`, or add `\bibliography{refs/related_work_table6}` on a path LaTeX can see.
+ 
+diff --git a/docs/archival/reports/README.md b/docs/archival/reports/README.md
+index 0337457..2f96f46 100644
+--- a/docs/archival/reports/README.md
++++ b/docs/archival/reports/README.md
+@@ -5,4 +5,4 @@
+ | **`manuscript_artifacts/`** | Output of `build_kbs_main_manuscript_artifacts.py`: `manuscript_artifact_report.md`, `manuscript_artifact_manifest.json`, optional `latex_snippets/`, internal audits (`*_gap_map.md`, scheduler checks, …) |
+ | **Other `*.md` / audits** | Repository hygiene, evidence alignment, subsection maps — support navigation; not substitute for canonical `analysis/*_heavy_r1` CSVs |
+ 
+-**Canonical KBS checklist:** [`../CANONICAL_KBS_SUBMISSION.md`](../CANONICAL_KBS_SUBMISSION.md).
++**Canonical KBS checklist:** [`../../../CANONICAL_KBS_SUBMISSION.md`](../../../CANONICAL_KBS_SUBMISSION.md).
+diff --git a/docs/baselines.md b/docs/baselines.md
+index a5fc43e..fdde3c6 100644
+--- a/docs/baselines.md
++++ b/docs/baselines.md
+@@ -261,7 +261,7 @@ required adaptation, or an optional deviation. The two `memory_window`/
+ values (the official defaults are CDN-scale constants that never fire at
+ this repository's request-count scale); both are validation-tunable via CLI
+ flags and are tuned on a held-out validation prefix (never the test region)
+-in `scripts/experiments/run_lrb_external_baseline.py`, mirroring the
++in `scripts/experiments/reviewer/run_lrb_external_baseline.py`, mirroring the
+ paper's own per-trace tuning protocol.
+ 
+ ### Diagnostics exposed
+@@ -296,7 +296,7 @@ Full external-baseline comparison across all 7 manuscript trace families and
+ capacities 32/64/128:
+ 
+ ```bash
+-python scripts/experiments/run_lrb_external_baseline.py
++python scripts/experiments/reviewer/run_lrb_external_baseline.py
+ ```
+ 
+ Outputs write to `analysis/external_learned_baselines/lrb/` — canonical
+diff --git a/docs/canonical_experiments.md b/docs/canonical_experiments.md
+index ad10e87..0b13e2a 100644
+--- a/docs/canonical_experiments.md
++++ b/docs/canonical_experiments.md
+@@ -71,7 +71,7 @@ Controlled timing benchmarks on an idle machine.
+ The primary external baseline is **LRB**. It is run across all canonical traces:
+ 
+ ```bash
+-python scripts/experiments/run_lrb_external_baseline.py \
++python scripts/experiments/reviewer/run_lrb_external_baseline.py \
+   --capacities 32,64,128 \
+   --out-dir analysis/external_learned_baselines/lrb
+ ```
+diff --git a/docs/external_baselines.md b/docs/external_baselines.md
+index ca89747..45ed724 100644
+--- a/docs/external_baselines.md
++++ b/docs/external_baselines.md
+@@ -13,24 +13,24 @@ This document describes the external learned baselines integrated into this repo
+ ### 1. LRB (Learning Relaxed Belady)
+ - **Paper**: *Learning Relaxed Belady for Content Delivery Network Caching* (NSDI '20).
+ - **Status**: Adapted implementation.
+-- **Provenance**: Based on the official [songjiayang/LRB](https://github.com/songjiayang/LRB) logic, integrated via `scripts/experiments/run_lrb_external_baseline.py`.
++- **Provenance**: Based on the official [songjiayang/LRB](https://github.com/songjiayang/LRB) logic, integrated via `scripts/experiments/reviewer/run_lrb_external_baseline.py`.
+ - **Note**: This is a heavyweight baseline requiring significant training time and memory.
+ - **Method Spec**: See `docs/lrb_method_spec.md`.
+ 
+ ### 2. 3L-Cache
+ - **Paper**: *3L-Cache: A Three-Layer Cache Management for Cloud Storage* (FAST '21).
+-- **Status**: Independent reimplementation.
+-- **Provenance**: Reimplemented based on the paper's description of the admission and eviction policies.
++- **Status**: Independent reimplementation (Scientific branches).
++- **Provenance**: Reimplemented based on the paper's description of the admission and eviction policies. Available in the `feat/3l-cache-baseline` worktree.
+ 
+ ### 3. HALP
+ - **Paper**: *HALP: Heuristic-Aided Learned Caching* (OSDI '23).
+-- **Status**: Independent reimplementation / Adaptation.
+-- **Note**: Reimplemented to follow the heuristic-augmented learning structure described in the paper.
++- **Status**: Independent reimplementation / Adaptation (Scientific branches).
++- **Note**: Reimplemented to follow the heuristic-augmented learning structure described in the paper. Available in the `feat/halp-baseline` worktree.
+ 
+ ### 4. CACHEUS
+ - **Paper**: *CACHEUS: Machine Learning-based Caching for Block I/O* (FAST '21).
+-- **Status**: Author-released source (no license file found at pinned commit).
+-- **Provenance**: Integrated via `lafc.policies.external.cacheus`.
++- **Status**: Author-released source (Scientific branches).
++- **Provenance**: Integrated via `lafc.policies.external.cacheus`. Available in the `feat/cacheus-baseline` worktree.
+ 
+ ## Setup and usage
+ 
+@@ -38,7 +38,7 @@ External baselines often require additional dependencies (e.g., specific version
+ 
+ For LRB, you must use the designated runner:
+ ```bash
+-python scripts/experiments/run_lrb_external_baseline.py --capacities 32,64,128 --out-dir analysis/external_learned_baselines/lrb
++python scripts/experiments/reviewer/run_lrb_external_baseline.py --capacities 32,64,128 --out-dir analysis/external_learned_baselines/lrb
+ ```
+ 
+ Refer to `docs/baselines.md` for the full roster of internal classical baselines (LRU, Belady, etc.).
+diff --git a/docs/kbs_manuscript_workflow.md b/docs/kbs_manuscript_workflow.md
+index 88bceb8..72b1553 100644
+--- a/docs/kbs_manuscript_workflow.md
++++ b/docs/kbs_manuscript_workflow.md
+@@ -20,7 +20,7 @@ Use **only** this pipeline for primary **multi-trace Wulver** `evict_value_v1` c
+ 
+ **Preflight (full main quantitative bundle):** **`analysis/evict_value_wulver_v1_policy_comparison_heavy_r1.csv`** must exist to refresh Table~1, Table~3, and Figures~2–3. The builder still runs without it: it refreshes offline/schematic artifacts and writes **explicit unavailable stubs** for policy-dependent tables/figures (see `reports/manuscript_artifacts/manuscript_artifact_report.md`). Do not substitute the unsuffixed `analysis/evict_value_wulver_v1_policy_comparison.csv` for canonical KBS claims.
+ 
+-**End-to-end evidence gap (what is missing vs what already helps):** [`../reports/manuscript_artifacts/end_to_end_evidence_gap_report.md`](../reports/manuscript_artifacts/end_to_end_evidence_gap_report.md).
++**End-to-end evidence gap (what is missing vs what already helps):** [`archival/reports/manuscript_artifacts/end_to_end_evidence_gap_report.md`](archival/reports/manuscript_artifacts/end_to_end_evidence_gap_report.md).
+ 
+ ---
+ 
+diff --git a/docs/lrb_method_spec.md b/docs/lrb_method_spec.md
+index f77fc70..8535b93 100644
+--- a/docs/lrb_method_spec.md
++++ b/docs/lrb_method_spec.md
+@@ -146,7 +146,7 @@ constant default (67,108,864 requests) is CDN-scale and never fires within
+ this repository's ≤50,000-request/trace, 32–128-slot evaluation. **Required
+ adaptation**: this repository ships an illustrative default
+ (`memory_window=4096`) and performs its own small validation-only grid
+-search per trace/capacity in `scripts/experiments/run_lrb_external_baseline.py`,
++search per trace/capacity in `scripts/experiments/reviewer/run_lrb_external_baseline.py`,
+ analogous in spirit to the paper's own protocol — never tuned against the
+ evaluated/test region.
+ 
+diff --git a/scripts/validation/revision_readiness.py b/scripts/validation/revision_readiness.py
+index da2f2d0..f10d4a3 100644
+--- a/scripts/validation/revision_readiness.py
++++ b/scripts/validation/revision_readiness.py
+@@ -43,31 +43,91 @@ def concern_1_readiness(c1: Dict[str, object]) -> Dict[str, str]:
+ 
+ def concern_2_readiness(c2: Dict[str, object], ablation_root: Optional[Path]) -> Dict[str, str]:
+     training = "COMPLETE" if c2.get("models_done") == c2.get("models_total") else "RUNNING"
+-    audits = "NOT_RUN"
+-    if ablation_root is not None:
+-        same_ex = _audit_final_state(ablation_root / "analysis" / "supervision_objective_ablation_v1" / "same_example_audit.json")
+-        fair = _audit_final_state(ablation_root / "analysis" / "supervision_objective_ablation_v1" / "fairness_audit.json")
+-        if same_ex == "COMPLETE" and fair == "COMPLETE":
+-            audits = "COMPLETE"
+-        elif same_ex != "NOT_RUN" or fair != "NOT_RUN":
+-            audits = f"PARTIAL (same_example={same_ex}, fairness={fair})"
++
++    # Audit states come from the richer status fields (already computed in revision_status).
++    same_ex_pass = bool(c2.get("same_example_final_pass"))
++    fair_pass = bool(c2.get("fairness_final_pass"))
++    same_ex_exists = bool(c2.get("same_example_audit_exists"))
++    fair_exists = bool(c2.get("fairness_audit_exists"))
++
++    if same_ex_pass and fair_pass:
++        audits = "BOTH_FINAL_PASS"
++    elif same_ex_exists or fair_exists:
++        audits = f"PARTIAL (same_example_final_pass={same_ex_pass}, fairness_final_pass={fair_pass})"
++    else:
++        audits = "NOT_RUN"
++
+     if c2.get("registry_frozen"):
+         registry = "FROZEN"
+     elif training == "COMPLETE":
+         registry = "READY_TO_FREEZE"
+     else:
+         registry = "BLOCKED"
+-    eval_ = "COMPLETE" if c2.get("eval_rows", 0) >= c2.get("eval_rows_expected", 84) else (
+-        "READY" if c2.get("registry_frozen") else "BLOCKED"
+-    )
+-    note = None
+-    if training == "RUNNING":
+-        note = ("NOTE: the running objective_ablation_pipeline tmux session already auto-chains "
+-                "dataset build -> train -> registry freeze -> 84-row eval with NO manual step in "
+-                "between -- it does not wait for the same-example/fairness audits above. If those "
+-                "audits are meant to gate the eval, the pipeline must be interrupted before Stage 4 "
+-                "fires, which is a deliberate, audited decision -- not something this tool does.")
+-    return {"training": training, "audits": audits, "registry": registry, "eval": eval_, **({"note": note} if note else {})}
++
++    # Use the eval_state from status module for precise eval classification.
++    eval_state = c2.get("eval_state", "NOT_STARTED")
++    eval_rows = c2.get("eval_rows", 0)
++    eval_expected = c2.get("eval_rows_expected", 84)
++
++    if eval_state == "COMPLETE_AND_AUDITED":
++        eval_ = "COMPLETE_AND_AUDITED"
++    elif eval_state in ("FINAL_AUDITS_RUNNING",):
++        eval_ = "FINAL_AUDITS_RUNNING"
++    elif eval_state == "BLOCKED_BY_AUDIT":
++        eval_ = "BLOCKED_BY_AUDIT"
++    elif eval_state == "CURRENT_RUN_EVAL_COMPLETE_AUDITS_REQUIRED":
++        # 84/84 rows exist but the final audits have not been produced yet.
++        eval_ = "CURRENT_RUN_EVAL_COMPLETE_AUDITS_REQUIRED"
++    elif eval_state == "CURRENT_RUN_RUNNING_PRE_GATE":
++        # Currently running but audits were not run before eval started.
++        # This is the live run that began before the gate was installed.
++        eval_ = "CURRENT_RUN_RUNNING_PRE_GATE"
++    elif eval_state == "CURRENT_RUN_PARTIAL_STOPPED_PRE_GATE":
++        eval_ = "CURRENT_RUN_PARTIAL_STOPPED_PRE_GATE"
++    elif eval_state == "NOT_STARTED":
++        if registry == "FROZEN" and training == "COMPLETE":
++            eval_ = "READY_TO_START"
++        else:
++            eval_ = "NOT_STARTED"
++    elif eval_state in ("INVALID_OVERFLOW", "INVALID_DUPLICATE_KEYS", "INVALID_NAN_INF", "EVALUATION_FAILED"):
++        eval_ = "FAILED"
++    else:
++        eval_ = "BLOCKED"
++
++    result: Dict[str, str] = {
++        "training": training,
++        "audits": audits,
++        "registry": registry,
++        "eval": eval_,
++        "eval_rows": f"{eval_rows}/{eval_expected}",
++    }
++
++    # Acceptance note for the current live run that started without the audit gate.
++    if eval_state == "CURRENT_RUN_RUNNING_PRE_GATE":
++        result["acceptance_note"] = (
++            "CURRENT RUN started before the audit gate was installed. "
++            "Run both final audits after 84/84 rows complete. "
++            "If both pass with FINAL=true, the run is scientifically acceptable."
++        )
++    elif eval_state == "CURRENT_RUN_PARTIAL_STOPPED_PRE_GATE":
++        result["acceptance_note"] = (
++            "CURRENT RUN evaluation stopped before reaching 84/84 (pre-gate run). "
++            "Resume the evaluator to 84/84, then run both final audits."
++        )
++    elif eval_state == "CURRENT_RUN_EVAL_COMPLETE_AUDITS_REQUIRED":
++        result["acceptance_note"] = (
++            "Evaluation is 84/84 but the final audits have not yet run. "
++            "Run audit_supervision_objective_examples.py and "
++            "audit_supervision_objective_fairness.py (both FINAL=true) "
++            "to reach COMPLETE_AND_AUDITED."
++        )
++    elif eval_state == "BLOCKED_BY_AUDIT":
++        result["acceptance_note"] = (
++            "One or both final audits FAILED. Acceptance is blocked until the "
++            "underlying training/model/data issue is fixed and the audits pass."
++        )
++
++    return result
+ 
+ 
+ def concern_3_readiness(c3: Dict[str, object], active_tmux) -> Dict[str, str]:
+@@ -86,12 +146,20 @@ def concern_3_readiness(c3: Dict[str, object], active_tmux) -> Dict[str, str]:
+ 
+ 
+ def concern_4_readiness(c4: Dict[str, object]) -> Dict[str, str]:
+-    smoke = "COMPLETE" if c4.get("smoke_artifacts") else "NOT_STARTED"
++    expected = c4.get("smoke_artifacts_expected", 9)
++    present = c4.get("smoke_artifacts_count", 0)
++    missing = c4.get("smoke_artifacts_missing", [])
++    smoke = "COMPLETE" if present == expected and not missing else (
++        "INCOMPLETE" if present > 0 else "NOT_STARTED"
++    )
+     gate = c4.get("timing_gate", "DEFER")
+     controlled_timing = "BLOCKED_BY_ACTIVE_JOBS" if gate == "DEFER" else "READY"
+     if c4.get("controlled_campaign_started"):
+         controlled_timing = "COMPLETE"
+-    return {"smoke": smoke, "controlled_timing": controlled_timing}
++    result: Dict[str, str] = {"smoke": smoke, "controlled_timing": controlled_timing}
++    if missing:
++        result["smoke_missing"] = str(missing)
++    return result
+ 
+ 
+ def next_action(c1r, c2r, c3r, c4r) -> str:
+@@ -101,11 +169,19 @@ def next_action(c1r, c2r, c3r, c4r) -> str:
+     # -- only surface it as the top action when C1/C2 aren't already
+     # actively consuming CPU for their own training, to avoid recommending
+     # a 4th heavy job on top of 2-3 already running.
+-    other_heavy_job_running = c1r["training"] == "RUNNING" or c2r["training"] == "RUNNING"
++    other_heavy_job_running = (
++        c1r["training"] == "RUNNING"
++        or c2r["training"] == "RUNNING"
++        or c2r["eval"] in ("RUNNING", "CURRENT_RUN_RUNNING_PRE_GATE")
++    )
+     if c1r["registry"] == "READY_TO_FREEZE":
+         return "CONCERN_1_READY_FOR_NEXT_STAGE"
+     if c2r["registry"] == "READY_TO_FREEZE" and c2r["training"] == "COMPLETE":
+         return "CONCERN_2_READY_FOR_NEXT_STAGE"
++    if c2r["eval"] in ("CURRENT_RUN_EVAL_COMPLETE_AUDITS_REQUIRED", "FINAL_AUDITS_RUNNING"):
++        return "RUN_C2_FINAL_AUDITS"
++    if c2r["eval"] == "BLOCKED_BY_AUDIT":
++        return "REVIEW_C2_AUDIT_FAILURE"
+     if c3r["resume"] == "READY" and not other_heavy_job_running:
+         return "CONCERN_3_READY_TO_RESUME"
+     if c4r["controlled_timing"] == "READY":
+diff --git a/scripts/validation/revision_status.py b/scripts/validation/revision_status.py
+index ebdabb3..3f3bc4b 100644
+--- a/scripts/validation/revision_status.py
++++ b/scripts/validation/revision_status.py
+@@ -22,6 +22,7 @@ from __future__ import annotations
+ import argparse
+ import csv
+ import json
++import math
+ import subprocess
+ from pathlib import Path
+ from typing import Dict, List, Optional
+@@ -105,6 +106,67 @@ def concern_1_status(fairness_root: Path) -> Dict[str, object]:
+     }
+ 
+ 
++def _is_process_running(cmd_fragment: str) -> bool:
++    """Return True if any process in the process table has cmd_fragment in its cmdline."""
++    out = subprocess.run(["ps", "-eo", "cmd"], capture_output=True, text=True).stdout
++    for line in out.splitlines():
++        if "grep" in line or "revision_status.py" in line or "revision_readiness.py" in line:
++            continue
++        if cmd_fragment in line:
++            return True
++    return False
++
++
++def _audit_state(audit_path: Path) -> str:
++    """Classify an audit artifact into NOT_RUN / CORRUPT / PARTIAL / PASS / FAIL."""
++    if not audit_path.exists():
++        return "NOT_RUN"
++    try:
++        d = json.loads(audit_path.read_text(encoding="utf-8"))
++    except json.JSONDecodeError:
++        return "CORRUPT"
++    if not d.get("FINAL"):
++        return "PARTIAL"
++    if d.get("overall") == "PASS":
++        return "PASS"
++    return "FAIL"
++
++
++def _audit_final_pass(audit_path: Path) -> bool:
++    """Return True iff audit file exists, FINAL=true, and overall=PASS."""
++    return _audit_state(audit_path) == "PASS"
++
++
++def _analyze_eval_csv(path: Path) -> Dict[str, object]:
++    """Stream the C2 eval CSV and report integrity facts (never loads the
++    whole file into memory): row count, non-ok rows, duplicate (objective,
++    held_out_family, capacity) keys, and NaN/Inf cells."""
++    facts = {"rows": 0, "non_ok_rows": 0, "duplicate_keys": 0, "nan_inf_cells": 0}
++    if not path.exists():
++        return facts
++    seen = set()
++    with path.open(newline="", encoding="utf-8") as fh:
++        for row in csv.DictReader(fh):
++            facts["rows"] += 1
++            if str(row.get("status", "")).lower() in ("fail", "failed", "error"):
++                facts["non_ok_rows"] += 1
++            key = (row.get("objective"), row.get("held_out_family"), row.get("capacity"))
++            if key in seen:
++                facts["duplicate_keys"] += 1
++            seen.add(key)
++            for value in row.values():
++                if value in ("", "n/a", "NA"):
++                    continue
++                try:
++                    float(value)
++                except (TypeError, ValueError):
++                    continue
++                f = float(value)
++                if math.isnan(f) or math.isinf(f):
++                    facts["nan_inf_cells"] += 1
++    return facts
++
++
+ def concern_2_status(ablation_root: Path) -> Dict[str, object]:
+     data_root = ablation_root / "data" / "derived" / "supervision_objective_ablation_v1"
+     models_root = ablation_root / "models" / "supervision_objective_ablation_v1"
+@@ -119,26 +181,100 @@ def concern_2_status(ablation_root: Path) -> Dict[str, object]:
+         registry_frozen = bool(json.loads(registry_path.read_text(encoding="utf-8")).get("MODEL_SELECTION_FROZEN"))
+ 
+     eval_csv = ablation_root / "analysis" / "supervision_objective_ablation_v1" / "policy_comparison.csv"
+-    eval_rows = _count_csv_rows(eval_csv)
++    eval_facts = _analyze_eval_csv(eval_csv)
++    eval_rows = eval_facts["rows"]
++    eval_failures = eval_facts["non_ok_rows"]
+ 
+     same_example_path = ablation_root / "analysis" / "supervision_objective_ablation_v1" / "same_example_audit.json"
+     fairness_audit_path = ablation_root / "analysis" / "supervision_objective_ablation_v1" / "fairness_audit.json"
+ 
++    same_example_state = _audit_state(same_example_path)
++    fairness_state = _audit_state(fairness_audit_path)
++    same_example_final_pass = _audit_final_pass(same_example_path)
++    fairness_final_pass = _audit_final_pass(fairness_audit_path)
++
+     expected_models = len(OBJECTIVES) * len(FAMILIES)
+     expected_eval = len(OBJECTIVES) * len(FAMILIES) * len(CAPACITIES)
++
++    # Detect whether the evaluator / audit processes are currently alive.
++    evaluator_active = _is_process_running("run_supervision_objective_ablation.py")
++    audit_active = _is_process_running("audit_supervision_objective")
++
++    # ----- Explicit C2 evaluation state machine -------------------------------
++    #   NOT_STARTED                      rows == 0, evaluator absent
++    #   CURRENT_RUN_RUNNING_PRE_GATE     0 < rows < 84, evaluator active
++    #   CURRENT_RUN_PARTIAL_STOPPED_PRE_GATE  0 < rows < 84, evaluator absent
++    #   CURRENT_RUN_EVAL_COMPLETE_AUDITS_REQUIRED  rows == 84, audits not FINAL PASS
++    #   FINAL_AUDITS_RUNNING             rows == 84, audits not FINAL PASS, audit process alive
++    #   COMPLETE_AND_AUDITED             rows == 84, both audits FINAL PASS
++    #   BLOCKED_BY_AUDIT                 rows == 84, any audit FAIL
++    #   FAILED / INVALID                 rows > 84, duplicate keys, non-ok rows, or NaN/Inf
++    # --------------------------------------------------------------------------
++    invalid = (
++        eval_rows > expected_eval
++        or eval_facts["duplicate_keys"] > 0
++        or eval_failures > 0
++        or eval_facts["nan_inf_cells"] > 0
++    )
++    if invalid:
++        if eval_rows > expected_eval:
++            eval_state = "INVALID_OVERFLOW"
++        elif eval_facts["duplicate_keys"] > 0:
++            eval_state = "INVALID_DUPLICATE_KEYS"
++        elif eval_facts["nan_inf_cells"] > 0:
++            eval_state = "INVALID_NAN_INF"
++        else:
++            eval_state = "EVALUATION_FAILED"
++    elif eval_rows == expected_eval:
++        if same_example_final_pass and fairness_final_pass:
++            eval_state = "COMPLETE_AND_AUDITED"
++        elif audit_active:
++            eval_state = "FINAL_AUDITS_RUNNING"
++        elif same_example_state == "FAIL" or fairness_state == "FAIL":
++            eval_state = "BLOCKED_BY_AUDIT"
++        else:
++            eval_state = "CURRENT_RUN_EVAL_COMPLETE_AUDITS_REQUIRED"
++    elif eval_rows > 0:
++        if evaluator_active:
++            eval_state = "CURRENT_RUN_RUNNING_PRE_GATE"
++        else:
++            eval_state = "CURRENT_RUN_PARTIAL_STOPPED_PRE_GATE"
++    elif evaluator_active:
++        eval_state = "CURRENT_RUN_RUNNING_PRE_GATE"
++    else:
++        eval_state = "NOT_STARTED"
++
++    # ----- Overall concern-2 pipeline status ---------------------------------
++    if invalid:
++        status = "FAILED"
++    elif eval_state in ("COMPLETE_AND_AUDITED", "FINAL_AUDITS_RUNNING",
++                        "BLOCKED_BY_AUDIT", "CURRENT_RUN_EVAL_COMPLETE_AUDITS_REQUIRED"):
++        status = eval_state
++    elif eval_state in ("CURRENT_RUN_RUNNING_PRE_GATE", "CURRENT_RUN_PARTIAL_STOPPED_PRE_GATE"):
++        status = eval_state
++    elif models_done == expected_models:
++        status = "TRAINING_COMPLETE_AUDITS_NOT_RUN" if not (same_example_final_pass and fairness_final_pass) else "READY_FOR_EVALUATION"
++    elif models_done > 0 or datasets_done > 0:
++        status = "TRAINING_RUNNING"
++    else:
++        status = "NOT_STARTED"
++
+     return {
+         "datasets_done": datasets_done, "datasets_total": len(FAMILIES),
+         "models_done": models_done, "models_total": expected_models,
+         "registry_frozen": registry_frozen,
+         "eval_rows": eval_rows, "eval_rows_expected": expected_eval,
++        "eval_failures": eval_failures, "eval_duplicate_keys": eval_facts["duplicate_keys"],
++        "eval_nan_inf_cells": eval_facts["nan_inf_cells"],
++        "evaluator_active": evaluator_active, "audit_active": audit_active,
++        "eval_state": eval_state,
+         "same_example_audit_exists": same_example_path.exists(),
++        "same_example_audit_state": same_example_state,
++        "same_example_final_pass": same_example_final_pass,
+         "fairness_audit_exists": fairness_audit_path.exists(),
+-        "status": (
+-            "COMPLETE" if eval_rows >= expected_eval else
+-            "TRAINING COMPLETE — EVALUATION PENDING" if models_done == expected_models and not registry_frozen else
+-            "EVALUATION RUNNING" if registry_frozen and eval_rows > 0 else
+-            "RUNNING — TRAINING" if models_done > 0 or datasets_done > 0 else "NOT_STARTED"
+-        ),
++        "fairness_audit_state": fairness_state,
++        "fairness_final_pass": fairness_final_pass,
++        "status": status,
+     }
+ 
+ 
+@@ -159,16 +295,38 @@ def concern_3_status(fairness_root: Path) -> Dict[str, object]:
+     }
+ 
+ 
++# Canonical list of smoke artifacts for Concern 4 (practical-significance
++# ablation v1). This is the authoritative list -- do not use a glob.
++# provenance.json is bookkeeping, not a result artifact.
++C4_SMOKE_ARTIFACTS: List[str] = [
++    "exact_optimization_equivalence.json",
++    "profiler_breakdown.csv",
++    "selective_invocation.csv",
++    "topk_tradeoff.csv",
++    "model_complexity_tradeoff.csv",
++    "break_even_miss_cost.csv",
++    "miss_cost_sweep.csv",
++    "weighted_cost.csv",
++    "pareto_frontier.csv",
++]
++
++
+ def concern_4_status(fairness_root: Path) -> Dict[str, object]:
+     smoke_dir = fairness_root / "analysis" / "practical_significance_ablation_v1"
+-    smoke_artifacts = sorted(p.name for p in smoke_dir.glob("*.csv")) if smoke_dir.exists() else []
++    present = [a for a in C4_SMOKE_ARTIFACTS if (smoke_dir / a).exists()] if smoke_dir.exists() else []
++    missing = [a for a in C4_SMOKE_ARTIFACTS if a not in present]
++    smoke_complete = len(missing) == 0 and len(present) == len(C4_SMOKE_ARTIFACTS)
+     controlled_marker = smoke_dir / "controlled_final" / "profiler_breakdown.csv"
+     return {
+-        "smoke_artifacts": smoke_artifacts,
++        "smoke_artifacts_present": present,
++        "smoke_artifacts_missing": missing,
++        "smoke_artifacts_expected": len(C4_SMOKE_ARTIFACTS),
++        "smoke_artifacts_count": len(present),
+         "controlled_campaign_started": controlled_marker.exists(),
+         "timing_gate": _c4_gate_from_process_list(),
+-        "status": "SMOKE_COMPLETE_CONTROLLED_PENDING" if smoke_artifacts and not controlled_marker.exists() else (
+-            "CONTROLLED_COMPLETE" if controlled_marker.exists() else "NOT_STARTED"
++        "status": "SMOKE_COMPLETE_CONTROLLED_PENDING" if smoke_complete and not controlled_marker.exists() else (
++            "CONTROLLED_COMPLETE" if controlled_marker.exists() else
++            "SMOKE_INCOMPLETE" if present and missing else "NOT_STARTED"
+         ),
+     }
+ 
+@@ -208,9 +366,14 @@ def format_report(report: Dict[str, object]) -> str:
+     lines.append(f"    datasets {c2.get('datasets_done', '?')}/{c2.get('datasets_total', '?')}")
+     lines.append(f"    models   {c2.get('models_done', '?')}/{c2.get('models_total', '?')}")
+     lines.append(f"    registry frozen: {c2.get('registry_frozen', '?')}")
+-    lines.append(f"    evaluation {c2.get('eval_rows', '?')}/{c2.get('eval_rows_expected', '?')}")
+-    lines.append(f"    same_example_audit exists: {c2.get('same_example_audit_exists', '?')}, "
+-                 f"fairness_audit exists: {c2.get('fairness_audit_exists', '?')}")
++    lines.append(f"    evaluation {c2.get('eval_rows', '?')}/{c2.get('eval_rows_expected', '?')}"
++                 f"  failures={c2.get('eval_failures', '?')}  dup_keys={c2.get('eval_duplicate_keys', '?')}"
++                 f"  nan_inf={c2.get('eval_nan_inf_cells', '?')}  evaluator_active={c2.get('evaluator_active', '?')}")
++    lines.append(f"    eval_state: {c2.get('eval_state', '?')}")
++    lines.append(f"    same_example_audit: exists={c2.get('same_example_audit_exists', '?')} "
++                 f"state={c2.get('same_example_audit_state', '?')} final_pass={c2.get('same_example_final_pass', '?')}")
++    lines.append(f"    fairness_audit: exists={c2.get('fairness_audit_exists', '?')} "
++                 f"state={c2.get('fairness_audit_state', '?')} final_pass={c2.get('fairness_final_pass', '?')}")
+     lines.append(f"    status {c2.get('status')}")
+     lines.append("")
+ 
+@@ -223,7 +386,9 @@ def format_report(report: Dict[str, object]) -> str:
+ 
+     c4 = report["concern_4"]
+     lines.append("Concern 4 (practical significance):")
+-    lines.append(f"    smoke artifacts: {len(c4.get('smoke_artifacts', []))} file(s)")
++    lines.append(f"    smoke artifacts: {c4.get('smoke_artifacts_count', '?')}/{c4.get('smoke_artifacts_expected', '?')}")
++    if c4.get("smoke_artifacts_missing"):
++        lines.append(f"    MISSING: {c4.get('smoke_artifacts_missing')}")
+     lines.append(f"    controlled campaign started: {c4.get('controlled_campaign_started', '?')}")
+     lines.append(f"    C4_CONTROLLED_TIMING_GATE = {c4.get('timing_gate', '?')}")
+     lines.append(f"    status {c4.get('status')}")
+diff --git a/tests/test_datasets.py b/tests/test_datasets.py
+index d6d2fc3..ee3fbaf 100644
+--- a/tests/test_datasets.py
++++ b/tests/test_datasets.py
+@@ -83,7 +83,7 @@ def test_prepare_cli_brightkite(tmp_path: Path):
+         fh.write("1\t2008-01-01T00:00:00Z\t40.0\t-70.0\tvenueA\n")
+     cmd = [
+         sys.executable,
+-        "scripts/datasets/prepare_all.py",
++        "scripts/setup/prepare_all.py",
+         "--dataset",
+         "brightkite",
+         "--raw-dir",
+@@ -112,7 +112,7 @@ def test_prepare_cli_spec_missing_manifest_fails(tmp_path: Path):
+     (raw_root / "spec_cpu2006").mkdir(parents=True)
+     cmd = [
+         sys.executable,
+-        "scripts/datasets/prepare_all.py",
++        "scripts/setup/prepare_all.py",
+         "--dataset",
+         "spec_cpu2006",
+         "--raw-dir",
+@@ -201,7 +201,7 @@ def test_prepare_cli_sample_only_for_new_dataset(tmp_path: Path):
+     )
+     cmd = [
+         sys.executable,
+-        "scripts/datasets/prepare_all.py",
++        "scripts/setup/prepare_all.py",
+         "--dataset",
+         "twemcache",
+         "--raw-dir",
+@@ -220,7 +220,7 @@ def test_prepare_cli_sample_only_without_raw_uses_examples(tmp_path: Path):
+     out_root = tmp_path / "out"
+     cmd = [
+         sys.executable,
+-        "scripts/datasets/prepare_all.py",
++        "scripts/setup/prepare_all.py",
+         "--dataset",
+         "metakv",
+         "--raw-dir",
+diff --git a/tests/test_decision_aligned_targets_package.py b/tests/test_decision_aligned_targets_package.py
+index 9da6dbe..ec14146 100644
+--- a/tests/test_decision_aligned_targets_package.py
++++ b/tests/test_decision_aligned_targets_package.py
+@@ -15,7 +15,7 @@ def test_decision_aligned_target_scripts_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/build_evict_value_decision_aligned_dataset.py",
++            "scripts/experiments/exploratory/build_evict_value_decision_aligned_dataset.py",
+             "--trace-glob",
+             "data/example_*.json",
+             "--capacities",
+@@ -35,7 +35,7 @@ def test_decision_aligned_target_scripts_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/build_evict_value_pairwise_dataset.py",
++            "scripts/experiments/exploratory/build_evict_value_pairwise_dataset.py",
+             "--candidate-csv",
+             str(cand_dir / "candidate_rows.csv"),
+             "--output-dir",
+@@ -49,7 +49,7 @@ def test_decision_aligned_target_scripts_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/run_evict_value_decision_aligned_first_check.py",
++            "scripts/experiments/exploratory/run_evict_value_decision_aligned_first_check.py",
+             "--candidate-csv",
+             str(cand_dir / "candidate_rows.csv"),
+             "--output-dir",
+@@ -61,7 +61,7 @@ def test_decision_aligned_target_scripts_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/run_evict_value_pairwise_first_check.py",
++            "scripts/experiments/exploratory/run_evict_value_pairwise_first_check.py",
+             "--pairwise-csv",
+             str(pair_dir / "pairwise_rows.csv"),
+             "--output-dir",
+diff --git a/tests/test_evict_decision_aligned_v1.py b/tests/test_evict_decision_aligned_v1.py
+index ff00e24..2f1675d 100644
+--- a/tests/test_evict_decision_aligned_v1.py
++++ b/tests/test_evict_decision_aligned_v1.py
+@@ -34,7 +34,7 @@ def test_decision_aligned_scripts_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/build_evict_regret_dataset_v1.py",
++            "scripts/experiments/exploratory/build_evict_regret_dataset_v1.py",
+             "--trace-glob",
+             "data/example_*.json",
+             "--capacities",
+@@ -49,7 +49,7 @@ def test_decision_aligned_scripts_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/build_evict_pairwise_dataset_v1.py",
++            "scripts/experiments/exploratory/build_evict_pairwise_dataset_v1.py",
+             "--trace-glob",
+             "data/example_*.json",
+             "--capacities",
+@@ -65,7 +65,7 @@ def test_decision_aligned_scripts_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/run_evict_regret_first_check.py",
++            "scripts/experiments/exploratory/run_evict_regret_first_check.py",
+             "--data-dir",
+             str(data_dir),
+             "--output-dir",
+@@ -76,7 +76,7 @@ def test_decision_aligned_scripts_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/run_evict_pairwise_first_check.py",
++            "scripts/experiments/exploratory/run_evict_pairwise_first_check.py",
+             "--data-dir",
+             str(data_dir),
+             "--output-dir",
+diff --git a/tests/test_evict_value_failure_slice_audit.py b/tests/test_evict_value_failure_slice_audit.py
+index deb8514..ab6e2bd 100644
+--- a/tests/test_evict_value_failure_slice_audit.py
++++ b/tests/test_evict_value_failure_slice_audit.py
+@@ -10,7 +10,7 @@ def test_evict_value_failure_slice_audit_smoke(tmp_path):
+     out_md = tmp_path / "summary.md"
+     cmd = [
+         sys.executable,
+-        "scripts/run_evict_value_failure_slice_audit.py",
++        "scripts/experiments/diagnostics/run_evict_value_failure_slice_audit.py",
+         "--trace-manifest",
+         "",
+         "--trace-glob",
+diff --git a/tests/test_evict_value_pairwise_v1.py b/tests/test_evict_value_pairwise_v1.py
+index 0c5bbd9..b89904a 100644
+--- a/tests/test_evict_value_pairwise_v1.py
++++ b/tests/test_evict_value_pairwise_v1.py
+@@ -15,7 +15,7 @@ def test_pairwise_v1_training_and_first_check_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/build_evict_value_decision_aligned_dataset.py",
++            "scripts/experiments/exploratory/build_evict_value_decision_aligned_dataset.py",
+             "--trace-glob",
+             "data/example_*.json",
+             "--capacities",
+@@ -33,7 +33,7 @@ def test_pairwise_v1_training_and_first_check_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/build_evict_value_pairwise_dataset.py",
++            "scripts/experiments/exploratory/build_evict_value_pairwise_dataset.py",
+             "--candidate-csv",
+             str(cand_dir / "candidate_rows.csv"),
+             "--output-dir",
+@@ -47,7 +47,7 @@ def test_pairwise_v1_training_and_first_check_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/train_evict_value_pairwise_v1.py",
++            "scripts/experiments/exploratory/train_evict_value_pairwise_v1.py",
+             "--pairwise-csv",
+             str(pair_dir / "pairwise_rows.csv"),
+             "--metrics-json",
+@@ -63,7 +63,7 @@ def test_pairwise_v1_training_and_first_check_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/run_evict_value_pairwise_first_check.py",
++            "scripts/experiments/exploratory/run_evict_value_pairwise_first_check.py",
+             "--candidate-csv",
+             str(cand_dir / "candidate_rows.csv"),
+             "--pairwise-csv",
+diff --git a/tests/test_evict_value_v1.py b/tests/test_evict_value_v1.py
+index ea074a9..6eb8c40 100644
+--- a/tests/test_evict_value_v1.py
++++ b/tests/test_evict_value_v1.py
+@@ -52,7 +52,7 @@ def test_evict_value_v1_training_smoke_and_reproducibility(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/build_evict_value_dataset_v1.py",
++            "scripts/experiments/exploratory/build_evict_value_dataset_v1.py",
+             "--sample-only",
+             "--capacities",
+             "2",
+@@ -68,7 +68,7 @@ def test_evict_value_v1_training_smoke_and_reproducibility(tmp_path: Path):
+ 
+     cmd = [
+         sys.executable,
+-        "scripts/train_evict_value_v1.py",
++        "scripts/experiments/exploratory/train_evict_value_v1.py",
+         "--data-dir",
+         str(out_dir),
+         "--horizon",
+@@ -154,7 +154,7 @@ def test_lightweight_comparison_includes_evict_value_v1(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/run_lightweight_baseline_comparison.py",
++            "scripts/experiments/exploratory/run_lightweight_baseline_comparison.py",
+             "--capacities",
+             "3",
+             "--max-requests",
+diff --git a/tests/test_evict_value_v2_decision_aligned.py b/tests/test_evict_value_v2_decision_aligned.py
+index 9393bf8..e807cb6 100644
+--- a/tests/test_evict_value_v2_decision_aligned.py
++++ b/tests/test_evict_value_v2_decision_aligned.py
+@@ -42,7 +42,7 @@ def test_v2_scripts_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/build_evict_value_v2_rollout_dataset.py",
++            "scripts/experiments/exploratory/build_evict_value_v2_rollout_dataset.py",
+             "--trace-glob",
+             "data/example_*.json",
+             "--dataset",
+@@ -64,7 +64,7 @@ def test_v2_scripts_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/build_evict_value_v2_pairwise_dataset.py",
++            "scripts/experiments/exploratory/build_evict_value_v2_pairwise_dataset.py",
+             "--candidate-csv",
+             str(rollout_dir / "candidate_rows.csv"),
+             "--output-dir",
+@@ -76,7 +76,7 @@ def test_v2_scripts_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/run_evict_value_v2_rollout_first_check.py",
++            "scripts/experiments/exploratory/run_evict_value_v2_rollout_first_check.py",
+             "--candidate-csv",
+             str(rollout_dir / "candidate_rows.csv"),
+             "--output-dir",
+@@ -88,7 +88,7 @@ def test_v2_scripts_smoke(tmp_path: Path):
+     subprocess.run(
+         [
+             sys.executable,
+-            "scripts/run_evict_value_v2_pairwise_first_check.py",
++            "scripts/experiments/exploratory/run_evict_value_v2_pairwise_first_check.py",
+             "--pairwise-csv",
+             str(pairwise_dir / "pairwise_rows.csv"),
+             "--output-dir",
+diff --git a/tests/test_family_winner_selection.py b/tests/test_family_winner_selection.py
+index 0b54bbe..ce38dd9 100644
+--- a/tests/test_family_winner_selection.py
++++ b/tests/test_family_winner_selection.py
+@@ -11,7 +11,7 @@ def test_family_winner_selection_runs(tmp_path):
+     model_path = out_dir / "models" / "ml_gate_v2_lightweight.pkl"
+     cmd = [
+         sys.executable,
+-        "scripts/run_family_winner_selection.py",
++        "scripts/experiments/reviewer/run_family_winner_selection.py",
+         "--capacities",
+         "2,3",
+         "--max-requests",
+diff --git a/tests/test_fifo_reinsertion.py b/tests/test_fifo_reinsertion.py
+index d46befd..4c43655 100644
+--- a/tests/test_fifo_reinsertion.py
++++ b/tests/test_fifo_reinsertion.py
+@@ -103,7 +103,7 @@ def test_fifo_reinsertion_runs_via_run_policy_helper():
+ 
+ def test_runner_policies_dict_accepts_fifo_reinsertion():
+     repo_root = Path(__file__).resolve().parents[1]
+-    script_path = repo_root / "scripts" / "run_policy_comparison_wulver_v1.py"
++    script_path = repo_root / "scripts" / "experiments" / "canonical" / "run_policy_comparison_wulver_v1.py"
+     spec = importlib.util.spec_from_file_location("run_policy_comparison_wulver_v1", script_path)
+     module = importlib.util.module_from_spec(spec)
+     spec.loader.exec_module(module)
+diff --git a/tests/test_hybrid_fallback_experiment.py b/tests/test_hybrid_fallback_experiment.py
+index ff00047..38f69c7 100644
+--- a/tests/test_hybrid_fallback_experiment.py
++++ b/tests/test_hybrid_fallback_experiment.py
+@@ -10,7 +10,7 @@ def test_hybrid_fallback_experiment_runs(tmp_path):
+     out_dir = tmp_path / "hybrid_fallback"
+     cmd = [
+         sys.executable,
+-        "scripts/run_hybrid_fallback_experiment.py",
++        "scripts/experiments/exploratory/run_hybrid_fallback_experiment.py",
+         "--trace-glob",
+         "data/example_unweighted.json,data/example_atlas_v1.json,data/example_general_caching.json,data/example.json",
+         "--capacities",
+diff --git a/tests/test_offline_teacher_vs_heuristic_experiment.py b/tests/test_offline_teacher_vs_heuristic_experiment.py
+index 75eb481..97342cc 100644
+--- a/tests/test_offline_teacher_vs_heuristic_experiment.py
++++ b/tests/test_offline_teacher_vs_heuristic_experiment.py
+@@ -10,7 +10,7 @@ def test_offline_teacher_vs_heuristic_experiment_runs(tmp_path):
+     out_dir = tmp_path / "exp"
+     cmd = [
+         sys.executable,
+-        "scripts/run_offline_teacher_vs_heuristic_experiment.py",
++        "scripts/experiments/exploratory/run_offline_teacher_vs_heuristic_experiment.py",
+         "--trace-glob",
+         "data/example_unweighted.json,data/example_atlas_v1.json,data/example_general_caching.json",
+         "--capacities",
+diff --git a/tests/test_offline_teacher_vs_heuristic_mediumscale.py b/tests/test_offline_teacher_vs_heuristic_mediumscale.py
+index 42dcf70..ee90084 100644
+--- a/tests/test_offline_teacher_vs_heuristic_mediumscale.py
++++ b/tests/test_offline_teacher_vs_heuristic_mediumscale.py
+@@ -9,7 +9,7 @@ def test_offline_teacher_vs_heuristic_mediumscale_runs(tmp_path):
+     out_dir = tmp_path / "medium"
+     cmd = [
+         sys.executable,
+-        "scripts/run_offline_teacher_vs_heuristic_mediumscale.py",
++        "scripts/experiments/exploratory/run_offline_teacher_vs_heuristic_mediumscale.py",
+         "--trace-glob",
+         "data/example_unweighted.json,data/example_atlas_v1.json,data/example_general_caching.json,data/example.json",
+         "--capacities",
+diff --git a/tests/test_pairwise_vs_pointwise_experiment.py b/tests/test_pairwise_vs_pointwise_experiment.py
+index 0b8a03b..7a0b801 100644
+--- a/tests/test_pairwise_vs_pointwise_experiment.py
++++ b/tests/test_pairwise_vs_pointwise_experiment.py
+@@ -9,7 +9,7 @@ def test_pairwise_vs_pointwise_experiment_runs(tmp_path):
+     out_dir = tmp_path / "pairwise_vs_pointwise"
+     cmd = [
+         sys.executable,
+-        "scripts/run_pairwise_vs_pointwise_experiment.py",
++        "scripts/experiments/exploratory/run_pairwise_vs_pointwise_experiment.py",
+         "--trace-glob",
+         "data/example_unweighted.json,data/example_atlas_v1.json,data/example_general_caching.json,data/example.json",
+         "--capacities",
+diff --git a/tests/test_revision_readiness.py b/tests/test_revision_readiness.py
+index 29986b8..f55649c 100644
+--- a/tests/test_revision_readiness.py
++++ b/tests/test_revision_readiness.py
+@@ -1,4 +1,4 @@
+-"""Fixture tests for scripts/revision_readiness.py."""
++"""Fixture tests for scripts/validation/revision_readiness.py."""
+ 
+ from __future__ import annotations
+ 
+@@ -8,7 +8,7 @@ from pathlib import Path
+ 
+ import pytest
+ 
+-_SCRIPTS_DIR = str(Path("scripts").resolve())
++_SCRIPTS_DIR = str(Path("scripts/validation").resolve())
+ 
+ 
+ @pytest.fixture(autouse=True)
+@@ -62,6 +62,25 @@ def test_next_action_timing_ready_when_everything_else_settled():
+     assert m.next_action(c1r, c2r, c3r, c4r) == "CONCERN_4_TIMING_READY"
+ 
+ 
++def test_next_action_run_c2_final_audits_when_eval_complete_audits_required():
++    m = _import_module()
++    c1r = {"training": "COMPLETE", "registry": "FROZEN", "eval": "BLOCKED"}
++    c2r = {"training": "COMPLETE", "registry": "FROZEN", "eval": "CURRENT_RUN_EVAL_COMPLETE_AUDITS_REQUIRED",
++           "audits": "NOT_RUN"}
++    c3r = {"campaign": "PARTIAL", "resume": "READY", "completion_audit": "BLOCKED"}
++    c4r = {"smoke": "COMPLETE", "controlled_timing": "BLOCKED_BY_ACTIVE_JOBS"}
++    assert m.next_action(c1r, c2r, c3r, c4r) == "RUN_C2_FINAL_AUDITS"
++
++
++def test_next_action_review_audit_failure_when_blocked():
++    m = _import_module()
++    c1r = {"training": "COMPLETE", "registry": "FROZEN", "eval": "BLOCKED"}
++    c2r = {"training": "COMPLETE", "registry": "FROZEN", "eval": "BLOCKED_BY_AUDIT", "audits": "PARTIAL"}
++    c3r = {"campaign": "PARTIAL", "resume": "READY", "completion_audit": "BLOCKED"}
++    c4r = {"smoke": "COMPLETE", "controlled_timing": "BLOCKED_BY_ACTIVE_JOBS"}
++    assert m.next_action(c1r, c2r, c3r, c4r) == "REVIEW_C2_AUDIT_FAILURE"
++
++
+ def test_concern_1_readiness_blocked_while_training(tmp_path):
+     m = _import_module()
+     c1 = {"models_done": 2, "models_total": 7, "registry_frozen": False,
+@@ -79,23 +98,55 @@ def test_concern_1_readiness_ready_to_freeze_when_all_models_done(tmp_path):
+     assert r["training"] == "COMPLETE"
+ 
+ 
+-def test_concern_2_readiness_flags_auto_chain_note_while_training(tmp_path):
++def test_concern_2_readiness_training_running_eval_blocked(tmp_path):
+     m = _import_module()
+     c2 = {"models_done": 24, "models_total": 28, "registry_frozen": False,
+-          "eval_rows": 0, "eval_rows_expected": 84}
++          "eval_rows": 0, "eval_rows_expected": 84, "eval_state": "NOT_STARTED"}
+     r = m.concern_2_readiness(c2, ablation_root=None)
+     assert r["training"] == "RUNNING"
+-    assert "note" in r
+-    assert "auto-chains" in r["note"]
++    assert r["registry"] == "BLOCKED"
++    assert r["eval"] == "NOT_STARTED"
++
++
++def test_concern_2_readiness_ready_to_start_when_frozen_no_eval_state(tmp_path):
++    m = _import_module()
++    c2 = {"models_done": 28, "models_total": 28, "registry_frozen": True,
++          "eval_rows": 84, "eval_rows_expected": 84, "eval_state": "NOT_STARTED"}
++    r = m.concern_2_readiness(c2, ablation_root=None)
++    assert "acceptance_note" not in r
++    assert r["eval"] == "READY_TO_START"
++
++
++def test_concern_2_readiness_running_pre_gate_has_acceptance_note():
++    m = _import_module()
++    c2 = {"models_done": 28, "models_total": 28, "registry_frozen": True,
++          "eval_rows": 40, "eval_rows_expected": 84, "eval_state": "CURRENT_RUN_RUNNING_PRE_GATE",
++          "same_example_final_pass": False, "fairness_final_pass": False}
++    r = m.concern_2_readiness(c2, ablation_root=None)
++    assert r["eval"] == "CURRENT_RUN_RUNNING_PRE_GATE"
++    assert "acceptance_note" in r
++
++
++def test_concern_2_readiness_eval_complete_audits_required():
++    m = _import_module()
++    c2 = {"models_done": 28, "models_total": 28, "registry_frozen": True,
++          "eval_rows": 84, "eval_rows_expected": 84,
++          "eval_state": "CURRENT_RUN_EVAL_COMPLETE_AUDITS_REQUIRED",
++          "same_example_final_pass": False, "fairness_final_pass": False}
++    r = m.concern_2_readiness(c2, ablation_root=None)
++    assert r["eval"] == "CURRENT_RUN_EVAL_COMPLETE_AUDITS_REQUIRED"
++    assert "acceptance_note" in r
+ 
+ 
+-def test_concern_2_readiness_no_note_when_training_complete(tmp_path):
++def test_concern_2_readiness_blocked_by_audit():
+     m = _import_module()
+     c2 = {"models_done": 28, "models_total": 28, "registry_frozen": True,
+-          "eval_rows": 84, "eval_rows_expected": 84}
++          "eval_rows": 84, "eval_rows_expected": 84,
++          "eval_state": "BLOCKED_BY_AUDIT",
++          "same_example_final_pass": True, "fairness_final_pass": False}
+     r = m.concern_2_readiness(c2, ablation_root=None)
+-    assert "note" not in r
+-    assert r["eval"] == "COMPLETE"
++    assert r["eval"] == "BLOCKED_BY_AUDIT"
++    assert "acceptance_note" in r
+ 
+ 
+ def test_audit_final_state_reads_final_flag(tmp_path):
+@@ -124,5 +175,7 @@ def test_concern_3_readiness_ready_when_no_session_active():
+ 
+ def test_concern_4_readiness_reflects_gate():
+     m = _import_module()
+-    r = m.concern_4_readiness({"smoke_artifacts": ["a.csv"], "timing_gate": "READY", "controlled_campaign_started": False})
++    c4 = {"smoke_artifacts_expected": 9, "smoke_artifacts_count": 9, "smoke_artifacts_missing": [],
++          "timing_gate": "READY", "controlled_campaign_started": False}
++    r = m.concern_4_readiness(c4)
+     assert r == {"smoke": "COMPLETE", "controlled_timing": "READY"}
+diff --git a/tests/test_revision_status.py b/tests/test_revision_status.py
+index 3ebddb6..054ebaa 100644
+--- a/tests/test_revision_status.py
++++ b/tests/test_revision_status.py
+@@ -1,4 +1,4 @@
+-"""Fixture tests for scripts/revision_status.py."""
++"""Fixture tests for scripts/validation/revision_status.py."""
+ 
+ from __future__ import annotations
+ 
+@@ -9,7 +9,7 @@ from pathlib import Path
+ 
+ import pytest
+ 
+-_SCRIPTS_DIR = str(Path("scripts").resolve())
++_SCRIPTS_DIR = str(Path("scripts/validation").resolve())
+ 
+ 
+ @pytest.fixture(autouse=True)
+@@ -130,3 +130,175 @@ def test_concern_3_status_complete_when_42_rows(tmp_path):
+ def test_count_csv_rows_missing_file_is_zero(tmp_path):
+     m = _import_module()
+     assert m._count_csv_rows(tmp_path / "nope.csv") == 0
++
++
++# ---------------------------------------------------------------------------
++# Concern 2 explicit evaluation state machine (Reviewer Concern 2 fix)
++# ---------------------------------------------------------------------------
++
++FAM = ["brightkite", "citibike", "cloudphysics", "metacdn", "metakv", "twemcache", "wiki2018"]
++OBJS = ["objective_eviction_loss", "objective_next_arrival", "objective_reuse_distance", "objective_pairwise"]
++
++
++def _make_c2_root(tmp_path: Path, *, n_models=28, n_eval_rows=0, audit_payloads=None) -> Path:
++    m = _import_module()
++    data_root = tmp_path / "data" / "derived" / "supervision_objective_ablation_v1"
++    models_root = tmp_path / "models" / "supervision_objective_ablation_v1"
++    out_dir = tmp_path / "analysis" / "supervision_objective_ablation_v1"
++    for fam in FAM:
++        (data_root / fam).mkdir(parents=True)
++        (data_root / fam / "manifest.json").write_text("{}")
++    for obj in OBJS:
++        (models_root / obj).mkdir(parents=True)
++        for fam in FAM:
++            if n_models >= OBJS.index(obj) * len(FAM) + FAM.index(fam) + 1:
++                (models_root / obj / f"{fam}.pkl").write_bytes(b"x")
++
++    registry = {
++        "MODEL_SELECTION_FROZEN": n_models == 28,
++        "protocol_id": "supervision_objective_ablation_v1",
++        "expected_model_count": 28,
++        "actual_model_count": n_models,
++        "records": [
++            {"objective": obj, "held_out_family": fam}
++            for obj in OBJS for fam in FAM
++        ][:n_models],
++    }
++    (out_dir).mkdir(parents=True)
++    (out_dir / "model_registry.json").write_text(json.dumps(registry))
++
++    if n_eval_rows:
++        import csv as csv_mod
++        with (out_dir / "policy_comparison.csv").open("w", newline="") as fh:
++            w = csv_mod.DictWriter(fh, fieldnames=["objective", "held_out_family", "capacity", "status", "miss_ratio"])
++            w.writeheader()
++            for i in range(n_eval_rows):
++                obj = OBJS[i % len(OBJS)]
++                fam = FAM[(i // len(OBJS)) % len(FAM)]
++                cap = [32, 64, 128][i % 3]
++                w.writerow({"objective": obj, "held_out_family": fam, "capacity": cap,
++                            "status": "ok", "miss_ratio": 0.5})
++    else:
++        (out_dir / "policy_comparison.csv").write_text("objective,held_out_family,capacity,status,miss_ratio\n")
++
++    for name, payload in (audit_payloads or {}).items():
++        (out_dir / name).write_text(json.dumps(payload))
++
++    return tmp_path
++
++
++def _patch_evaluator_active(m, active: bool):
++    import unittest.mock
++    return unittest.mock.patch.object(m, "_is_process_running", return_value=active)
++
++
++def test_c2_state_running_pre_gate_40_of_84_active(tmp_path):
++    m = _import_module()
++    root = _make_c2_root(tmp_path, n_models=28, n_eval_rows=40)
++    with _patch_evaluator_active(m, True):
++        s = m.concern_2_status(root)
++    assert s["eval_state"] == "CURRENT_RUN_RUNNING_PRE_GATE"
++    assert s["status"] == "CURRENT_RUN_RUNNING_PRE_GATE"
++
++
++def test_c2_state_partial_stopped_pre_gate_40_of_84_absent(tmp_path):
++    m = _import_module()
++    root = _make_c2_root(tmp_path, n_models=28, n_eval_rows=40)
++    with _patch_evaluator_active(m, False):
++        s = m.concern_2_status(root)
++    assert s["eval_state"] == "CURRENT_RUN_PARTIAL_STOPPED_PRE_GATE"
++    assert s["status"] == "CURRENT_RUN_PARTIAL_STOPPED_PRE_GATE"
++
++
++def test_c2_state_eval_complete_audits_required_84_of_84(tmp_path):
++    m = _import_module()
++    root = _make_c2_root(tmp_path, n_models=28, n_eval_rows=84)
++    with _patch_evaluator_active(m, False):
++        s = m.concern_2_status(root)
++    assert s["eval_state"] == "CURRENT_RUN_EVAL_COMPLETE_AUDITS_REQUIRED"
++    assert s["status"] == "CURRENT_RUN_EVAL_COMPLETE_AUDITS_REQUIRED"
++
++
++def test_c2_state_complete_and_audited_84_with_both_final_pass(tmp_path):
++    m = _import_module()
++    audits = {
++        "same_example_audit.json": {"FINAL": True, "overall": "PASS"},
++        "fairness_audit.json": {"FINAL": True, "overall": "PASS"},
++    }
++    root = _make_c2_root(tmp_path, n_models=28, n_eval_rows=84, audit_payloads=audits)
++    with _patch_evaluator_active(m, False):
++        s = m.concern_2_status(root)
++    assert s["eval_state"] == "COMPLETE_AND_AUDITED"
++    assert s["status"] == "COMPLETE_AND_AUDITED"
++
++
++def test_c2_state_blocked_by_audit_84_with_fairness_fail(tmp_path):
++    m = _import_module()
++    audits = {
++        "same_example_audit.json": {"FINAL": True, "overall": "PASS"},
++        "fairness_audit.json": {"FINAL": True, "overall": "FAIL"},
++    }
++    root = _make_c2_root(tmp_path, n_models=28, n_eval_rows=84, audit_payloads=audits)
++    with _patch_evaluator_active(m, False):
++        s = m.concern_2_status(root)
++    assert s["eval_state"] == "BLOCKED_BY_AUDIT"
++    assert s["status"] == "BLOCKED_BY_AUDIT"
++
++
++def test_c2_state_invalid_overflow_85_rows(tmp_path):
++    m = _import_module()
++    root = _make_c2_root(tmp_path, n_models=28, n_eval_rows=85)
++    with _patch_evaluator_active(m, False):
++        s = m.concern_2_status(root)
++    assert s["eval_state"] == "INVALID_OVERFLOW"
++    assert s["status"] == "FAILED"
++
++
++def test_c2_state_invalid_duplicate_keys(tmp_path):
++    m = _import_module()
++    root = _make_c2_root(tmp_path, n_models=28, n_eval_rows=0)
++    import csv as csv_mod
++    out = root / "analysis" / "supervision_objective_ablation_v1" / "policy_comparison.csv"
++    # 83 unique rows + one exact duplicate of the first = 84 rows total.
++    with out.open("w", newline="") as fh:
++        w = csv_mod.writer(fh)
++        w.writerow(["objective", "held_out_family", "capacity", "status", "miss_ratio"])
++        rows = []
++        for i in range(83):
++            obj = OBJS[i % len(OBJS)]
++            fam = FAM[(i // len(OBJS)) % len(FAM)]
++            cap = [32, 64, 128][i % 3]
++            rows.append([obj, fam, cap, "ok", 0.5])
++        rows.insert(1, list(rows[0]))  # duplicate of row 1
++        w.writerows(rows)
++    with _patch_evaluator_active(m, False):
++        s = m.concern_2_status(root)
++    assert s["eval_rows"] == 84
++    assert s["eval_duplicate_keys"] >= 1
++    assert s["eval_state"] == "INVALID_DUPLICATE_KEYS"
++    assert s["status"] == "FAILED"
++
++
++def test_c2_state_training_complete_audits_not_run_no_eval(tmp_path):
++    m = _import_module()
++    root = _make_c2_root(tmp_path, n_models=28, n_eval_rows=0)
++    with _patch_evaluator_active(m, False):
++        s = m.concern_2_status(root)
++    assert s["eval_state"] == "NOT_STARTED"
++    assert s["status"] == "TRAINING_COMPLETE_AUDITS_NOT_RUN"
++
++
++def test_c4_authoritative_smoke_artifact_list_is_9():
++    m = _import_module()
++    assert len(m.C4_SMOKE_ARTIFACTS) == 9
++    assert m.C4_SMOKE_ARTIFACTS == [
++        "exact_optimization_equivalence.json",
++        "profiler_breakdown.csv",
++        "selective_invocation.csv",
++        "topk_tradeoff.csv",
++        "model_complexity_tradeoff.csv",
++        "break_even_miss_cost.csv",
++        "miss_cost_sweep.csv",
++        "weighted_cost.csv",
++        "pareto_frontier.csv",
++    ]
+diff --git a/tests/test_sieve.py b/tests/test_sieve.py
+index 16e7d42..4e6a1c1 100644
+--- a/tests/test_sieve.py
++++ b/tests/test_sieve.py
+@@ -109,7 +109,7 @@ def test_runner_policies_dict_accepts_sieve():
+     # `--policies sieve` resolves to a working SievePolicy instance without
+     # running any trace (zero-compute check on the registry wiring itself).
+     repo_root = Path(__file__).resolve().parents[1]
+-    script_path = repo_root / "scripts" / "run_policy_comparison_wulver_v1.py"
++    script_path = repo_root / "scripts" / "experiments" / "canonical" / "run_policy_comparison_wulver_v1.py"
+     spec = importlib.util.spec_from_file_location("run_policy_comparison_wulver_v1", script_path)
+     module = importlib.util.module_from_spec(spec)
+     spec.loader.exec_module(module)

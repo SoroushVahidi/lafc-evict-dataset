@@ -1,0 +1,139 @@
+{
+  "by_family": {
+    "cloudphysics": {
+      "by_capacity": {
+        "32": {
+          "cl_lru_miss_ratio": 0.983642578125,
+          "cl_mru_minus_lru_miss_ratio_gap": 0.0162353515625,
+          "cl_random_minus_lru_miss_ratio_gap": 0.002801513671874978,
+          "cl_sieve_miss_ratio": 0.985595703125,
+          "offline_all_tied_fraction_H16": 0.8695599195792124,
+          "offline_mru_minus_lru_regret_gap_H16": -0.0026603846388172465,
+          "offline_random_minus_lru_regret_gap_H16": -0.0006593844560427303,
+          "offline_random_optimal_probability_H16": 0.9920562894742186
+        },
+        "128": {
+          "cl_lru_miss_ratio": 0.9560546875,
+          "cl_mru_minus_lru_miss_ratio_gap": 0.0428466796875,
+          "cl_random_minus_lru_miss_ratio_gap": 0.008135986328124956,
+          "cl_sieve_miss_ratio": 0.9698486328125,
+          "offline_all_tied_fraction_H16": 0.6617387652246955,
+          "offline_mru_minus_lru_regret_gap_H16": 0.004094918101637967,
+          "offline_random_minus_lru_regret_gap_H16": 0.0030941568668626626,
+          "offline_random_optimal_probability_H16": 0.9951712450125998
+        }
+      },
+      "scored_split_label": "test"
+    },
+    "metacdn": {
+      "by_capacity": {
+        "32": {
+          "cl_lru_miss_ratio": 0.579150390625,
+          "cl_mru_minus_lru_miss_ratio_gap": 0.2743164062500001,
+          "cl_random_minus_lru_miss_ratio_gap": 0.031159667968750027,
+          "cl_sieve_miss_ratio": 0.583837890625,
+          "offline_all_tied_fraction_H16": 0.012164372359274908,
+          "offline_mru_minus_lru_regret_gap_H16": 0.30349597928308575,
+          "offline_random_minus_lru_regret_gap_H16": 0.04562278519830994,
+          "offline_random_optimal_probability_H16": 0.9404484547498978
+        },
+        "128": {
+          "cl_lru_miss_ratio": 0.5490234375,
+          "cl_mru_minus_lru_miss_ratio_gap": 0.30156249999999996,
+          "cl_random_minus_lru_miss_ratio_gap": 0.016347656249999898,
+          "cl_sieve_miss_ratio": 0.551025390625,
+          "offline_all_tied_fraction_H16": 0.008488964346349746,
+          "offline_mru_minus_lru_regret_gap_H16": 0.31495863887584435,
+          "offline_random_minus_lru_regret_gap_H16": 0.017411972148972294,
+          "offline_random_optimal_probability_H16": 0.9816592651627353
+        }
+      },
+      "scored_split_label": "validation"
+    },
+    "metakv": {
+      "by_capacity": {
+        "32": {
+          "cl_lru_miss_ratio": 0.740966796875,
+          "cl_mru_minus_lru_miss_ratio_gap": 0.07421875,
+          "cl_random_minus_lru_miss_ratio_gap": 0.0034667968749999556,
+          "cl_sieve_miss_ratio": 0.7412109375,
+          "offline_all_tied_fraction_H16": 0.8668489692890198,
+          "offline_mru_minus_lru_regret_gap_H16": 0.07054585612116113,
+          "offline_random_minus_lru_regret_gap_H16": 0.0040820887673538074,
+          "offline_random_optimal_probability_H16": 0.9953410943416071
+        },
+        "128": {
+          "cl_lru_miss_ratio": 0.72900390625,
+          "cl_mru_minus_lru_miss_ratio_gap": 0.0625,
+          "cl_random_minus_lru_miss_ratio_gap": -0.015124511718749956,
+          "cl_sieve_miss_ratio": 0.6982421875,
+          "offline_all_tied_fraction_H16": 0.8559013102282333,
+          "offline_mru_minus_lru_regret_gap_H16": 0.07090025359256129,
+          "offline_random_minus_lru_regret_gap_H16": 0.0012886002218934912,
+          "offline_random_optimal_probability_H16": 0.9987113997781065
+        }
+      },
+      "scored_split_label": "test"
+    },
+    "twemcache": {
+      "by_capacity": {
+        "32": {
+          "cl_lru_miss_ratio": 0.7510986328125,
+          "cl_mru_minus_lru_miss_ratio_gap": 0.2037353515625,
+          "cl_random_minus_lru_miss_ratio_gap": 0.031481933593749956,
+          "cl_sieve_miss_ratio": 0.814697265625,
+          "offline_all_tied_fraction_H16": 0.24270126027107716,
+          "offline_mru_minus_lru_regret_gap_H16": 0.08948717271262122,
+          "offline_random_minus_lru_regret_gap_H16": 0.028310688525456415,
+          "offline_random_optimal_probability_H16": 0.9347340748764829
+        },
+        "128": {
+          "cl_lru_miss_ratio": 0.6204833984375,
+          "cl_mru_minus_lru_miss_ratio_gap": 0.3287353515625,
+          "cl_random_minus_lru_miss_ratio_gap": 0.04827880859375,
+          "cl_sieve_miss_ratio": 0.71533203125,
+          "offline_all_tied_fraction_H16": 0.10174707485173906,
+          "offline_mru_minus_lru_regret_gap_H16": 0.12040391088315436,
+          "offline_random_minus_lru_regret_gap_H16": 0.018272409440615485,
+          "offline_random_optimal_probability_H16": 0.9713503265747716
+        }
+      },
+      "scored_split_label": "test"
+    },
+    "wiki2018": {
+      "by_capacity": {
+        "32": {
+          "cl_lru_miss_ratio": 1.0,
+          "cl_mru_minus_lru_miss_ratio_gap": 0.0,
+          "cl_random_minus_lru_miss_ratio_gap": 0.0,
+          "cl_sieve_miss_ratio": 1.0,
+          "offline_all_tied_fraction_H16": 1.0,
+          "offline_mru_minus_lru_regret_gap_H16": 0.0,
+          "offline_random_minus_lru_regret_gap_H16": 0.0,
+          "offline_random_optimal_probability_H16": 1.0
+        },
+        "128": {
+          "cl_lru_miss_ratio": 1.0,
+          "cl_mru_minus_lru_miss_ratio_gap": 0.0,
+          "cl_random_minus_lru_miss_ratio_gap": 0.0,
+          "cl_sieve_miss_ratio": 1.0,
+          "offline_all_tied_fraction_H16": 1.0,
+          "offline_mru_minus_lru_regret_gap_H16": 0.0,
+          "offline_random_minus_lru_regret_gap_H16": 0.0,
+          "offline_random_optimal_probability_H16": 1.0
+        }
+      },
+      "scored_split_label": "test"
+    }
+  },
+  "exploratory_discriminativeness_vs_closed_loop_separation_H16": {
+    "kendall_p_TWO_SIDED_CAUTION_TINY_N": 0.002173791587794007,
+    "kendall_tau_b": 0.7727272727272727,
+    "n": 10,
+    "pearson_p_TWO_SIDED_CAUTION_TINY_N": 4.658881435654299e-06,
+    "pearson_r": 0.9675602321860546,
+    "spearman_p_TWO_SIDED_CAUTION_TINY_N": 0.000209371137768355,
+    "spearman_rho": 0.9146341463414634
+  },
+  "exploratory_note": "EXPLORATORY, not pre-registered as such in DESIGN.md's RQ text; included because DESIGN.md's own discussion motivates checking whether discriminativeness predicts separation."
+}

@@ -1,0 +1,78 @@
+{
+  "gates": [
+    {
+      "detail": "",
+      "name": "plan_composition_exact",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "no_learned_policy_in_results",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "no_duplicate_execution_key",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "every_result_key_is_in_plan",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "every_row_has_distinguishable_status",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "scored_windows_match_authoritative_matrix",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "identical_scored_windows_within_cell",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "hits_plus_misses_equals_scored_requests",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "no_negative_counts",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "no_nan_or_inf_numeric_outputs",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "miss_ratio_in_valid_range",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "deterministic_policy_exactly_one_result_per_cell",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "random_policy_seeds_exactly_0_to_19_when_present",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "all_230_planned_executions_complete",
+      "passed": true
+    }
+  ],
+  "n_complete": 230,
+  "n_failed": 0,
+  "n_planned": 230,
+  "run_valid": true
+}
