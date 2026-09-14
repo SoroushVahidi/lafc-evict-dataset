@@ -1,0 +1,33 @@
+{
+  "cap128_n5_LRU_hit_rate_vs_closed_loop_MRU_LRU_gap": {
+    "n": 5,
+    "pearson_r": 0.8926527955252279,
+    "spearman_rho": 0.8999999999999998
+  },
+  "cap128_n5_LRU_hit_rate_vs_offline_all_tied_fraction": {
+    "n": 5,
+    "pearson_r": -0.8335845671508332,
+    "spearman_rho": -0.8999999999999998
+  },
+  "cap32_n5_LRU_hit_rate_vs_closed_loop_MRU_LRU_gap": {
+    "n": 5,
+    "pearson_r": 0.9090204838233659,
+    "spearman_rho": 0.8999999999999998
+  },
+  "cap32_n5_LRU_hit_rate_vs_offline_all_tied_fraction": {
+    "n": 5,
+    "pearson_r": -0.8287840780150408,
+    "spearman_rho": -0.8999999999999998
+  },
+  "note": "n=5 per capacity, n=10 pooled across both capacities (not independent horizons -- these are the 5 families x 2 capacities actually tested, no pseudo-replication here since there is no horizon dimension on the trace-metric side). Exploratory, not pre-registered.",
+  "pooled_n10_LRU_hit_rate_vs_closed_loop_MRU_LRU_gap": {
+    "n": 10,
+    "pearson_r": 0.8986376954329001,
+    "spearman_rho": 0.9146341463414634
+  },
+  "pooled_n10_LRU_hit_rate_vs_offline_all_tied_fraction": {
+    "n": 10,
+    "pearson_r": -0.8318484233147998,
+    "spearman_rho": -0.9024390243902439
+  }
+}

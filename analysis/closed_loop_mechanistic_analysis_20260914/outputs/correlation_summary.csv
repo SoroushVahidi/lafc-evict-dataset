@@ -1,0 +1,7 @@
+comparison,n,pearson_r,spearman_rho
+pooled_n10_LRU_hit_rate_vs_offline_all_tied_fraction,10,-0.8318484233147998,-0.9024390243902439
+pooled_n10_LRU_hit_rate_vs_closed_loop_MRU_LRU_gap,10,0.8986376954329001,0.9146341463414634
+cap32_n5_LRU_hit_rate_vs_offline_all_tied_fraction,5,-0.8287840780150408,-0.8999999999999998
+cap32_n5_LRU_hit_rate_vs_closed_loop_MRU_LRU_gap,5,0.9090204838233659,0.8999999999999998
+cap128_n5_LRU_hit_rate_vs_offline_all_tied_fraction,5,-0.8335845671508332,-0.8999999999999998
+cap128_n5_LRU_hit_rate_vs_closed_loop_MRU_LRU_gap,5,0.8926527955252279,0.8999999999999998

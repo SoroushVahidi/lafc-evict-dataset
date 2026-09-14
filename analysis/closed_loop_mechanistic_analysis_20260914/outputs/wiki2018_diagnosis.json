@@ -1,0 +1,73 @@
+{
+  "classification": "CAUSALLY_ESTABLISHED (by mathematical necessity, not statistical inference -- see report Section 23 for the justification of using this category here); Q9 = fully explained",
+  "cold_start_characteristics": {
+    "family": "wiki2018",
+    "first_repeat_position": null,
+    "max_possible_hits_in_first_128": 0,
+    "max_possible_hits_in_first_32": 0,
+    "quarter1_repeated_fraction": 0.0,
+    "quarter2_repeated_fraction": 0.0,
+    "quarter3_repeated_fraction": 0.0,
+    "quarter4_repeated_fraction": 0.0,
+    "unique_count_after_1024": 1024,
+    "unique_count_after_128": 128,
+    "unique_count_after_256": 256,
+    "unique_count_after_32": 32,
+    "unique_count_after_512": 512,
+    "unique_count_after_64": 64
+  },
+  "diagnosis": "wiki2018's scored window contains EXACTLY ZERO reuse events (n_reuse_events=0; unique_over_request_ratio=1.0; every one of the 4096 window requests is a first-ever occurrence in the full 50,000-request trace). Since a cache hit requires a repeated reference to an already-resident item, zero reuse events makes miss_ratio=1.0 a mathematical certainty for ANY eviction policy at ANY capacity -- not a statistical tendency, a deductive consequence of the trace itself containing no repeats in this window. This fully and exactly explains the observed exact tie among all four Tier-1 policies (and all 20 random seeds, std=0) at both capacities.",
+  "mechanism_comparison": [
+    {
+      "actual_lru_hits_tier1": 0,
+      "capacity": 32,
+      "cl_mru_minus_lru_miss_ratio_gap": 0.0,
+      "exact_match": true,
+      "family": "wiki2018",
+      "offline_all_tied_fraction_H16": 1.0,
+      "predicted_lru_hit_rate": 0.0,
+      "predicted_lru_hits_from_stack_distance": 0,
+      "scored_window_request_count": 4096
+    },
+    {
+      "actual_lru_hits_tier1": 0,
+      "capacity": 128,
+      "cl_mru_minus_lru_miss_ratio_gap": 0.0,
+      "exact_match": true,
+      "family": "wiki2018",
+      "offline_all_tied_fraction_H16": 1.0,
+      "predicted_lru_hit_rate": 0.0,
+      "predicted_lru_hits_from_stack_distance": 0,
+      "scored_window_request_count": 4096
+    }
+  ],
+  "trace_characteristics": {
+    "cache_could_plausibly_be_warm": true,
+    "compulsory_fraction": 1.0,
+    "family": "wiki2018",
+    "longest_novel_streak": 4096,
+    "n_reuse_events": 0,
+    "normalized_entropy": 1.0,
+    "pre_window_history_requests": 24576,
+    "repeated_fraction": 0.0,
+    "reuse_beyond_128_fraction": null,
+    "reuse_distance_mean": null,
+    "reuse_distance_median": null,
+    "reuse_distance_p10": null,
+    "reuse_distance_p25": null,
+    "reuse_distance_p75": null,
+    "reuse_distance_p90": null,
+    "reuse_within_128_fraction": null,
+    "reuse_within_32_fraction": null,
+    "scored_split_label": "test",
+    "scored_window_request_count": 4096,
+    "shannon_entropy_bits": 12.0,
+    "top10pct_share": 0.10009765625,
+    "top1pct_share": 0.010009765625,
+    "top5pct_share": 0.050048828125,
+    "unique_objects_in_window": 4096,
+    "unique_over_request_ratio": 1.0,
+    "working_set_size_128_mean": 128.0,
+    "working_set_size_32_mean": 32.0
+  }
+}

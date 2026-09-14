@@ -1,0 +1,6 @@
+family,max_possible_hits_in_first_32,max_possible_hits_in_first_128,first_repeat_position,unique_count_after_32,unique_count_after_64,unique_count_after_128,unique_count_after_256,unique_count_after_512,unique_count_after_1024,quarter1_repeated_fraction,quarter2_repeated_fraction,quarter3_repeated_fraction,quarter4_repeated_fraction
+cloudphysics,0,8,68,32,64,120,227,460,926,0.279296875,0.240234375,0.1572265625,0.18359375
+metacdn,10,43,12,22,44,85,161,322,612,0.40234375,0.505859375,0.4619140625,0.51953125
+metakv,16,46,1,16,38,82,160,301,583,0.4306640625,0.494140625,0.4462890625,0.435546875
+twemcache,8,42,16,24,44,86,152,314,621,0.90625,0.8916015625,0.93359375,0.896484375
+wiki2018,0,0,,32,64,128,256,512,1024,0.0,0.0,0.0,0.0
