@@ -32,7 +32,7 @@ from pathlib import Path
 from scipy import stats
 
 ANALYSIS_ROOT = Path(__file__).resolve().parents[1]
-JOINED_PATH = ANALYSIS_ROOT / "data" / "joined_offline_closed_loop.csv"
+JOINED_PATH = ANALYSIS_ROOT / "joined_data" / "joined_offline_closed_loop.csv"
 OUT_DIR = ANALYSIS_ROOT / "outputs"
 
 PAIRS = [

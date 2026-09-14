@@ -61,7 +61,7 @@ TIER1_FAMILIES = ("cloudphysics", "metacdn", "metakv", "twemcache", "wiki2018")
 TIER1_CAPACITIES = ("32", "128")
 OFFLINE_HORIZONS = ("4", "8", "16")
 
-OUT_PATH = ANALYSIS_ROOT / "data" / "joined_offline_closed_loop.csv"
+OUT_PATH = ANALYSIS_ROOT / "joined_data" / "joined_offline_closed_loop.csv"
 
 
 def load_phase8():

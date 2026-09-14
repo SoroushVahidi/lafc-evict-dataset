@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 ANALYSIS_ROOT = Path(__file__).resolve().parents[1]
-DATA_PATH = ANALYSIS_ROOT / "data" / "joined_offline_closed_loop.csv"
+DATA_PATH = ANALYSIS_ROOT / "joined_data" / "joined_offline_closed_loop.csv"
 OUT_DIR = ANALYSIS_ROOT / "outputs"
 EVIDENCE_DIR = ANALYSIS_ROOT.parent / "closed_loop_tier1_evidence_20260914"
 

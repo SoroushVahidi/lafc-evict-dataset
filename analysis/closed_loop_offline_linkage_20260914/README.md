@@ -118,7 +118,7 @@ only as a documented secondary view, never as a headline number.
 
 ## Files
 
-- `data/joined_offline_closed_loop.csv` -- the 30-row (5 families x 2 capacities x 3 horizons) joined table underlying every statistic below.
+- `joined_data/joined_offline_closed_loop.csv` -- the 30-row (5 families x 2 capacities x 3 horizons) joined table underlying every statistic below.
 - `outputs/rq_cl1_rank_agreement.json` -- per-horizon concordance counts + per-cell 3-item tau-b (primary).
 - `outputs/rq_cl1_sensitivity_exclusions.json` -- same, excluding wiki2018 / MetaCDN / MetaKV in turn.
 - `outputs/rq_cl2_gap_correspondence.json` -- per-horizon Pearson/Spearman/Kendall (primary, excluding-wiki2018, test-window-only, and pooled-secondary views).
