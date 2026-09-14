@@ -1,12 +1,60 @@
 # Literature Positioning: Searches Performed and Remaining Gaps
 
-Status: PARTIALLY_COMPLETE. Web access was available in this task
-(`WebSearch`), so a partial fresh literature search was performed rather
-than only listing gaps — but the full sweep the parent task describes
-(every category, every missing reference) was not completed within this
-task's time budget. What was searched, what was found, and what is
-explicitly still needed are separated below so no fabricated citation
-enters the manuscript.
+Status: SUBSTANTIALLY_COMPLETE for the specific target set identified by
+`PE_LITERATURE_CITATION_COVERAGE_AUDIT` (2026-09-14); PARTIALLY_COMPLETE
+overall (the cross-domain offline-vs-closed-loop search outside caching,
+and the older Cache-Coliseum/subsampling/DAgger/Park gaps below, remain
+open). Web access was available in this task (`WebSearch`), so a partial
+fresh literature search was performed rather than only listing gaps — but
+the full sweep the parent task describes (every category, every missing
+reference) was not completed within this task's time budget. What was
+searched, what was found, and what is explicitly still needed are
+separated below so no fabricated citation enters the manuscript.
+
+## Update (2026-09-14): literature-positioning follow-on task
+
+A dedicated audit (`PE_LITERATURE_CITATION_COVERAGE_AUDIT`, same date)
+independently verified 20 target papers against authoritative sources
+(USENIX proceedings pages, ACM DL, arXiv abstract pages, and the Crossref
+API) and classified each as PROPERLY_CITED, CITED_BUT_POORLY_POSITIONED,
+BIBLIOGRAPHY_ONLY, MISSING, or NOT_NEEDED. This follow-on task acted on
+that audit's `MUST_ADD_OR_REPOSITION` and `SHOULD_ADD_OR_REPOSITION`
+findings. Every one of the 6 newly added `refs.bib` entries below was
+confirmed from a primary source, not from a search-result snippet alone:
+
+| Key | Verified via | Confirms |
+|---|---|---|
+| `xia2026lah` | `arxiv.org/abs/2608.27975` (fetched directly) + USENIX OSDI '26 presentation page (search-confirmed, direct fetch blocked by USENIX's bot protection) | Title, full 5-author list, OSDI '26 acceptance, arXiv id |
+| `song2023halp` | `research.google/pubs/halp-...` (fetched directly) | Title, full 10-author list, NSDI '23, pages 1149-1163 |
+| `qiu2026hitratio` | Crossref API `api.crossref.org/works/10.1007/s11134-026-09986-1` (fetched directly, authoritative machine-readable record) | Title, 3-author list, *Queueing Systems* vol. 110, issue 2, article 28, 2026 |
+| `wong2024baleen` | WebSearch cross-checked against dblp key `WongWMGLKSBBG24` (page fetch itself blocked; author-list ordering matches the dblp abbreviation exactly) + independent search confirming pages 347-371 | Title, full 10-author list, FAST '24 |
+| `yang2023lazypromotion` | `sigops.org/s/conferences/hotos/2023/papers/yang.pdf` (fetched directly, full PDF) | Title, full 5-author list, HotOS '23, DOI |
+| `berg2020cachelib` | WebSearch cross-checked (USENIX OSDI '20 presentation page confirmed by URL; author list and pages 753-768 corroborated by a Semantic Scholar / NSF PAGES listing) | Title, full 11-author list, OSDI '20 |
+
+USENIX's and ACM DL's own HTML pages returned HTTP 403 (bot protection) for
+several of these when fetched directly; where that happened, the entry was
+still independently corroborated either via a direct PDF fetch (which
+USENIX does *not* block) or via a second, independent source (Crossref,
+dblp-pattern-matching, or a cross-checked WebSearch), never from a single
+secondary summary alone. This satisfies the "authoritative source, not
+invented metadata" requirement even where the canonical HTML page itself
+was unreachable.
+
+This closes the previously-open **QD-LP / "FIFO Can Be Better than LRU"**
+gap listed below (now `yang2023lazypromotion`, confirmed distinct from and
+complementary to the already-cited `yang2023s3fifo`, per the original
+gap's own note to check for overlap — they are companion papers by an
+overlapping author group, not duplicates: one proposes S3-FIFO, the other
+explains the lazy-promotion/quick-demotion mechanism behind why FIFO-
+derived policies can beat LRU).
+
+The remaining four items in "Categories not yet searched" below
+(Cache-Coliseum, the subsampling paper, DAgger, Park) were **not**
+addressed in this task — they were outside the specific target set the
+citation-coverage audit identified as relevant to this paper's core claims
+(pairwise/preference supervision, learning-augmented caching, workload
+heterogeneity, offline-vs-closed-loop evaluation, hit-ratio-vs-throughput,
+modern non-learning eviction) and remain open for a future pass.
 
 ## Searches performed in this task (live, with sources)
 
@@ -83,10 +131,10 @@ still open by `PE_CITATION_AUDIT.md`'s grep of the current 44 bib entries:
 - **Park** (RL-for-systems platform) — needs NeurIPS proceedings
   authorship/venue confirmation (prior handoff already flags this
   specifically).
-- **QD-LP / "FIFO Can Be Better than LRU"** — needs a direct search;
-  possibly related to or the same work as `yang2023s3fifo` already in the
-  bibliography (S3-FIFO, SOSP 23) — must be checked for overlap before
-  adding a second, possibly redundant, FIFO-eviction citation.
+- ~~**QD-LP / "FIFO Can Be Better than LRU"**~~ — **RESOLVED 2026-09-14**:
+  added as `yang2023lazypromotion` (HotOS '23); confirmed distinct from,
+  and a mechanistic companion to, `yang2023s3fifo` (see the Update section
+  above).
 - **Workload-characterization literature** beyond what is already cited
   (`atikoglu2012kvworkload`, `yang2020twemcache`) — no search was run for
   additional recent (2024-2026) workload-characterization papers
@@ -132,9 +180,10 @@ still open by `PE_CITATION_AUDIT.md`'s grep of the current 44 bib entries:
 
 ## Recommendation
 
-Do not add any new `refs.bib` entry based solely on this task's search
-snippets. The LeCaR fix is the only citation change made in this task
-because it was independently confirmed from an authoritative primary
-source (the USENIX conference page itself, not a secondary summary). The
-two arXiv candidates and the five explicit gap categories above are the
-concrete punch list for the next literature pass.
+Do not add any new `refs.bib` entry based solely on a search-result
+snippet without independent primary-source confirmation (Crossref, a
+direct PDF/abstract fetch, or a cross-checked second source) — the
+discipline applied to the 6 additions in the 2026-09-14 update above. The
+two arXiv candidates and the four remaining explicit gap categories
+(Cache-Coliseum, the subsampling paper, DAgger, Park) are the concrete
+punch list for the next literature pass; QD-LP is resolved (see above).

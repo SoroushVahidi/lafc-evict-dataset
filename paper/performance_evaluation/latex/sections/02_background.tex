@@ -6,10 +6,15 @@ before admitting the requested one. Classical policies such as LRU, ARC
 \cite{megiddo2003arc}, and LIRS \cite{jiang2002lirs} operationalize this
 choice through recency/frequency structure; more recent heuristics such as
 SIEVE \cite{zhang2024sieve} and S3-FIFO \cite{yang2023s3fifo} revisit that
-structure for scan-resistance and simplicity. Learned or learning-augmented
-approaches (for example LeCaR \cite{vietri2018lecar}, LRB
-\cite{song2020lrb}, Parrot \cite{liu2020parrot}, and GL-Cache
-\cite{yang2023glcache}) instead attempt to predict which eviction will lead
+structure for scan-resistance and simplicity. A recent hybrid line tunes
+such heuristics' own parameters with a learned control plane rather than
+replacing them outright: LAH, instantiated as S4-FIFO over an S3-FIFO data
+plane, reports robustness and interpretability gains from this
+decoupling \cite{xia2026lah}. Learned or learning-augmented approaches (for
+example LeCaR \cite{vietri2018lecar}, LRB \cite{song2020lrb}, Parrot
+\cite{liu2020parrot}, GL-Cache \cite{yang2023glcache}, CACHEUS
+\cite{rodriguez2021cacheus}, 3L-Cache \cite{zhou2025threelcache}, and HALP
+\cite{song2023halp}) instead attempt to predict which eviction will lead
 to lower future miss cost, typically by training on labels each system
 derives for itself from raw traces. This makes cross-paper comparison hard:
 different papers use different traces, different label constructions, and
@@ -73,7 +78,13 @@ candidate-level \texttt{y\_loss} values -- e.g. this decision yields
 (A,B): A preferred, (A,C): tie, (B,C): C preferred -- gives the
 \emph{pairwise derived view}. The pairwise view introduces no new ground
 truth: every label in it is a function of the candidate view already
-described (Section~\ref{sec:tasks-baselines} discusses why a derived
+described. This is a narrower claim than systems such as HALP, which train
+directly on preference-comparison feedback as their primary learning
+signal \cite{song2023halp}: \lafc's pairwise view is instead a
+deterministic reformatting of the already-defined candidate-level
+\texttt{y\_loss} values, released for compatibility with pairwise/ranking
+methods rather than as an independent source of supervision
+(Section~\ref{sec:tasks-baselines} discusses why a derived
 pairwise view is still useful for certain modeling and diagnostic
 purposes). A single full-cache miss with $k$ admissible candidates
 therefore appears in three aligned forms: $k$ candidate rows, one
