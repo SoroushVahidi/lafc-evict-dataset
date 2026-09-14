@@ -1,0 +1,21 @@
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \caption{Pairwise-sample-backed summary statistics for the shipped sample view.}
+  \label{tab:pairwise-sample-stats}
+  \begin{tabularx}{\columnwidth}{@{}P{0.34\columnwidth}L@{}}
+    \toprule
+    statistic & value \\
+    \midrule
+    pairwise rows & 1,000,000 \\
+    split breakdown & test=102,024; train=737,896; val=160,080 \\
+    family breakdown & wiki2018=250,872; cloudphysics=245,336;\newline
+    metakv=190,584; twemcache=169,064;\newline
+    metacdn=144,144 \\
+    unique decisions represented & 118,635 \\
+    label distribution & a\_better=60,673; b\_better=61,065;\newline
+    tie=878,262 \\
+    A/B orientation method & deterministic\_hash\_v1 (randomized, not lexicographic) \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

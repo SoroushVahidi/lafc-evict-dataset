@@ -1,0 +1,18 @@
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \caption{Feature-based pairwise baselines on the non-tie subset (121,738 of 1,000,000 rows) of the shipped pairwise sample, evaluated after the A/B orientation fix (deterministic hash-based randomization, not lexicographic ordering). An evaluation-only augmented feature view joins released candidate features back to the capped sample. Results are pairwise-sample-backed rather than full-pairwise-universe-backed, and no full quadratic pairwise materialization is performed.}
+  \label{tab:pairwise-feature-baselines}
+  \begin{tabularx}{\columnwidth}{@{}P{0.24\columnwidth}LP{0.16\columnwidth}P{0.14\columnwidth}@{}}
+    \toprule
+    baseline & feature source / model type & accuracy & log loss \\
+    \midrule
+    random non-tie & random-label sanity check & 0.5006 & 0.6931 \\
+    majority non-tie & empirical majority-class sanity check & 0.5016 & 0.6931 \\
+    LRU-score pairwise & 1-D logistic on LRU-score difference & 0.9225 & 0.2426 \\
+    predictor-score pairwise & 1-D logistic on predictor-score difference & 0.5016 & 0.6931 \\
+    linear-score pairwise & logistic on pointwise linear-score difference & 0.9490 & 0.1161 \\
+    logistic feature difference & logistic regression on released feature differences & 0.9660 & 0.0824 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

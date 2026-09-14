@@ -1,0 +1,27 @@
+% ============================================================================
+% Highlights for Performance Evaluation (Elsevier) submission.
+%
+% Per the journal's ScienceDirect "Guide for authors" (consulted 2026-09-13),
+% Highlights are MANDATORY for this journal: 3-5 bullet points, each at most
+% 85 characters including spaces, capturing the novelty of the study.
+%
+% Elsevier's submission system typically wants Highlights uploaded as a
+% SEPARATE plain-text/short file (item type "Highlights"), not typeset into
+% the main article PDF body. This file is therefore NOT \input by main.tex;
+% it is a standalone source for that separate upload. It is provided here in
+% a minimal compilable form (elsarticle's optional `\begin{highlights}`
+% environment) purely so the bullet text has one authoritative, versioned
+% source; if a plain-text upload is required by the submission system,
+% strip the LaTeX wrapper and submit the five bullet lines directly.
+%
+% Content is mechanically derived from the existing abstract/results
+% (Section~\ref{sec:tasks-baselines}, \ref{sec:characterization}) with no
+% new claims and no rewriting of the underlying numbers.
+% ============================================================================
+\begin{highlights}
+\item LAFC-Evict is a benchmark for decision-aligned cache-eviction supervision.
+\item Each row is one candidate victim's finite-horizon counterfactual y\_loss label.
+\item Open release covers 278M candidate rows across five trace families.
+\item A linear value-regression baseline is intentionally weak (test R2 0.0026).
+\item Logistic pairwise baseline reaches 0.9660 accuracy on non-tie samples.
+\end{highlights}

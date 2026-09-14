@@ -1,0 +1,17 @@
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \caption{Release-package layout using release-relative paths for the evaluated benchmark snapshot.}
+  \label{tab:artifact-layout}
+  \begin{tabularx}{\columnwidth}{@{}P{0.31\columnwidth}L@{}}
+    \toprule
+    artifact & relative\_path \\
+    \midrule
+    candidate rows & data/candidate\_rows/ \\
+    decision view & data/decision\_view/decision\_view.parquet \\
+    pairwise sample & data/pairwise\_sample/pairwise\_sample.parquet \\
+    release manifest & metadata/release\_manifest.json \\
+    checksums & metadata/checksums.sha256 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

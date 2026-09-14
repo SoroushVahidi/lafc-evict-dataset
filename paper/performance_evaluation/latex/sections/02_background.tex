@@ -1,0 +1,12 @@
+\section{Background and Motivation: Learned Cache Eviction}
+\label{sec:background}
+
+At each full-cache miss, a caching system must evict one resident object before admitting the requested one. Classical policies such as LRU operationalize this choice through simple recency structure, while learned or learning-augmented approaches attempt to predict which eviction will lead to lower future miss cost. In practice, these approaches differ in feature sets, prediction targets, and evaluation methodology.
+
+The main difficulty for a benchmark is that victim selection is structured, not i.i.d. A model does not act on one object in isolation; it acts within a decision set whose size, feature spread, and ambiguity vary across traces and capacities. A useful benchmark therefore preserves decision boundaries instead of flattening them away.
+
+This observation motivates the core \lafc\ design choice: represent supervision at the candidate-within-decision level. Each row corresponds to one candidate victim at one full-cache eviction decision, and the label records the finite-horizon counterfactual miss cost of forcing that eviction under a fixed continuation policy. This representation allows both pointwise learning and within-decision evaluation, while keeping the supervised object aligned with the actual cache-eviction choice.
+
+From that candidate-level foundation, the benchmark derives two secondary evaluation surfaces. Grouping all rows with the same \texttt{decision\_id} produces a decision view that records candidate count, optimal-set membership, tie structure, and regret summaries. Sampling candidate pairs from the same decision produces the shipped pairwise view, which turns within-decision comparisons into a simpler classification problem without discarding the original decision boundary.
+
+A single full-cache miss can therefore appear in three complementary forms. If one decision exposes $k$ admissible victims, the release records $k$ candidate rows, one decision-group summary, and up to $k(k-1)/2$ within-decision pairwise comparisons before any sampling cap is applied. The manuscript keeps that task-view progression textual rather than introducing a second overview figure beside the main pipeline diagram.

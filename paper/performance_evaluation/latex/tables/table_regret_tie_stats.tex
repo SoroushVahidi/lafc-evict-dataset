@@ -1,0 +1,23 @@
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \caption{Candidate-label and best-candidate-selection summaries from committed result JSON files.}
+  \label{tab:label-selection-summary}
+  \begin{tabularx}{\columnwidth}{@{}P{0.50\columnwidth}L@{}}
+    \toprule
+    statistic & value \\
+    \midrule
+    candidate rows summarized & 277,995,072 \\
+    \texttt{y\_loss} mean / std & 7.7561 / 4.6542 \\
+    \texttt{y\_loss} q05 / q25 / q50 / q75 / q95 & 2 / 4 / 7 / 11 / 16 \\
+    \texttt{y\_value} mean / std & -7.7561 / 4.6542 \\
+    \texttt{y\_value} q05 / q25 / q50 / q75 / q95 & -16 / -11 / -7 / -4 / -2 \\
+    manifest-backed decision rows & 2,363,286 \\
+    best-candidate evaluator decision count & 2,363,286 (exact match) \\
+    best-candidate optimal-selection rate & 0.8753 \\
+    best-candidate regret mean / median / max & 0.1251 / 0 / 3 \\
+    random-selector expected optimal-selection rate & 0.9912 \\
+    random-selector expected regret & 0.0088 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

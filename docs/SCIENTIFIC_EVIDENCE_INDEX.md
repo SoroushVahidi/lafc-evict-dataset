@@ -1,5 +1,11 @@
 # LAFC-Evict Scientific Evidence Index
 
+> **Updated 2026-09-14** with Tier-1/linkage/mechanistic/continuation rows
+> added below the original table (marked NEW). See
+> `docs/CURRENT_PROJECT_STATUS_AND_HANDOFF_20260914B.md` for the current
+> canonical handoff and `docs/PE_CLAIM_EVIDENCE_LEDGER.md` for exact
+> manuscript-ready values. Original rows below are unmodified.
+
 This index maps each current scientific question to the repository artifact that
 supports it. It is a navigation aid; the frozen reports remain the source of
 exact numbers.
@@ -15,6 +21,12 @@ exact numbers.
 | Public v0.3 release | `dataset_card/`, `publication/`, `docs/LAFC_EVICT_PUBLICATION_STATE.md` | `polish/final-handoff-20260914` after Query 2 | Current public status | v0.3 is wiki2018-only on Hugging Face and AWS Open Data; Zenodo remains v0.2 DOI-backed; public v0.3 is not the five-family scientific dataset. | Keep public/canonical distinction prominent in all future release docs. |
 | Continuation-policy sensitivity | No completed experiment | n/a | Not run | Closed-loop replay does not test how labels change under alternative continuation policies. | Design and run a separate continuation-policy sensitivity experiment if needed for reviewer response. |
 | Related-work/citation state | `paper/sigmod2027/latex/refs.bib`, related-work notes, manuscript branches | Multiple historical branches | Incomplete | Several references are present but need metadata checks; Cache-Coliseum, Learning Caching Policies with Subsampling, DAgger, Park, and QD-LP are high-priority gaps. | Verify against authoritative sources before editing bibliography metadata. |
+
+| Tier-1 closed-loop production evaluation (NEW) | `analysis/closed_loop_tier1_evidence_20260914/` | `experiment/closed-loop-tier1-harness-20260913` / `8a4cd32` | Validated (14/14 gates, 230/230 complete) | 5 families x 2 capacities x 4 policies x 20 seeds; LRU best in 9/10 cells, MetaKV/cap128 is the sole SIEVE-beats-LRU exception. | Use `PE_CLAIM_EVIDENCE_LEDGER.md` C1-C9 for exact manuscript values. |
+| Offline<->closed-loop linkage (NEW) | `analysis/closed_loop_offline_linkage_20260914/` | `analysis/tier1-offline-closed-loop-linkage-20260914` / `c5c8422` | Validated, dual code-path checked | RQ-CL1-CL4 answered; 8/9 non-degenerate cells concordant at H=16; H=16 best-aligned horizon; two named exceptions. | Integrate into manuscript per restructuring plan. |
+| Mechanistic workload analysis (NEW) | `analysis/closed_loop_mechanistic_analysis_20260914/` | `analysis/closed-loop-mechanisms-20260914` / `412c47f` | Validated, trace-only | Explains cloudphysics/cap32 (near-zero-signal) and characterizes but does not fully resolve MetaKV/cap128; wiki2018 degeneracy causally established. | Cite mechanism classifications exactly (DIRECTLY_SUPPORTED vs PLAUSIBLE_BUT_NOT_ESTABLISHED). |
+| Continuation-policy sensitivity, full sampled study (NEW) | `analysis/continuation_policy_sensitivity_full_20260914/` | `experiment/continuation-sensitivity-full-20260914` / `484417c` | Validated (`FULL_EXPERIMENT_VALID: true`) | MRU and mean-random continuation both ROBUST at capacities 32/128, Set C n=6597; median Jaccard 1.0 both; see ledger C10 for full nuance. | Extend, do not replace, with population census once validated. |
+| Full-population MRU continuation census (NEW) | n/a (running) | `experiment/continuation-mru-population-census-20260914` / `1a29e77`, RUN_ID `20260914T042528Z_1a29e773a113` | **UNVALIDATED / INCOMPLETE — running** | None usable yet. | Do not interpret or cite until finished and validated. |
 
 ## Current Hypothesis Summary
 

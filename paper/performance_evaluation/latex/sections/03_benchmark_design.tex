@@ -1,0 +1,42 @@
+\section{Benchmark Design}
+\label{sec:benchmark-design}
+
+\lafc\ is organized around five layers: external raw traces, processed traces, generated features, generated labels, and benchmark tasks. The release package begins after candidate-row generation and focuses on converting existing generated data into a reusable benchmark package for cache-eviction benchmarking, with schema, validation, and release metadata.
+
+The evaluated open subset is \texttt{lafc-evict-v0.1-open}. The evaluated release metadata identifies five selected families: \texttt{cloudphysics}, \texttt{metacdn}, \texttt{metakv}, \texttt{twemcache}, and \texttt{wiki2018}. The family registry also lists \texttt{brightkite} and \texttt{citibike} as excluded from the evaluated open subset for redistribution reasons. This scope boundary is a release-governance decision, not a statement that the broader generated dataset mix is automatically redistributable. Not every selected family appears in every split in the evaluated release; for example, \texttt{metacdn} contributes train and validation decision rows but no test decision rows. Split assignment is produced upstream of this release package, which only normalizes and validates split values rather than assigning them, so uneven per-family split coverage reflects that upstream construction rather than a benchmark design guarantee of uniform cross-family generalization.
+
+The canonical benchmark unit is the candidate row. A single row corresponds to one candidate victim at one full-cache miss decision, so one eviction decision with $|C_t|$ admissible victim choices contributes $|C_t|$ candidate rows. Decision-level and pairwise benchmark objects are derived from that candidate-level base rather than collected independently. This design keeps the benchmark centered on cache-eviction decisions instead of conflating the benchmark contribution with end-to-end deployment claims.
+
+% TEMPLATE NOTE: the SIGMOD source used the ACM `acmart`-only two-column
+% spanning environment `figure*` (only meaningful under ACM's twocolumn
+% layout) together with ACM's accessibility macro `\Description{...}`
+% (alt-text for the ACM production pipeline, not part of elsarticle). This
+% is mechanically adapted below to a single-column `figure` environment,
+% matching elsarticle's default single-column layout, which is the correct
+% direct analogue; no caption text or figure content was changed. The
+% original ACM `\Description` alt-text is preserved verbatim as a comment
+% for future accessibility use:
+%   Overview diagram of the LAFC-Evict pipeline. External cache traces feed
+%   decision extraction and feature generation, then counterfactual label
+%   generation, then released benchmark artifacts including candidate rows,
+%   a decision view, and a pairwise sample. The lower portion summarizes
+%   benchmark tasks: value prediction, best-candidate selection, and
+%   pairwise preference learning.
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\textwidth]{../../64BDAA68-CBD4-4E8E-800B-467D62C0D9DE.png}
+  \caption{LAFC-Evict generation and release pipeline. The benchmark converts external cache traces into decision-level candidate rows, finite-horizon counterfactual labels, and released benchmark views for value prediction, best-candidate selection, and pairwise preference learning.}
+  \label{fig:pipeline}
+\end{figure}
+
+The benchmark is designed to satisfy four requirements:
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Decision alignment.} Preserve within-decision structure and candidate competition.
+  \item \textbf{Task multiplicity.} Support pointwise, decision-level, and pairwise learning tasks from one release.
+  \item \textbf{Releaseability.} Separate public benchmark artifacts from upstream raw-trace ownership and hosting constraints.
+  \item \textbf{Validation.} Expose checks for schema, consistency, family scope, and checksums.
+\end{enumerate}
+
+\input{tables/table_dataset_scale}
+
+\input{tables/table_split_counts}

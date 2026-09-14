@@ -1,0 +1,135 @@
+% ============================================================================
+% LAFC-Evict manuscript -- Performance Evaluation (Elsevier) template.
+%
+% MECHANICAL TEMPLATE MIGRATION NOTICE
+% -------------------------------------------------------------------------
+% This file is a mechanical reformatting of the canonical SIGMOD manuscript at
+% paper/sigmod2027/latex/main.tex (ACM `acmart` class) into the Elsevier
+% `elsarticle` class for submission to Performance Evaluation. No scientific
+% content, results, numbers, or claims were changed. See
+% paper/performance_evaluation/TEMPLATE_MIGRATION_REPORT.md for the full
+% audit of what changed and why.
+%
+% Elsevier guidance consulted 2026-09-13 (see migration report for links):
+%   - ScienceDirect "Guide for authors" listing for Performance Evaluation
+%     (elsarticle.cls, elsarticle-num citation style, Highlights mandatory)
+%   - Elsevier "LaTeX instructions for authors" (elsarticle.cls current)
+%   - Elsevier CRediT author statement policy
+%   - Elsevier data statement / declaration-of-interest guidance
+%   - Elsevier generative-AI-in-writing disclosure policy (updated 2026-06)
+% ============================================================================
+\documentclass[preprint,12pt]{elsarticle}
+
+% Declares the target journal name in the running head of the preprint style.
+\journal{Performance Evaluation}
+
+% ---- Packages inherited unchanged from the SIGMOD manuscript ----
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{amsmath}
+
+\newcommand{\lafc}{LAFC-Evict}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\begin{document}
+
+\begin{frontmatter}
+
+% TEMPLATE NOTE: the SIGMOD source title carried a
+% "\texorpdfstring{[Experiments \& Analysis]}{...}" suffix, which is a
+% SIGMOD/VLDB "Experiments and Analysis" track label. That label is specific
+% to the SIGMOD submission track and is not applicable to a Performance
+% Evaluation journal submission, so it is dropped here as a venue-specific
+% formatting artifact, not a scientific content change.
+\title{\lafc: A Large-Scale Counterfactual Benchmark for Learned Cache Eviction}
+
+% TEMPLATE NOTE: the SIGMOD manuscript listed "Anonymous Authors" for
+% double-blind review. Performance Evaluation review is not double-blind at
+% the author-facing template level, so real author/affiliation metadata is
+% required. No author metadata was present in the SIGMOD manuscript itself;
+% the identity below is taken from the repository's own CITATION.cff
+% (repo root), which lists a single author. Please confirm this is complete
+% and correct (co-authors, ORCID, grant/affiliation numbers) before
+% submission.
+\author[njit]{Soroush Vahidi\corref{cor1}}
+\ead{sv96@njit.edu}
+\cortext[cor1]{Corresponding author.}
+
+\affiliation[njit]{organization={New Jersey Institute of Technology},
+            city={Newark},
+            state={NJ},
+            country={USA}}
+
+\begin{abstract}
+\begin{sloppypar}
+Learned cache-eviction research has outgrown small ad hoc evaluations, yet empirical comparison remains difficult because prior studies often rely on private traces, release-incomplete preprocessing pipelines, or supervision targets that are not comparable across papers. This paper presents \lafc, a benchmark package for learned cache eviction in caching systems built around decision-aligned counterfactual supervision. Each canonical candidate row represents one candidate victim considered at one full-cache miss decision and includes release-facing provenance fields, cache-state features, and a finite-horizon counterfactual label. The canonical loss label, \texttt{y\_loss}, is the continuation-policy miss cost over a finite horizon after forcing that candidate eviction. The corresponding value label, \texttt{y\_value}, is defined as $-\texttt{y\_loss}$. The benchmark also exposes decision-level and pairwise benchmark views to support value prediction, best-candidate selection, pairwise preference learning, and label-surface characterization.
+
+The evaluated open-release snapshot covers five selected trace families---cloudphysics, metacdn, metakv, twemcache, and wiki2018---and its release metadata record 277,995,072 candidate rows, 2,363,286 decision-view rows, and a capped pairwise sample of 1,000,000 rows. Two additional families, brightkite and citibike, remain excluded from the open subset. Beyond benchmark definition, release schema, validation, and reproducibility, the paper reports full candidate-label summaries, a linear \texttt{y\_loss} regression baseline, a best-candidate selector induced by that linear score, and pairwise-sample-backed feature baselines. Across all candidate rows, \texttt{y\_loss} has mean 7.7561, standard deviation 4.6542, and 5/25/50/75/95th percentiles of 2/4/7/11/16; the mirrored \texttt{y\_value} summary confirms the sign-flipped construction. The linear regression baseline is intentionally weak (test MAE 3.8739, RMSE 4.7152, $R^2=0.0026$), while the derived best-candidate selector reaches 0.8753 optimal-selection rate with 0.1251 mean regret. The shipped pairwise sample's A/B orientation is assigned by a deterministic hash over stable decision and pair-identity fields rather than by candidate-identifier ordering, giving a balanced non-tie split (about 49.8\%/50.2\%); on the resulting non-tie subset (121,738 of 1,000,000 rows), a logistic feature-difference baseline reaches 0.9660 accuracy with 0.0824 log loss after joining released candidate features back to the capped sample for evaluation only. These results demonstrate benchmark executability rather than online policy quality, and they are not evidence of online-policy superiority. The labels are therefore interpreted as decision-aligned finite-horizon counterfactual targets rather than offline-optimal supervision.
+\end{sloppypar}
+\end{abstract}
+
+% TEMPLATE NOTE: the SIGMOD manuscript's \ccsdesc{...} ACM CCS-concept
+% classification has no direct Elsevier/elsarticle equivalent and is
+% dropped as a mechanical, venue-specific formatting artifact (not a
+% content change). Keywords are carried over unchanged.
+\begin{keyword}
+learned cache eviction \sep benchmark datasets \sep counterfactual supervision \sep cache replacement
+\end{keyword}
+
+\end{frontmatter}
+
+\input{sections/01_introduction}
+\input{sections/02_background}
+\input{sections/03_benchmark_design}
+\input{sections/04_label_generation}
+\input{sections/05_schema_views}
+\input{sections/06_release_validation}
+\input{sections/07_tasks_baselines}
+\input{sections/08_characterization}
+\input{sections/09_limitations_ethics}
+\input{sections/10_related_work}
+\input{sections/11_conclusion}
+
+\section*{Acknowledgments}
+The author gratefully acknowledges Prof. Ioannis (Yiannis) Koutis for his guidance and support. The author also acknowledges support from the Google Cloud Research Credits Program; Cohere Labs through the Catalyst Grant Program, which provided \$1,000 in API credits; and CloudRift AI through the AI Builder Grant, which provided 1,000 credits. The author further thanks Amazon Web Services, through the AWS Open Data Sponsorship Program, for sponsored hosting of up to 600 GB for two years to support public access to \lafc.
+
+% ---------------------------------------------------------------------------
+% Elsevier-mandated end-of-manuscript declarations (Performance Evaluation).
+% Guidance consulted 2026-09-13; see TEMPLATE_MIGRATION_REPORT.md for links
+% and full rationale on what is/isn't filled in here.
+% ---------------------------------------------------------------------------
+
+\section*{Declaration of competing interest}
+% TODO(author, pre-submission): No competing-interest information exists
+% anywhere in the source SIGMOD manuscript or repository metadata. Elsevier
+% requires the corresponding author to complete this declaration on behalf
+% of all authors (via the Elsevier Declaration Tool or equivalent standard
+% wording) before submission. Left unfilled here rather than fabricated;
+% see TEMPLATE_MIGRATION_REPORT.md "Remaining template TODOs".
+\relax
+
+\section*{Data availability}
+The evaluated \lafc\ open-release snapshot (candidate rows, decision view, pairwise sample, manifest, and checksums; Section~\ref{sec:release-validation}) is developed in the project's public GitHub repository at \url{https://github.com/SoroushVahidi/lafc-evict-dataset} and archived under Zenodo concept DOI \href{https://doi.org/10.5281/zenodo.21895843}{10.5281/zenodo.21895843}, released under a CC0-1.0 license, per the repository's \texttt{CITATION.cff}.
+% TODO(author, pre-submission): confirm the final public-hosting status and
+% any version-specific DOI at submission time, consistent with the release
+% caveats already stated in Section~\ref{sec:release-validation}.
+
+\section*{Funding}
+This work received computing/API support through the Google Cloud Research Credits Program, the Cohere Labs Catalyst Grant Program (\$1,000 in API credits), and the CloudRift AI Builder Grant (1,000 credits). Public hosting of the \lafc\ dataset is supported by the AWS Open Data Sponsorship Program, which provides sponsored hosting of up to 600 GB for two years.
+
+\section*{CRediT authorship contribution statement}
+% NOTE: auto-generated default for a sole-authored paper (CITATION.cff lists
+% one author). Please confirm before submission.
+\textbf{Soroush Vahidi:} Conceptualization, Methodology, Software, Formal analysis, Investigation, Data curation, Writing -- original draft, Writing -- review \& editing, Visualization.
+
+\input{sections/12_ai_use_disclosure}
+
+\bibliographystyle{elsarticle-num}
+\bibliography{refs}
+
+\end{document}

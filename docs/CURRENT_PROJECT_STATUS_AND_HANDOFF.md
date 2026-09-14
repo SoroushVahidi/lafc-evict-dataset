@@ -1,5 +1,13 @@
 # LAFC-Evict Current Project Status and Handoff
 
+> **SUPERSEDED as of 2026-09-14.** This document predates the Tier-1
+> closed-loop evaluation, the offline/closed-loop linkage analysis, the
+> mechanistic analysis, and the full continuation-policy-sensitivity study.
+> Read `docs/CURRENT_PROJECT_STATUS_AND_HANDOFF_20260914B.md` first. This
+> document is kept, unmodified below this notice, because its release/
+> publication history (Sections 1, 4, 15-17) remains accurate and because
+> manuscript/scientific content must never be discarded.
+
 This is the canonical starting point for a future LAFC-Evict agent. It records
 the current scientific, manuscript, release, and cleanup state after the
 closed-loop pilot was frozen and the production closed-loop evaluation was

@@ -1,0 +1,49 @@
+\section{Benchmark Tasks and Baselines}
+\label{sec:tasks-baselines}
+
+\lafc\ supports four benchmark tasks from one release.
+
+\paragraph{Candidate-level value prediction.}
+Predict \texttt{y\_loss} or \texttt{y\_value} from a single candidate row. This is a pointwise task over the canonical benchmark unit and measures how well a model predicts finite-horizon counterfactual eviction quality for one candidate at one decision.
+
+\paragraph{Best-candidate selection.}
+Given all candidate rows for one decision, identify a member of the minimum-loss set. This task can be framed as ranking or decision-level classification and connects most directly to the actual cache-eviction choice because it evaluates whether a method selects a benchmark-optimal victim within that decision.
+
+\paragraph{Pairwise preference prediction.}
+Predict whether candidate A is better than candidate B within the same decision, where ``better'' means lower \texttt{y\_loss} or equivalently higher \texttt{y\_value}. This task uses the pairwise view or the shipped pairwise sample and provides a simpler learning interface for within-decision preference modeling. Because equal losses induce ties, reports using this task need to state explicitly whether evaluation includes tie rows, excludes them, or maps them to a separate class. Within the shipped pairwise sample, the A/B assignment is randomized by a deterministic hash over stable decision and pair-identity fields (\texttt{orientation\_method: deterministic\_hash\_v1}), not by candidate-identifier ordering, so the non-tie \texttt{label\_a\_better}/\texttt{label\_b\_better} split is balanced (about 49.8\%/50.2\%) rather than reflecting a construction-induced directional imbalance.
+
+\paragraph{Candidate-label distribution characterization.}
+Summarize the empirical label surface without training a predictive model. This characterization task studies distributions of \texttt{y\_loss}, \texttt{y\_value}, regret, tie frequency, and decision ambiguity across families, capacities, horizons, and splits. It is descriptive rather than competitive, but it is important for understanding benchmark difficulty and for interpreting downstream task results.
+
+The empirical scope of this paper remains intentionally narrow. Rather than presenting a large model bake-off, we report lightweight baselines that can be executed directly from the committed release views and that establish reproducible reference points for later work.
+
+\begin{sloppypar}
+The current results surface covers three such references. A linear regression baseline over candidate rows predicts \texttt{y\_loss} from released features. It is intentionally weak: test MAE is 3.8739 with RMSE 4.7152 and $R^2=0.0026$, and the validation-split $R^2$ is slightly negative ($-0.0506$). Using that same linear score for within-decision selection nevertheless provides a reproducible decision-level floor. On the pairwise task, the earlier random and majority non-tie results remain useful sanity checks, but by themselves they do not test whether the released candidate features contain decision-relevant signal.
+\end{sloppypar}
+
+To probe that question without changing the released benchmark schema, we build an augmented feature view for evaluation only by joining released candidate-side features back onto the capped shipped pairwise sample. This produces a pairwise-sample-backed evaluation surface rather than a full-pairwise-universe-backed one, and no full quadratic pairwise materialization is performed. The shipped sample is itself tie-heavy: 878,262 of its 1,000,000 rows (87.8\%) are exact ties, leaving 121,738 non-tie rows evaluated below. Ties remain common and are reported here as part of the label-surface characterization rather than discarded. Table~\ref{tab:pairwise-feature-baselines} reports six non-tie pairwise baselines on that 121,738-row surface: the random and majority sanity checks, 1-D LRU-score and predictor-score models, a pairwise baseline induced by the released pointwise linear \texttt{y\_loss} regressor, and a logistic regression over released feature differences.
+
+The resulting evidence is stronger than the earlier sanity checks alone. The logistic feature-difference model is the strongest pairwise baseline, reaching 0.9660 accuracy with 0.0824 log loss on the non-tie subset of the shipped sample. The linear-score and LRU-score baselines also outperform the random and majority checks, which indicates that the released candidate features retain decision-relevant signal for pairwise preference prediction. These numbers nevertheless warrant conservative interpretation. They improve the empirical benchmark evidence without changing the released candidate-row, decision-view, or shipped pairwise artifacts, and they do not support full-universe or online-policy claims.
+
+The best-candidate baseline's evaluator previously reported 2,366,413 decision groups against a manifest-backed decision-view count of 2,363,286. That mismatch traced to a decision-key bug: the evaluator grouped candidate rows by a 6-column key instead of the canonical 9-column decision key, which double-counted 3,127 decisions whose rows were not contiguous within a partition file. The corrected evaluator now groups by the canonical 9-column decision key and reports 2,363,286 decisions, an exact match with the decision view. A cheap decision-level floor computed directly from the decision view shows the dataset is heavily tied: a uniform-random selector's expected optimal-selection rate is 0.9912 with expected regret 0.0088, both more favorable than the linear-score selector's observed 0.8753 optimal-selection rate and 0.1251 mean regret purely because of tie density in the label surface, not because the linear score underperforms a stronger baseline; headline selection-rate and regret numbers should be read alongside this random floor rather than in isolation.
+
+\input{tables/table_pairwise_sample_stats}
+
+\input{tables/table_pairwise_feature_baselines}
+
+\begin{table}[t]
+  \caption{Benchmark task definitions and representative evaluation outputs.}
+  \label{tab:task-definitions}
+  \centering
+  \footnotesize
+  \begin{tabularx}{\columnwidth}{@{}P{0.22\columnwidth}P{0.20\columnwidth}L@{}}
+    \toprule
+    Task & Inputs & Representative outputs \\
+    \midrule
+    Value regression & candidate rows & MAE, RMSE, and optional rank correlation between predicted and observed values \\
+    Best-candidate selection & decision groups & Top-1 accuracy against the benchmark-optimal set and mean realized regret relative to the best available candidate \\
+    Pairwise preference & pairwise rows from one decision & Accuracy or ROC-AUC, with tie handling stated explicitly and non-tie-only reporting marked when used \\
+    Label characterization & candidate or decision aggregates & Histograms, quantiles, tie rates, regret summaries, and per-family/capacity/horizon breakdowns \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

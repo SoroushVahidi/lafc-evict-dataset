@@ -1,0 +1,94 @@
+\section{Introduction}
+\label{sec:introduction}
+
+\begin{sloppypar}
+When a cache request misses and the cache is full, a system must pick one
+resident object to evict before admitting the requested object. Evaluating
+whether a given eviction decision was a good one requires knowing what
+would have happened to each candidate victim if it, rather than another
+object, had been evicted -- information that is not directly observable
+from a single trace replay, because only one candidate is actually evicted
+at each decision. This paper studies a reusable way to construct that
+counterfactual evidence at scale, and evaluates when it is informative,
+when it degenerates, how it relates to actual closed-loop cache
+performance, and how sensitive it is to one of its own modeling
+assumptions.
+\end{sloppypar}
+
+\lafc\ materializes, for real cache traces, a per-decision, per-candidate
+finite-horizon counterfactual miss cost: for each object that could have
+been evicted at a full-cache miss, how many additional misses would occur
+over the next $H$ requests if that object, specifically, had been the one
+evicted. This candidate-level quantity is stored as \texttt{y\_loss} (a
+convenience alias \texttt{y\_value} $= -\texttt{y\_loss}$ is also provided;
+see Section~\ref{sec:tasks-baselines}). Section~\ref{sec:background} works
+through one full decision by hand -- resident objects, a forced eviction, a
+future request window, and the resulting candidate costs, including a case
+where two candidates tie for optimal -- before any aggregate statistic is
+introduced, so that every quantity used later in the paper is grounded in
+a concrete example first.
+
+\begin{sloppypar}
+The contribution of this paper is not a new eviction policy. It is an
+evaluation of a reusable offline supervision surface against closed-loop
+cache-policy behavior, organized around five questions. \textbf{(RQ1)} Is
+the finite-horizon counterfactual target actually discriminative between
+candidates, and when does it degenerate to an uninformative tie? We find
+that it is not uniformly discriminative: aggregate tie rates are
+substantial, and no audited decision has a strict unique winner, but
+discriminativeness varies strongly and predictably by workload, cache
+capacity, and horizon, and one workload in our evaluation is a genuine,
+mechanistically explained negative control. \textbf{(RQ2)} Does the
+offline candidate ranking correspond to actual closed-loop cache
+performance? Across a production-scale closed-loop evaluation, offline and
+closed-loop policy orderings agree in the large majority of workload/
+capacity regimes where the offline signal itself is not near zero, with
+two specific, characterized exceptions. \textbf{(RQ3)} How does this
+correspondence depend on workload, capacity, and horizon? We find that
+capacity-scale locality in the underlying trace predicts both offline
+discriminativeness and closed-loop policy separation, and that a horizon
+of 16 future requests aligns offline and closed-loop evidence more
+strongly than shorter horizons, though modestly. \textbf{(RQ4)} How
+sensitive are the labels to the choice of continuation policy after a
+forced eviction? A sampled robustness study at two cache capacities finds
+the labels robust to two alternative continuation policies by a
+pre-registered criterion, while also showing that this robustness is not
+absolute at the level of individual decisions. \textbf{(RQ5)} What does
+this imply in practice for a researcher deciding between offline and
+closed-loop evaluation? We argue, and the evidence in this paper supports,
+that the offline supervision this dataset provides complements rather than
+replaces closed-loop evaluation, and we give concrete, evidenced guidance
+for when the offline signal can be trusted.
+\end{sloppypar}
+
+Every quantitative claim in this paper traces to a specific, independently
+validated evidence artifact; Sections~\ref{sec:tasks-baselines}
+through~\ref{sec:characterization} and the limitations discussion in
+Section~\ref{sec:limitations} state the exact scope, sample sizes, and
+caveats attached to each result rather than presenting them as unqualified
+findings. The underlying release also exposes candidate-level, decision-level,
+and pairwise derived views of the same supervision at production scale
+(Table~\ref{tab:dataset-scale}), which supports the evaluation methodology
+in this paper and is also intended for reuse by other researchers studying
+learned cache eviction; release construction, schema, and validation are
+described in Sections~\ref{sec:benchmark-design}--\ref{sec:release-validation}
+but are not the paper's central argument.
+
+To our knowledge, existing public cache-replacement resources do not
+provide a reusable candidate-level counterfactual supervision surface at
+this scale together with a direct evaluation of its relationship to
+closed-loop cache-policy behavior; we make this claim with the restrained
+scope stated above, not as a claim of exhaustive prior-art coverage (see
+Section~\ref{sec:related-work}).
+
+The rest of the paper proceeds as follows. Section~\ref{sec:background}
+gives the worked example and motivates decision-aligned counterfactual
+supervision. Sections~\ref{sec:benchmark-design}--\ref{sec:release-validation}
+describe construction, label definition, schema, and release validation.
+Section~\ref{sec:tasks-baselines} defines the benchmark tasks. Section~\ref{sec:characterization}
+reports target discriminativeness (RQ1) and, together with material drawn
+from the closed-loop production evaluation, addresses RQ2--RQ4 (offline/
+closed-loop correspondence, workload/capacity/horizon dependence, and
+continuation-policy robustness); practical implications (RQ5) are
+synthesized alongside it. Section~\ref{sec:limitations} states limitations,
+ethics, and reuse constraints, followed by related work and conclusion.
