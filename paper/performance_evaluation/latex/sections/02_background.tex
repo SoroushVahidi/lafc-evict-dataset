@@ -1,12 +1,81 @@
-\section{Background and Motivation: Learned Cache Eviction}
+\section{Background and a Worked Example}
 \label{sec:background}
 
-At each full-cache miss, a caching system must evict one resident object before admitting the requested one. Classical policies such as LRU operationalize this choice through simple recency structure, while learned or learning-augmented approaches attempt to predict which eviction will lead to lower future miss cost. In practice, these approaches differ in feature sets, prediction targets, and evaluation methodology.
+At each full-cache miss, a caching system must evict one resident object
+before admitting the requested one. Classical policies such as LRU, ARC
+\cite{megiddo2003arc}, and LIRS \cite{jiang2002lirs} operationalize this
+choice through recency/frequency structure; more recent heuristics such as
+SIEVE \cite{zhang2024sieve} and S3-FIFO \cite{yang2023s3fifo} revisit that
+structure for scan-resistance and simplicity. Learned or learning-augmented
+approaches (for example LeCaR \cite{vietri2018lecar}, LRB
+\cite{song2020lrb}, Parrot \cite{liu2020parrot}, and GL-Cache
+\cite{yang2023glcache}) instead attempt to predict which eviction will lead
+to lower future miss cost, typically by training on labels each system
+derives for itself from raw traces. This makes cross-paper comparison hard:
+different papers use different traces, different label constructions, and
+different evaluation protocols, so a reported improvement is often not
+attributable to the policy alone.
 
-The main difficulty for a benchmark is that victim selection is structured, not i.i.d. A model does not act on one object in isolation; it acts within a decision set whose size, feature spread, and ambiguity vary across traces and capacities. A useful benchmark therefore preserves decision boundaries instead of flattening them away.
+\lafc\ addresses the label-construction half of that problem by
+materializing a reusable, candidate-level counterfactual label directly
+from real traces, independent of any specific learned method. The rest of
+this section works through exactly what that label is, using a small,
+fully hand-checkable example (full derivation in the paper's
+reproducibility artifact); Section~\ref{sec:benchmark-design} then defines
+the same quantities formally for the production-scale dataset.
 
-This observation motivates the core \lafc\ design choice: represent supervision at the candidate-within-decision level. Each row corresponds to one candidate victim at one full-cache eviction decision, and the label records the finite-horizon counterfactual miss cost of forcing that eviction under a fixed continuation policy. This representation allows both pointwise learning and within-decision evaluation, while keeping the supervised object aligned with the actual cache-eviction choice.
+\subsection{A worked eviction decision}
 
-From that candidate-level foundation, the benchmark derives two secondary evaluation surfaces. Grouping all rows with the same \texttt{decision\_id} produces a decision view that records candidate count, optimal-set membership, tie structure, and regret summaries. Sampling candidate pairs from the same decision produces the shipped pairwise view, which turns within-decision comparisons into a simpler classification problem without discarding the original decision boundary.
+Suppose a cache holds three objects at capacity 3, ordered from
+least-recently-used to most-recently-used: A, B, C. A request arrives for
+object D, which is not resident: a \emph{cache miss}. The cache is full,
+so admitting D requires evicting exactly one resident object. A, B, and C
+are the three \emph{candidate victims} for this \emph{eviction decision}.
 
-A single full-cache miss can therefore appear in three complementary forms. If one decision exposes $k$ admissible victims, the release records $k$ candidate rows, one decision-group summary, and up to $k(k-1)/2$ within-decision pairwise comparisons before any sampling cap is applied. The manuscript keeps that task-view progression textual rather than introducing a second overview figure beside the main pipeline diagram.
+To score each candidate, we look ahead a finite \emph{horizon} of $H=3$
+future requests, which turn out to be B, E, F. For each candidate, we ask:
+if this candidate, and no other, had been evicted, and the cache had then
+continued to evict under a \emph{continuation policy} (LRU, the canonical
+choice throughout this dataset) for the next $H$ requests, how many of
+those requests would miss? This defines the candidate's \emph{counterfactual
+miss cost}, stored as \texttt{y\_loss} (a convenience alias
+\texttt{y\_value}~$=-\texttt{y\_loss}$ is also provided; see
+Section~\ref{sec:benchmark-design}).
+
+Figure~\ref{fig:worked-example} works through all three resulting
+counterfactual worlds by hand. Evicting A costs 2 future misses (B hits
+because A's eviction did not affect B; E and F both miss because they are
+new objects). Evicting B costs 3 (B itself is now a miss, plus E and F).
+Evicting C also costs 2, by the same reasoning as A. \textbf{The optimal
+candidate set for this decision is \(\{A, C\}\), a tie} -- both evictions
+are equally good by this measure, and only evicting B is strictly worse.
+This is not a contrived edge case: across the full production dataset, no
+audited decision has a strict unique winner (Section~\ref{sec:characterization}),
+so tie handling of exactly this kind is the common case, not the
+exception.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/figure1_worked_example.pdf}
+  \caption{The worked example: three counterfactual worlds (one per
+  candidate victim), each replayed forward under LRU continuation for the
+  next $H=3$ requests. A and C tie for optimal ($y\_loss=2$); evicting B is
+  strictly worse ($y\_loss=3$).}
+  \label{fig:worked-example}
+\end{figure}
+
+\subsection{From one decision to the released views}
+
+Grouping every candidate row by its decision id gives the \emph{decision
+view} (candidate count, optimal-set membership, tie flags, regret
+summaries). Deriving pairwise preference labels directly from the
+candidate-level \texttt{y\_loss} values -- e.g. this decision yields
+(A,B): A preferred, (A,C): tie, (B,C): C preferred -- gives the
+\emph{pairwise derived view}. The pairwise view introduces no new ground
+truth: every label in it is a function of the candidate view already
+described (Section~\ref{sec:tasks-baselines} discusses why a derived
+pairwise view is still useful for certain modeling and diagnostic
+purposes). A single full-cache miss with $k$ admissible candidates
+therefore appears in three aligned forms: $k$ candidate rows, one
+decision-group summary, and up to $k(k-1)/2$ within-decision pairwise
+comparisons.

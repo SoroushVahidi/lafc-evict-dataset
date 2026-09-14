@@ -22,6 +22,27 @@ Classical cache-replacement work defines the policy landscape that any learned b
 
 Another relevant line of work treats caching as an online problem augmented by predictions rather than as a supervised dataset. Competitive Caching with Machine Learned Advice and later learning-augmented caching results formalize how predictive advice can improve classical online algorithms while preserving robustness guarantees~\cite{lykouris2021mladvice,wei2020learningaugcache}. Robust Learning-Augmented Caching: An Experimental Study extends that line empirically, while Parsimonious Learning-Augmented Caching studies how much prediction access is really needed~\cite{chledowski2021robustlac,im2022parsimoniouslac}. This perspective is complementary to \lafc\ rather than directly competing with it. Learning-augmented caching papers typically study online algorithms equipped with advice, predictor queries, and robustness objectives. By contrast, \lafc\ releases finite-horizon, continuation-policy-dependent counterfactual labels for every candidate within a decision. The artifact can train or diagnose predictors and eviction-scoring models before they are embedded into an online algorithm, and it supports value regression, best-candidate selection, pairwise preference learning, and label characterization from one release.
 
+\subsection{Offline Surrogate Evaluation and Closed-Loop Correspondence}
+
+A methodological question this paper shares with several other applied-ML
+domains -- recommendation, autonomous driving, and reinforcement
+learning among them -- is whether an offline proxy metric, computed
+without deploying a policy, predicts that policy's actual closed-loop
+performance. The general finding across those domains is that offline and
+online/closed-loop metrics correlate imperfectly and domain-specifically,
+which is why closed-loop or online validation is treated as necessary
+rather than optional wherever it is feasible. This paper's
+Sections~\ref{sec:linkage} and~\ref{sec:closed-loop} pose the same
+question for finite-horizon counterfactual cache-eviction labels
+specifically, with a bounded, regime-characterized answer rather than a
+universal one; to the best of our knowledge, we are not aware of prior
+work posing this question for candidate-level cache-eviction supervision
+in particular. A dedicated cross-domain literature search for this
+methodological category (surrogate/offline-vs-closed-loop evaluation
+methodology as a topic in its own right) remains only partially complete
+at the time of writing; see \texttt{docs/PE\_LITERATURE\_SEARCH\_GAPS.md}
+in the accompanying artifact for what was and was not verified.
+
 \subsection{Benchmark and Dataset Positioning}
 
 Public learning-to-rank collections such as LETOR and the Yahoo! Learning to Rank Challenge show how reusable labeled artifacts can organize a research community~\cite{liu2009ltr,qin2010letor,chapelle2011yahoo}. In that limited sense, \lafc\ is to learned cache eviction somewhat analogous to LETOR-style ranking corpora: a standardized candidate-level label surface reduces bespoke label generation and evaluation drift. The label design in \lafc\ also connects to counterfactual learning and ranking because each cache decision induces a candidate set, a minimum-loss subset, regret summaries, and a natural pairwise structure~\cite{swaminathan2015crm,li2011offlinecb,joachims2017unbiasedltr,saito2020pairwise}. Even so, \lafc\ is not simply a ranking dataset transplanted into systems. Its labels are tied to finite-horizon eviction outcomes under a specified continuation policy. The central differentiation to maintain throughout is therefore cautious but concrete: to our knowledge, we are not aware of a public cache-eviction artifact that releases reusable candidate-level finite-horizon counterfactual supervision together with decision-level and pairwise task views at this scale. In that sense, \lafc\ is neither a new online policy nor merely a raw trace repository or simulator-centric contribution, but a reusable benchmark artifact for learned cache-eviction research that complements existing traces, simulators, and policy papers.

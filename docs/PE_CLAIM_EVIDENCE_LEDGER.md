@@ -1,5 +1,15 @@
 # PE Claim <-> Evidence Ledger
 
+> **Updated 2026-09-14 (follow-on manuscript-rewrite pass).** C5 and C8
+> amended with additional precision found while writing
+> `sections/08b_closed_loop.tex`, `08c_linkage.tex`, and
+> `08e_continuation.tex`; C13-C15 added below. No prior claim was
+> weakened without cause; two (C5, C8) were corrected because the
+> original entries, while not wrong, were less precise than the
+> manuscript prose ended up needing, and one imprecise generalization
+> (a claimed "LRU > SIEVE > random > MRU" ranking) was caught and removed
+> before it reached the built PDF.
+
 Status: NOT_PRESENT prior to this task (repository-wide search found no
 prior claim/evidence ledger for the Performance Evaluation manuscript).
 This is a new document built entirely from already-validated, already-frozen
@@ -65,7 +75,7 @@ row here rather than restating numbers from memory.
 
 - Status: PARTIALLY_SUPPORTED
 - Evidence: `analysis/closed_loop_offline_linkage_20260914/SCIENTIFIC_SUMMARY.md`, RQ-CL1
-- Values: pairwise concordance (offline regret-gap sign vs. closed-loop miss-ratio-gap sign), MRU-vs-LRU and random-vs-LRU pairs, SIEVE excluded (no offline counterpart): 13/20 concordant, 3/20 discordant, 4/20 both-tied (wiki2018), identical at H=4/H=8/H=16. Without wiki2018: 13/16 (81%) at H=16. Per-cell 3-item Kendall tau-b: 6/8 non-degenerate cells at exactly +1.0, cloudphysics/cap32 at -1.0, metakv/cap128 at +0.33.
+- Values: pairwise concordance (offline regret-gap sign vs. closed-loop miss-ratio-gap sign), MRU-vs-LRU and random-vs-LRU pairs, SIEVE excluded (no offline counterpart): combined 13/20 concordant, 3/20 discordant, 4/20 both-tied (wiki2018), identical at H=4/H=8/H=16. **Per-pair split (added 2026-09-14, used in `sections/08c_linkage.tex`)**: MRU-vs-LRU alone = 7/10 concordant, 1/10 discordant (cloudphysics/cap32 only), 2/10 tied (wiki2018); random-vs-LRU alone = 6/10 concordant, 2/10 discordant (cloudphysics/cap32 AND metakv/cap128), 2/10 tied. Without wiki2018: 13/16 (81%) at H=16. Per-cell 3-item Kendall tau-b: 6/8 non-degenerate cells at exactly +1.0, cloudphysics/cap32 at -1.0, metakv/cap128 at +0.33.
 - Scope: 2 comparable pairs (MRU-vs-LRU, random-vs-LRU) x 5 families x 2 capacities = 20 comparisons at each of H={4,8,16}; SIEVE has no offline counterpart and is excluded from this specific claim.
 - Caveats: the two discordant cells (C7, C8 below) must always be named, not glossed over.
 - Census-dependent: NO (Tier-1/linkage already complete and validated at capacities 32/128).
@@ -90,7 +100,7 @@ row here rather than restating numbers from memory.
 
 - Status: SUPPORTED as a documented exception; NOT_SUPPORTED as an explained mechanism
 - Evidence: `analysis/closed_loop_mechanistic_analysis_20260914/SCIENTIFIC_SUMMARY.md`, Q2-Q7; `analysis/closed_loop_offline_linkage_20260914/SCIENTIFIC_SUMMARY.md`, RQ-CL1/RQ-CL3
-- Values: MetaKV/cap128 is the only Tier-1 cell (of 10) where a policy other than LRU wins closed-loop outright (SIEVE 0.6982 vs LRU 0.7290, -4.22% relative); offline random-LRU regret gap = +0.00129 (random slightly worse) vs. closed-loop miss-ratio gap = -0.0151 (random better) — a sign disagreement. MetaKV's all-tied fraction (0.856-0.867) is comparable to cloudphysics's, ruling out "weak offline signal" as the sole explanation.
+- Values: MetaKV/cap128 is the only Tier-1 cell (of 10) where a policy other than LRU wins closed-loop outright (SIEVE 0.6982 vs LRU 0.7290, -4.22% relative). **Correction (2026-09-14): random-mean ALSO beats LRU at this cell** (relative gap -2.07%, i.e. random miss ratio ~0.7137), so LRU is actually in *third* place at metakv/cap128 (SIEVE 1st, random 2nd, LRU 3rd, MRU worst) — not merely "one other policy wins," two do. An earlier draft of this entry and of `sections/08b_closed_loop.tex` stated only the SIEVE exception and a universal "LRU > SIEVE > random > MRU" ranking claim; both were corrected before the manuscript build because they were contradicted by this same summary.csv data (SIEVE loses to random at twemcache both capacities and at cloudphysics both capacities, so no fixed SIEVE-vs-random order exists). Offline random-LRU regret gap = +0.00129 (random slightly worse) vs. closed-loop miss-ratio gap = -0.0151 (random better) — a sign disagreement. MetaKV's all-tied fraction (0.856-0.867) is comparable to cloudphysics's, ruling out "weak offline signal" as the sole explanation.
 - Caveats: the mechanistic analysis identifies two *plausible* contributing structural properties (cold-start/no-warmup scoring window; a reuse-distance "boundary zone" at 0.574->0.600 fraction between distance 32 and 128) but explicitly classifies causation as `PLAUSIBLE_BUT_NOT_ESTABLISHED` (Q5) and states directly that existing data "cannot isolate which one... caused the reversal" (Q6). Do not claim this is explained; claim it is characterized.
 - Census-dependent: NO (structural/trace argument, independent of continuation-policy choice).
 
@@ -125,6 +135,29 @@ row here rather than restating numbers from memory.
 
 - Status: LIMITATION (scope-defining, not a positive claim)
 - Evidence: dataset construction as documented across `analysis/sigmod_target_discriminativeness_20260913/`, `analysis/closed_loop_production_design_20260913/`, and the closed-loop harness (`experiment/closed-loop-tier1-harness-20260913`) — all operate on object-count capacity with unconditional admission and unit-sized objects; no byte/latency/dirty-write cost model exists anywhere in the evidence chain.
+- Census-dependent: NO.
+
+### C13. MRU is worst in every non-degenerate closed-loop cell; no fixed SIEVE-vs-random order exists
+
+- Status: SUPPORTED (added 2026-09-14, `sections/08b_closed_loop.tex`)
+- Evidence: `analysis/closed_loop_tier1_evidence_20260914/run/20260914T023445Z_8a4cd32402a1/summary.csv`, `relative_miss_diff_vs_lru` column, all 8 non-degenerate (family, capacity) cells.
+- Values: MRU has the largest positive relative-miss-ratio gap vs. LRU in all 8 non-degenerate cells (range +1.65% to +54.93%). SIEVE beats random-mean at metacdn (both capacities) and metakv/cap32; random-mean beats SIEVE at twemcache (both capacities), cloudphysics (both capacities), and metakv/cap128 — i.e. neither policy is consistently second- or third-best.
+- Caveat: this entry exists specifically because an earlier draft claimed a universal "LRU > SIEVE > random > MRU" ordering, which the same source data contradicts; kept here as a record of the correction, not just the finding.
+- Census-dependent: NO.
+
+### C14. Continuation-robustness erodes with horizon for random continuation, though it stays above the ROBUST threshold
+
+- Status: SUPPORTED, at the stated scope only
+- Evidence: `analysis/continuation_policy_sensitivity_full_20260914/outputs/20260914T040333Z_1f66342be435/scientific_analysis.json`, `PRIMARY_ANALYSIS.{mru,random_mean}.by_horizon_setC`.
+- Values (Set C, both capacities pooled, n=2199 decisions per horizon): MRU median Jaccard is 1.000 at H=4, H=8, and H=16 (mean Jaccard 0.9996/0.9987/0.9957). Random-mean median Jaccard is 1.000 at H=4 and H=8 but **drops to 0.881 at H=16** (mean Jaccard 0.9033/0.8047/0.6740); mean cross-continuation regret for random rises from 0.0114 (H=4) to 0.0570 (H=16); strict reversal fraction rises from 0.0 (H=4) to 1.41e-04 (H=16).
+- Caveat: 0.881 remains above the pre-registered ROBUST threshold (median Jaccard >= 0.8), so the overall ROBUST classification (C10) is not contradicted — but reporting only the by-capacity pooled numbers (median exactly 1.0 at both capacities) would hide this horizon-dependent erosion. Both breakdowns must be reported together, as done in `tables/table_linkage_continuation_summary.tex`.
+- Census-dependent: only insofar as population-scale validation may later confirm or extend this same by-horizon pattern; the sampled-study finding itself is not census-dependent.
+
+### C15. Capacity-scale reuse is a single trace statistic that predicts both offline discriminativeness and closed-loop separation
+
+- Status: PARTIALLY_SUPPORTED (exploratory, n=10) — restates C4 with the exact mechanistic-analysis correlation values used in `sections/08d_mechanistic.tex` and `sections/08f_practical_implications.tex`
+- Evidence: `analysis/closed_loop_mechanistic_analysis_20260914/outputs/correlation_summary.csv`, `mechanism_comparison.csv`.
+- Values: trace-derived LRU hit rate vs. offline all-tied fraction (H=16): pooled r=-0.832 (n=10), cap32 r=-0.829 (n=5), cap128 r=-0.834 (n=5). vs. closed-loop |MRU-LRU| miss-ratio gap: pooled r=0.899 (n=10), cap32 r=0.909 (n=5), cap128 r=0.893 (n=5).
 - Census-dependent: NO.
 
 ## Cross-cutting caveats that apply to nearly every claim above

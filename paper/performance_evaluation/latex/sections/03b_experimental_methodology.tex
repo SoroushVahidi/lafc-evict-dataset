@@ -1,0 +1,88 @@
+\section{Experimental Methodology}
+\label{sec:experimental-methodology}
+
+This section consolidates the methodological choices used across every
+result reported in Sections~\ref{sec:characterization}--\ref{sec:continuation}
+so that scope and caveats are stated once rather than scattered.
+
+\textbf{Workloads, capacities, horizons.} All results use the five
+families defined in Section~\ref{sec:benchmark-design}
+(cloudphysics, metacdn, metakv, twemcache, wiki2018). Offline
+target-discriminativeness results (Section~\ref{sec:characterization}) span
+all four evaluated capacities (32, 64, 128, 256) and all three horizons
+($H\in\{4,8,16\}$). Closed-loop, linkage, mechanistic, and continuation
+results (Sections~\ref{sec:closed-loop}--\ref{sec:continuation}) are
+reported at capacities 32 and 128 only -- this is the scope of the Tier-1
+production closed-loop evaluation on which all three later sections
+depend, not a data-availability limitation, and it is stated here once
+rather than repeated in each section.
+
+\textbf{Split terminology and two family-specific caveats.} ``test''
+denotes a temporally held-out scoring window; ``validation'' denotes a
+window used during earlier development that is not temporally held out in
+the same sense. Two caveats apply and recur throughout the paper: (i)
+\textbf{MetaCDN's closed-loop evidence is validation-window evidence, not
+test-window}, for both of its evaluated capacities; every result that
+includes MetaCDN should be read with this in mind, and Section~\ref{sec:linkage}
+reports what changes if MetaCDN is excluded. (ii) \textbf{MetaKV is the
+only family whose scored window begins at an empty cache} (a cold start,
+identifiable from the identity $\mathit{evictions} = \mathit{misses} -
+\mathit{capacity}$ holding exactly for MetaKV and no other family);
+Section~\ref{sec:mechanisms} discusses this as a plausible, not
+established, contributor to MetaKV's one policy-ranking exception.
+
+\textbf{Policies and seeds.} Closed-loop replay is evaluated for LRU, MRU,
+SIEVE (all deterministic, one run each), and random (20 CRN seeds, seeds
+0--19; mean and per-seed standard deviation reported). SIEVE has no
+offline counterpart in the labels described in Section~\ref{sec:label-generation}
+and is therefore closed-loop-only evidence throughout -- it is not part of
+any offline-vs-closed-loop correspondence claim, but is still reported as
+a closed-loop reference point (Section~\ref{sec:closed-loop}).
+
+\textbf{Offline metrics.} Per decision: all-tied fraction, unique-winner
+fraction, mean/median optimal-set fraction, decision-weighted random-optimal
+probability, and random regret (mean and tail percentiles), all computed
+per (family, capacity, horizon) stratum before any pooling
+(Section~\ref{sec:characterization}).
+
+\textbf{Closed-loop metrics.} Miss ratio per (family, capacity, policy),
+and, for random, its across-seed mean and standard deviation; relative
+miss-ratio difference vs.\ LRU is reported as the primary comparison
+statistic (Section~\ref{sec:closed-loop}).
+
+\textbf{Offline$\leftrightarrow$closed-loop linkage metrics.} Sign
+concordance between the offline regret gap and the closed-loop miss-ratio
+gap (MRU-vs-LRU and random-vs-LRU only, since these are the two pairs with
+both an offline and a closed-loop side), plus Pearson/Spearman/Kendall
+correlation between the two gaps' magnitudes, computed per horizon on the
+$n=10$ (family, capacity) cells (Section~\ref{sec:linkage}). $n=10$ is
+small and is treated as such throughout: correlations are reported with
+their exact $n$, never as population-scale claims.
+
+\textbf{Continuation-sensitivity metrics.} Optimal-set Jaccard overlap,
+cross-continuation regret (in misses), and strict-reversal fraction,
+comparing the canonical LRU-continuation label against MRU- and
+mean-random-continuation (10 CRN seeds) relabelings of the same decisions,
+on a pre-registered, stratified 5,000-primary + 500-diagnostic decision
+sample (Section~\ref{sec:continuation}). The primary statistical unit here
+is the \emph{decision} (not the candidate row or the continuation seed):
+every reported statistic is a decision-level cluster statistic, and the
+one reported bootstrap confidence interval resamples at the decision
+level.
+
+\textbf{Tie-aware analysis.} Every metric above that could be silently
+distorted by ties (optimal-set membership, pairwise preference,
+concordance) is computed with ties as a first-class outcome rather than
+broken arbitrarily; Section~\ref{sec:background}'s worked example shows
+the base case this generalizes from.
+
+\textbf{Provenance and validation strategy.} Every number in this paper
+traces to a frozen, gate-validated artifact (14/14 gates for Tier-1;
+independent dual-code-path recomputation for the linkage, mechanistic, and
+continuation analyses; see Section~\ref{sec:release-validation} for the
+full provenance chain and \texttt{docs/PE\_CLAIM\_EVIDENCE\_LEDGER.md} in
+the accompanying artifact for the exact source of every reported value).
+No number in this paper is read from a partial or unvalidated intermediate
+run; in particular, a full-population continuation-sensitivity census is
+in progress at submission time and is not used anywhere in this paper
+(Section~\ref{sec:continuation}).

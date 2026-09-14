@@ -1,40 +1,61 @@
-\section{Benchmark Design}
+\section{Evaluation Methodology: LAFC-Evict Construction}
 \label{sec:benchmark-design}
 
-\lafc\ is organized around five layers: external raw traces, processed traces, generated features, generated labels, and benchmark tasks. The release package begins after candidate-row generation and focuses on converting existing generated data into a reusable benchmark package for cache-eviction benchmarking, with schema, validation, and release metadata.
+This section defines the scientific abstraction underlying \lafc\ before
+describing how it is packaged for release. A \emph{trace} is a sequence of
+\emph{requests} (accesses) to objects. A \emph{cache state} is the set of
+objects resident in a bounded-capacity cache at a point in the trace. When
+a request misses and the cache is full, the system faces an
+\emph{eviction decision}: choose one resident object, a \emph{candidate
+victim}, to evict before admitting the requested object. \lafc\ treats
+every such decision, across every trace, capacity, and horizon evaluated,
+as one supervised unit; Section~\ref{sec:tasks-baselines} defines the exact
+formal quantities (finite-horizon counterfactual loss, optimal candidate
+set, regret) built on top of this abstraction, following directly from the
+worked example in Section~\ref{sec:background}.
 
-The evaluated open subset is \texttt{lafc-evict-v0.1-open}. The evaluated release metadata identifies five selected families: \texttt{cloudphysics}, \texttt{metacdn}, \texttt{metakv}, \texttt{twemcache}, and \texttt{wiki2018}. The family registry also lists \texttt{brightkite} and \texttt{citibike} as excluded from the evaluated open subset for redistribution reasons. This scope boundary is a release-governance decision, not a statement that the broader generated dataset mix is automatically redistributable. Not every selected family appears in every split in the evaluated release; for example, \texttt{metacdn} contributes train and validation decision rows but no test decision rows. Split assignment is produced upstream of this release package, which only normalizes and validates split values rather than assigning them, so uneven per-family split coverage reflects that upstream construction rather than a benchmark design guarantee of uniform cross-family generalization.
+The cache abstraction used throughout this paper is intentionally narrow
+and stated explicitly here rather than left implicit: objects are
+unit-sized (no byte-weighted or variable-size accounting), capacity is
+counted in objects, and admission of the requested object is
+unconditional (eviction is never avoided by refusing admission).
+Section~\ref{sec:limitations} discusses the consequences of this scope
+boundary; every claim in this paper should be read as bounded by it.
 
-The canonical benchmark unit is the candidate row. A single row corresponds to one candidate victim at one full-cache miss decision, so one eviction decision with $|C_t|$ admissible victim choices contributes $|C_t|$ candidate rows. Decision-level and pairwise benchmark objects are derived from that candidate-level base rather than collected independently. This design keeps the benchmark centered on cache-eviction decisions instead of conflating the benchmark contribution with end-to-end deployment claims.
-
-% TEMPLATE NOTE: the SIGMOD source used the ACM `acmart`-only two-column
-% spanning environment `figure*` (only meaningful under ACM's twocolumn
-% layout) together with ACM's accessibility macro `\Description{...}`
-% (alt-text for the ACM production pipeline, not part of elsarticle). This
-% is mechanically adapted below to a single-column `figure` environment,
-% matching elsarticle's default single-column layout, which is the correct
-% direct analogue; no caption text or figure content was changed. The
-% original ACM `\Description` alt-text is preserved verbatim as a comment
-% for future accessibility use:
-%   Overview diagram of the LAFC-Evict pipeline. External cache traces feed
-%   decision extraction and feature generation, then counterfactual label
-%   generation, then released benchmark artifacts including candidate rows,
-%   a decision view, and a pairwise sample. The lower portion summarizes
-%   benchmark tasks: value prediction, best-candidate selection, and
-%   pairwise preference learning.
 \begin{figure}[t]
   \centering
   \includegraphics[width=\textwidth]{../../64BDAA68-CBD4-4E8E-800B-467D62C0D9DE.png}
-  \caption{LAFC-Evict generation and release pipeline. The benchmark converts external cache traces into decision-level candidate rows, finite-horizon counterfactual labels, and released benchmark views for value prediction, best-candidate selection, and pairwise preference learning.}
+  \caption{LAFC-Evict generation and release pipeline. External cache traces are converted into decision-level candidate rows, finite-horizon counterfactual labels, and released benchmark views for value prediction, best-candidate selection, and pairwise preference learning.}
   \label{fig:pipeline}
 \end{figure}
 
-The benchmark is designed to satisfy four requirements:
+The evaluated dataset covers five trace families -- \texttt{cloudphysics},
+\texttt{metacdn}, \texttt{metakv}, \texttt{twemcache}, and
+\texttt{wiki2018} -- chosen to span a CDN workload, a key-value workload,
+two additional production-derived workloads, and one intentionally
+included negative/control workload (wiki2018; Sections~\ref{sec:characterization}
+and~\ref{sec:mechanisms} show why it degenerates and treat that as a
+useful, explained result rather than a benchmark defect). Two further
+families, \texttt{brightkite} and \texttt{citibike}, are excluded from the
+open release subset for redistribution reasons; this is a release-packaging
+boundary, not a claim that the underlying generated corpus is limited to
+five families. Not every family appears in every split (e.g.\ metacdn
+contributes train/validation but no test decisions); split assignment is
+produced upstream of this release package and is normalized and validated,
+not assigned, here.
+
+The evaluation in this paper is organized to satisfy four requirements:
 \begin{enumerate}[leftmargin=*]
-  \item \textbf{Decision alignment.} Preserve within-decision structure and candidate competition.
-  \item \textbf{Task multiplicity.} Support pointwise, decision-level, and pairwise learning tasks from one release.
-  \item \textbf{Releaseability.} Separate public benchmark artifacts from upstream raw-trace ownership and hosting constraints.
-  \item \textbf{Validation.} Expose checks for schema, consistency, family scope, and checksums.
+  \item \textbf{Decision alignment.} Preserve within-decision candidate
+  competition rather than treating candidates as i.i.d.\ points.
+  \item \textbf{Task multiplicity.} Support pointwise (candidate-level),
+  decision-level, and pairwise views of the same underlying supervision.
+  \item \textbf{Closed-loop grounding.} Evaluate the offline labels
+  against actual closed-loop cache-policy behavior rather than presenting
+  them as self-validating (Sections~\ref{sec:closed-loop}
+  and~\ref{sec:linkage}).
+  \item \textbf{Reproducibility.} Expose validated, checksummed artifacts
+  for every reported number (Section~\ref{sec:release-validation}).
 \end{enumerate}
 
 \input{tables/table_dataset_scale}

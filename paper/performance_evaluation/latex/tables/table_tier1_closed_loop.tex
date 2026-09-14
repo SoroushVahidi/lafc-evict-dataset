@@ -1,0 +1,22 @@
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \caption{Tier-1 closed-loop production evaluation: LRU miss ratio and relative miss-ratio difference vs.\ LRU for MRU, mean-random (20 seeds), and SIEVE. Source: \texttt{analysis/closed\_loop\_tier1\_evidence\_20260914/} (230/230 complete, 14/14 gates passed). MetaCDN is validation-window evidence; all other families are test-window. Negative values mean the policy beats LRU.}
+  \label{tab:tier1-closed-loop}
+  \begin{tabularx}{\columnwidth}{@{}llrrrrr@{}}
+    \toprule
+    family & cap. & LRU miss ratio & MRU $\Delta$ & random $\Delta$ & SIEVE $\Delta$ & random std \\
+    \midrule
+    metacdn      & 32  & 0.5792 & +47.37\% & +5.38\% & +0.81\%  & 0.0013 \\
+    metacdn      & 128 & 0.5490 & +54.93\% & +2.98\% & +0.36\%  & 0.0014 \\
+    twemcache    & 32  & 0.7511 & +27.12\% & +4.19\% & +8.47\%  & 0.0025 \\
+    twemcache    & 128 & 0.6205 & +52.98\% & +7.78\% & +15.29\% & 0.0023 \\
+    metakv       & 32  & 0.7410 & +10.02\% & +0.47\% & +0.03\%  & 0.0011 \\
+    metakv       & 128 & 0.7290 & +8.57\%  & $-$2.07\% & $-$4.22\% & 0.0015 \\
+    cloudphysics & 32  & 0.9836 & +1.65\%  & +0.28\% & +0.20\%  & 0.0010 \\
+    cloudphysics & 128 & 0.9561 & +4.48\%  & +0.85\% & +1.44\%  & 0.0014 \\
+    wiki2018     & 32  & 1.0000 & 0.00\%   & 0.00\%  & 0.00\%   & 0.0000 \\
+    wiki2018     & 128 & 1.0000 & 0.00\%   & 0.00\%  & 0.00\%   & 0.0000 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

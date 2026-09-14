@@ -1,0 +1,36 @@
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \caption{Offline$\leftrightarrow$closed-loop correspondence and sampled continuation-policy robustness, summarized. Top: H=16 concordance/correlation across the 10 family$\times$capacity cells (\texttt{analysis/closed\_loop\_offline\_linkage\_20260914/}). Bottom: sampled continuation study, Set C (discriminative-under-LRU, $n{=}6597$ primary-sample decisions; \texttt{analysis/continuation\_policy\_sensitivity\_full\_20260914/}), capacities 32/128 only --- population-scale evidence pending census validation.}
+  \label{tab:linkage-continuation-summary}
+  \begin{tabularx}{\columnwidth}{@{}Lrr@{}}
+    \toprule
+    \multicolumn{3}{@{}l}{\textit{Offline$\leftrightarrow$closed-loop, H=16 (n=10 cells; SIEVE excluded, no offline counterpart)}} \\
+    \midrule
+    metric & MRU-vs-LRU & random-vs-LRU \\
+    \midrule
+    Concordant / discordant / tied (of 10) & 7/1/2 & 6/2/2 \\
+    Pearson $r$ & 0.835 & 0.755 \\
+    Spearman $\rho$ & 0.915 & 0.829 \\
+    Kendall $\tau$-b & 0.773 & 0.591 \\
+    \midrule
+    \multicolumn{3}{@{}l}{\textit{Sampled continuation robustness, Set C, by capacity}} \\
+    \midrule
+    metric & cap.\ 32 & cap.\ 128 \\
+    \midrule
+    MRU median / mean Jaccard & 1.000 / 0.9958 & 1.000 / 0.9999 \\
+    MRU mean cross-cont.\ regret & 0.0018 & 0.0001 \\
+    MRU strict reversal fraction & 2.7$\times10^{-5}$ & 0.0 \\
+    random median / mean Jaccard & 1.000 / 0.7251 & 1.000 / 0.8522 \\
+    random mean cross-cont.\ regret & 0.0463 & 0.0197 \\
+    random strict reversal fraction & 1.0$\times10^{-3}$ & 1.5$\times10^{-6}$ \\
+    \midrule
+    \multicolumn{3}{@{}l}{\textit{Sampled continuation robustness, Set C, by horizon (both capacities pooled)}} \\
+    \midrule
+    metric & H=4 & H=16 \\
+    \midrule
+    MRU median Jaccard & 1.000 & 1.000 \\
+    random median Jaccard & 1.000 & 0.881 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

@@ -21,3 +21,45 @@ The evaluated open-release snapshot passed metadata repair, the provided verific
 Table~\ref{tab:artifact-layout} summarizes the release-package components used in the evaluation: candidate rows, derived benchmark views, manifest metadata, and checksums. Validation claims rely on those package contents together with reproducible validation scripts rather than on any standalone status note.
 
 \input{tables/table_artifact_layout}
+
+\subsection{Provenance of the evaluation results in this paper}
+
+Beyond the released dataset artifact above, every result reported in
+Sections~\ref{sec:characterization}--\ref{sec:continuation} traces to an
+independently frozen, gate-validated analysis artifact, each with its own
+committed scripts, provenance record, and (where applicable) an
+independent second code path that recomputes headline numbers and
+requires exact agreement: the target-discriminativeness audit, the Tier-1
+closed-loop production evidence (14/14 validity gates; a byte-verified
+evidence freeze recording the SHA256 of every output file both before and
+after freezing), the offline$\leftrightarrow$closed-loop linkage analysis,
+the mechanistic workload analysis, and the continuation-policy sensitivity
+pilot and full sampled study (prelaunch LRU-equivalence gate;
+post-completion validity gates; an independent recheck script requiring
+$10^{-9}$ numerical agreement with the primary analysis). All five are
+scripted, reproducible, and checked into the repository alongside this
+manuscript.
+
+\textbf{Two label sources must not be conflated.} The candidate-level
+\texttt{y\_loss}/\texttt{y\_value} labels released and evaluated throughout
+this paper use the canonical LRU continuation policy
+(Section~\ref{sec:label-generation}). The continuation-sensitivity study
+(Section~\ref{sec:continuation}) additionally computes MRU- and
+random-continuation \emph{relabelings} of the same decisions, strictly for
+the purpose of measuring sensitivity -- these sensitivity-study outputs
+are not an alternative release and are not used anywhere in this paper as
+if they were the canonical label.
+
+\textbf{The population-scale continuation census is not validated
+evidence.} A full-population MRU continuation census is running at the
+time of writing to extend Section~\ref{sec:continuation}'s sampled result.
+It has not finished and been independently validated as of this
+manuscript, and no number from it appears anywhere in this paper.
+
+\textbf{A known, unresolved provenance limitation, carried forward
+honestly rather than hidden:} the exact historical commit provenance of
+the full-release label generator is incomplete. This does not affect the
+validity of the frozen analysis artifacts above, each of which independently
+records its own generation provenance, but it means the full historical
+lineage of the generator code itself predating those artifacts is not
+completely reconstructable from repository history alone.

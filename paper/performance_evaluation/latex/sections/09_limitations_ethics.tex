@@ -2,30 +2,27 @@
 \label{sec:limitations}
 
 This evaluation surface has several important constraints, and the
-practical guidance elsewhere in this paper should be read together with
-them rather than instead of them.
-
-% TODO-CENSUS: once Sections 5-10 are restructured per
-% docs/PE_MANUSCRIPT_RESTRUCTURING_PLAN.md, replace the plain-text section
-% pointers below with \ref{} to the corresponding new section labels.
+practical guidance in Section~\ref{sec:practical-implications} should be
+read together with them rather than instead of them.
 
 First, the main label is a finite-horizon, continuation-policy-specific
 counterfactual miss cost, not an offline-optimal label for the full future
 control problem. Good performance on this label does not automatically
-imply online deployment gains, which is exactly why this paper's
-closed-loop evaluation and offline/closed-loop linkage analysis evaluate
-closed-loop behavior directly rather than relying on the offline label
-alone.
+imply online deployment gains, which is exactly why
+Sections~\ref{sec:closed-loop} and~\ref{sec:linkage} evaluate closed-loop
+behavior directly rather than relying on the offline label alone.
 
 Second, the canonical labels use LRU as the continuation policy after a
-forced eviction. This paper's continuation-policy sensitivity study reports
-a sampled analysis, at capacities 32 and 128 only, showing both MRU and
-mean-random continuation classify as robust on
+forced eviction. Section~\ref{sec:continuation} reports a sampled
+continuation-policy sensitivity study, at capacities 32 and 128 only,
+showing both MRU and mean-random continuation classify as robust on
 the pre-registered rule (median optimal-set Jaccard 1.0 at both
-capacities; mean cross-continuation regret and strict reversal fractions
-small but not identically zero, and visibly larger under random than under
-MRU continuation). This robustness result is a sampled-study finding at
-two capacities, not a population-scale or all-capacity guarantee; a
+capacities pooled; mean cross-continuation regret and strict reversal
+fractions small but not identically zero, and visibly larger under random
+than under MRU continuation; median Jaccard under random continuation
+drops to 0.881, specifically at $H=16$, still above but closer to the 0.8
+robustness threshold). This robustness result is a sampled-study finding
+at two capacities, not a population-scale or all-capacity guarantee; a
 separate full-population census is in progress and is not reported here.
 
 Third, the target is substantially tied. Across the full audited canonical
@@ -52,8 +49,9 @@ evidence is validation-window evidence, not a temporally held-out test
 window (Twemcache's is test-window). MetaKV is the only family whose
 scored window begins at an empty cache (a cold start, identifiable from
 the identity evictions = misses - capacity); this is plausibly, but not
-conclusively, connected to MetaKV being the one Tier-1 cell where a
-non-LRU policy wins closed-loop outright.
+conclusively, connected to MetaKV being the one Tier-1 cell where LRU
+falls to third place, behind both SIEVE and random-mean
+(Section~\ref{sec:mechanisms}).
 
 Sixth, a known data-generation issue remains open: in the audited canonical
 data, \texttt{candidate\_is\_predictor\_victim} is identical to
@@ -72,7 +70,7 @@ reasons, and not every selected family appears in every split of the
 evaluated release package.
 
 Finally, this paper reports closed-loop results for LRU, MRU, random, and
-SIEVE; it does not report a closed-loop
+SIEVE (Section~\ref{sec:closed-loop}); it does not report a closed-loop
 evaluation of any learned policy trained on these labels. A frozen pilot
 (not the production Tier-1 evaluation reported here) previously found a
 simple learned policy competitive with random and SIEVE but not with LRU

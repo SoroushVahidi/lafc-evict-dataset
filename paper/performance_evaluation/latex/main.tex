@@ -31,6 +31,7 @@
 \usepackage{tabularx}
 \usepackage{hyperref}
 \usepackage{amsmath}
+\usepackage{graphicx}
 
 \newcommand{\lafc}{LAFC-Evict}
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
@@ -67,9 +68,45 @@
 
 \begin{abstract}
 \begin{sloppypar}
-Learned cache-eviction research has outgrown small ad hoc evaluations, yet empirical comparison remains difficult because prior studies often rely on private traces, release-incomplete preprocessing pipelines, or supervision targets that are not comparable across papers. This paper presents \lafc, a benchmark package for learned cache eviction in caching systems built around decision-aligned counterfactual supervision. Each canonical candidate row represents one candidate victim considered at one full-cache miss decision and includes release-facing provenance fields, cache-state features, and a finite-horizon counterfactual label. The canonical loss label, \texttt{y\_loss}, is the continuation-policy miss cost over a finite horizon after forcing that candidate eviction. The corresponding value label, \texttt{y\_value}, is defined as $-\texttt{y\_loss}$. The benchmark also exposes decision-level and pairwise benchmark views to support value prediction, best-candidate selection, pairwise preference learning, and label-surface characterization.
-
-The evaluated open-release snapshot covers five selected trace families---cloudphysics, metacdn, metakv, twemcache, and wiki2018---and its release metadata record 277,995,072 candidate rows, 2,363,286 decision-view rows, and a capped pairwise sample of 1,000,000 rows. Two additional families, brightkite and citibike, remain excluded from the open subset. Beyond benchmark definition, release schema, validation, and reproducibility, the paper reports full candidate-label summaries, a linear \texttt{y\_loss} regression baseline, a best-candidate selector induced by that linear score, and pairwise-sample-backed feature baselines. Across all candidate rows, \texttt{y\_loss} has mean 7.7561, standard deviation 4.6542, and 5/25/50/75/95th percentiles of 2/4/7/11/16; the mirrored \texttt{y\_value} summary confirms the sign-flipped construction. The linear regression baseline is intentionally weak (test MAE 3.8739, RMSE 4.7152, $R^2=0.0026$), while the derived best-candidate selector reaches 0.8753 optimal-selection rate with 0.1251 mean regret. The shipped pairwise sample's A/B orientation is assigned by a deterministic hash over stable decision and pair-identity fields rather than by candidate-identifier ordering, giving a balanced non-tie split (about 49.8\%/50.2\%); on the resulting non-tie subset (121,738 of 1,000,000 rows), a logistic feature-difference baseline reaches 0.9660 accuracy with 0.0824 log loss after joining released candidate features back to the capped sample for evaluation only. These results demonstrate benchmark executability rather than online policy quality, and they are not evidence of online-policy superiority. The labels are therefore interpreted as decision-aligned finite-horizon counterfactual targets rather than offline-optimal supervision.
+Evaluating cache-eviction decisions requires knowing what would have
+happened under each candidate choice, information that is not directly
+observable from a single trace replay. This paper studies \lafc, a
+reusable way to construct that counterfactual evidence at production
+scale -- a per-decision, per-candidate finite-horizon counterfactual miss
+cost, computed for real cache traces -- and evaluates it against five
+questions. Is the target actually discriminative between candidates, and
+when does it degenerate? Across five trace families, four capacities, and
+three horizons, we find the target is not uniformly discriminative:
+two-thirds of decisions are fully tied in aggregate and no audited decision
+has a strict unique winner, but discriminativeness varies strongly and
+predictably by workload, capacity, and horizon, and one workload is a
+fully degenerate, mechanistically explained negative control. Does the
+offline candidate ranking correspond to actual closed-loop cache
+performance? A production-scale closed-loop evaluation (LRU, MRU, random,
+SIEVE; 5 families $\times$ 2 capacities $\times$ 20 seeds) shows offline
+and closed-loop policy orderings agree in most workload/capacity regimes
+where the offline signal is not near zero, with two specific, characterized
+exceptions. How does this depend on workload, capacity, and horizon?
+Capacity-scale reuse in the underlying trace predicts both offline
+discriminativeness and closed-loop policy separation ($r=0.83$--$0.97$,
+$n=10$, exploratory), and a horizon of 16 requests aligns offline and
+closed-loop evidence more strongly than shorter horizons. How sensitive
+are the labels to the continuation-policy assumption used to construct
+them? A pre-registered, stratified 5,500-decision sampled study at
+capacities 32 and 128 finds both MRU and mean-random continuation classify
+robust, though random continuation is measurably more perturbing than MRU
+and this robustness erodes somewhat at longer horizons -- a result we
+report with its exact scope rather than as a blanket robustness claim.
+What does this imply in practice? We argue, and the evidence here
+supports, that this offline supervision complements rather than replaces
+closed-loop evaluation, and give concrete guidance for when the offline
+signal can be trusted. \lafc\ also releases the underlying candidate-level,
+decision-level, and pairwise supervision (277,995,072 candidate rows,
+2,363,286 decisions, five trace families) for reuse by other researchers.
+Every quantitative claim in this paper traces to an independently
+validated, gate-checked artifact; a population-scale extension of the
+continuation-sensitivity result is in progress and is explicitly not used
+here.
 \end{sloppypar}
 \end{abstract}
 
@@ -86,11 +123,18 @@ learned cache eviction \sep benchmark datasets \sep counterfactual supervision \
 \input{sections/01_introduction}
 \input{sections/02_background}
 \input{sections/03_benchmark_design}
+\input{sections/03b_experimental_methodology}
 \input{sections/04_label_generation}
 \input{sections/05_schema_views}
 \input{sections/06_release_validation}
 \input{sections/07_tasks_baselines}
 \input{sections/08_characterization}
+\input{sections/08b_closed_loop}
+\input{sections/08c_linkage}
+\input{sections/08d_mechanistic}
+\input{sections/08e_continuation}
+\input{sections/08f_practical_implications}
+\input{sections/09b_discussion}
 \input{sections/09_limitations_ethics}
 \input{sections/10_related_work}
 \input{sections/11_conclusion}
@@ -128,6 +172,8 @@ This work received computing/API support through the Google Cloud Research Credi
 \textbf{Soroush Vahidi:} Conceptualization, Methodology, Software, Formal analysis, Investigation, Data curation, Writing -- original draft, Writing -- review \& editing, Visualization.
 
 \input{sections/12_ai_use_disclosure}
+
+\input{sections/13_appendix_release_tables}
 
 \bibliographystyle{elsarticle-num}
 \bibliography{refs}

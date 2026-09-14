@@ -1,5 +1,13 @@
 # Figure and Table Plan
 
+> **Status update 2026-09-14 (follow-on task):** Figures 1-4 and Tables
+> 1-3 (dataset scale, Tier-1 closed-loop, linkage+continuation summary)
+> are now built and wired into the manuscript, generated reproducibly by
+> scripts under `paper/performance_evaluation/scripts/figures/`. Figure 5
+> exists only as an explicitly-labeled preliminary/sampled-only draft
+> (`figure5_DRAFT_sampled_only_PRELIMINARY.pdf`), intentionally NOT
+> included in the built manuscript, pending population-census validation.
+
 Status: NOT_PRESENT prior to this task. The manuscript branch
 (`manuscript/performance-evaluation-template-20260913`) has 8 tables, all
 release/schema-descriptive (dataset scale, decision breakdown, candidate

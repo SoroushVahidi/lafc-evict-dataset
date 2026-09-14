@@ -1,0 +1,60 @@
+\section{Practical Implications (RQ5)}
+\label{sec:practical-implications}
+
+This section synthesizes Sections~\ref{sec:characterization}--\ref{sec:continuation}
+into guidance, without turning exploratory correlations into universal
+rules.
+
+\textbf{When should the offline counterfactual signal be trusted?} Most
+directly in workload/capacity regimes with high capacity-scale reuse --
+identifiable, before running any closed-loop replay, from a low trace-derived
+all-tied fraction or a high trace-derived LRU hit rate
+(Section~\ref{sec:mechanisms}). In this dataset that means metacdn- and
+twemcache-like regimes, where offline discriminativeness is high and
+offline$\leftrightarrow$closed-loop agreement is strongest.
+
+\textbf{When should a researcher be cautious?} In near-zero-offline-signal
+regimes (cloudphysics/cap32 is the concrete example here): a small offline
+regret gap can flip sign without indicating a real disagreement -- it is
+consistent with, not evidence against, offline informativeness elsewhere.
+Caution is also warranted around cold-start-scored windows (MetaKV) and
+validation-window-only evidence (MetaCDN), both stated explicitly in
+Section~\ref{sec:experimental-methodology} rather than left implicit.
+
+\textbf{What does a high tie rate mean?} Not that the target is useless --
+Section~\ref{sec:characterization}'s aggregate all-tied fraction of 0.68
+coexists with genuinely discriminative sub-regimes. A high tie rate is
+itself informative: it identifies where a policy comparison is unlikely to
+be resolvable by this label family at all (wiki2018 is the limiting case),
+which is useful information for deciding where \emph{not} to expect a
+learned method to outperform a heuristic on this evidence.
+
+\textbf{Why is closed-loop evaluation still necessary?} Because the
+offline$\leftrightarrow$closed-loop correspondence in
+Section~\ref{sec:linkage} is real but bounded: it holds in most, not all,
+regimes, rests on $n=8$--10 independent cells, and has at least one
+exception (metakv/cap128) that is not explained by existing evidence. A
+result derived only from offline labels cannot be presented as a
+closed-loop performance claim.
+
+\textbf{How should continuation-policy assumptions be interpreted?} As a
+tested, not assumed, robustness property, and one with real limits: the
+labels are close to unaffected by switching to MRU continuation, more
+(though still boundedly) affected by random continuation, and that effect
+grows somewhat with horizon (Section~\ref{sec:continuation}). This
+supports using the canonical LRU-continuation labels with reasonable
+confidence at capacities 32/128, not a claim that continuation choice is
+irrelevant.
+
+\textbf{What capacity-scale reuse tells you before running anything.} The
+single trace statistic most predictive of both offline informativeness and
+closed-loop policy separation in this evaluation is a simple, cheaply
+computed one -- trace-derived LRU hit rate at the target capacity
+(Section~\ref{sec:mechanisms}) -- which a practitioner can compute on a new
+trace before committing to either an offline-label study or a full
+closed-loop evaluation of it.
+
+None of the correlations underlying this guidance ($r=0.6$--$0.97$
+depending on which one) are treated here as anything stronger than the
+$n=8$--10 exploratory findings they are; they inform where to look next,
+not a guarantee of what will be found there.

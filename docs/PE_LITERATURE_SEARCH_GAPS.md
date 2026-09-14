@@ -97,6 +97,39 @@ still open by `PE_CITATION_AUDIT.md`'s grep of the current 44 bib entries:
   behavior" as a general PE-journal methodology question, independent of
   caching) — no search was run for this category at all.
 
+## Additional search performed in the follow-on manuscript-rewrite task (2026-09-14)
+
+### 4. Offline-vs-closed-loop evaluation methodology (cross-domain)
+
+- Query: `offline surrogate metric versus online closed-loop evaluation
+  machine learning systems validity`.
+- Findings: the general cross-domain finding (recommendation systems,
+  autonomous driving, RL) is that offline and online/closed-loop metrics
+  correlate imperfectly and domain-specifically. Two candidate papers
+  surfaced that are plausibly citable peers for this paper's
+  Section~10.6 (Offline Surrogate Evaluation and Closed-Loop
+  Correspondence) but were **not added to `refs.bib`** because full
+  metadata (confirmed author list, venue/publication status, exact year)
+  was not independently verified from the paper itself in this task:
+  - "Closing the Online-Offline Gap: A Scalable Framework for Composed
+    Model Evaluation" (surfaced via ResearchGate,
+    https://www.researchgate.net/publication/395337037) -- relevant
+    because it addresses exactly this offline/online correspondence
+    question, though for a different (general ML systems) domain.
+  - "Scalable Offline Metrics for Autonomous Driving" (arXiv,
+    https://arxiv.org/pdf/2510.08571) -- relevant as a same-question,
+    different-domain peer (offline proxy metric validity against
+    closed-loop driving performance).
+- Before citing either: fetch the actual paper, confirm authors/venue/
+  year, and confirm the claimed relevance holds under a full read, per
+  the same discipline applied to the two arXiv candidates in the
+  original search above.
+- No search was run in this follow-on task for related-work items #6
+  (performance-evaluation methodology literature specifically) or #7
+  (recent articles in the *Performance Evaluation* journal itself) beyond
+  the general special-issue mention already recorded above; both remain
+  open gaps.
+
 ## Recommendation
 
 Do not add any new `refs.bib` entry based solely on this task's search

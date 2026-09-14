@@ -1,0 +1,61 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\textbf{What LAFC-Evict enables.} A reusable, candidate-level, finite-horizon
+counterfactual supervision surface, materialized once from real traces and
+usable across value-regression, best-candidate-selection, and pairwise
+formulations (Sections~\ref{sec:background}--\ref{sec:tasks-baselines})
+without every study re-deriving its own labels from raw traces
+(Section~\ref{sec:related-work} situates this against prior learned-cache
+work, most of which derives labels internally and non-reusably).
+
+\textbf{What the evaluation reveals, beyond the surface itself.} Four
+findings that only emerge from evaluating the surface against closed-loop
+behavior, not from describing the surface alone: the target's
+discriminativeness is workload-structured, not incidental
+(Section~\ref{sec:characterization}); that structure is explained, not
+just observed, by a single trace-level property, capacity-scale reuse
+(Section~\ref{sec:mechanisms}); offline and closed-loop policy orderings
+agree in most, not all, informative regimes, with the exceptions
+identified rather than smoothed over (Section~\ref{sec:linkage}); and the
+canonical LRU-continuation assumption is robust, with quantified limits,
+at the capacities tested (Section~\ref{sec:continuation}).
+
+\textbf{Why the negative/degenerate regimes are scientifically useful, not
+an embarrassment.} wiki2018's complete degeneracy and cloudphysics/cap32's
+near-zero offline signal are both, in this paper, explained results
+(Section~\ref{sec:mechanisms}), not unexplained anomalies. A benchmark
+whose degenerate cases are mechanistically understood is more trustworthy
+in its non-degenerate claims than one that reports only favorable cases;
+this is the paper's answer to the historical criticism that the target's
+tie-heaviness was previously stated but not investigated.
+
+\textbf{Offline surrogate evaluation vs.\ closed-loop performance.} This
+paper's position, supported by Sections~\ref{sec:linkage}
+and~\ref{sec:closed-loop}, is that the offline surrogate is a genuine,
+partially-validated predictor of closed-loop policy separation in
+identifiable regimes, and that this relationship is itself the
+contribution -- not a claim that the surrogate can replace closed-loop
+evaluation. The two exceptions found (cloudphysics/cap32,
+metakv/cap128) are not edge cases invented for balance; they were
+identified by the same symmetric procedure that found the 8 agreeing
+cells, and metakv/cap128 in particular remains only partially understood
+even after dedicated mechanistic analysis (Section~\ref{sec:mechanisms}).
+
+\textbf{Continuation robustness as currently validated.} The robustness
+finding in Section~\ref{sec:continuation} is deliberately reported with
+its exact scope attached (capacities 32/128, a stratified sample, a
+horizon-dependent erosion under random continuation) rather than as a
+blanket "labels are continuation-robust" statement. This is a case where
+narrowing the claim to match the evidence produces a more useful result
+for a future reader than a broader, less careful one would: a practitioner
+working at capacity 64 or 256, or caring specifically about $H=16$ under
+random-like continuation dynamics, now knows exactly what is and is not
+yet established.
+
+\textbf{Methodological limitations that shape every result above} are
+collected in Section~\ref{sec:limitations} rather than repeated here;
+Section~\ref{sec:characterization}'s target-discriminativeness numbers,
+Section~\ref{sec:linkage}'s small $n$, and Section~\ref{sec:continuation}'s
+capacity scope are the three limitations most load-bearing for the claims
+in this discussion specifically.

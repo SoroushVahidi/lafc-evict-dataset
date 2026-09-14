@@ -79,38 +79,69 @@ figure/table).
 See `PE_FIGURE_TABLE_PLAN.md` (5 figures, 3 main-text tables, explicit
 duplication checks, explicit appendix candidates).
 
-## What was actually changed in this task (see also `FINAL_HEAD` in the
-completion report)
+## What was actually changed (updated 2026-09-14, follow-on rewrite pass)
 
-This task performed the following concrete, committed edits (not merely
-planning) on `paper/performance_evaluation/` in this branch, copied forward
-from `manuscript/performance-evaluation-template-20260913` as described
-above:
+**Pass 1** (original task, HEAD `edc7607`): rewrote `01_introduction.tex`
+and `09_limitations_ethics.tex`; fixed the LeCaR citation.
 
-1. Rewrote `sections/01_introduction.tex` to open with the scientific
-   story (per the required framing) instead of dataset-scale numbers, and
-   to state RQ1-RQ5 explicitly.
-2. Rewrote `sections/09_limitations_ethics.tex` to add every cross-cutting
-   caveat from `PE_CLAIM_EVIDENCE_LEDGER.md`.
-3. Fixed the LeCaR citation author-metadata error in
-   `latex/refs.bib` (see `PE_CITATION_AUDIT.md`).
-4. Did **not** rewrite Sections 2-8, 10, 12-13 in this task — that is the
-   largest remaining piece of manuscript work (see
-   `docs/CURRENT_PROJECT_STATUS_AND_HANDOFF_20260914B.md` Section 7 and the
-   final report's `REMAINING_MANUSCRIPT_WORK`). Rewriting all eleven
-   remaining content sections to publication quality in one pass was judged
-   higher-risk than doing the two highest-leverage, most reviewer-visible
-   sections (Introduction, Limitations) correctly and leaving the rest as
-   an explicit, planned to-do rather than a rushed, unverified rewrite.
-5. Did not move any section to appendix in this task (the file moves
-   themselves are mechanical LaTeX restructuring that should happen
-   together with the full section rewrite, not split across two passes).
+**Pass 2** (this follow-on task) added substantially more:
+
+1. New `sections/03b_experimental_methodology.tex` (families/capacities/
+   horizons/splits/policies/seeds/metrics, consolidated in one place).
+2. Rewrote `sections/02_background.tex` to integrate the worked example
+   (`docs/PE_WORKED_EXAMPLE.md`) as Figure 1, and added early citations
+   (LRU/ARC/LIRS/SIEVE/S3-FIFO/LeCaR/LRB/Parrot/GL-Cache) so prior work is
+   discussed by page 2, not only in Related Work.
+3. Rewrote `sections/03_benchmark_design.tex` to lead with the scientific
+   abstraction (trace/access/cache-state/eviction-decision/candidate-victim)
+   before release mechanics.
+4. Edited `sections/04_label_generation.tex` to add the y\_loss/y\_value
+   dual-interface explanation (recommendation B, canonical + alias).
+5. Fully rewrote `sections/08_characterization.tex` around target
+   discriminativeness (RQ1), with Figure 2.
+6. Added four new results sections: `08b_closed_loop.tex` (RQ2 part 1,
+   Table 2), `08c_linkage.tex` (RQ2 part 2/RQ3, Figure 3),
+   `08d_mechanistic.tex` (RQ3 part 2), `08e_continuation.tex` (RQ4, with
+   one `% TODO-CENSUS` marker, no final Figure 5).
+7. Added `08f_practical_implications.tex` (RQ5) and `09b_discussion.tex`
+   (Discussion).
+8. Extended `sections/06_release_validation.tex` with a provenance
+   subsection (analysis-artifact chain, canonical-vs-sensitivity label
+   distinction, census-not-validated statement, generator-provenance
+   limitation).
+9. Edited `sections/07_tasks_baselines.tex` to state explicitly that the
+   shipped pairwise sample used is the canonical regenerated sample (not
+   the historical stale one), and trimmed stale internal bug-fix
+   narration.
+10. Added `sections/13_appendix_release_tables.tex` (appendix) and moved
+    3 orphaned schema/release tables into it, as planned but not executed
+    in Pass 1.
+11. Added new tables `table_tier1_closed_loop.tex` (Table 2) and
+    `table_linkage_continuation_summary.tex` (Table 3).
+12. Generated 4 figures via reproducible Python scripts under
+    `paper/performance_evaluation/scripts/figures/` (Figures 1-4, wired
+    into the manuscript) plus one explicitly-labeled preliminary,
+    sampled-only Figure 5 draft (NOT wired into the manuscript, per the
+    task's constraint against presenting census-adjacent evidence as
+    final).
+13. Rewrote the abstract to match the new RQ-organized framing.
+14. Updated `09_limitations_ethics.tex`'s forward pointers from plain
+    text to real `\ref{}`s now that the target sections exist.
+15. Added `\usepackage{graphicx}` and reordered `main.tex`'s `\input`
+    list.
+16. Added a new Related Work subsection ("Offline Surrogate Evaluation
+    and Closed-Loop Correspondence") for early positioning against the
+    cross-domain offline/online-evaluation-correspondence literature.
+
+Not yet done: Section 10 (Related Work)'s existing five subsections were
+not otherwise rewritten (only the one new subsection was added); Section
+5 (schema views) and Section 12 (AI-use disclosure) were left unedited;
+no section was physically renamed/relabeled (new content used new files
+instead, to avoid breaking existing `\ref{}`s under time pressure).
 
 ## Build/integration blocker check
 
-No blocker was found preventing the above four edits from being made
-directly and built (`pdflatex`/`latexmk` are available in this
-environment; see the final report's `MANUSCRIPT_BUILD_RESULT`). The
-remaining, larger restructuring (full section rewrite + file moves) is
-deferred by choice (Section "What was actually changed", item 4), not
-because of a technical blocker.
+No blocker was found. `pdflatex`/`latexmk` built the full manuscript
+cleanly after both passes (see the final report's
+`MANUSCRIPT_BUILD_RESULT`). All further restructuring is deferred by
+choice, not because of a technical blocker.

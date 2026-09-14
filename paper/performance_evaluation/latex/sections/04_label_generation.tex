@@ -12,6 +12,19 @@ L_{t,H}^{\pi}(c)
 \]
 The release stores this quantity as \texttt{y\_loss}, and it stores the corresponding value label as \texttt{y\_value} $= -\texttt{y\_loss}$. The triggering miss at time $t$ is common to all candidates and is therefore not the decision-discriminating part of the label.
 
+Both columns are retained in the schema, but they are not independent
+information: \texttt{y\_value} is a deterministic sign-flip of
+\texttt{y\_loss}, computed by the same generation step. The two exist
+because downstream modeling code is written against either a
+minimization convention (\texttt{y\_loss} as a cost/regret target, the
+convention used throughout the rest of this paper and the more directly
+interpretable of the two -- a count of extra misses) or a maximization
+convention (\texttt{y\_value} as a value/utility target, convenient for
+argmax-based candidate selection or value-function-style formulations).
+This paper treats \texttt{y\_loss} as canonical and uses
+\texttt{y\_value} only where a specific baseline is more naturally stated
+as a maximization, never reporting the same statistic under both names.
+
 This label has two consequences for the paper. First, it creates a common numerical target for regression-style benchmark tasks. Second, it induces structured decision-level objects. For a fixed decision $(t, S_t^{-}, C_t)$, the benchmark-optimal candidate set is
 \[
 C_t^{\star} = \arg\min_{c \in C_t} L_{t,H}^{\pi}(c),

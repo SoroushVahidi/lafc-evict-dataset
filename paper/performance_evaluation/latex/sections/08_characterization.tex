@@ -1,14 +1,71 @@
-\section{Empirical Characterization}
+\section{Target Discriminativeness (RQ1)}
 \label{sec:characterization}
 
-The empirical characterization emphasizes benchmark structure rather than a large model bake-off. The release metadata establish the scale and heterogeneity of the benchmark, and the released candidate-row summaries add full label-distribution reporting without changing that focus.
+This section answers RQ1: is the finite-horizon counterfactual target
+discriminative between candidates, and when does it degenerate? Source:
+\texttt{analysis/sigmod\_target\_discriminativeness\_20260913/}, audited
+over all 277,995,072 candidate rows / 2,363,286 decisions in the canonical
+dataset (all capacities, all horizons; the full population, not a sample).
 
-Across 277,995,072 candidate rows, \texttt{y\_loss} has mean 7.7561, standard deviation 4.6542, and 5/25/50/75/95th percentiles of 2/4/7/11/16. The corresponding \texttt{y\_value} summary mirrors those values by sign, as expected from the benchmark definition. The resulting label surface is broad but still bounded by the finite horizon, which keeps both candidate-level regression errors and decision-level regret interpretable. Table~\ref{tab:decision-breakdown}'s exactly equal horizon counts (787,762 rows at each of horizons 4, 8, and 16) reflect the same underlying full-cache-miss decisions relabeled at each configured horizon, whereas its capacity counts correspond to genuinely different full-cache-miss events produced by replaying each trace at each cache size; pooled statistics in this paper therefore mix horizons and capacities and should be read as aggregate release summaries rather than per-configuration results.
+\subsection{The uncomfortable aggregate facts, stated first}
 
-The same result summaries also show that the simple linear-score selector often lands in the benchmark-optimal set even though its underlying value regression is weak. That combination is useful descriptive context for later benchmark users: the release is not trivial, but a lightweight heuristic already clears a reproducible lower bar. The evaluator's grouped decision count now matches the manifest-backed decision-view count exactly (Table~\ref{tab:label-selection-summary}); an earlier decision-key bug that double-counted a small number of decisions has been fixed and reconciled. Because the dataset is heavily tied at the decision level, a uniform-random selector's expected optimal-selection rate and regret are included alongside the linear-score selector's observed metrics so that headline numbers are not read in isolation from tie density.
+Pooled across every family, capacity, and horizon: the decision-weighted
+random-optimal probability is 0.9912, the decision-weighted mean random
+regret is 0.0088, the all-tied fraction is 0.6766, and the unique-winner
+fraction is exactly 0.0. In plain terms: a uniformly random candidate
+choice lands in the optimal set 99.1\% of the time, over two-thirds of
+decisions have every candidate exactly tied, and \emph{no audited decision
+in this dataset has a single, strictly-best candidate victim}. The overall
+classification, by the audit's own pre-registered rule, is
+\textbf{B~=~CONDITIONALLY DISCRIMINATIVE} -- not uniformly discriminative,
+and this is stated here as the paper's own finding rather than a limitation
+discovered post hoc. Aggregate degeneracy this large is, by itself, a
+substantive result about the target's shape.
 
-\input{tables/table_decision_breakdown}
+\subsection{Where the target is informative}
 
-\input{tables/table_candidate_count_stats}
+The aggregate picture, however, is not the same at every family, capacity,
+and horizon. Figure~\ref{fig:discriminativeness} shows discriminativeness
+(1 -- all-tied fraction) across all five families, four capacities, and
+three horizons (source data: same audit, per-stratum breakdown,
+\texttt{outputs/phase4\_stratified\_family\_capacity\_horizon.csv}, 60
+family$\times$capacity$\times$horizon cells). Two families,
+\textbf{metacdn} and \textbf{twemcache}, are substantially more
+discriminative than the aggregate figure suggests -- at $H=16$, metacdn's
+all-tied fraction is 0.0085--0.012 and twemcache's is 0.10--0.24 across its
+two smallest capacities, an order of magnitude below the aggregate 0.68.
+\textbf{cloudphysics} and \textbf{metakv} sit at the tie-heavy end
+(all-tied fraction 0.66--0.87 at $H=16$), closer to but still below the
+degenerate extreme. \textbf{wiki2018} is exactly at the degenerate
+extreme: all-tied fraction 1.0 at every capacity and every horizon tested,
+with zero reuse events in its scored windows (Section~\ref{sec:mechanisms}
+shows this is a mathematical certainty, not a statistical property of the
+trace, and treats wiki2018 as a genuine negative control rather than a
+benchmark failure). Discriminativeness also increases with horizon within
+every non-degenerate family (e.g.\ twemcache/cap32 rises from 0.46 at
+$H=4$ to 0.75 at $H=16$) -- a longer look-ahead window resolves more ties,
+consistent with more future requests giving more opportunities for
+candidates' fates to diverge.
 
-\input{tables/table_regret_tie_stats}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/figure2_discriminativeness.pdf}
+  \caption{Target discriminativeness (1 -- all-tied fraction) by family,
+  capacity, and horizon. Reproducible from
+  \texttt{paper/performance\_evaluation/scripts/figures/make\_figure2\_discriminativeness.py}
+  against the frozen audit CSV; no number is hand-entered.}
+  \label{fig:discriminativeness}
+\end{figure}
+
+\subsection{Interpretation}
+
+The scientific contribution here is partly \emph{characterizing} where the
+target is informative rather than asserting it is informative everywhere.
+High tie rates are not hidden or explained away: they are the majority
+regime in this dataset, and Section~\ref{sec:mechanisms} connects them
+directly to trace-level reuse structure (capacity-scale locality), giving
+a mechanistic account of exactly why metacdn/twemcache are discriminative
+and cloudphysics/metakv/wiki2018 are not. Sections~\ref{sec:closed-loop}
+and~\ref{sec:linkage} then ask whether this same discriminativeness
+structure predicts anything about actual closed-loop cache-policy
+behavior (it does, in the regimes identified here).
