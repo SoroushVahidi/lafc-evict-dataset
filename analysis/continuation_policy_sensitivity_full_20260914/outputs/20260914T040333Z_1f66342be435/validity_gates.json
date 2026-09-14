@@ -1,0 +1,185 @@
+{
+  "FULL_EXPERIMENT_VALID": true,
+  "gates": [
+    {
+      "detail": "",
+      "name": "prelaunch_lru_equivalence_gate_ran",
+      "passed": true
+    },
+    {
+      "detail": "n_mismatches=0",
+      "name": "lru_equivalence_mismatches_zero",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "primary_manifest_exists",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "diagnostic_manifest_exists",
+      "passed": true
+    },
+    {
+      "detail": "got 5000",
+      "name": "primary_sample_size_5000",
+      "passed": true
+    },
+    {
+      "detail": "got 500",
+      "name": "diagnostic_sample_size_500",
+      "passed": true
+    },
+    {
+      "detail": "got 500",
+      "name": "stratum_cloudphysics_32_has_500",
+      "passed": true
+    },
+    {
+      "detail": "got 500",
+      "name": "stratum_cloudphysics_128_has_500",
+      "passed": true
+    },
+    {
+      "detail": "got 500",
+      "name": "stratum_metacdn_32_has_500",
+      "passed": true
+    },
+    {
+      "detail": "got 500",
+      "name": "stratum_metacdn_128_has_500",
+      "passed": true
+    },
+    {
+      "detail": "got 500",
+      "name": "stratum_metakv_32_has_500",
+      "passed": true
+    },
+    {
+      "detail": "got 500",
+      "name": "stratum_metakv_128_has_500",
+      "passed": true
+    },
+    {
+      "detail": "got 500",
+      "name": "stratum_twemcache_32_has_500",
+      "passed": true
+    },
+    {
+      "detail": "got 500",
+      "name": "stratum_twemcache_128_has_500",
+      "passed": true
+    },
+    {
+      "detail": "got 500",
+      "name": "stratum_wiki2018_32_has_500",
+      "passed": true
+    },
+    {
+      "detail": "got 500",
+      "name": "stratum_wiki2018_128_has_500",
+      "passed": true
+    },
+    {
+      "detail": "got 100",
+      "name": "diagnostic_cloudphysics_has_100_decisions",
+      "passed": true
+    },
+    {
+      "detail": "got 100",
+      "name": "diagnostic_metacdn_has_100_decisions",
+      "passed": true
+    },
+    {
+      "detail": "got 100",
+      "name": "diagnostic_metakv_has_100_decisions",
+      "passed": true
+    },
+    {
+      "detail": "got 100",
+      "name": "diagnostic_twemcache_has_100_decisions",
+      "passed": true
+    },
+    {
+      "detail": "got 100",
+      "name": "diagnostic_wiki2018_has_100_decisions",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "selection_used_only_baseline_lru_info",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "no_duplicate_primary_decision_ids",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "raw_candidate_results_exists",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "decision_metrics_exists",
+      "passed": true
+    },
+    {
+      "detail": "expected 33000 got 33000",
+      "name": "decision_metrics_row_count_matches_expected",
+      "passed": true
+    },
+    {
+      "detail": "[]",
+      "name": "no_nan_jaccard",
+      "passed": true
+    },
+    {
+      "detail": "[]",
+      "name": "no_duplicate_decision_metric_keys",
+      "passed": true
+    },
+    {
+      "detail": "expected 132, got 132",
+      "name": "overlap_decisions_present_once_per_sample_tag",
+      "passed": true
+    },
+    {
+      "detail": "{'16', '8', '4'}",
+      "name": "all_three_horizons_present",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "wiki2018_present",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "metacdn_present_and_labeled_validation",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "metakv_present",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "sample_labels_preserved",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "run_manifest_exists",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "raw_output_hash_recorded",
+      "passed": true
+    }
+  ]
+}

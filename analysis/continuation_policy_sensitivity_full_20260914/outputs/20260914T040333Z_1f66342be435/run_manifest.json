@@ -1,0 +1,22 @@
+{
+  "output_files": {
+    "candidate_results.jsonl": {
+      "bytes": 5876423254,
+      "note": "raw output, NOT committed to git",
+      "sha256": "410485bec8771220aee847e2b8b9e0d2dc7ba460b027c08930d88846faad3d45"
+    },
+    "decision_metrics.csv": {
+      "bytes": 3821190,
+      "sha256": "d254d2a784826a3974dd2173be16606bbaeccd78735b8a3ede9793c1a894b30c"
+    },
+    "provenance.json": {
+      "bytes": 2388,
+      "sha256": "44fbe52a4b9532c39f249695d59b5153b40e7033035736f7c840e1f6649e44e3"
+    },
+    "summary.json": {
+      "bytes": 229,
+      "sha256": "92628628899a7cec12d1185f36cd0c3ca366f36a0f490ab7a62367b667753f66"
+    }
+  },
+  "run_id": "20260914T040333Z_1f66342be435"
+}

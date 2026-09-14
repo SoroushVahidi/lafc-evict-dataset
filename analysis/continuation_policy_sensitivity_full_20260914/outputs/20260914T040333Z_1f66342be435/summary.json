@@ -1,0 +1,8 @@
+{
+  "n_decision_horizon_pairs_expected": 16500,
+  "n_decision_horizon_pairs_processed_this_invocation": 16500,
+  "n_decisions": 5500,
+  "n_failed": 0,
+  "n_raw_jsonl_lines": 15259392,
+  "run_id": "20260914T040333Z_1f66342be435"
+}

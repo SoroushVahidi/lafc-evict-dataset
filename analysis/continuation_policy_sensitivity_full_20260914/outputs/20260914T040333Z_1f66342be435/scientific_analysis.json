@@ -1,0 +1,674 @@
+{
+  "DIAGNOSTIC_ANALYSIS": {
+    "mru": {
+      "fraction_ccr_zero": 0.974,
+      "max_ccr": 0.06666666666666667,
+      "mean_ccr": 0.000849597987726132,
+      "mean_jaccard": 0.9957703090100001,
+      "mean_prob_still_optimal": 0.9991504020122739,
+      "median_jaccard": 1.0,
+      "min_jaccard": 0.5862068965517241,
+      "n_decisions": 1500,
+      "pairwise_totals": {
+        "pairwise_a_strict_b_tie": 7223,
+        "pairwise_a_tie_b_strict": 1982,
+        "pairwise_both_tied": 2536324,
+        "pairwise_concordant": 75931,
+        "pairwise_discordant": 12
+      },
+      "strict_reversal_fraction": 4.577580840077636e-06,
+      "total_pairs": 2621472
+    },
+    "random_mean": {
+      "fraction_ccr_zero": 0.668,
+      "max_ccr": 0.7916666666666669,
+      "mean_ccr": 0.032023830862362386,
+      "mean_jaccard": 0.8078298301581609,
+      "mean_prob_still_optimal": 0.8082683674402918,
+      "median_jaccard": 1.0,
+      "min_jaccard": 0.0,
+      "n_decisions": 1500,
+      "pairwise_totals": {
+        "pairwise_a_strict_b_tie": 1900,
+        "pairwise_a_tie_b_strict": 233364,
+        "pairwise_both_tied": 2304942,
+        "pairwise_concordant": 79871,
+        "pairwise_discordant": 1395
+      },
+      "strict_reversal_fraction": 0.0005321437726590252,
+      "total_pairs": 2621472
+    }
+  },
+  "PRIMARY_ANALYSIS": {
+    "mru": {
+      "bootstrap_setC": {
+        "mean_ccr_ci95": [
+          0.0007326995719702261,
+          0.0010270198418713852
+        ],
+        "median_jaccard_ci95": [
+          1.0,
+          1.0
+        ],
+        "n_decisions_per_resample": 6597,
+        "n_resamples": 2000,
+        "seed": 20260914
+      },
+      "by_capacity_setC": {
+        "32": {
+          "fraction_ccr_zero": 0.9526646805693479,
+          "max_ccr": 0.07692307692307693,
+          "mean_ccr": 0.0018347006972709858,
+          "mean_jaccard": 0.9957738527145049,
+          "mean_prob_still_optimal": 0.9983113506825798,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.6071428571428571,
+          "n_decisions": 3021,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 5534,
+            "pairwise_a_tie_b_strict": 5366,
+            "pairwise_both_tied": 1357048,
+            "pairwise_concordant": 130427,
+            "pairwise_discordant": 41
+          },
+          "strict_reversal_fraction": 2.7362227845938646e-05,
+          "total_pairs": 1498416
+        },
+        "128": {
+          "fraction_ccr_zero": 0.9932885906040269,
+          "max_ccr": 0.024793388429752067,
+          "mean_ccr": 6.51822643828784e-05,
+          "mean_jaccard": 0.9999036300838481,
+          "mean_prob_still_optimal": 0.9999348177356172,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.9212598425196851,
+          "n_decisions": 3576,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 1777,
+            "pairwise_a_tie_b_strict": 4660,
+            "pairwise_both_tied": 28236327,
+            "pairwise_concordant": 822964,
+            "pairwise_discordant": 0
+          },
+          "strict_reversal_fraction": 0.0,
+          "total_pairs": 29065728
+        }
+      },
+      "by_family_setC": {
+        "cloudphysics": {
+          "fraction_ccr_zero": 0.9781420765027322,
+          "max_ccr": 0.03333333333333333,
+          "mean_ccr": 0.0006680070803219931,
+          "mean_jaccard": 0.9979500373544353,
+          "mean_prob_still_optimal": 0.999331992919678,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.6333333333333333,
+          "n_decisions": 732,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 1851,
+            "pairwise_a_tie_b_strict": 623,
+            "pairwise_both_tied": 4272735,
+            "pairwise_concordant": 71767,
+            "pairwise_discordant": 0
+          },
+          "strict_reversal_fraction": 0.0,
+          "total_pairs": 4346976
+        },
+        "metacdn": {
+          "fraction_ccr_zero": 0.9844331641285956,
+          "max_ccr": 0.06896551724137931,
+          "mean_ccr": 0.0005609257939653135,
+          "mean_jaccard": 0.9989758409462932,
+          "mean_prob_still_optimal": 0.9995169698687595,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.7586206896551724,
+          "n_decisions": 2955,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 1237,
+            "pairwise_a_tie_b_strict": 2546,
+            "pairwise_both_tied": 12383438,
+            "pairwise_concordant": 389068,
+            "pairwise_discordant": 15
+          },
+          "strict_reversal_fraction": 1.1740484572064033e-06,
+          "total_pairs": 12776304
+        },
+        "metakv": {
+          "fraction_ccr_zero": 1.0,
+          "max_ccr": 0.0,
+          "mean_ccr": 0.0,
+          "mean_jaccard": 0.9995698924731183,
+          "mean_prob_still_optimal": 1.0,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.9032258064516129,
+          "n_decisions": 450,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 168,
+            "pairwise_a_tie_b_strict": 6,
+            "pairwise_both_tied": 1973686,
+            "pairwise_concordant": 35228,
+            "pairwise_discordant": 0
+          },
+          "strict_reversal_fraction": 0.0,
+          "total_pairs": 2009088
+        },
+        "twemcache": {
+          "fraction_ccr_zero": 0.9573170731707317,
+          "max_ccr": 0.07692307692307693,
+          "mean_ccr": 0.0014752868617583825,
+          "mean_jaccard": 0.9965889029584203,
+          "mean_prob_still_optimal": 0.9986105015671755,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.6071428571428571,
+          "n_decisions": 2460,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 4055,
+            "pairwise_a_tie_b_strict": 6851,
+            "pairwise_both_tied": 10963516,
+            "pairwise_concordant": 457328,
+            "pairwise_discordant": 26
+          },
+          "strict_reversal_fraction": 2.274362268819823e-06,
+          "total_pairs": 11431776
+        },
+        "wiki2018": {
+          "fraction_ccr_zero": null,
+          "max_ccr": null,
+          "mean_ccr": null,
+          "mean_jaccard": null,
+          "mean_prob_still_optimal": null,
+          "median_jaccard": null,
+          "min_jaccard": null,
+          "n_decisions": 0,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 0,
+            "pairwise_a_tie_b_strict": 0,
+            "pairwise_both_tied": 0,
+            "pairwise_concordant": 0,
+            "pairwise_discordant": 0
+          },
+          "strict_reversal_fraction": null,
+          "total_pairs": 0
+        }
+      },
+      "by_horizon_setC": {
+        "4": {
+          "fraction_ccr_zero": 0.9949977262391997,
+          "max_ccr": 0.03333333333333333,
+          "mean_ccr": 0.0001591021334233058,
+          "mean_jaccard": 0.9996193558335327,
+          "mean_prob_still_optimal": 0.9998408978665768,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.9032258064516129,
+          "n_decisions": 2199,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 441,
+            "pairwise_a_tie_b_strict": 399,
+            "pairwise_both_tied": 10002166,
+            "pairwise_concordant": 185040,
+            "pairwise_discordant": 2
+          },
+          "strict_reversal_fraction": 1.9630845869591505e-07,
+          "total_pairs": 10188048
+        },
+        "8": {
+          "fraction_ccr_zero": 0.9845384265575261,
+          "max_ccr": 0.06666666666666667,
+          "mean_ccr": 0.0005521740859118592,
+          "mean_jaccard": 0.9986791759676441,
+          "mean_prob_still_optimal": 0.9994928121492782,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.7741935483870968,
+          "n_decisions": 2199,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 1707,
+            "pairwise_a_tie_b_strict": 1642,
+            "pairwise_both_tied": 9886018,
+            "pairwise_concordant": 298674,
+            "pairwise_discordant": 7
+          },
+          "strict_reversal_fraction": 6.870796054357027e-07,
+          "total_pairs": 10188048
+        },
+        "16": {
+          "fraction_ccr_zero": 0.9445202364711233,
+          "max_ccr": 0.07692307692307693,
+          "mean_ccr": 0.0019152461016693012,
+          "mean_jaccard": 0.9957388443836162,
+          "mean_prob_still_optimal": 0.9982404139653368,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.6071428571428571,
+          "n_decisions": 2199,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 5163,
+            "pairwise_a_tie_b_strict": 7985,
+            "pairwise_both_tied": 9705191,
+            "pairwise_concordant": 469677,
+            "pairwise_discordant": 32
+          },
+          "strict_reversal_fraction": 3.140935339134641e-06,
+          "total_pairs": 10188048
+        }
+      },
+      "stratified_sets": {
+        "A_all_decisions": {
+          "fraction_ccr_le_1": 1.0,
+          "fraction_ccr_zero": 0.9843333333333333,
+          "max_ccr": 0.07692307692307693,
+          "mean_ccr": 0.0005225481722592548,
+          "mean_jaccard": 0.9989894210153574,
+          "mean_prob_still_optimal": 0.9995079082423094,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.6071428571428571,
+          "n_decisions": 15000,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 7311,
+            "pairwise_a_tie_b_strict": 14180,
+            "pairwise_both_tied": 63705077,
+            "pairwise_concordant": 953391,
+            "pairwise_discordant": 41
+          },
+          "strict_reversal_fraction": 6.338899196042053e-07,
+          "total_pairs": 64680000
+        },
+        "B_excluding_both_tied": {
+          "fraction_ccr_le_1": 1.0,
+          "fraction_ccr_zero": 0.9647411852963241,
+          "max_ccr": 0.07692307692307693,
+          "mean_ccr": 0.0011760273944319312,
+          "mean_jaccard": 0.997725628691727,
+          "mean_prob_still_optimal": 0.9988925166743646,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.6071428571428571,
+          "n_decisions": 6665,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 7311,
+            "pairwise_a_tie_b_strict": 14180,
+            "pairwise_both_tied": 29729797,
+            "pairwise_concordant": 953391,
+            "pairwise_discordant": 41
+          },
+          "strict_reversal_fraction": 1.335299589118546e-06,
+          "total_pairs": 30704720
+        },
+        "C_discriminative_under_LRU": {
+          "fraction_ccr_le_1": 1.0,
+          "fraction_ccr_zero": 0.974685463089283,
+          "max_ccr": 0.07692307692307693,
+          "mean_ccr": 0.000875507440334822,
+          "mean_jaccard": 0.9980124587282644,
+          "mean_prob_still_optimal": 0.9991913746603972,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.6071428571428571,
+          "n_decisions": 6597,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 7311,
+            "pairwise_a_tie_b_strict": 10026,
+            "pairwise_both_tied": 29593375,
+            "pairwise_concordant": 953391,
+            "pairwise_discordant": 41
+          },
+          "strict_reversal_fraction": 1.3414411344220862e-06,
+          "total_pairs": 30564144
+        },
+        "D_discriminative_under_either": {
+          "fraction_ccr_le_1": 1.0,
+          "fraction_ccr_zero": 0.9647411852963241,
+          "max_ccr": 0.07692307692307693,
+          "mean_ccr": 0.0011760273944319312,
+          "mean_jaccard": 0.997725628691727,
+          "mean_prob_still_optimal": 0.9988925166743646,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.6071428571428571,
+          "n_decisions": 6665,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 7311,
+            "pairwise_a_tie_b_strict": 14180,
+            "pairwise_both_tied": 29729797,
+            "pairwise_concordant": 953391,
+            "pairwise_discordant": 41
+          },
+          "strict_reversal_fraction": 1.335299589118546e-06,
+          "total_pairs": 30704720
+        }
+      }
+    },
+    "random_mean": {
+      "bootstrap_setC": {
+        "mean_ccr_ci95": [
+          0.030485464986600024,
+          0.03336749600531019
+        ],
+        "median_jaccard_ci95": [
+          1.0,
+          1.0
+        ],
+        "n_decisions_per_resample": 6597,
+        "n_resamples": 2000,
+        "seed": 20260914
+      },
+      "by_capacity_setC": {
+        "32": {
+          "fraction_ccr_zero": 0.5180403839788149,
+          "max_ccr": 0.6714285714285718,
+          "mean_ccr": 0.04631594079332088,
+          "mean_jaccard": 0.7250620816083891,
+          "mean_prob_still_optimal": 0.7257393061918186,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.0,
+          "n_decisions": 3021,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 2119,
+            "pairwise_a_tie_b_strict": 208996,
+            "pairwise_both_tied": 1153418,
+            "pairwise_concordant": 132337,
+            "pairwise_discordant": 1546
+          },
+          "strict_reversal_fraction": 0.0010317562012151498,
+          "total_pairs": 1498416
+        },
+        "128": {
+          "fraction_ccr_zero": 0.7077740492170023,
+          "max_ccr": 0.38897637795275625,
+          "mean_ccr": 0.019683447620802274,
+          "mean_jaccard": 0.8521960311591861,
+          "mean_prob_still_optimal": 0.8521960311591861,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.007874015748031496,
+          "n_decisions": 3576,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 139,
+            "pairwise_a_tie_b_strict": 2135784,
+            "pairwise_both_tied": 26105203,
+            "pairwise_concordant": 824558,
+            "pairwise_discordant": 44
+          },
+          "strict_reversal_fraction": 1.5138103542426325e-06,
+          "total_pairs": 29065728
+        }
+      },
+      "by_family_setC": {
+        "cloudphysics": {
+          "fraction_ccr_zero": 0.6489071038251366,
+          "max_ccr": 0.31360000000000054,
+          "mean_ccr": 0.02479811694386151,
+          "mean_jaccard": 0.8312554491177265,
+          "mean_prob_still_optimal": 0.8316520646650559,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.0,
+          "n_decisions": 732,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 328,
+            "pairwise_a_tie_b_strict": 421675,
+            "pairwise_both_tied": 3851683,
+            "pairwise_concordant": 73152,
+            "pairwise_discordant": 138
+          },
+          "strict_reversal_fraction": 3.174620701839624e-05,
+          "total_pairs": 4346976
+        },
+        "metacdn": {
+          "fraction_ccr_zero": 0.6517766497461929,
+          "max_ccr": 0.6714285714285718,
+          "mean_ccr": 0.02769023199285055,
+          "mean_jaccard": 0.8088443171300714,
+          "mean_prob_still_optimal": 0.8089643979116882,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.0,
+          "n_decisions": 2955,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 385,
+            "pairwise_a_tie_b_strict": 663252,
+            "pairwise_both_tied": 11722732,
+            "pairwise_concordant": 389710,
+            "pairwise_discordant": 225
+          },
+          "strict_reversal_fraction": 1.761072685809605e-05,
+          "total_pairs": 12776304
+        },
+        "metakv": {
+          "fraction_ccr_zero": 0.8688888888888889,
+          "max_ccr": 0.21290322580645085,
+          "mean_ccr": 0.008982378098794984,
+          "mean_jaccard": 0.9166197280895444,
+          "mean_prob_still_optimal": 0.9170498356164261,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.007874015748031496,
+          "n_decisions": 450,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 168,
+            "pairwise_a_tie_b_strict": 30764,
+            "pairwise_both_tied": 1942928,
+            "pairwise_concordant": 35228,
+            "pairwise_discordant": 0
+          },
+          "strict_reversal_fraction": 0.0,
+          "total_pairs": 2009088
+        },
+        "twemcache": {
+          "fraction_ccr_zero": 0.5300813008130081,
+          "max_ccr": 0.5666666666666668,
+          "mean_ccr": 0.043207129488769744,
+          "mean_jaccard": 0.7425905416464884,
+          "mean_prob_still_optimal": 0.7430812675770255,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.0,
+          "n_decisions": 2460,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 1377,
+            "pairwise_a_tie_b_strict": 1229089,
+            "pairwise_both_tied": 9741278,
+            "pairwise_concordant": 458805,
+            "pairwise_discordant": 1227
+          },
+          "strict_reversal_fraction": 0.0001073324039939201,
+          "total_pairs": 11431776
+        },
+        "wiki2018": {
+          "fraction_ccr_zero": null,
+          "max_ccr": null,
+          "mean_ccr": null,
+          "mean_jaccard": null,
+          "mean_prob_still_optimal": null,
+          "median_jaccard": null,
+          "min_jaccard": null,
+          "n_decisions": 0,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 0,
+            "pairwise_a_tie_b_strict": 0,
+            "pairwise_both_tied": 0,
+            "pairwise_concordant": 0,
+            "pairwise_discordant": 0
+          },
+          "strict_reversal_fraction": null,
+          "total_pairs": 0
+        }
+      },
+      "by_horizon_setC": {
+        "4": {
+          "fraction_ccr_zero": 0.8212824010914052,
+          "max_ccr": 0.23666666666666655,
+          "mean_ccr": 0.011380038340271922,
+          "mean_jaccard": 0.9032829101647675,
+          "mean_prob_still_optimal": 0.9034887710888435,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.007874015748031496,
+          "n_decisions": 2199,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 412,
+            "pairwise_a_tie_b_strict": 220061,
+            "pairwise_both_tied": 9782504,
+            "pairwise_concordant": 185069,
+            "pairwise_discordant": 2
+          },
+          "strict_reversal_fraction": 1.9630845869591505e-07,
+          "total_pairs": 10188048
+        },
+        "8": {
+          "fraction_ccr_zero": 0.6325602546612097,
+          "max_ccr": 0.585714285714286,
+          "mean_ccr": 0.027281491888244257,
+          "mean_jaccard": 0.8046750608120041,
+          "mean_prob_still_optimal": 0.805128994123248,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.007874015748031496,
+          "n_decisions": 2199,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 900,
+            "pairwise_a_tie_b_strict": 645614,
+            "pairwise_both_tied": 9242046,
+            "pairwise_concordant": 299341,
+            "pairwise_discordant": 147
+          },
+          "strict_reversal_fraction": 1.4428671714149756e-05,
+          "total_pairs": 10188048
+        },
+        "16": {
+          "fraction_ccr_zero": 0.4088221919054115,
+          "max_ccr": 0.6714285714285718,
+          "mean_ccr": 0.056976698888633125,
+          "mean_jaccard": 0.673972704768655,
+          "mean_prob_still_optimal": 0.6742432859160276,
+          "median_jaccard": 0.8809523809523809,
+          "min_jaccard": 0.0,
+          "n_decisions": 2199,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 946,
+            "pairwise_a_tie_b_strict": 1479105,
+            "pairwise_both_tied": 8234071,
+            "pairwise_concordant": 472485,
+            "pairwise_discordant": 1441
+          },
+          "strict_reversal_fraction": 0.0001414402444904068,
+          "total_pairs": 10188048
+        }
+      },
+      "stratified_sets": {
+        "A_all_decisions": {
+          "fraction_ccr_le_1": 1.0,
+          "fraction_ccr_zero": 0.8287333333333333,
+          "max_ccr": 0.6714285714285718,
+          "mean_ccr": 0.01441796022190742,
+          "mean_jaccard": 0.907235307897613,
+          "mean_prob_still_optimal": 0.9073717009287156,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.0,
+          "n_decisions": 15000,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 2258,
+            "pairwise_a_tie_b_strict": 2357853,
+            "pairwise_both_tied": 61361404,
+            "pairwise_concordant": 956895,
+            "pairwise_discordant": 1590
+          },
+          "strict_reversal_fraction": 2.458256029684601e-05,
+          "total_pairs": 64680000
+        },
+        "B_excluding_both_tied": {
+          "fraction_ccr_le_1": 1.0,
+          "fraction_ccr_zero": 0.6145536384096024,
+          "max_ccr": 0.6714285714285718,
+          "mean_ccr": 0.032448522629949184,
+          "mean_jaccard": 0.7912272495820244,
+          "mean_prob_still_optimal": 0.7915342106422707,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.0,
+          "n_decisions": 6665,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 2258,
+            "pairwise_a_tie_b_strict": 2357853,
+            "pairwise_both_tied": 27386124,
+            "pairwise_concordant": 956895,
+            "pairwise_discordant": 1590
+          },
+          "strict_reversal_fraction": 5.178356943167044e-05,
+          "total_pairs": 30704720
+        },
+        "C_discriminative_under_LRU": {
+          "fraction_ccr_le_1": 1.0,
+          "fraction_ccr_zero": 0.6208882825526755,
+          "max_ccr": 0.6714285714285718,
+          "mean_ccr": 0.031879409705716434,
+          "mean_jaccard": 0.7939768919151422,
+          "mean_prob_still_optimal": 0.7942870170427063,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.0,
+          "n_decisions": 6597,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 2258,
+            "pairwise_a_tie_b_strict": 2344780,
+            "pairwise_both_tied": 27258621,
+            "pairwise_concordant": 956895,
+            "pairwise_discordant": 1590
+          },
+          "strict_reversal_fraction": 5.202174155441749e-05,
+          "total_pairs": 30564144
+        },
+        "D_discriminative_under_either": {
+          "fraction_ccr_le_1": 1.0,
+          "fraction_ccr_zero": 0.6145536384096024,
+          "max_ccr": 0.6714285714285718,
+          "mean_ccr": 0.032448522629949184,
+          "mean_jaccard": 0.7912272495820244,
+          "mean_prob_still_optimal": 0.7915342106422707,
+          "median_jaccard": 1.0,
+          "min_jaccard": 0.0,
+          "n_decisions": 6665,
+          "pairwise_totals": {
+            "pairwise_a_strict_b_tie": 2258,
+            "pairwise_a_tie_b_strict": 2357853,
+            "pairwise_both_tied": 27386124,
+            "pairwise_concordant": 956895,
+            "pairwise_discordant": 1590
+          },
+          "strict_reversal_fraction": 5.178356943167044e-05,
+          "total_pairs": 30704720
+        }
+      }
+    }
+  },
+  "ROBUSTNESS_CLASSIFICATION": {
+    "mru": "ROBUST",
+    "random_mean": "ROBUST"
+  },
+  "WIKI2018_SPECIAL": {
+    "mru": {
+      "fraction_ccr_zero": 1.0,
+      "max_ccr": 0.0,
+      "mean_ccr": 0.0,
+      "mean_jaccard": 1.0,
+      "mean_prob_still_optimal": 1.0,
+      "median_jaccard": 1.0,
+      "min_jaccard": 1.0,
+      "n_decisions": 3000,
+      "pairwise_totals": {
+        "pairwise_a_strict_b_tie": 0,
+        "pairwise_a_tie_b_strict": 0,
+        "pairwise_both_tied": 12936000,
+        "pairwise_concordant": 0,
+        "pairwise_discordant": 0
+      },
+      "strict_reversal_fraction": 0.0,
+      "total_pairs": 12936000
+    },
+    "random_mean": {
+      "fraction_ccr_zero": 1.0,
+      "max_ccr": 0.0,
+      "mean_ccr": 0.0,
+      "mean_jaccard": 1.0,
+      "mean_prob_still_optimal": 1.0,
+      "median_jaccard": 1.0,
+      "min_jaccard": 1.0,
+      "n_decisions": 3000,
+      "pairwise_totals": {
+        "pairwise_a_strict_b_tie": 0,
+        "pairwise_a_tie_b_strict": 0,
+        "pairwise_both_tied": 12936000,
+        "pairwise_concordant": 0,
+        "pairwise_discordant": 0
+      },
+      "strict_reversal_fraction": 0.0,
+      "total_pairs": 12936000
+    }
+  }
+}

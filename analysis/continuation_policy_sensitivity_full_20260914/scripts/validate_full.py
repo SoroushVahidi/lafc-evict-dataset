@@ -64,8 +64,25 @@ def main(run_dir: Path):
                       (lambda v: v != v)(float(r["optimal_set_jaccard"])) if r["optimal_set_jaccard"] not in ("", "None")]
         gates.append(gate("no_nan_jaccard", len(neg_or_nan) == 0, str(neg_or_nan[:5])))
 
-        keys = [(r["decision_id"], r["horizon"], r["alt_policy"]) for r in rows]
-        gates.append(gate("no_duplicate_decision_metric_keys", len(keys) == len(set(keys))))
+        # "sample" is part of the semantic key: the 11 decisions that overlap
+        # between the primary and diagnostic manifests are, by design (per
+        # DESIGN.md's "preserve the logical distinction between samples"),
+        # computed once under each sample tag -- this is expected, reported
+        # overlap, not an error. See PRIMARY_MANIFEST.json's
+        # overlap_with_diagnostic_sample list.
+        keys = [(r["decision_id"], r["horizon"], r["alt_policy"], r["sample"]) for r in rows]
+        dup_keys = [k for k in set(keys) if keys.count(k) > 1]
+        gates.append(gate("no_duplicate_decision_metric_keys", len(dup_keys) == 0, str(dup_keys[:5])))
+
+        overlap_ids = set(json.loads((FULL_DIR / "PRIMARY_MANIFEST.json").read_text())["overlap_with_diagnostic_sample"])
+        cross_sample_pairs = [r for r in rows if r["decision_id"] in overlap_ids]
+        # Each overlapping decision appears under BOTH sample tags (primary,
+        # diagnostic), each with both alt_policy rows (mru, random_mean), at
+        # every horizon: overlap_ids x horizons x 2 alt_policies x 2 sample tags.
+        expected_overlap_rows = len(overlap_ids) * len(HORIZONS) * 2 * 2
+        gates.append(gate("overlap_decisions_present_once_per_sample_tag",
+                           len(cross_sample_pairs) == expected_overlap_rows,
+                           f"expected {expected_overlap_rows}, got {len(cross_sample_pairs)}"))
 
         horizons_present = {r["horizon"] for r in rows}
         gates.append(gate("all_three_horizons_present", horizons_present == {str(h) for h in HORIZONS}, str(horizons_present)))

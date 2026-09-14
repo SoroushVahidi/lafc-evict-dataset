@@ -1,0 +1,11 @@
+{
+  "gate": "LRU_EQUIVALENCE_MISMATCHES",
+  "gate_pass": true,
+  "gate_value": 0,
+  "max_abs_difference": 0,
+  "mismatches": [],
+  "n_decisions_audited": 5500,
+  "n_horizons_per_decision": 3,
+  "n_mismatches": 0,
+  "total_candidate_horizon_comparisons": 1271616
+}
