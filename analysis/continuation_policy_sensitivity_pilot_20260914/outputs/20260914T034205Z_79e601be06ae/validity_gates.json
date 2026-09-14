@@ -1,0 +1,125 @@
+{
+  "PILOT_VALID": true,
+  "gates": [
+    {
+      "detail": "",
+      "name": "lru_equivalence_gate_ran",
+      "passed": true
+    },
+    {
+      "detail": "n_mismatches=0",
+      "name": "lru_equivalence_mismatches_zero",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "pilot_manifest_exists",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "expected_pilot_cells_present",
+      "passed": true
+    },
+    {
+      "detail": "got 80",
+      "name": "expected_decision_count",
+      "passed": true
+    },
+    {
+      "detail": "got 20",
+      "name": "cell_twemcache_32_has_20_decisions",
+      "passed": true
+    },
+    {
+      "detail": "got 20",
+      "name": "cell_cloudphysics_32_has_20_decisions",
+      "passed": true
+    },
+    {
+      "detail": "got 20",
+      "name": "cell_metakv_128_has_20_decisions",
+      "passed": true
+    },
+    {
+      "detail": "got 20",
+      "name": "cell_wiki2018_32_has_20_decisions",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "all_pilot_decisions_at_horizon_16",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "selection_used_only_baseline_lru_info",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "no_duplicate_decision_ids_in_manifest",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "candidate_results_exists",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "decision_metrics_exists",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "no_failed_candidate_rows",
+      "passed": true
+    },
+    {
+      "detail": "[]",
+      "name": "no_nan_or_negative_loss_or_regret",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "no_duplicate_result_keys",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "candidate_completeness_identical_across_policies",
+      "passed": true
+    },
+    {
+      "detail": "{}",
+      "name": "every_decision_has_10_random_seeds",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "wiki2018_present_and_handled_separately",
+      "passed": true
+    },
+    {
+      "detail": "MetaCDN is not one of the 4 pre-registered pilot cells; absence is expected, not an error",
+      "name": "metacdn_absent_from_pilot_as_designed",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "metakv_cap128_present",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "run_manifest_exists",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "output_file_hashes_recorded",
+      "passed": true
+    }
+  ]
+}

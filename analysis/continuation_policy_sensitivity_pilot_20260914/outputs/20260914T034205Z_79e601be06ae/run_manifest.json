@@ -1,0 +1,22 @@
+{
+  "output_files": {
+    "candidate_results.csv": {
+      "bytes": 5576509,
+      "sha256": "fe2a6fe3b34f864e23be2a56cbedf5bfae99b1d49d5e93a12bffa0d4521cfb73"
+    },
+    "decision_metrics.csv": {
+      "bytes": 17419,
+      "sha256": "732a91f2af7131ca691f2d57a29c3330c4a0327d268f654ad8be5f0c0c71517c"
+    },
+    "provenance.json": {
+      "bytes": 1975,
+      "sha256": "17abbcab5fe37eaad08773a0a3697c6e2d159130b359b2d59f8004a9fb9677b8"
+    },
+    "summary.json": {
+      "bytes": 267,
+      "sha256": "df6b08611c49b552ab1750ecd247e381b0d6111150c00397b03df076c3bccad7"
+    }
+  },
+  "run_id": "20260914T034205Z_79e601be06ae",
+  "run_valid_pending_gates": true
+}

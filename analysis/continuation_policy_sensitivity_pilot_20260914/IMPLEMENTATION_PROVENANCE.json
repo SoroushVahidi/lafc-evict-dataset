@@ -1,0 +1,73 @@
+{
+  "duplication_audit": {
+    "performed_before_implementation": true,
+    "classification": "NOT_PREVIOUSLY_RUN",
+    "classification_scope": "MRU/random candidate-level continuation comparison on real LAFC-Evict decisions",
+    "prior_related_artifacts_found": [
+      {
+        "path": "src/lafc/evict_value_v2_rollout.py",
+        "repo": "augmented-caching",
+        "branches": ["main", "chore/repository-polish"],
+        "note": "Generalized rollout with reference_policy in {lru, blind_oracle, fifo} before this task. Never included mru or random."
+      },
+      {
+        "path": "scripts/experiments/exploratory/run_continuation_policy_light_ablation.py",
+        "repo": "augmented-caching",
+        "branches": ["main", "chore/repository-polish"],
+        "note": "Toy-scale ablation. Actual on-disk output at analysis/exploratory/continuation_policy_light/ (untracked): 4 traces, capacities [2,3], 300 requests/trace, 3 decisions, protocols lru/blind_oracle/fifo only."
+      },
+      {
+        "path": "src/lafc/continuation_policy_ablation.py + configs/continuation_policy_causal_ablation_v1.json",
+        "repo": "augmented-caching",
+        "branches": ["kbs/second-revision-science ONLY"],
+        "note": "status=PROTOCOL_FROZEN_NO_RESULTS. Different question: LRU-vs-learned-pi1 continuation for downstream policy iteration, not MRU/random label-ranking sensitivity."
+      }
+    ],
+    "fresh_verification_before_this_task": {
+      "method": "git grep -niE for reference_policy/policy literals ==\"mru\"/\"random\" across every branch of both repos, plus git log --all --grep, plus direct inspection of the untracked toy-ablation output on disk",
+      "result": "zero hits for mru/random as a continuation-policy value anywhere"
+    },
+    "prelaunch_recheck_before_running_pilot": {
+      "performed": true,
+      "result": "no new artifact found; safe to proceed"
+    }
+  },
+  "secondary_repo_implementation": {
+    "repo_path": "/home/soroush/projects/augmented-caching/repo",
+    "source_branch": "chore/repository-polish",
+    "source_head": "ceb36705b59d0d16db55d0fc0bfb63a5c7a2a6a1",
+    "implementation_branch": "experiment/continuation-sensitivity-pilot-20260914",
+    "worktree_path": "/home/soroush/projects/augmented-caching/repo/.claude/worktrees/continuation-sensitivity-pilot-20260914",
+    "files_modified": [
+      {
+        "path": "src/lafc/evict_value_v2_rollout.py",
+        "sha256_after_change": "03be4bdbafa4fb67759e5c2958b86a52947cffaf8b086c50f524383c1242f399",
+        "change_summary": "Added SUPPORTED_REFERENCE_POLICIES constant; added rng_seed field to EvictValueV2RolloutConfig; added 'mru' and 'random' branches to _choose_victim() with an optional rng parameter; added rng_seed parameter and CRN rng construction to simulate_rollout_misses(); threaded cfg.rng_seed through build_rollout_candidate_rows_v2() and added continuation_rng_seed to its output rows. No unrelated code touched."
+      }
+    ],
+    "files_created": [
+      "tests/test_evict_value_v2_rollout_continuation.py"
+    ],
+    "canonical_generator_files_touched": [],
+    "canonical_generator_files_confirmed_untouched": [
+      "src/lafc/evict_value_wulver_v1.py",
+      "src/lafc/evict_value_dataset_v1.py (read-only import of _simulate_lru_misses only, sha256 4a8f5a2b27ebb7811ee514ce625a6949c223c0e4524f7b0536cf1140e53fc559 -- unchanged from source_head)"
+    ],
+    "sieve_implemented": false,
+    "test_results": "11/11 new tests pass; 12/12 relevant new+existing tests pass (1 pre-existing unrelated failure -- scripts/build_evict_value_v2_rollout_dataset.py does not exist at this commit -- confirmed present before this task's changes via git stash before/after comparison, not introduced by this work",
+    "dirty_main_checkout_untouched": true
+  },
+  "lru_equivalence_gate": {
+    "total_candidate_horizon_comparisons": 52480,
+    "mismatches": 0,
+    "max_absolute_difference": 0,
+    "gate_pass": true,
+    "coverage": "80 pilot decisions at H=16 across all 4 pilot cells (tied and discriminative), plus 20 additional random decisions per (family, capacity) across all 5 families x 2 capacities x 3 horizons"
+  },
+  "canonical_release_generator_provenance": {
+    "classification": "GENERATOR_PROVENANCE_UNKNOWN",
+    "reason": "No manifest or provenance record in the primary repository ties the historical 277,995,072-row release to a specific augmented-caching commit SHA. dataset_card/PROVENANCE.md describes provenance policy, not a build record. release/ is not present locally (gitignored). No historical candidate_rows.parquet sample was found anywhere in either repository to check row-for-row.",
+    "historical_canonical_row_sample_found": false,
+    "implication": "The LRU equivalence gate proves current-code self-consistency (the new generalized path matches the CURRENT canonical _simulate_lru_misses exactly), not that the current canonical function is byte-identical to whatever code produced the historical release. This is a known, honestly-reported gap, not resolved by this task."
+  }
+}
