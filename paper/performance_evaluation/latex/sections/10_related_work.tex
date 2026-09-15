@@ -4,36 +4,84 @@
 \begingroup
 \sloppy
 
-\subsection{Production Cache Workloads and Benchmark Traces}
+\subsection{Infrastructure, Traces, and Benchmarks}
 
-Public traces and benchmark infrastructure provide the substrate for cache evaluation. The UMass Trace Repository and large-scale workload studies of key-value stores and Twemcache clusters demonstrate the value of realistic, heterogeneous request streams for systems research~\cite{umasstracerepo,atikoglu2012kvworkload,yang2020twemcache}. CacheLib further shows what that heterogeneity looks like from the inside of a single production caching engine, which must serve many such workloads simultaneously behind one shared implementation~\cite{berg2020cachelib}. More broadly, benchmark artifacts such as YCSB, OLTP-Bench, and the Join Order Benchmark made comparison easier by publishing reusable workloads, interfaces, and evaluation surfaces rather than one-off experiments~\cite{cooper2010ycsb,difallah2013oltpbench,leis2018job}. Cache-specific infrastructure such as libCacheSim and cache\_dataset further lowers the cost of trace-driven evaluation by providing high-performance simulation support and large open trace collections~\cite{libcachesim,cachedataset}. Existing trace libraries and simulators therefore supply essential raw material for cache studies, and some public artifacts even expose oracle-style features or procedural oracle policies. \lafc\ packages a different layer of supervision: for each full-cache miss decision and candidate victim, it releases finite-horizon counterfactual loss labels under a fixed continuation policy, together with decision-level and pairwise views.
+Cache studies rely on realistic traces and reusable tooling. The UMass
+Trace Repository, production workload studies, CacheLib, libCacheSim, and
+cache\_dataset provide traces, cache-engine context, and simulation support
+for trace-driven evaluation~\cite{umasstracerepo,atikoglu2012kvworkload,yang2020twemcache,berg2020cachelib,libcachesim,cachedataset}.
+Broader systems artifacts such as YCSB, OLTP-Bench, Join Order Benchmark,
+and Park show the value of reusable evaluation infrastructure for systems
+and learning-augmented systems research~\cite{cooper2010ycsb,difallah2013oltpbench,leis2018job,mao2019park}.
+Most directly, Cache-Coliseum is a NeurIPS 2025 benchmark for evaluating
+learning-augmented caching algorithms, with multiple algorithm
+implementations and predictors~\cite{chen2025guard,cachecoliseumrepo}.
+\lafc\ therefore does not claim to be the first cache benchmark for
+learned or learning-augmented caching; its narrower claim is a different
+artifact type: reusable per-decision, per-candidate finite-horizon
+counterfactual supervision, plus decision and pairwise derived views.
 
-Those distinctions matter because raw traces, workload studies, and simulator-oriented artifacts do not by themselves provide a reusable table of candidate-level finite-horizon counterfactual outcomes. \lafc\ is intended to complement that ecosystem rather than replace it. The artifact is useful precisely when a downstream user wants to study offline value regression, best-candidate selection, preference learning, or label-distribution analysis without first regenerating the same counterfactual rollouts from scratch.
+\subsection{Learned and Adaptive Cache Replacement}
 
-\subsection{Learned Cache Replacement}
+Recent learned-caching work typically contributes a policy, policy-selection
+scheme, or learning framework. LRB, LHD, GL-Cache, 3L-Cache, LeCaR,
+CACHEUS, MAT, ALPS, HR-Cache, Parrot, Hawkeye, Mockingjay, and HALP differ
+in model class, target signal, and deployment setting, but they all study
+how to make a cache choose better online or with lower overhead
+~\cite{song2020lrb,beckmann2018lhd,yang2023glcache,zhou2025threelcache,vietri2018lecar,rodriguez2021cacheus,yang2023mat,shahout2024alps,torabi2024hrcache,liu2020parrot,jain2016hawkeye,shah2022mockingjay,song2023halp}.
+HALP is especially close to \lafc's pairwise view because it trains from
+preference comparisons between candidate evictions in production, but its
+signal is generated and consumed online by a deployed policy. \lafc's
+pairwise view is instead a static reformatting of already-materialized
+finite-horizon counterfactual labels. Baleen addresses the adjacent
+admission/prefetching axis rather than per-candidate eviction labels
+~\cite{wong2024baleen}.
 
-Recent learned-caching papers contribute online policies, policy-selection schemes, or learning frameworks rather than reusable supervised benchmarks, and they differ in what signal they learn from and at what granularity. LRB learns a relaxed Belady-style policy for CDN caching, and LHD instead models hit density directly for key-value caches~\cite{song2020lrb,beckmann2018lhd}. GL-Cache and 3L-Cache both target the efficiency and overhead profile of learned eviction, at group and object granularity respectively, so that a learned policy stays cheap enough to run inline~\cite{yang2023glcache,zhou2025threelcache}. LeCaR learns between replacement experts online~\cite{vietri2018lecar}, and CACHEUS extends that practical line with adaptive expert selection, giving both a mechanism for adjusting to changing workload regimes without full retraining~\cite{rodriguez2021cacheus}. Parrot uses imitation learning to approximate Belady-style replacement decisions from past accesses~\cite{liu2020parrot}, while Hawkeye and Mockingjay show how Belady-derived signals can guide deployable replacement policies in hardware caches~\cite{jain2016hawkeye,shah2022mockingjay}. MAT focuses on reducing the overhead of ML-guided eviction by using a heuristic filter around a learned module~\cite{yang2023mat}. ALPS emphasizes lightweight learned replacement and the practical cost of learning overheads~\cite{shahout2024alps}, while Feedforward Neural Networks for Caching is useful precisely because it questions whether heavier learned models are always justified~\cite{fedchenko2018fnncache}. HR-Cache extends the learned-caching line into edge delivery settings~\cite{torabi2024hrcache}.
+\subsection{Heuristics and Learning-Augmented Caching}
 
-HALP is a closer conceptual precedent worth singling out: it deploys a preference-learning eviction policy in production for YouTube's CDN, where a lightweight reward model is trained continuously from automated preference comparisons between candidate evictions -- a scheme the authors liken to reinforcement learning from feedback rather than supervised imitation of a fixed oracle~\cite{song2023halp}. This makes HALP the closest production system to \lafc's own pairwise derived view, but the two are not the same kind of artifact and should not be read as such. HALP's preference signal is generated and consumed online, as the primary training objective of a deployed policy; \lafc's pairwise view is instead a static, deterministic reformatting of candidate-level finite-horizon counterfactual labels that already exist independently of it (Section~\ref{sec:background}), released so pairwise/ranking-style methods can consume the same underlying supervision. \lafc\ does not claim any preference-learning contribution of its own -- HALP already demonstrates that preference signals are useful for eviction in production; \lafc's contribution is a reusable, decoupled label surface, not a new instance of preference learning. Baleen addresses a related but distinct problem, applying coordinated ML admission and prefetching -- rather than eviction -- to flash caches, and end-to-end optimizes for backend load rather than a per-candidate label~\cite{wong2024baleen}. It is included here as a reminder that objective design (what to admit and prefetch, not only what to evict) is a live and separate axis from the counterfactual-label problem \lafc\ addresses, not as a directly comparable eviction system.
+Classical and modern policies define the policy landscape that \lafc\
+interfaces with: Belady's look-ahead optimum, LIRS, ARC, CLOCK-Pro,
+GreedyDual-Size, TinyLFU/W-TinyLFU, S3-FIFO, lazy-promotion/quick-demotion,
+SIEVE, and LAH/S4-FIFO all emphasize different practical signals or
+robustness/overhead tradeoffs~\cite{belady1966study,jiang2002lirs,megiddo2003arc,jiang2005clockpro,cao1997greedydual,einziger2017tinylfu,einziger2018wtinylfu,yang2023s3fifo,yang2023lazypromotion,zhang2024sieve,xia2026lah}.
+Learning-augmented caching theory instead studies algorithms with
+predictions and robustness/consistency guarantees
+~\cite{lykouris2021mladvice,wei2020learningaugcache,chledowski2021robustlac,im2022parsimoniouslac}.
+The subsampling study of Wang et al. identifies extremely long decision and
+reward horizons as a practical obstacle for reinforcement-learning cache
+policies and uses subsampling to reduce that horizon~\cite{wang2019subsampling};
+this motivates treating temporal horizon as a first-class difficulty, but
+does not validate \lafc's particular $H\in\{4,8,16\}$ choices.
 
-Across all of these works, the primary contribution is a policy, a policy-selection scheme, or an online learning framework. By contrast, \lafc\ releases a static benchmark surface with candidate-level finite-horizon counterfactual labels, decision-view summaries, and a shipped pairwise sample for offline value regression, best-candidate selection, and preference-learning tasks. To our knowledge, we are not aware of a public artifact in this line that releases reusable per-candidate finite-horizon counterfactual supervision at this scale.
+\subsection{Offline versus Deployed Evaluation}
 
-\subsection{Modern Heuristic and Non-Learning Eviction}
-
-Classical cache-replacement work defines the policy landscape that any learned benchmark must eventually interface with. Belady's look-ahead policy remains the canonical offline reference point~\cite{belady1966study}. Offline analyses such as FOO/PFOO compute practical bounds on optimal caching with variable object sizes, but their artifacts target trace-level optimality analysis rather than a reusable per-decision, per-candidate supervised label surface~\cite{berger2018foopfoo}. Practical online policies then emphasize different signals: LIRS focuses on inter-reference recency~\cite{jiang2002lirs}, ARC adaptively balances recency and frequency~\cite{megiddo2003arc}, CLOCK-Pro revisits CLOCK-style replacement with stronger reuse sensitivity~\cite{jiang2005clockpro}, and GreedyDual-Size accounts for cost and size~\cite{cao1997greedydual}. TinyLFU and W-TinyLFU further show that admission and segmented cache management matter in modern software caches~\cite{einziger2017tinylfu,einziger2018wtinylfu}. More recent object-cache work shows that policy progress does not always come from heavier machinery: S3-FIFO argues that simple FIFO-based queueing can beat more elaborate baselines at scale~\cite{yang2023s3fifo}, and a companion analysis explains \emph{why} at a mechanism level -- lazy promotion and quick demotion, not queue discipline by itself, are what let FIFO-derived policies beat LRU-style recency tracking~\cite{yang2023lazypromotion}. SIEVE emphasizes turn-key deployability for web caches~\cite{zhang2024sieve} and, unlike S3-FIFO, is not only discussed here: it is one of the four closed-loop policy arms (alongside LRU, MRU, and random-mean) evaluated directly in Section~\ref{sec:closed-loop}. LAH revisits this same simple-heuristic family from the other direction: rather than proposing a new heuristic, it learns the \emph{parameters} of an existing one -- S3-FIFO, instantiated as S4-FIFO -- from a control plane decoupled from the data plane, reporting robustness and interpretability gains over both purely heuristic and heavier learned baselines~\cite{xia2026lah}. S3-FIFO, the lazy-promotion/quick-demotion analysis, and LAH are strong online comparison targets for future end-to-end studies, but only SIEVE among this group is evaluated here; \lafc\ does not claim a new eviction policy of its own. The contribution here is reusable supervision that can be used to train or diagnose such policies, not an online replacement rule that supersedes them.
-
-\subsection{Learning-Augmented Caching Theory}
-
-Another relevant line of work treats caching as an online problem augmented by predictions rather than as a supervised dataset, with provable robustness/consistency guarantees as the object of study rather than empirical miss ratio alone -- a genuinely different research question from the learned-from-data policies of the previous two subsections, and one \lafc\ is careful not to conflate with them. Competitive Caching with Machine Learned Advice and later learning-augmented caching results formalize how predictive advice can improve classical online algorithms while preserving worst-case robustness guarantees~\cite{lykouris2021mladvice,wei2020learningaugcache}. Robust Learning-Augmented Caching: An Experimental Study extends that line empirically, testing how the theoretical robustness/consistency trade-off behaves under realistic, imperfect predictors rather than only in the adversarial worst case~\cite{chledowski2021robustlac}, while Parsimonious Learning-Augmented Caching studies how much prediction access is really needed to retain the theoretical benefit~\cite{im2022parsimoniouslac}. LAH (previous subsection) sits at a practical bridge between this theoretical line and the learned-from-data policies above: it carries no formal competitive-ratio guarantee, but its explicit robustness and interpretability goals echo the same underlying concern that a learned or advice-driven component should degrade gracefully, not fail silently, when its signal is wrong~\cite{xia2026lah}. This perspective is complementary to \lafc\ rather than directly competing with it. Learning-augmented caching papers typically study online algorithms equipped with advice, predictor queries, and robustness objectives. By contrast, \lafc\ releases finite-horizon, continuation-policy-dependent counterfactual labels for every candidate within a decision. The artifact can train or diagnose predictors and eviction-scoring models before they are embedded into an online algorithm, and it supports value regression, best-candidate selection, pairwise preference learning, and label characterization from one release.
-
-\subsection{Offline Surrogate Evaluation versus Deployed, Closed-Loop Behavior}
-
-A methodological question this paper shares with several other applied-ML domains -- recommendation, autonomous driving, and reinforcement learning among them -- is whether an offline proxy metric, computed without deploying a policy, predicts that policy's actual closed-loop performance. Within caching specifically, Qiu, Yang, and Harchol-Balter give a sharp, caching-native instance of this same gap: increasing a cache's hit ratio can, past a certain point, \emph{decrease} end-to-end throughput and increase response time, because a higher hit ratio changes contention on the hit path itself~\cite{qiu2026hitratio}. That result targets a different offline/online pairing than this paper does -- cache hit ratio versus downstream system throughput, rather than finite-horizon counterfactual miss cost versus closed-loop miss ratio -- and this paper does not claim it studies the same quantity. What it establishes, directly and independently, is that a favorable cache-local metric need not imply favorable end-to-end system behavior -- exactly the caution that motivates treating Sections~\ref{sec:closed-loop} and~\ref{sec:linkage}'s closed-loop validation as necessary, rather than inferring closed-loop behavior from the offline labels alone. The broader cross-domain finding, outside caching, is the same in spirit: offline and online/closed-loop metrics correlate imperfectly and domain-specifically across recommendation, autonomous driving, and reinforcement learning, which is why closed-loop or online validation is treated as necessary rather than optional wherever it is feasible. This paper's Sections~\ref{sec:linkage} and~\ref{sec:closed-loop} pose the same question for finite-horizon counterfactual cache-eviction labels specifically, with a bounded, regime-characterized answer rather than a universal one; beyond the hit-ratio-versus-throughput result above, to the best of our knowledge we are not aware of prior work posing this offline-versus-closed-loop question for candidate-level cache-eviction supervision in particular. A broader cross-domain literature search for this methodological category outside caching (surrogate/offline-vs-closed-loop evaluation methodology as a topic in its own right, in recommendation/autonomous-driving/RL) remains only partially complete at the time of writing; see \texttt{docs/PE\_LITERATURE\_SEARCH\_GAPS.md} in the accompanying artifact for what was and was not verified.
+Offline and deployed behavior need not agree when actions affect future
+observations. DAgger formalizes this distribution-shift problem for
+imitation learning and structured prediction; \lafc\ does not implement
+DAgger, but its closed-loop checks are motivated by the same caution
+~\cite{ross2011dagger}. In recommender systems, Castells and Moffat
+similarly survey why offline evaluation should not be equated with online
+utility~\cite{castells2022offline}. Within caching, Qiu, Yang, and
+Harchol-Balter show a cache-local metric can even move opposite to
+end-to-end performance: beyond a point, higher hit ratio can reduce
+throughput because it changes hit-path contention~\cite{qiu2026hitratio}.
+This paper asks a narrower question -- whether finite-horizon
+counterfactual miss-cost gaps align with closed-loop miss-ratio gaps -- and
+reports a bounded, regime-characterized answer.
 
 \subsection{Positioning \lafc}
 
-Public learning-to-rank collections such as LETOR and the Yahoo! Learning to Rank Challenge show how reusable labeled artifacts can organize a research community~\cite{liu2009ltr,qin2010letor,chapelle2011yahoo}. In that limited sense, \lafc\ is to learned cache eviction somewhat analogous to LETOR-style ranking corpora: a standardized candidate-level label surface reduces bespoke label generation and evaluation drift. The label design in \lafc\ also connects to counterfactual learning and ranking because each cache decision induces a candidate set, a minimum-loss subset, regret summaries, and a natural pairwise structure~\cite{swaminathan2015crm,li2011offlinecb,joachims2017unbiasedltr,saito2020pairwise}. Even so, \lafc\ is not simply a ranking dataset transplanted into systems. Its labels are tied to finite-horizon eviction outcomes under a specified continuation policy.
-
-To state the boundary precisely, given the full literature surveyed above: \lafc\ does not claim to be the first to use future accesses for supervision (LRB, Parrot, and HALP all do so already); the first to support pairwise or preference-style modeling of cache decisions (HALP, again, does this directly and online); the first learned or learning-augmented eviction approach (the entire learned-cache-replacement and learning-augmented-theory literature surveyed above); or the first to raise offline-versus-closed-loop validity as a methodological concern (established in other applied-ML domains, and now also directly in caching via the hit-ratio/throughput result). What is not, to our knowledge, already available is a public cache-eviction artifact that releases reusable candidate-level finite-horizon counterfactual supervision together with decision-level and pairwise task views, at production scale, decoupled from any specific downstream learned method. In that narrower sense, \lafc\ is neither a new online policy nor merely a raw trace repository or simulator-centric contribution, but a reusable benchmark artifact for learned cache-eviction research that complements existing traces, simulators, learned and heuristic policy papers, and learning-augmented theory alike.
+Given this literature, \lafc\ is not a new online eviction policy, not the
+first use of future accesses for supervision, not the first preference
+learning approach for eviction, and not the first benchmark for
+learning-augmented caching. To the best of our knowledge, its distinct
+contribution is a public cache-eviction artifact that releases reusable
+candidate-level finite-horizon counterfactual supervision, together with
+decision-level and pairwise task views, at production scale and decoupled
+from any particular downstream learned method. It complements traces,
+simulators, Cache-Coliseum-style algorithm benchmarks, learned/adaptive
+policies, and learning-augmented theory by supplying a reusable label
+surface for offline value regression, best-candidate selection, preference
+learning, and label characterization.
 
 \endgroup

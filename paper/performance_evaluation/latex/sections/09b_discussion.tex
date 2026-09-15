@@ -21,26 +21,22 @@ identified rather than smoothed over (Section~\ref{sec:linkage}); and the
 canonical LRU-continuation assumption is robust, with quantified limits,
 at the capacities tested (Section~\ref{sec:continuation}).
 
-\textbf{Why the negative/degenerate regimes are scientifically useful, not
-an embarrassment.} wiki2018's complete degeneracy and cloudphysics/cap32's
-near-zero offline signal are both, in this paper, explained results
-(Section~\ref{sec:mechanisms}), not unexplained anomalies. A benchmark
-whose degenerate cases are mechanistically understood is more trustworthy
-in its non-degenerate claims than one that reports only favorable cases;
-this is the paper's answer to the historical criticism that the target's
-tie-heaviness was previously stated but not investigated.
+\textbf{Why degenerate regimes are useful.} wiki2018's complete degeneracy
+and cloudphysics/cap32's near-zero offline signal are explained results
+(Section~\ref{sec:mechanisms}), not unexplained anomalies. Mechanistically
+understood degenerate cases make the non-degenerate claims more
+trustworthy and answer the earlier criticism that tie-heaviness was stated
+but not investigated.
 
 \textbf{Offline surrogate evaluation vs.\ closed-loop performance.} This
 paper's position, supported by Sections~\ref{sec:linkage}
-and~\ref{sec:closed-loop}, is that the offline surrogate is a genuine,
-partially-validated predictor of closed-loop policy separation in
-identifiable regimes, and that this relationship is itself the
-contribution -- not a claim that the surrogate can replace closed-loop
-evaluation. The two exceptions found (cloudphysics/cap32,
-metakv/cap128) are not edge cases invented for balance; they were
-identified by the same symmetric procedure that found the 8 agreeing
-cells, and metakv/cap128 in particular remains only partially understood
-even after dedicated mechanistic analysis (Section~\ref{sec:mechanisms}).
+and~\ref{sec:closed-loop}, is that the offline$\leftrightarrow$closed-loop
+correspondence itself -- not the offline surrogate alone -- is the
+contribution: the two exceptions found were identified by the same
+symmetric procedure that found the 8 agreeing cells, not selected for
+balance, and are characterized rather than smoothed over
+(Section~\ref{sec:practical-implications} gives the resulting practitioner
+guidance in detail).
 
 \textbf{Continuation robustness as currently validated.} The robustness
 finding in Section~\ref{sec:continuation} is deliberately reported with
@@ -55,9 +51,7 @@ stateful deployed continuation policy would preserve the same ordering;
 it says the tested alternatives did, with random tested only in the
 validated sample.
 
-\textbf{Methodological limitations that shape every result above} are
-collected in Section~\ref{sec:limitations} rather than repeated here;
-Section~\ref{sec:characterization}'s target-discriminativeness numbers,
-Section~\ref{sec:linkage}'s small $n$, and Section~\ref{sec:continuation}'s
-continuation-policy scope are the three limitations most load-bearing for
-the claims in this discussion specifically.
+\textbf{Methodological limits} are collected in
+Section~\ref{sec:limitations}. For this discussion, the load-bearing ones
+are target discriminativeness, small-$n$ linkage evidence, and the tested
+scope of continuation policies.

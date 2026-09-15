@@ -18,3 +18,4 @@ build/
 reports/
 .duckdb_tmp/
 *.blg
+paper/performance_evaluation/latex/main.pdf

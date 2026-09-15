@@ -39,25 +39,28 @@ attached everywhere; they are not treated as population-scale estimates.
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/figure3_linkage_scatter.pdf}
-  \caption{Offline regret gap vs.\ closed-loop miss-ratio gap, H=16, MRU-vs-LRU
-  and random-vs-LRU. Reproducible from
+  \caption{Offline regret gap vs.\ closed-loop miss-ratio gap at $H=16$,
+  split into two panels on identical axis scales: (a) MRU-vs-LRU and (b)
+  random-vs-LRU, each $n=10$ family$\times$capacity cells (one point per
+  cell per panel). The two discordant cells from RQ-CL1 are outlined and
+  labeled; random-vs-LRU gaps are uniformly small relative to MRU-vs-LRU,
+  so panel (b) additionally shows a zoomed inset of its own native range so
+  individual points remain distinguishable under the shared scale.
+  Reproducible from
   \texttt{paper/performance\_evaluation/scripts/figures/make\_figure3\_linkage\_scatter.py}
   against \texttt{outputs/rq\_cl2\_scatter\_data.csv}.}
   \label{fig:linkage-scatter}
 \end{figure}
 
 \textbf{RQ-CL3 (workload/capacity dependence).} metacdn and twemcache are
-the strong-agreement, most-discriminative-offline regimes and also show
-the largest closed-loop policy separation; cloudphysics is a
-weak/ambiguous regime where the offline gap is close enough to zero that
-its sign is not robust; metakv/cap128 is the one reversal regime; wiki2018
-is degenerate on both sides, exactly, confirming it as a clean negative
-control. An exploratory (not pre-registered) correlation between offline
-discriminativeness ($1-\text{all-tied fraction}$) and closed-loop
-$|\text{MRU}-\text{LRU}|$ separation, across all 10 cells at $H=16$, gives
-Pearson $r=0.968$ -- Section~\ref{sec:mechanisms} traces this to a shared
-underlying trace-locality property rather than treating it as a
-coincidence.
+the strong-agreement, high-discriminativeness regimes and also show the
+largest closed-loop policy separation; cloudphysics has a near-zero
+offline gap whose sign is not robust; metakv/cap128 is the one reversal;
+wiki2018 is degenerate on both sides. Across the 10 cells at $H=16$, an
+exploratory correlation between offline discriminativeness
+($1-\text{all-tied fraction}$) and closed-loop
+$|\text{MRU}-\text{LRU}|$ separation gives Pearson $r=0.968$;
+Section~\ref{sec:mechanisms} traces this to shared trace locality.
 
 \textbf{RQ-CL4 (horizon).} $H=16$ wins or ties on every magnitude-sensitive
 statistic across every sensitivity slice tested (primary, excluding
@@ -74,5 +77,7 @@ consistent and not cherry-picked.
 in the large majority of workload/capacity regimes where the offline
 signal itself is not near zero, with two specific, characterized
 exceptions; $H=16$ gives the strongest, though modest, alignment among the
-three horizons tested. This is a bounded, evidenced claim, not a universal
-predictive-validity claim for the offline labels.
+three horizons tested (Section~\ref{sec:limitations} states the horizon
+scope explicitly: $H\in\{4,8,16\}$ only, no claim beyond $H=16$). This is a
+bounded, evidenced claim, not a universal predictive-validity claim for
+the offline labels.

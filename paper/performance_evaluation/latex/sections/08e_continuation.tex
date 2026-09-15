@@ -24,12 +24,11 @@ continuation-sensitivity evidence referenced throughout this section.
 \end{figure}
 
 \textbf{Sampled MRU/random study.} The pre-registered sampled study
-(\texttt{analysis/continuation\_\allowbreak policy\_\allowbreak sensitivity\_\allowbreak full\_\allowbreak 20260914/},
-RUN\_ID \texttt{20260914T040333Z\_1f66342be435}) evaluates 5{,}000
-primary decisions plus 500 diagnostic oversample decisions at capacities
-32 and 128. Its prelaunch LRU-equivalence gate audited 1{,}271{,}616
-candidate-horizon comparisons with 0 mismatches, and the run is validated
-(\texttt{FULL\_EXPERIMENT\_VALID: true}). By the pre-registered Set-C rule
+evaluates 5{,}000 primary decisions plus 500 diagnostic oversample
+decisions at capacities 32 and 128, validated end-to-end (prelaunch
+LRU-equivalence gate: 1{,}271{,}616 candidate-horizon comparisons, 0
+mismatches; Section~\ref{sec:release-validation} gives the exact run
+identifier and full gate provenance). By the pre-registered Set-C rule
 (median Jaccard $\geq 0.8$ and cross-continuation regret $\leq 1$ miss for
 $\geq 80\%$ of LRU-optimal candidates), both MRU and mean-random
 continuation classify ROBUST at this sampled scope. MRU is very close to
@@ -40,13 +39,12 @@ visibly more perturbing: mean Jaccard is 0.7251 at capacity 32 and 0.8522
 at capacity 128, with mean cross-continuation regret 0.0463 and 0.0197.
 
 \textbf{Full-population MRU census.} The full-population MRU census
-(\texttt{analysis/continuation\_\allowbreak policy\_\allowbreak mru\_\allowbreak population\_\allowbreak census\_\allowbreak 20260914/validated/20260914T042528Z\_\allowbreak 1a29e773a113/})
 extends the MRU side of that result to all five families, capacities 32,
-64, 128, and 256, and horizons 4, 8, and 16. The census validates 60/60
-chunks and 2{,}363{,}286/2{,}363{,}286 decision-horizon records, with 0
-duplicate, missing, or extra decision-horizon keys; 30/30 mandatory gates
-and an independent recheck pass, and \texttt{FULL\_CENSUS\_VALID: true}.
-Across all decision-horizon units, mean optimal-set Jaccard is
+64, 128, and 256, and horizons 4, 8, and 16, over the complete population
+of 2{,}363{,}286 decision-horizon records (60/60 chunks, 0 duplicate/
+missing/extra keys, all validity gates and an independent recheck passing
+-- Section~\ref{sec:release-validation} gives the exact run identifier and
+full gate provenance). Across all decision-horizon units, mean optimal-set Jaccard is
 0.9994054593, median Jaccard is 1.0, 98.69\% of records have exact
 Jaccard 1, mean cross-continuation regret is 0.000304471 misses, median
 and p95 regret are both 0, the maximum mean regret is 0.193548 misses, and
@@ -70,16 +68,14 @@ all-family and excluding-wiki Set-C summaries are identical.
 
 \textbf{Capacity and horizon effects.} Sensitivity is largest at the
 smallest capacity and longest horizon, but remains small in absolute
-terms. By capacity in Set C, mean Jaccard and mean cross-continuation
-regret are 0.994809/0.002067 at capacity 32, 0.998859/0.000530 at
-capacity 64, 0.999806/0.000096 at capacity 128, and
-0.999959/0.000019 at capacity 256. Thus the new population-only
-capacities, 64 and 256, reveal no hidden sensitivity and cross no
-pre-registered robustness threshold. By horizon in Set C, mean Jaccard
-declines modestly from 0.999820 at $H=4$ to 0.999222 at $H=8$ and
-0.996869 at $H=16$, while mean cross-continuation regret rises from
-0.000039 to 0.000283 and 0.001355 misses. The direction is real but the
-magnitude remains far below a practically meaningful miss-count change.
+terms. In Set C, mean Jaccard/mean cross-continuation regret are
+0.994809/0.002067 at capacity 32, 0.998859/0.000530 at 64,
+0.999806/0.000096 at 128, and 0.999959/0.000019 at 256. The added
+population-only capacities therefore reveal no hidden sensitivity. By
+horizon, mean Jaccard declines from 0.999820 at $H=4$ to 0.999222 at
+$H=8$ and 0.996869 at $H=16$, while mean cross-continuation regret rises
+from 0.000039 to 0.000283 and 0.001355 misses. The direction is real, but
+the magnitude remains small.
 
 \textbf{Worst cell and scope.} The worst Set-C family/capacity/horizon cell
 is cloudphysics/capacity 32/$H=16$: mean Jaccard 0.980433, median Jaccard

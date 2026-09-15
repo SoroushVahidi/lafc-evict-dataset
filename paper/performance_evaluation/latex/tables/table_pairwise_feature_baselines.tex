@@ -1,18 +1,21 @@
 \begin{table}[t]
   \centering
   \footnotesize
-  \caption{Feature-based pairwise baselines on the non-tie subset (121,738 of 1,000,000 rows) of the shipped pairwise sample, evaluated after the A/B orientation fix (deterministic hash-based randomization, not lexicographic ordering). An evaluation-only augmented feature view joins released candidate features back to the capped sample. Results are pairwise-sample-backed rather than full-pairwise-universe-backed, and no full quadratic pairwise materialization is performed.}
+  \caption{Feature-based pairwise baselines on non-tie rows only
+  (121,738 of 1,000,000 sampled pairs; 878,262 ties omitted). Models are
+  fit on \texttt{train}; \texttt{test} is the primary held-out result.}
   \label{tab:pairwise-feature-baselines}
-  \begin{tabularx}{\columnwidth}{@{}P{0.24\columnwidth}LP{0.16\columnwidth}P{0.14\columnwidth}@{}}
+  \begin{tabularx}{\columnwidth}{@{}P{0.22\columnwidth}L P{0.09\columnwidth}P{0.1\columnwidth} P{0.09\columnwidth}P{0.09\columnwidth}@{}}
     \toprule
-    baseline & feature source / model type & accuracy & log loss \\
+    & & \multicolumn{2}{c}{test ($n$=2{,}211)} & train & val \\
+    baseline & feature / model & acc. & log loss & acc. & acc. \\
     \midrule
-    random non-tie & random-label sanity check & 0.5006 & 0.6931 \\
-    majority non-tie & empirical majority-class sanity check & 0.5016 & 0.6931 \\
-    LRU-score pairwise & 1-D logistic on LRU-score difference & 0.9225 & 0.2426 \\
-    predictor-score pairwise & 1-D logistic on predictor-score difference & 0.5016 & 0.6931 \\
-    linear-score pairwise & logistic on pointwise linear-score difference & 0.9490 & 0.1161 \\
-    logistic feature difference & logistic regression on released feature differences & 0.9660 & 0.0824 \\
+    random non-tie & random-label check & 0.4903 & 0.6931 & 0.5030 & 0.4971 \\
+    majority non-tie & majority-class check & 0.4853 & 0.6933 & 0.5030 & 0.5000 \\
+    LRU-score pairwise & 1-D logistic, LRU score & 0.6427 & 0.9285 & 0.9141 & 0.9508 \\
+    predictor-score pairwise & 1-D logistic, predictor score & 0.4853 & 0.6933 & 0.5030 & 0.5000 \\
+    linear-score pairwise & logistic, linear score & 0.6621 & 0.5512 & 0.9430 & 0.9735 \\
+    logistic feature difference & logistic, feature diffs & 0.7078 & 0.5494 & 0.9598 & 0.9896 \\
     \bottomrule
   \end{tabularx}
 \end{table}

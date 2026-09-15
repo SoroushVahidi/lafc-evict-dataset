@@ -84,9 +84,11 @@ correspond to closed-loop cache performance? A closed-loop evaluation over
 production-derived traces (LRU, MRU, random, SIEVE; five families, two
 capacities, 20 seeds) shows offline and closed-loop policy orderings agree
 in most regimes where the offline signal is not near zero, with two
-characterized exceptions. \textbf{(RQ3)} Capacity-scale reuse predicts
+characterized exceptions. \textbf{(RQ3)} Capacity-scale reuse correlates with
 both offline discriminativeness and closed-loop separation
-($r=0.83$--$0.97$, $n=10$, exploratory), strengthening at longer horizons.
+($r=0.83$--$0.97$, $n=10$, exploratory); this correlation is strongest at
+the longest of the three evaluated horizons ($H=16$ of $H\in\{4,8,16\}$),
+which is not evidence about horizons beyond 16.
 \textbf{(RQ4)} A pre-registered sampled study (5,500 decisions, capacities
 32 and 128) and a separate full-population MRU census (capacities 32, 64,
 128, and 256) both find the canonical LRU-continuation labels robust;
@@ -144,10 +146,21 @@ interests or personal relationships that could have appeared to
 influence the work reported in this paper.
 
 \section*{Data availability}
-The evaluated \lafc\ open-release snapshot (candidate rows, decision view, pairwise sample, manifest, and checksums; Section~\ref{sec:release-validation}) is developed in the project's public GitHub repository at \url{https://github.com/SoroushVahidi/lafc-evict-dataset} and archived under Zenodo concept DOI \href{https://doi.org/10.5281/zenodo.21895843}{10.5281/zenodo.21895843}, released under a CC0-1.0 license, per the repository's \texttt{CITATION.cff}.
-% TODO(author, pre-submission): confirm the final public-hosting status and
-% any version-specific DOI at submission time, consistent with the release
-% caveats already stated in Section~\ref{sec:release-validation}.
+\begin{sloppypar}
+The \lafc\ repository is public at
+\url{https://github.com/SoroushVahidi/lafc-evict-dataset} and is released
+under CC0-1.0 per its \texttt{CITATION.cff}. The current public derived-data
+snapshot (v0.3) is wiki2018-only and is distributed through Hugging Face
+(\url{https://huggingface.co/datasets/SoroushVahidi/lafc-evict}) and AWS
+Open Data. Zenodo currently archives v0.2 only (version DOI
+\href{https://doi.org/10.5281/zenodo.21895844}{10.5281/zenodo.21895844};
+concept DOI \href{https://doi.org/10.5281/zenodo.21895843}{10.5281/zenodo.21895843});
+no v0.3 Zenodo version DOI has been minted. The scientific evaluation in
+this paper uses a five-family corpus, but cloudphysics, metacdn, metakv,
+and twemcache remain uncleared for public derived-data redistribution, so
+they are represented here through validated summary/provenance artifacts
+rather than a public download of their generated rows.
+\end{sloppypar}
 
 \section*{Funding}
 This work received computing/API support through the Google Cloud Research Credits Program, the Cohere Labs Catalyst Grant Program (\$1,000 in API credits), and the CloudRift AI Builder Grant (1,000 credits). Public hosting of the \lafc\ dataset is supported by the AWS Open Data Sponsorship Program, which provides sponsored hosting of up to 600 GB for two years.
@@ -157,9 +170,13 @@ This work received computing/API support through the Google Cloud Research Credi
 % one author). Please confirm before submission.
 \textbf{Soroush Vahidi:} Conceptualization, Methodology, Software, Formal analysis, Investigation, Data curation, Writing -- original draft, Writing -- review \& editing, Visualization.
 
-\input{sections/12_ai_use_disclosure}
-
 \input{sections/13_appendix_release_tables}
+
+% Elsevier's current generative-AI policy requires this declaration
+% immediately before the references section (see the TEMPLATE NOTE in
+% sections/12_ai_use_disclosure.tex for the source/date), hence its
+% placement after the appendix and immediately before \bibliography below.
+\input{sections/12_ai_use_disclosure}
 
 \bibliographystyle{elsarticle-num}
 \bibliography{refs}

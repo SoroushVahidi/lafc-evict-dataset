@@ -10,7 +10,7 @@ Predict \texttt{y\_loss} or \texttt{y\_value} from a single candidate row. This 
 Given all candidate rows for one decision, identify a member of the minimum-loss set. This task can be framed as ranking or decision-level classification and connects most directly to the actual cache-eviction choice because it evaluates whether a method selects a benchmark-optimal victim within that decision.
 
 \paragraph{Pairwise preference prediction.}
-Predict whether candidate A is better than candidate B within the same decision, where ``better'' means lower \texttt{y\_loss} or equivalently higher \texttt{y\_value}. This task uses the pairwise view or the shipped pairwise sample and provides a simpler learning interface for within-decision preference modeling. Because equal losses induce ties, reports using this task need to state explicitly whether evaluation includes tie rows, excludes them, or maps them to a separate class. Within the shipped pairwise sample, the A/B assignment is randomized by a deterministic hash over stable decision and pair-identity fields (\texttt{orientation\_method: deterministic\_hash\_v1}), not by candidate-identifier ordering, so the non-tie \texttt{label\_a\_better}/\texttt{label\_b\_better} split is balanced (about 49.8\%/50.2\%) rather than reflecting a construction-induced directional imbalance.
+Predict whether candidate A is better than candidate B within the same decision, where ``better'' means lower \texttt{y\_loss} or equivalently higher \texttt{y\_value}. This task uses the pairwise view or shipped pairwise sample as a simpler interface for within-decision preference modeling. Because equal losses induce ties, reports must state whether evaluation includes ties, excludes them, or treats them as a separate class. In the shipped sample, deterministic hash randomization of A/B orientation keeps the non-tie A-better/B-better split balanced (about 49.8\%/50.2\%) rather than encoding candidate-identifier order.
 
 \paragraph{Candidate-label distribution characterization.}
 Summarize the empirical label surface without training a predictive model. This characterization task studies distributions of \texttt{y\_loss}, \texttt{y\_value}, regret, tie frequency, and decision ambiguity across families, capacities, horizons, and splits. It is descriptive rather than competitive, but it is important for understanding benchmark difficulty and for interpreting downstream task results.
@@ -21,18 +21,26 @@ The empirical scope of this paper remains intentionally narrow. Rather than pres
 The current results surface covers three such references. A linear regression baseline over candidate rows predicts \texttt{y\_loss} from released features. It is intentionally weak: test MAE is 3.8739 with RMSE 4.7152 and $R^2=0.0026$, and the validation-split $R^2$ is slightly negative ($-0.0506$). Using that same linear score for within-decision selection nevertheless provides a reproducible decision-level floor. On the pairwise task, the earlier random and majority non-tie results remain useful sanity checks, but by themselves they do not test whether the released candidate features contain decision-relevant signal.
 \end{sloppypar}
 
-To probe that question without changing the released benchmark schema, we build an augmented feature view for evaluation only by joining released candidate-side features back onto the capped shipped pairwise sample. This produces a pairwise-sample-backed evaluation surface rather than a full-pairwise-universe-backed one, and no full quadratic pairwise materialization is performed. The shipped sample used throughout this paper is the canonical
-regenerated pairwise sample (SHA256 prefix
-\texttt{1d770c69\ldots9eda02}, full digest and provenance in the
-accompanying reproducibility artifact),
-not the historical, noncanonical sample that a stale six-column
-decision-selection key produced in an earlier release artifact; the
-regenerated sample's tie-count balance below (near-50/50 non-tie split) is
-itself evidence of this, since the historical sample's non-tie rows were
-heavily skewed (about 6{,}134 vs.\ 113{,}898) in a way traceable to the
-key bug, not to the underlying label distribution. It is itself tie-heavy: 878,262 of its 1,000,000 rows (87.8\%) are exact ties, leaving 121,738 non-tie rows evaluated below. Ties remain common and are reported here as part of the label-surface characterization rather than discarded. Table~\ref{tab:pairwise-feature-baselines} reports six non-tie pairwise baselines on that 121,738-row surface: the random and majority sanity checks, 1-D LRU-score and predictor-score models, a pairwise baseline induced by the released pointwise linear \texttt{y\_loss} regressor, and a logistic regression over released feature differences.
+To test whether released candidate features carry pairwise signal without
+changing the benchmark schema, we join those features back to the capped
+shipped pairwise sample for evaluation only. This remains a sample-backed
+evaluation, not a full quadratic pairwise materialization. The canonical
+regenerated sample is itself tie-heavy: 878,262 of 1,000,000 rows (87.8\%)
+are exact ties, leaving 121,738 non-ties. All classifier metrics below are
+therefore non-tie-only.
 
-The resulting evidence is stronger than the earlier sanity checks alone. The logistic feature-difference model is the strongest pairwise baseline, reaching 0.9660 accuracy with 0.0824 log loss on the non-tie subset of the shipped sample. The linear-score and LRU-score baselines also outperform the random and majority checks, which indicates that the released candidate features retain decision-relevant signal for pairwise preference prediction. These numbers nevertheless warrant conservative interpretation. They improve the empirical benchmark evidence without changing the released candidate-row, decision-view, or shipped pairwise artifacts, and they do not support full-universe or online-policy claims.
+\textbf{Fitting and evaluation protocol.} Logistic score calibrations and
+the feature-difference model are fit only on non-tie \texttt{train} rows,
+with fixed L2 regularization and no validation tuning. The temporally
+held-out \texttt{test} split is the generalization result; train/validation
+columns are diagnostic. On the 2,211-row test non-tie subset, the logistic
+feature-difference model reaches 0.7078 accuracy and 0.5494 log loss,
+ahead of random/majority checks and the 1-D score baselines
+(Table~\ref{tab:pairwise-feature-baselines}). This replaces the earlier
+overall non-tie 0.9660 figure as the number to cite. The train/validation
+gap is large, and the test non-tie subset is small and unusually tie-heavy,
+so the result supports only a capped-sample, non-tie pairwise baseline,
+not a population or online-policy claim.
 
 The best-candidate evaluator groups candidate rows by the canonical
 9-column decision key and reports 2,363,286 decisions, an exact match

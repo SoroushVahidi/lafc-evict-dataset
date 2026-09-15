@@ -13,7 +13,7 @@ Classifications follow the source report's own discipline exactly:
 proven), and \textsc{causally established} (reserved for one deductive
 result below). No claim here is upgraded beyond its source classification.
 
-\textbf{Capacity-scale reuse predicts both discriminativeness and
+\textbf{Capacity-scale reuse correlates with both discriminativeness and
 closed-loop separation.} Trace-derived LRU hit rate (an exact,
 capacity-scale reuse measure, computed independently of the labels)
 correlates with offline discriminativeness at $r=-0.83$ and with
@@ -35,8 +35,7 @@ driving both.
   \label{fig:locality}
 \end{figure}
 
-\textbf{cloudphysics/cap32 (\textsc{directly observed}): a near-zero-signal
-regime, not a real contradiction.} Only 17.5\% of window requests are
+\textbf{cloudphysics/cap32 is near-zero signal.} Only 17.5\% of window requests are
 reuses at all; of those, only 9.4\% fall within stack distance 32. The
 trace-only predicted LRU hit rate ($0.175 \times 0.094 = 1.6\%$) exactly
 reproduces the observed Tier-1 LRU hit rate (134/8192 = 1.64\%). The
@@ -45,9 +44,7 @@ metacdn's own MRU-LRU gap is over 100$\times$ larger. The
 Section~\ref{sec:linkage} discordance at this cell is exactly what a
 coin-flip-scale signal would produce.
 
-\textbf{metakv/cap128 (\textsc{consistent with mechanism}, not
-established): a real but bounded exception, characterized, not
-explained.} MetaKV's reuse-distance median is short (2, comparable to
+\textbf{metakv/cap128 remains a bounded exception.} MetaKV's reuse-distance median is short (2, comparable to
 metacdn's 3) but its tail is markedly heavier: reuse-within-32 is only
 0.574, rising to just 0.600 by distance 128 -- a narrow, 2.6-percentage-point
 ``boundary zone'' sitting almost exactly at the tested capacities, where a
