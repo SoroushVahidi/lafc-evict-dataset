@@ -19,7 +19,13 @@ continuation-sensitivity evidence referenced throughout this section.
   informative stratum (Set C: decisions discriminative under LRU).
   Sampled MRU and mean-random evidence covers capacities 32 and 128 only;
   full-population MRU evidence covers capacities 32, 64, 128, and 256.
-  No population-scale random-continuation result is shown or implied.}
+  No population-scale random-continuation result is shown or implied. The
+  left panel plots \emph{median} Jaccard against the 0.8 threshold because
+  the pre-registered Set-C rule is defined on median Jaccard, not the mean;
+  the center panel plots mean cross-continuation regret for descriptive
+  scale against the raw 1-miss bound, but the rule itself applies that
+  bound to the \emph{fraction} of LRU-optimal candidates remaining optimal
+  (right panel, reported in text), not to the mean regret directly.}
   \label{fig:continuation-robustness}
 \end{figure}
 
@@ -37,6 +43,11 @@ LRU: Set-C mean Jaccard is 0.9958 at capacity 32 and 0.9999 at capacity
 respectively. Mean-random continuation also classifies ROBUST, but it is
 visibly more perturbing: mean Jaccard is 0.7251 at capacity 32 and 0.8522
 at capacity 128, with mean cross-continuation regret 0.0463 and 0.0197.
+A pre-registered bootstrap (2{,}000 resamples, $n=6{,}597$ pooled Set-C
+decisions) gives 95\% confidence intervals for mean cross-continuation
+regret of $[0.00073, 0.00103]$ misses for MRU and $[0.03049, 0.03337]$
+misses for mean-random, both well clear of zero and consistent with the
+point estimates above.
 
 \textbf{Full-population MRU census.} The full-population MRU census
 extends the MRU side of that result to all five families, capacities 32,

@@ -23,9 +23,17 @@ non-LRU policy wins outright. \textbf{MRU is the worst policy in every
 non-degenerate cell}, by a wide margin (relative miss-ratio increase over
 LRU ranging from 1.65\% at alibaba-block/cap32, a near-zero-signal regime,
 up to 54.93\% at metacdn/cap128). \textbf{Random-seed variability is small
-relative to policy gaps} throughout: the largest random-policy standard
-deviation observed is 0.0025 (twemcache/cap32), an order of magnitude
-below the smallest genuine policy gap reported in the table.
+relative to the large policy gaps that drive this section's headline
+comparisons}: the largest random-policy standard deviation observed is
+0.0025 absolute miss ratio (twemcache/cap32), an order of magnitude
+smaller than twemcache's own MRU gaps over LRU (27.12\%/52.98\% relative,
+$\approx 0.20$--$0.33$ absolute miss ratio at twemcache's LRU miss ratios). This margin does not
+hold uniformly, however: converted to the same absolute miss-ratio units,
+the smallest non-degenerate policy gap in the table (metakv/cap32 SIEVE,
+$+0.03\%$ relative on a $0.7410$ LRU miss ratio, $\approx 0.0002$ absolute)
+is smaller than the random-policy standard deviation itself, so in that
+low-signal cell the reported SIEVE/random differences are within, not
+above, the seed-noise floor and should not be over-read.
 
 \textbf{wiki2018 is a complete, exact tie across every policy}: miss ratio
 1.0 for LRU, MRU, SIEVE, and every one of random's 20 seeds, at both
