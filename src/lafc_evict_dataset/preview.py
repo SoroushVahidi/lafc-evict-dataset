@@ -347,11 +347,14 @@ def provenance_rows() -> list[dict[str, str]]:
         },
         {
             "family": "cloudphysics",
-            "source_name": "CloudPhysics / open cache trace collection block I/O family",
-            "source_url": "https://github.com/cacheMon/cache_dataset",
-            "redistribution_status": "UNCLEAR",
+            "source_name": (
+                "Alibaba Cloud EBS block-storage trace (historical/internal "
+                "family key 'cloudphysics'; this is NOT VMware/CloudPhysics data)"
+            ),
+            "source_url": "https://github.com/alibaba/block-traces",
+            "redistribution_status": "cleared_for_public_release",
             "included": "no",
-            "reason": "specific open trace collection provenance and terms require confirmation",
+            "reason": "cleared under CC BY 4.0 for public release (see THIRD_PARTY_DATA.md); not yet packaged into the v0.2/v0.3 real-data preview build",
         },
         {
             "family": "citibike",
