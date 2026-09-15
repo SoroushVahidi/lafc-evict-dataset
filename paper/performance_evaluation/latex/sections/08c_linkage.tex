@@ -40,12 +40,13 @@ attached everywhere; they are not treated as population-scale estimates.
   \centering
   \includegraphics[width=\columnwidth]{figures/figure3_linkage_scatter.pdf}
   \caption{Offline regret gap vs.\ closed-loop miss-ratio gap at $H=16$,
-  split into two panels on identical axis scales: (a) MRU-vs-LRU and (b)
-  random-vs-LRU, each $n=10$ family$\times$capacity cells (one point per
-  cell per panel). The two discordant cells from RQ-CL1 are outlined and
-  labeled; random-vs-LRU gaps are uniformly small relative to MRU-vs-LRU,
-  so panel (b) additionally shows a zoomed inset of its own native range so
-  individual points remain distinguishable under the shared scale.
+  split into two panels: (a) MRU-vs-LRU and (b) random-vs-LRU, each $n=10$
+  family$\times$capacity cells (one point per cell per panel). \textbf{The
+  two panels use different axis ranges}, visible directly from their tick
+  labels: random-vs-LRU gaps (panel b) are uniformly much smaller in
+  magnitude than MRU-vs-LRU gaps (panel a), so each panel is scaled to its
+  own range rather than a shared one. The two discordant cells from RQ-CL1
+  are outlined and labeled; every other point is left unlabeled.
   Reproducible from
   \texttt{paper/performance\_evaluation/scripts/figures/make\_figure3\_linkage\_scatter.py}
   against \texttt{outputs/rq\_cl2\_scatter\_data.csv}.}

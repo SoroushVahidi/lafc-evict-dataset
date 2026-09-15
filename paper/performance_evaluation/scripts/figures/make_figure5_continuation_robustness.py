@@ -58,7 +58,14 @@ def load_population_by_capacity() -> dict[int, dict[str, float]]:
                 continue
             cap = int(row["capacity"])
             out[cap] = {
-                "jaccard": float(row["jaccard_mean"]),
+                # Plot median_jaccard, not jaccard_mean: the pre-registered
+                # Set-C robustness rule (Section 8e) is stated in terms of
+                # median Jaccard >= 0.8, so the plotted "ROBUST threshold"
+                # line must show the same statistic the rule actually tests
+                # -- plotting the mean here previously let points fall below
+                # the 0.8 line while still being classified ROBUST by the
+                # (unplotted) median, which is misleading on its face.
+                "jaccard": float(row["jaccard_median"]),
                 "ccr": float(row["ccr_mean"]),
                 "still": float(row["fraction_lru_optimal_still_mru_optimal"]),
             }
@@ -74,7 +81,7 @@ def load_sampled() -> dict[str, dict[int, dict[str, float]]]:
         for cap in CAPS_SAMPLED:
             cell = by_cap[str(cap)]
             out[policy][cap] = {
-                "jaccard": float(cell["mean_jaccard"]),
+                "jaccard": float(cell["median_jaccard"]),  # see note in load_population_by_capacity
                 "ccr": float(cell["mean_ccr"]),
                 "still": float(cell["mean_prob_still_optimal"]),
             }
@@ -102,7 +109,7 @@ def main() -> None:
 
     fig, axes = plt.subplots(1, 3, figsize=(11.2, 3.6))
     metrics = [
-        ("jaccard", "Mean optimal-set Jaccard", (0.68, 1.02), False),
+        ("jaccard", "Median optimal-set Jaccard", (0.68, 1.02), False),
         ("ccr", "Mean cross-continuation regret", (1e-5, 1.2), True),
         ("still", "Fraction LRU-optimal still optimal", (0.68, 1.02), False),
     ]
