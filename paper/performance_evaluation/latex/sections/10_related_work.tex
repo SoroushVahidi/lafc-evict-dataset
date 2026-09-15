@@ -15,11 +15,12 @@ and Park show the value of reusable evaluation infrastructure for systems
 and learning-augmented systems research~\cite{cooper2010ycsb,difallah2013oltpbench,leis2018job,mao2019park}.
 Most directly, Cache-Coliseum is a NeurIPS 2025 benchmark for evaluating
 learning-augmented caching algorithms, with multiple algorithm
-implementations and predictors~\cite{chen2025guard,cachecoliseumrepo}.
-\lafc\ therefore does not claim to be the first cache benchmark for
-learned or learning-augmented caching; its narrower claim is a different
-artifact type: reusable per-decision, per-candidate finite-horizon
-counterfactual supervision, plus decision and pairwise derived views.
+implementations and predictors~\cite{chen2025guard,cachecoliseumrepo}. It
+benchmarks algorithms against each other; \lafc\ instead supplies the
+labels an algorithm would train or evaluate against -- reusable
+per-decision, per-candidate finite-horizon counterfactual supervision,
+plus decision and pairwise derived views (full positioning in
+Section~\ref{sec:positioning}).
 
 \subsection{Learned and Adaptive Cache Replacement}
 
@@ -70,18 +71,18 @@ counterfactual miss-cost gaps align with closed-loop miss-ratio gaps -- and
 reports a bounded, regime-characterized answer.
 
 \subsection{Positioning \lafc}
+\label{sec:positioning}
 
-Given this literature, \lafc\ is not a new online eviction policy, not the
-first use of future accesses for supervision, not the first preference
-learning approach for eviction, and not the first benchmark for
-learning-augmented caching. To the best of our knowledge, its distinct
-contribution is a public cache-eviction artifact that releases reusable
-candidate-level finite-horizon counterfactual supervision, together with
-decision-level and pairwise task views, at production scale and decoupled
-from any particular downstream learned method. It complements traces,
-simulators, Cache-Coliseum-style algorithm benchmarks, learned/adaptive
-policies, and learning-augmented theory by supplying a reusable label
-surface for offline value regression, best-candidate selection, preference
-learning, and label characterization.
+Given this literature, \lafc's contribution is a public cache-eviction
+artifact that releases reusable candidate-level finite-horizon
+counterfactual supervision, together with decision-level and pairwise task
+views, at production scale and decoupled from any particular downstream
+learned method. It complements traces, simulators, Cache-Coliseum-style
+algorithm benchmarks, learned/adaptive policies, and learning-augmented
+theory by supplying a reusable label surface for offline value regression,
+best-candidate selection, preference learning, and label characterization
+-- not a new online eviction policy, and not a claim to be the first use
+of future-access supervision, preference learning, or benchmarking in this
+space (scope stated once here rather than repeated per subsection above).
 
 \endgroup

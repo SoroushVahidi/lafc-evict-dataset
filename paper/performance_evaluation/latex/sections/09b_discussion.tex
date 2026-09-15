@@ -39,17 +39,15 @@ balance, and are characterized rather than smoothed over
 guidance in detail).
 
 \textbf{Continuation robustness as currently validated.} The robustness
-finding in Section~\ref{sec:continuation} is deliberately reported with
-its exact scope attached: sampled MRU and mean-random continuation at
-capacities 32/128, and full-population MRU continuation at capacities
-32/64/128/256. Within that scope, the LRU continuation used for label
-generation is not driving the target ordering to a practically meaningful
-degree: Set-C median Jaccard remains 1.0, mean cross-continuation regret
-is below 0.001 misses in the population MRU census, and capacities 64/256
-do not reveal hidden sensitivity. The result does not say that every
-stateful deployed continuation policy would preserve the same ordering;
-it says the tested alternatives did, with random tested only in the
-validated sample.
+finding in Section~\ref{sec:continuation} matters because it addresses a
+specific threat to the label's validity: that the canonical LRU
+continuation, not the eviction choice itself, is what actually drives the
+reported target ordering. Within its tested scope
+(Section~\ref{sec:practical-implications} gives the exact capacities and
+numbers), it is not: switching continuation policy leaves the ordering
+essentially unchanged. This is a statement about the tested alternatives,
+not a claim that every stateful deployed continuation policy would
+preserve the same ordering.
 
 \textbf{Methodological limits} are collected in
 Section~\ref{sec:limitations}. For this discussion, the load-bearing ones

@@ -74,38 +74,43 @@
 
 \begin{abstract}
 \begin{sloppypar}
-Evaluating cache-eviction decisions requires knowing what would have
-happened under each candidate choice -- information not observable from a
-single trace replay. This paper introduces \lafc, a reusable way to
-construct that counterfactual evidence at scale: a per-decision,
-per-candidate finite-horizon counterfactual miss-cost label, computed for
-real cache traces, evaluated against five questions. \textbf{(RQ1)} Is the
-target discriminative between candidates? Across five trace families,
-four capacities, and three horizons, two-thirds of decisions are fully
-tied in aggregate and no audited decision has a strict unique winner, but
-discriminativeness varies strongly and predictably by workload, capacity,
-and horizon, and one workload is a fully degenerate, mechanistically
-explained negative control. \textbf{(RQ2)} Does the offline ranking
-correspond to closed-loop cache performance? A closed-loop evaluation over
-production-derived traces (LRU, MRU, random, SIEVE; five families, two
-capacities, 20 seeds) shows offline and closed-loop policy orderings agree
-in most regimes where the offline signal is not near zero, with two
-characterized exceptions. \textbf{(RQ3)} Capacity-scale reuse (trace-derived LRU hit rate) correlates
-with both offline discriminativeness ($r=0.83$) and closed-loop separation
-($r=0.90$); discriminativeness and closed-loop separation in turn correlate
-with each other ($r=0.97$) (all $n=10$, exploratory); this correlation is strongest at
-the longest of the three evaluated horizons ($H=16$ of $H\in\{4,8,16\}$),
-which is not evidence about horizons beyond 16.
-\textbf{(RQ4)} A pre-registered sampled study (5,500 decisions, capacities
-32 and 128) and a separate full-population MRU census (capacities 32, 64,
-128, and 256) both find the canonical LRU-continuation labels robust;
-random continuation is measurably more perturbing than MRU, and no
-population-scale random result is claimed. \textbf{(RQ5)} This offline
-supervision complements rather than replaces closed-loop evaluation, and
-we give concrete guidance for when it can be trusted. \lafc\ also releases
-the underlying candidate-, decision-, and pairwise-level supervision for
-reuse, with every quantitative claim traced to an independently
-validated, gate-checked artifact.
+A single trace replay evicts one candidate per decision and so never
+reveals what would have happened under the alternatives -- the
+counterfactual information needed to actually evaluate an eviction choice.
+This paper introduces \lafc, a reusable way to construct that
+counterfactual evidence at scale: for every resident candidate at every
+full-cache miss, a finite-horizon counterfactual miss-cost label, computed
+for real cache traces across five workload families, four cache
+capacities, and three horizons. We evaluate this supervision surface
+against five questions. \textbf{(RQ1: is the target discriminative?)}
+Not uniformly: two-thirds of decisions are fully tied in aggregate and no
+audited decision has a strict unique winner, but discriminativeness varies
+strongly and predictably by workload, capacity, and horizon, and one
+workload is a fully degenerate, mechanistically explained negative
+control. \textbf{(RQ2: does the offline ranking correspond to closed-loop
+performance?)} We ran a closed-loop evaluation of LRU, MRU, random, and
+SIEVE across the five families at two capacities (20 random seeds).
+Offline and closed-loop policy orderings agree in most regimes where the
+offline signal is not near zero, with two characterized exceptions.
+\textbf{(RQ3: what drives this correspondence?)} Capacity-scale reuse
+(trace-derived LRU hit rate) correlates with both offline
+discriminativeness ($r=0.83$) and closed-loop separation ($r=0.90$), and
+discriminativeness and closed-loop separation correlate with each other
+($r=0.97$) (all $n=10$, exploratory). The correspondence is strongest at
+$H=16$, the longest of the three evaluated horizons ($H\in\{4,8,16\}$);
+this is not evidence about horizons beyond 16. \textbf{(RQ4: how sensitive
+are the labels to the continuation policy assumed after a forced
+eviction?)} A pre-registered sampled study (5,500 decisions, capacities 32
+and 128) and a full-population MRU census (capacities 32, 64, 128, and
+256) both find the canonical LRU-continuation labels robust to the tested
+alternatives. Random continuation is measurably more perturbing than MRU;
+we make no population-scale claim for random continuation. \textbf{(RQ5:
+what should this mean in practice?)} This offline supervision complements
+rather than replaces closed-loop evaluation, and we give concrete guidance
+for when it can be trusted. \lafc\ also releases the underlying candidate-,
+decision-, and pairwise-level supervision for reuse, with every
+quantitative claim traced to an independently validated, gate-checked
+artifact.
 \end{sloppypar}
 \end{abstract}
 
