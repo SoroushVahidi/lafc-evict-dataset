@@ -21,15 +21,15 @@ rather than repeated in each section.
 denotes a temporally held-out scoring window; ``validation'' denotes a
 window used during earlier development that is not temporally held out in
 the same sense. Two caveats apply and recur throughout the paper: (i)
-\textbf{MetaCDN's closed-loop evidence is validation-window evidence, not
+\textbf{metacdn's closed-loop evidence is validation-window evidence, not
 test-window}, for both of its evaluated capacities; every result that
-includes MetaCDN should be read with this in mind, and Section~\ref{sec:linkage}
-reports what changes if MetaCDN is excluded. (ii) \textbf{MetaKV is the
+includes metacdn should be read with this in mind, and Section~\ref{sec:linkage}
+reports what changes if metacdn is excluded. (ii) \textbf{metakv is the
 only family whose scored window begins at an empty cache} (a cold start,
 identifiable from the identity $\mathit{evictions} = \mathit{misses} -
-\mathit{capacity}$ holding exactly for MetaKV and no other family);
+\mathit{capacity}$ holding exactly for metakv and no other family);
 Section~\ref{sec:mechanisms} discusses this as a plausible, not
-established, contributor to MetaKV's one policy-ranking exception.
+established, contributor to metakv's one policy-ranking exception.
 
 \textbf{Policies and seeds.} Closed-loop replay is evaluated for LRU, MRU,
 SIEVE (all deterministic, one run each), and random (20 CRN seeds, seeds

@@ -26,11 +26,9 @@ Fourth, the target is substantially tied. Across the full audited canonical
 dataset, the all-tied fraction is approximately 0.68 and the unique-winner
 fraction is exactly 0.0 -- no audited decision in this dataset has a single
 uniquely-best candidate victim. Discriminativeness varies strongly by
-family, capacity, and horizon; one
-family, wiki2018, is a fully degenerate negative control at every
-capacity and horizon tested, with zero reuse events in its scored windows,
-which is a mathematical certainty rather than a statistical property of
-that trace.
+family, capacity, and horizon; one family, wiki2018, is a fully degenerate
+negative control at every capacity and horizon tested
+(Section~\ref{sec:mechanisms} gives the causal explanation).
 
 Fifth, the evaluated dataset uses unit-object, count-based capacities (32,
 64, 128, or 256 objects) with unconditional admission of the requested
@@ -41,12 +39,12 @@ abstraction and not generalized to byte-addressable or admission-gated
 cache models without further evidence.
 
 Sixth, closed-loop evidence itself has two family-specific caveats that
-must be carried alongside any result that uses it. MetaCDN's closed-loop
+must be carried alongside any result that uses it. metacdn's closed-loop
 evidence is validation-window evidence, not a temporally held-out test
-window (Twemcache's is test-window). MetaKV is the only family whose
+window (twemcache's is test-window). metakv is the only family whose
 scored window begins at an empty cache (a cold start, identifiable from
 the identity evictions = misses - capacity); this is plausibly, but not
-conclusively, connected to MetaKV being the one Tier-1 cell where LRU
+conclusively, connected to metakv being the one Tier-1 cell where LRU
 falls to third place, behind both SIEVE and random-mean
 (Section~\ref{sec:mechanisms}).
 

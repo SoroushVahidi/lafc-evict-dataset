@@ -44,12 +44,12 @@ metacdn's own MRU-LRU gap is over 100$\times$ larger. The
 Section~\ref{sec:linkage} discordance at this cell is exactly what a
 coin-flip-scale signal would produce.
 
-\textbf{metakv/cap128 remains a bounded exception.} MetaKV's reuse-distance median is short (2, comparable to
+\textbf{metakv/cap128 remains a bounded exception.} metakv's reuse-distance median is short (2, comparable to
 metacdn's 3) but its tail is markedly heavier: reuse-within-32 is only
 0.574, rising to just 0.600 by distance 128 -- a narrow, 2.6-percentage-point
 ``boundary zone'' sitting almost exactly at the tested capacities, where a
 recency-strict policy (LRU) and a second-chance policy (SIEVE) can
-plausibly diverge. MetaKV's cold-start scoring window
+plausibly diverge. metakv's cold-start scoring window
 (Section~\ref{sec:experimental-methodology}) is a second, independently
 real structural property of this same cell. \textbf{Neither is shown to be
 the cause}: no per-request SIEVE or random trajectory log exists in the
@@ -57,8 +57,8 @@ frozen artifacts to isolate which property (or their interaction, or
 neither) produced the reversal, and the source analysis states this
 explicitly rather than forcing a resolution.
 
-\textbf{Twemcache's random-over-SIEVE ordering is not explained by
-existing data.} Twemcache has the strongest ``small hot set plus long
+\textbf{twemcache's random-over-SIEVE ordering is not explained by
+existing data.} twemcache has the strongest ``small hot set plus long
 tail'' bimodal signature in the dataset (longest novel streak 3; reuse
 distance p10=3 but p75=7379), which would naively predict SIEVE's
 second-chance admission should help -- but the observed result is the
