@@ -12,17 +12,17 @@ imply online deployment gains, which is exactly why
 Sections~\ref{sec:closed-loop} and~\ref{sec:linkage} evaluate closed-loop
 behavior directly rather than relying on the offline label alone.
 
-Second, the canonical labels use LRU as the continuation policy after a
-forced eviction. Section~\ref{sec:continuation} reports two bounded
-continuation-policy checks: a sampled study at capacities 32 and 128,
-where both MRU and mean-random continuation classify as robust on the
-pre-registered rule, and a full-population MRU census across capacities
-32, 64, 128, and 256, which also satisfies the MRU robustness criterion.
-This does not prove continuation-independence in general. Random
-continuation is not validated at population scale, and no experiment here
-covers every possible stateful deployment policy.
+Second, every horizon-dependent result is scoped to
+$H\in\{4,8,16\}$. Statements favoring $H=16$ mean strongest among those
+three evaluated horizons only; $H>16$ remains untested.
 
-Third, the target is substantially tied. Across the full audited canonical
+Third, the canonical labels use LRU continuation after a forced eviction.
+The sampled MRU/random study and full-population MRU census in
+Section~\ref{sec:continuation} support robustness only within their stated
+scopes; random continuation is not validated at population scale, and no
+experiment covers every deployment policy.
+
+Fourth, the target is substantially tied. Across the full audited canonical
 dataset, the all-tied fraction is approximately 0.68 and the unique-winner
 fraction is exactly 0.0 -- no audited decision in this dataset has a single
 uniquely-best candidate victim. Discriminativeness varies strongly by
@@ -32,7 +32,7 @@ capacity and horizon tested, with zero reuse events in its scored windows,
 which is a mathematical certainty rather than a statistical property of
 that trace.
 
-Fourth, the evaluated dataset uses unit-object, count-based capacities (32,
+Fifth, the evaluated dataset uses unit-object, count-based capacities (32,
 64, 128, or 256 objects) with unconditional admission of the requested
 object. Variable object sizes, byte-weighted miss cost, latency-aware cost,
 and dirty-write cost are not modeled by this label family, and admission
@@ -40,7 +40,7 @@ is never withheld. Claims in this paper should be read as scoped to this
 abstraction and not generalized to byte-addressable or admission-gated
 cache models without further evidence.
 
-Fifth, closed-loop evidence itself has two family-specific caveats that
+Sixth, closed-loop evidence itself has two family-specific caveats that
 must be carried alongside any result that uses it. MetaCDN's closed-loop
 evidence is validation-window evidence, not a temporally held-out test
 window (Twemcache's is test-window). MetaKV is the only family whose
@@ -50,14 +50,13 @@ conclusively, connected to MetaKV being the one Tier-1 cell where LRU
 falls to third place, behind both SIEVE and random-mean
 (Section~\ref{sec:mechanisms}).
 
-Sixth, a known data-generation issue remains open: in the audited canonical
-data, \texttt{candidate\_is\_predictor\_victim} is identical to
-\texttt{candidate\_is\_lru\_victim} throughout, and related predictor/
-bucket/confidence fields include constant or placeholder values. This
-paper does not make any claim that depends on those predictor fields being
-informative.
+Seventh, a known data-generation issue remains open: in the audited
+canonical data, the predictor-victim flag is identical to the LRU-victim
+flag throughout, and related predictor, bucket, and confidence fields
+include constant or placeholder values. This paper does not make any claim
+that depends on those predictor fields being informative.
 
-Seventh, benchmark reuse must preserve provenance distinctions. The release
+Eighth, benchmark reuse must preserve provenance distinctions. The release
 exposes generated supervision and derived views, but it does not erase the
 attribution, citation, or licensing requirements of the upstream raw traces
 from which candidate rows were derived; those raw traces remain external
