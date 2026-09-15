@@ -76,7 +76,7 @@ def main():
                ncol=7, frameon=False, bbox_to_anchor=(0.5, 1.08), fontsize=8)
     fig.tight_layout(rect=(0, 0, 1, 0.9))
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUT)
+    fig.savefig(OUT, bbox_inches="tight")
     print(f"wrote {OUT}")
 
 

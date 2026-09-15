@@ -1,53 +1,39 @@
 # Reviewer Concern Crosswalk (Performance Evaluation submission)
 
-Status: PARTIALLY_COMPLETE prior to this task. Built on and updates
-`analysis/closed_loop_offline_linkage_20260914/REVIEWER_ISSUE_MATRIX.md`
-(13 items, current as of the linkage-analysis task) rather than starting
-over. That matrix predates the mechanistic analysis and the full
-continuation-sensitivity study; this document reflects both, adds items
-#11-#14 explicitly (pairwise view, y_loss/y_value, figures/tables,
-citation correctness — present only implicitly or not at all in the prior
-matrix), and adds the census-dependency column required for this task.
-**A writing problem is never marked resolved merely because evidence now
-exists** — the "manuscript action still required" column is non-empty for
-every item, including items whose evidence is complete.
+Status: **RE-AUDITED 2026-09-15** against the current manuscript at
+`manuscript/pe-evidence-restructure-20260914` (HEAD `ac63bd7` plus the
+final-audit fixes committed alongside this update). This supersedes the
+2026-09-14 version of this document, which explicitly flagged itself as
+stale pending exactly this re-audit ("A full re-audit of this table
+against the current manuscript state is recommended before submission").
 
-| # | Concern | Status | Evidence resolving it | Manuscript action still required | Artifact action still required | Census-dependent |
-|---|---|---|---|---|---|---|
-| 1 | Unclear contribution / terminology | PARTIALLY_ADDRESSED | Full evidence chain (Tier-1, linkage, mechanistic, continuation) now supports a concrete, evidenced contribution statement (`PE_RESEARCH_QUESTIONS.md` RQ1-RQ5). | Rewrite Introduction/contribution statement using RQ1-RQ5 directly (done for Introduction in this task; see `PE_MANUSCRIPT_RESTRUCTURING_PLAN.md`). Avoid central-narrative jargon ("release-facing provenance fields", "decision-aligned supervision layer") per the writing-style requirement. | None. | NO |
-| 2 | Insufficient meaningful evaluation | ADDRESSED | 230 Tier-1 closed-loop replays + linkage analysis (`PE_CLAIM_EVIDENCE_LEDGER.md` C5-C9), not just isolated miss ratios. | Integrate Tier-1/linkage results into main text (Sections 6-7 of the restructuring plan; not yet written). | None. | NO |
-| 3 | Target degeneracy | PARTIALLY_ADDRESSED (claim narrowed, not hidden) | `PE_CLAIM_EVIDENCE_LEDGER.md` C1-C3; degeneracy shown to be informative in itself (predicts where closed-loop separation will be small). | Frame as "informative where discriminative, honestly degenerate elsewhere," never as uniform discriminativeness (Section 5 of restructuring plan). | None. | NO |
-| 4 | Closed-loop validity | PARTIALLY_ADDRESSED | Directly tested for the first time via linkage analysis; 8/9 non-degenerate cells concordant, r=0.6-0.9 (ledger C5/C6), two named bounded exceptions (C7/C8). | State the bounded finding, name both exceptions explicitly, never claim universal predictive validity (Section 7 of restructuring plan). | None. | NO |
-| 5 | Continuation policy | ADDRESSED_WITHIN_EVALUATED_SCOPE | Full sampled study, capacities 32/128, both MRU and mean-random continuation ROBUST; validated full-population MRU census at capacities 32/64/128/256 also ROBUST (ledger C10; validation branch `analysis/continuation-mru-census-validation-20260915` @ `95e3a41`). | State scope explicitly: sampled random only at 32/128; population census is MRU-only; arbitrary continuation policies are not universally covered. | None for the evaluated scope. A population-scale random census or deployed learned-policy continuation study would be a new experiment, not required for this manuscript integration. | RESOLVED for population MRU; NO for arbitrary/population-random scope. |
-| 6 | Narrow cache model | NOT_ADDRESSED | None; unchanged by any task to date. | State explicitly as a limitation (unit-object/count-capacity, unconditional admission, no byte/latency/dirty-write cost) — added to `sections/09_limitations_ethics.tex` in this task. | Would require new label generation to broaden; out of scope for any manuscript task. | NO |
-| 7 | Worked example | **ADDRESSED in this task** | `PE_WORKED_EXAMPLE.md` — new, self-contained, hand-verifiable, includes a genuine tie. | Insert as Figure 1 / motivating example (Section 2 of restructuring plan); not yet inserted into the actual `.tex` in this task. | None. | NO |
-| 8 | Related work | **SUBSTANTIALLY_ADDRESSED (2026-09-14 literature-positioning task)** | `10_related_work.tex` fully restructured into 6 scientific categories (production workloads, learned cache replacement, modern heuristic/non-learning eviction, learning-augmented caching theory, offline-vs-closed-loop evaluation, positioning); `PE_LITERATURE_CITATION_COVERAGE_AUDIT` (independent, verified) drove 6 new references (LAH/S4-FIFO, HALP, Qiu/Yang/Harchol-Balter, Baleen, HotOS'23 lazy-promotion/quick-demotion, CacheLib), all now cited in-text; explicit HALP-vs-pairwise-view distinction added; explicit learned-from-data-vs-learning-augmented-theory distinction preserved and sharpened. | 4 remaining gap categories (Cache-Coliseum, subsampling paper, DAgger, Park) and the cross-domain (non-caching) offline-vs-closed-loop search are still open — see `PE_LITERATURE_SEARCH_GAPS.md`. Not a blocker for this concern's core ask (current, defensible related-work positioning), which is now met. | None. | NO |
-| 9 | Artifact completeness | PARTIALLY_ADDRESSED | Every new evidence artifact (Tier-1, linkage, mechanistic, continuation) is independently gate-validated and byte-verified. | Artifact/reproducibility section (Section 14 of restructuring plan) needs to reference these gates explicitly; not yet written. | Public pairwise-sample promotion decision still deferred (see item 11). | NO |
-| 10 | Artifact completeness (release-side) | UNCHANGED | Prior handoff Sections 4/7/8 (public v0.3 wiki2018-only scope, predictor-field issue) unchanged, not re-investigated in this task. | State the public/canonical dataset-scope distinction plainly (carried forward from prior handoff). | Predictor-field issue remains unresolved upstream; out of scope for a manuscript task. | NO |
-| 11 | Pairwise view justification | **ADDRESSED in this task** | `PE_PAIRWISE_VIEW_JUSTIFICATION.md` — four concrete reasons, explicitly stated as a derived view carrying no new ground truth. | Insert into methodology section (Section 3 of restructuring plan); not yet inserted into the actual `.tex`. | Canonical regenerated pairwise sample can be cited directly; public-release promotion remains a separate, deferred release decision (see the same document). | NO |
-| 12 | y_loss/y_value redundancy | **ADDRESSED in this task** | `PE_YLOSS_YVALUE_DECISION.md` — recommendation B (canonical + documented alias), grounded in an audit of actual code usage. | Apply the recommendation consistently in prose once Sections 3/4 are rewritten; not yet applied beyond the decision document itself. | None; schema compatibility explicitly preserved. | NO |
-| 13 | Figures/tables | PARTIALLY_ADDRESSED | `PE_FIGURE_TABLE_PLAN.md` — 5 figures + 3 tables planned, each mapped to an RQ with explicit duplication checks; none of the 8 existing tables answer the new RQs. | Actually build the 5 figures/3 tables from the cited source artifacts; not done in this task (plotting scripts not yet written). | None. | Figure 5 only (continuation robustness) — see item 5. |
-| 14 | Citation correctness | **SUBSTANTIALLY_ADDRESSED (2026-09-14)** | `PE_CITATION_AUDIT.md` — 50 entries (44 + 6 new, each independently verified against a primary source before being added), 0 undefined citations confirmed by a clean `latexmk` build (0 `[?]` markers), LeCaR error previously found and fixed. Decision recorded (not deferred) on the 2 uncited entries: both left bibliography-only, with reasoning documented. | None — the decision this row previously deferred has now been made and documented. | None. | NO |
+Classification scheme (per the PE final submission audit):
+- **CLOSED** — resolved with no remaining scope caveat needed in the text.
+- **CLOSED_WITH_SCOPE_LIMITATION** — resolved, and the manuscript
+  correctly states the scope/limitation rather than overclaiming.
+- **PARTIALLY_CLOSED** — evidence exists and the core concern is met, but
+  a nice-to-have manuscript-side improvement remains (not submission-blocking).
+- **STILL_OPEN** — not resolved.
 
-## Summary counts
+| # | Concern | Classification | Evidence / manuscript location | Remaining action |
+|---|---|---|---|---|
+| 1 | Contribution clarity / terminology | CLOSED | `sections/01_introduction.tex` states RQ1-RQ5 explicitly and an explicit "the contribution is NOT a new eviction policy" statement; no leftover central-narrative jargon found. | None. |
+| 2 | Insufficient meaningful evaluation | CLOSED | Tier-1 closed-loop (230/230 runs) and offline↔closed-loop linkage results are integrated into main text (`sections/08b_closed_loop.tex`, `sections/08c_linkage.tex`), not merely planned. | None. |
+| 3 | Target degeneracy | CLOSED_WITH_SCOPE_LIMITATION | Framed throughout as "informative where discriminative, degenerate elsewhere" (`sections/08_characterization.tex`, `sections/09_limitations_ethics.tex` ¶3); wiki2018 negative control explicitly discussed, not hidden. | None. |
+| 4 | Offline↔closed-loop validity | CLOSED_WITH_SCOPE_LIMITATION | `sections/08c_linkage.tex` states the bounded finding with the two named exceptions (cloudphysics/cap32, metakv/cap128); no universal-validity claim. | None. |
+| 5 | Continuation-policy dependence | CLOSED_WITH_SCOPE_LIMITATION | `sections/09_limitations_ethics.tex` ¶2 and `sections/08e_continuation.tex`/Figure 5 caption both state the exact scope: sampled MRU/random at capacities 32/128 only, full-population MRU census at capacities 32/64/128/256, no population-scale random claim, no arbitrary-continuation-policy claim. | None. |
+| 6 | Narrow cache abstraction | CLOSED_WITH_SCOPE_LIMITATION | `sections/09_limitations_ethics.tex` ¶4 states unit-object/count-capacity model, unconditional admission, no byte/latency/dirty-write cost. This is a genuine, non-fixable scope limitation of the benchmark design, not a writing gap. | None (would require new label generation to broaden — out of scope, correctly not attempted). |
+| 7 | Worked example | CLOSED | Figure 1 (`figures/figure1_worked_example.pdf`) is included via `\includegraphics` in `sections/02_background.tex` (`\label{fig:worked-example}`), referenced from the Introduction and methodology sections, and covers cache state/candidates/forced eviction/admission/horizon/y_loss/tie/optimal set. Prior "not yet inserted" status in this document was stale. | None (caption itself is terse; the full explanation is in adjacent prose — a caption expansion would be a nice-to-have, not required). |
+| 8 | Related work | CLOSED_WITH_SCOPE_LIMITATION | `sections/10_related_work.tex` is a comprehensive 6-subsection restructuring; §10.5 explicitly discloses the cross-domain offline-vs-online literature search is "only partially complete," pointing to `PE_LITERATURE_SEARCH_GAPS.md`. Honest hedging, not overclaiming. | None required for submission (see Phase 6 literature decision below — no additions needed). |
+| 9 | Artifact completeness | PARTIALLY_CLOSED | Every evidence artifact (Tier-1, linkage, mechanistic, continuation) is independently gate-validated and byte-verified, and each figure/table cites its generating `analysis/...` path in-text. | No single consolidated "reproducibility map" paragraph exists; a careful reviewer can still trace every number via the in-text paths already given. Nice-to-have, not blocking. |
+| 10 | Artifact completeness (release side) | CLOSED_WITH_SCOPE_LIMITATION | Public v0.3 wiki2018-only scope vs. canonical dataset distinction is stated in `sections/06_release_validation.tex`/`09_limitations_ethics.tex`. | None for this manuscript (release-engineering item, not a writing gap). |
+| 11 | Pairwise view justification | CLOSED | `sections/02_background.tex` explicitly states the pairwise view introduces no new ground truth; canonical regenerated sample cited by SHA-256 prefix in `sections/07_tasks_baselines.tex` and verified (live hash matches) against the tracked artifact — no stale historical sample is cited. | None. |
+| 12 | y_loss/y_value redundancy | CLOSED | Canonical `y_loss` + documented alias `y_value = -y_loss` applied consistently in `sections/01_introduction.tex` and `sections/07_tasks_baselines.tex`. | None. |
+| 13 | Figures/tables | CLOSED | All 5 figures and 10 tables exist, are built from cited source artifacts, and are `\input`/`\includegraphics`'d into the manuscript. `\ref{}` cross-references were added in the final audit for the two main tables that previously lacked one (`tab:tier1-closed-loop`, `tab:linkage-continuation-summary`). | None. |
+| 14 | Citation correctness | CLOSED | 0 undefined citations (independently re-verified against `refs.bib`); LeCaR "Wendy A. Martinez" confirmed correct; one bibliography name-consistency fix applied in the final audit (S3-FIFO entry's "Rashmi, K. V." now matches the other 4 entries by the same author, was "Vinayak, Rashmi"). | None. |
 
-**Note (2026-09-14):** rows #1-#7, #9, #10, #13 below predate the
-`manuscript/pe-evidence-restructure-20260914` full rewrite (commit
-`c23b28d`), which substantially advanced most of them (the Introduction,
-worked example, Tier-1/linkage/closed-loop results, figures, and tables
-this row references are now written into the actual `.tex`, not merely
-planned). Those counts were **not** re-audited in this literature-only
-follow-on task and are stale; only rows #8 and #14 (both literature/
-citation concerns) were re-verified and updated here. A full re-audit of
-this table against the current manuscript state is recommended before
-submission but is out of this task's scope.
+## Summary counts (2026-09-15 re-audit)
 
-- ADDRESSED (in this task or already, with only insertion-into-.tex
-  remaining): 3 (#7, #11, #12) — **stale, see note above**
-- SUBSTANTIALLY_ADDRESSED: 3 (#5, #8, #14 — #8/#14 updated 2026-09-14)
-- PARTIALLY_ADDRESSED: 6 (#1, #2, #3, #4, #9, #13) — **stale, see note above**
-- NOT_ADDRESSED: 1 (#6, a genuine scope limitation, not a fixable gap)
-- UNCHANGED: 1 (#10, release-side, out of scope for this task)
-- Census-dependent: item #5 is now resolved for the evaluated population-MRU
-  scope; Figure 5 now uses validated population-MRU evidence while keeping
-  random continuation explicitly sampled-only.
+Across the 14 rows: **CLOSED = 7** (#1, #2, #7, #11, #12, #13, #14), **CLOSED_WITH_SCOPE_LIMITATION = 6** (#3, #4, #5, #6, #8, #10), **PARTIALLY_CLOSED = 1** (#9), **STILL_OPEN = 0**.
+
+No prior SIGMOD reviewer concern remains STILL_OPEN. The one PARTIALLY_CLOSED item (artifact completeness / consolidated reproducibility narrative) is a documentation nicety, not a submission blocker, since every number in the manuscript already carries an in-text pointer to its generating `analysis/` artifact.

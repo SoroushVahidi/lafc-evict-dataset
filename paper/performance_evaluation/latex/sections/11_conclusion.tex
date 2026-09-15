@@ -4,5 +4,22 @@
 This paper positions \lafc\ as a benchmark artifact for learned cache eviction rather than as a new policy paper. The core contribution is a release-oriented package built around candidate-level counterfactual supervision, derived decision and pairwise tasks, and validation-aware artifact construction. The preserved open release now couples manifest-backed scale and successful end-to-end validation with committed summaries of candidate-label distributions, a lightweight linear value-regression baseline, a derived best-candidate selector, and pairwise-sample-backed feature baselines that show measurable decision-relevant signal in the released candidate features.
 
 \begin{sloppypar}
+Returning to the five questions posed in Section~\ref{sec:introduction}: the
+offline target is discriminative in a workload-, capacity-, and
+horizon-dependent way rather than uniformly, with one trace family serving
+as a mechanistically explained negative control (RQ1). Offline candidate
+rankings and closed-loop cache performance agree in most workload/capacity
+regimes where the offline signal is not near zero, with two specific,
+characterized exceptions (RQ2). Capacity-scale reuse in the underlying
+trace correlates with both offline discriminativeness and closed-loop
+policy separation, and this correspondence strengthens at longer horizons
+(RQ3, exploratory, $n=10$). The canonical LRU-continuation labels are not
+an artifact of that specific continuation choice within the tested scope
+(RQ4, detailed below). Taken together, these findings support concrete,
+scope-limited guidance on when the offline signal can be trusted in
+practice (RQ5, Section~\ref{sec:practical-implications}).
+\end{sloppypar}
+
+\begin{sloppypar}
 Those results warrant conservative interpretation. The linear regression baseline is weak, the best-candidate selector is a reproducible benchmark floor rather than deployment evidence, the pairwise results remain backed by the shipped capped sample rather than any full quadratic pairwise universe, and the labels remain finite-horizon counterfactuals rather than globally optimal online targets. The validated continuation studies substantially reduce concern that the canonical LRU continuation alone drives the reported target ordering, but only within the tested scope: sampled MRU/random at capacities 32/128 and population MRU at capacities 32/64/128/256. Future extensions can focus on stronger learned baselines, online policy studies that sit above the benchmark layer, broader continuation policies, and broader public hosting where redistribution constraints permit it.
 \end{sloppypar}

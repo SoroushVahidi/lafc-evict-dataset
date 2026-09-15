@@ -60,7 +60,7 @@ def main():
     fig.suptitle("")
     fig.tight_layout(rect=(0, 0, 1, 0.92))
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUT)
+    fig.savefig(OUT, bbox_inches="tight")
     print(f"wrote {OUT}")
 
 
