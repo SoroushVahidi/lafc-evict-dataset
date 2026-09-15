@@ -10,13 +10,12 @@ structure for scan-resistance and simplicity. A recent hybrid line tunes
 such heuristics' own parameters with a learned control plane rather than
 replacing them outright: LAH, instantiated as S4-FIFO over an S3-FIFO data
 plane, reports robustness and interpretability gains from this
-decoupling \cite{xia2026lah}. Learned or learning-augmented approaches (for
-example LeCaR \cite{vietri2018lecar}, LRB \cite{song2020lrb}, Parrot
-\cite{liu2020parrot}, GL-Cache \cite{yang2023glcache}, CACHEUS
-\cite{rodriguez2021cacheus}, 3L-Cache \cite{zhou2025threelcache}, and HALP
-\cite{song2023halp}) instead attempt to predict which eviction will lead
-to lower future miss cost, typically by training on labels each system
-derives for itself from raw traces. This makes cross-paper comparison hard:
+decoupling \cite{xia2026lah}. Learned or learning-augmented approaches -- for example LeCaR, LRB,
+Parrot, and GL-Cache \cite{vietri2018lecar,song2020lrb,liu2020parrot,yang2023glcache}
+-- instead attempt to predict which eviction will lead to lower future
+miss cost. CACHEUS, 3L-Cache, and HALP take the same general approach
+\cite{rodriguez2021cacheus,zhou2025threelcache,song2023halp}, typically
+training on labels each system derives for itself from raw traces. This makes cross-paper comparison hard:
 different papers use different traces, different label constructions, and
 different evaluation protocols, so a reported improvement is often not
 attributable to the policy alone.

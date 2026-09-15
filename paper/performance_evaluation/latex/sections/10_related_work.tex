@@ -7,9 +7,11 @@
 \subsection{Infrastructure, Traces, and Benchmarks}
 
 Cache studies rely on realistic traces and reusable tooling. The UMass
-Trace Repository, production workload studies, CacheLib, libCacheSim, and
-cache\_dataset provide traces, cache-engine context, and simulation support
-for trace-driven evaluation~\cite{umasstracerepo,atikoglu2012kvworkload,yang2020twemcache,berg2020cachelib,libcachesim,cachedataset}.
+Trace Repository and production workload studies provide realistic traces
+for trace-driven evaluation~\cite{umasstracerepo,atikoglu2012kvworkload,yang2020twemcache}.
+CacheLib, libCacheSim, and cache\_dataset provide cache-engine context and
+simulation support for the same
+purpose~\cite{berg2020cachelib,libcachesim,cachedataset}.
 Broader systems artifacts such as YCSB, OLTP-Bench, Join Order Benchmark,
 and Park show the value of reusable evaluation infrastructure for systems
 and learning-augmented systems research~\cite{cooper2010ycsb,difallah2013oltpbench,leis2018job,mao2019park}.
@@ -24,12 +26,18 @@ Section~\ref{sec:positioning}).
 
 \subsection{Learned and Adaptive Cache Replacement}
 
-Recent learned-caching work typically contributes a policy, policy-selection
-scheme, or learning framework. LRB, LHD, GL-Cache, 3L-Cache, LeCaR,
-CACHEUS, MAT, ALPS, HR-Cache, Parrot, Hawkeye, Mockingjay, and HALP differ
-in model class, target signal, and deployment setting, but they all study
-how to make a cache choose better online or with lower overhead
-~\cite{song2020lrb,beckmann2018lhd,yang2023glcache,zhou2025threelcache,vietri2018lecar,rodriguez2021cacheus,yang2023mat,shahout2024alps,torabi2024hrcache,liu2020parrot,jain2016hawkeye,shah2022mockingjay,song2023halp}.
+Recent learned-caching work typically contributes a policy,
+policy-selection scheme, or learning framework; the systems below differ
+in model class, target signal, and deployment setting, but all study how
+to make a cache choose better online or with lower overhead. LRB, LHD,
+GL-Cache, and 3L-Cache are one such
+cluster~\cite{song2020lrb,beckmann2018lhd,yang2023glcache,zhou2025threelcache}.
+LeCaR, CACHEUS, MAT, and ALPS are
+another~\cite{vietri2018lecar,rodriguez2021cacheus,yang2023mat,shahout2024alps}.
+HR-Cache, Parrot, Hawkeye, and Mockingjay round out this
+group~\cite{torabi2024hrcache,liu2020parrot,jain2016hawkeye,shah2022mockingjay}.
+HALP~\cite{song2023halp} takes the same general approach and is discussed
+further below for its similarity to \lafc's pairwise view.
 HALP is especially close to \lafc's pairwise view because it trains from
 preference comparisons between candidate evictions in production, but its
 signal is generated and consumed online by a deployed policy. \lafc's
@@ -41,10 +49,17 @@ admission/prefetching axis rather than per-candidate eviction labels
 \subsection{Heuristics and Learning-Augmented Caching}
 
 Classical and modern policies define the policy landscape that \lafc\
-interfaces with: Belady's look-ahead optimum, LIRS, ARC, CLOCK-Pro,
-GreedyDual-Size, TinyLFU/W-TinyLFU, S3-FIFO, lazy-promotion/quick-demotion,
-SIEVE, and LAH/S4-FIFO all emphasize different practical signals or
-robustness/overhead tradeoffs~\cite{belady1966study,jiang2002lirs,megiddo2003arc,jiang2005clockpro,cao1997greedydual,einziger2017tinylfu,einziger2018wtinylfu,yang2023s3fifo,yang2023lazypromotion,zhang2024sieve,xia2026lah}.
+interfaces with. Belady's look-ahead optimum is the offline-optimal
+reference point against which all of the below are
+measured~\cite{belady1966study}. LIRS, ARC, CLOCK-Pro, and GreedyDual-Size
+are classical recency/frequency-aware
+policies~\cite{jiang2002lirs,megiddo2003arc,jiang2005clockpro,cao1997greedydual}.
+TinyLFU, W-TinyLFU, and S3-FIFO are more recent lightweight,
+admission-aware
+designs~\cite{einziger2017tinylfu,einziger2018wtinylfu,yang2023s3fifo}.
+Lazy-promotion/quick-demotion, SIEVE, and LAH/S4-FIFO round out this
+group, each emphasizing a different robustness/overhead
+tradeoff~\cite{yang2023lazypromotion,zhang2024sieve,xia2026lah}.
 Learning-augmented caching theory instead studies algorithms with
 predictions and robustness/consistency guarantees
 ~\cite{lykouris2021mladvice,wei2020learningaugcache,chledowski2021robustlac,im2022parsimoniouslac}.

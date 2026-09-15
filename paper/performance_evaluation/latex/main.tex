@@ -138,6 +138,14 @@ learned cache eviction \sep benchmark datasets \sep counterfactual supervision \
 \input{sections/08d_mechanistic}
 \input{sections/08e_continuation}
 \input{sections/08f_practical_implications}
+
+% Force any floats still queued from Sections 9-14 (found via full-document
+% visual QA: table_linkage_continuation_summary, cited near the start of
+% Section 13, was drifting all the way to page 44/45 in the pristine
+% baseline -- a pre-existing defect, not introduced by earlier polish
+% passes) to flush here, near their citation point, rather than cascading
+% behind Discussion/Limitations/Related-Work/Conclusion.
+\clearpage
 \input{sections/09b_discussion}
 \input{sections/09_limitations_ethics}
 \input{sections/10_related_work}
@@ -186,6 +194,12 @@ This work received computing/API support through the Google Cloud Research Credi
 % one author). Please confirm before submission.
 \textbf{Soroush Vahidi:} Conceptualization, Methodology, Software, Formal analysis, Investigation, Data curation, Writing -- original draft, Writing -- review \& editing, Visualization.
 
+% Full-document visual QA found the appendix's [t]-placed tables drifting
+% backward onto the same page as (and above) the CRediT statement and the
+% "Appendix A" heading that is supposed to introduce them. Force a clean
+% page break here so the heading and its tables render in the correct
+% reading order.
+\clearpage
 \input{sections/13_appendix_release_tables}
 
 % Force the appendix's [t]-placed float tables to typeset here rather than
