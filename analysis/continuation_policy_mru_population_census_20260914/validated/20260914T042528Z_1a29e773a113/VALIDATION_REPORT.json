@@ -1,0 +1,77 @@
+{
+  "FULL_CENSUS_VALID": true,
+  "duplicate_key_samples": [],
+  "duplicate_keys": 0,
+  "expected_capacities": [
+    32,
+    64,
+    128,
+    256
+  ],
+  "expected_chunks": 60,
+  "expected_families": [
+    "cloudphysics",
+    "metacdn",
+    "metakv",
+    "twemcache",
+    "wiki2018"
+  ],
+  "expected_horizons": [
+    4,
+    8,
+    16
+  ],
+  "expected_records": 2363286,
+  "extra_key_samples": [],
+  "extra_keys": 0,
+  "harness_commit": "1a29e773a113c8d47b13debe9893f4f5a9050099",
+  "independent_recheck_gates": {
+    "chunk_count": true,
+    "coverage": true,
+    "headline_metric_match": true,
+    "record_count": true,
+    "unique_keys": true
+  },
+  "independent_recheck_status": "PASS",
+  "lru_equivalence_comparisons": 180000,
+  "lru_equivalence_mismatches": 0,
+  "lru_equivalence_status": "PASSED",
+  "missing_key_samples": [],
+  "missing_keys": 0,
+  "numeric_validity": true,
+  "observed_capacities": [
+    32,
+    64,
+    128,
+    256
+  ],
+  "observed_chunks": 60,
+  "observed_done_markers": 60,
+  "observed_families": [
+    "cloudphysics",
+    "metacdn",
+    "metakv",
+    "twemcache",
+    "wiki2018"
+  ],
+  "observed_horizons": [
+    4,
+    8,
+    16
+  ],
+  "observed_records": 2363286,
+  "policy_scope_valid": true,
+  "provenance_valid": true,
+  "raw_files_hashed": 125,
+  "raw_hash_changed": false,
+  "raw_manifest_created": "/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/continuation-mru-census-validation-20260915/analysis/continuation_policy_mru_population_census_20260914/validated/20260914T042528Z_1a29e773a113/RAW_EVIDENCE_MANIFEST.json",
+  "raw_run_id": "20260914T042528Z_1a29e773a113",
+  "raw_run_path": "/home/soroush/projects/lafc-evict-dataset/repo/.claude/worktrees/continuation-mru-population-census-20260914/analysis/continuation_policy_mru_population_census_20260914/outputs/20260914T042528Z_1a29e773a113",
+  "raw_run_size": 1674761359,
+  "schema_error_samples": [],
+  "schema_valid": true,
+  "source_primary_commit": "1a29e773a113c8d47b13debe9893f4f5a9050099",
+  "source_secondary_commit": "9537afa4bf74a82478bcb621713c83a6c027a7df",
+  "unique_keys": 2363286,
+  "validation_time_utc": "2026-09-15T04:27:06Z"
+}
