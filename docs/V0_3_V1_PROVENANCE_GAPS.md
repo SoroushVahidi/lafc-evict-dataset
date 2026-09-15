@@ -101,3 +101,45 @@ Given four of seven families are `LICENSE_UNCLEAR` and two are
 candidate-level real-data rows for**, exactly matching what the already-
 published v0.2 preview did. This is the primary input to this task's final
 classification (`PROVENANCE_REVIEW_REQUIRED_BEFORE_BUILD`).
+
+## 5. Resolution (2026-09-15): the external research this document flagged has now been performed
+
+This section records the outcome of the "final review" this document said
+a future task would need to do. The external research (primary-source
+license lookups, not just intent) was performed on 2026-09-15 as part of
+the Performance Evaluation public-release audit. Findings, in full, live
+in `manifests/source_family_registry.yaml`, `dataset_card/LICENSE_DATA.md`,
+and `THIRD_PARTY_DATA.md`; summarized here for continuity with the gap
+this document originally flagged:
+
+| Family | Prior status (this doc) | Resolved status (2026-09-15) | Basis |
+|---|---|---|---|
+| `twemcache` | `LICENSE_UNCLEAR` | Cleared, CC BY 4.0 | `github.com/twitter/cache-trace`'s own repo (GitHub license API + LICENSE file text) |
+| `metakv` | `LICENSE_UNCLEAR` | Cleared, Apache License 2.0 | Meta's own CacheLib documentation ("licensed under the same license as CacheLib") + `facebook/CacheLib`'s Apache-2.0 license |
+| `metacdn` | `LICENSE_UNCLEAR` | Cleared, Apache License 2.0 | Same basis as `metakv` |
+| `cloudphysics` (historical key) | `LICENSE_UNCLEAR` | Cleared, CC BY 4.0 -- **but see the important correction below** | `github.com/alibaba/block-traces`'s own repo ("The trace data and document are licensed under CC-4.0") |
+
+**Important correction found during this review, not merely a licensing
+answer:** the internal family key `cloudphysics` does **not** identify the
+VMware/CloudPhysics dataset this document's own earlier table implied by
+using that name. Per Section 3 of `docs/V0_3_V1_DATA_INVENTORY.md` (local
+trace name `cloudphysics_alibaba_block_head_50k`) and a matching recorded
+checksum in
+`analysis/closed_loop_production_tier1_20260913/scripts/tier1_core.py`,
+the actual workload behind this key is Alibaba Cloud's Elastic Block
+Storage production block-storage trace. The key `cloudphysics` is
+preserved unchanged in all manifests, evidence directories, figures,
+tables, and experiment outputs for reproducibility -- it was **not**
+renamed retroactively, and no raw data, hash, or experiment output was
+regenerated or altered by this correction. Only source-registry
+provenance/attribution metadata (`manifests/source_family_registry.yaml`,
+`dataset_card/LICENSE_DATA.md`) and reader-facing display labels in the
+Performance Evaluation manuscript (prose, figures, tables -- not internal
+keys or evidence paths) were updated, to display "alibaba-block" instead
+of "cloudphysics" from the first defining occurrence onward, with a
+footnote explaining the historical key at first mention. No scientific
+number changed as part of this correction.
+
+`citibike` and `brightkite` were out of scope for this review and remain
+`DO_NOT_RELEASE` / `LICENSE_UNCLEAR` exactly as this document originally
+recorded.

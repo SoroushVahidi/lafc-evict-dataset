@@ -38,7 +38,7 @@ family$\times$capacity$\times$horizon cells). Two families,
 discriminative than the aggregate figure suggests -- at $H=16$, metacdn's
 all-tied fraction is 0.0085--0.012 and twemcache's is 0.10--0.24 across its
 two smallest capacities, an order of magnitude below the aggregate 0.68.
-\textbf{cloudphysics} and \textbf{metakv} sit at the tie-heavy end
+\textbf{alibaba-block} and \textbf{metakv} sit at the tie-heavy end
 (all-tied fraction 0.66--0.87 at $H=16$), closer to but still below the
 degenerate extreme. \textbf{wiki2018} is exactly at the degenerate
 extreme: all-tied fraction 1.0 at every capacity and every horizon tested,
@@ -69,7 +69,7 @@ High tie rates are not hidden or explained away: they are the majority
 regime in this dataset, and Section~\ref{sec:mechanisms} connects them
 directly to trace-level reuse structure (capacity-scale locality), giving
 a mechanistic account of exactly why metacdn/twemcache are discriminative
-and cloudphysics/metakv/wiki2018 are not. Sections~\ref{sec:closed-loop}
+and alibaba-block/metakv/wiki2018 are not. Sections~\ref{sec:closed-loop}
 and~\ref{sec:linkage} then ask whether this same discriminativeness
 structure predicts anything about actual closed-loop cache-policy
 behavior (it does, in the regimes identified here).

@@ -17,7 +17,7 @@ cells: MRU-vs-LRU agrees in sign (offline regret-gap sign matches
 closed-loop miss-ratio-gap sign) in 7 of 10 cells, disagrees in 1, and is
 tied on both sides (wiki2018) in 2; random-vs-LRU agrees in 6, disagrees
 in 2, ties in 2. The discordant cells are always the same two:
-\textbf{cloudphysics/cap32} (discordant for both pairs -- offline regret
+\textbf{alibaba-block/cap32} (discordant for both pairs -- offline regret
 gaps there are $-0.0027$ and $-0.0007$, i.e.\ barely non-zero on the
 offline side too) and \textbf{metakv/cap128} (discordant for random-vs-LRU
 only -- offline says random is very slightly worse than LRU, $+0.0013$
@@ -48,7 +48,7 @@ attached everywhere; they are not treated as population-scale estimates.
 
 \textbf{RQ-CL3 (workload/capacity dependence).} metacdn and twemcache are
 the strong-agreement, most-discriminative-offline regimes and also show
-the largest closed-loop policy separation; cloudphysics is a
+the largest closed-loop policy separation; alibaba-block is a
 weak/ambiguous regime where the offline gap is close enough to zero that
 its sign is not robust; metakv/cap128 is the one reversal regime; wiki2018
 is degenerate on both sides, exactly, confirming it as a clean negative

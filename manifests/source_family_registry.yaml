@@ -4,58 +4,130 @@
 
 families:
   - family: twemcache
-    source_name: Twitter cache trace / Twemcache open trace collection
+    source_name: Twitter production cache traces (Twemcache open trace collection)
     source_url: https://github.com/twitter/cache-trace
-    upstream_license: open_trace_collection_needs_citation_review
-    redistribution_status: eligible_pending_final_review
-    publication_clearance: not_cleared_pending_final_review
+    upstream_license: CC BY 4.0
+    redistribution_status: cleared
+    publication_clearance: cleared_for_public_release
     recommended_for_v0_1_open: true
     privacy_risk: low
-    notes: Candidate for lafc-evict-v0.1-open if final redistribution and attribution checks stay clear.
+    notes: >-
+      Reviewed 2026-09-15. Primary source (github.com/twitter/cache-trace,
+      description "A collection of Twitter's anonymized production cache
+      traces") is licensed CC BY 4.0, confirmed both via GitHub's
+      license-detection API (spdx_id CC-BY-4.0) and the repository's own
+      LICENSE file text (full CC BY 4.0 Public License). CC BY 4.0 permits
+      reproduction and Adapted Material with attribution; our tracked
+      candidate-level and decision-level derived rows are covered. See
+      dataset_card/LICENSE_DATA.md and THIRD_PARTY_DATA.md for the required
+      attribution text. Provenance confidence: STRONG (family/source/format
+      all match; no independently recorded checksum ties our local copy to a
+      specific upstream commit, so this is not verified at the byte level).
+      Associated publication already cited in the manuscript bibliography:
+      Yang, Yue, and Rashmi, "A Large-Scale Analysis of Hundreds of
+      In-Memory Cache Clusters at Twitter," OSDI 2020 (`yang2020twemcache`).
     required_citation: true
-    review_status: needs_review
+    review_status: reviewed_2026_09_15
     recommended_for_v0_2_preview: false
     v0_2_preview_redistribution_status: UNCLEAR
 
   - family: metakv
-    source_name: MetaKV trace family via open cache trace collection
-    source_url: https://github.com/cacheMon/cache_dataset
-    upstream_license: open_trace_collection_needs_citation_review
-    redistribution_status: eligible_pending_final_review
-    publication_clearance: not_cleared_pending_final_review
+    source_name: Meta MetaKV production key-value cache trace (via CacheLib)
+    source_url: https://cachelib.org/docs/Cache_Library_User_Guides/Cachebench_FB_HW_eval/
+    upstream_license: Apache License 2.0
+    redistribution_status: cleared
+    publication_clearance: cleared_for_public_release
     recommended_for_v0_1_open: true
     privacy_risk: low
-    notes: Candidate for lafc-evict-v0.1-open if final redistribution and attribution checks stay clear.
+    notes: >-
+      Reviewed 2026-09-15. Primary source is Meta's own CacheLib
+      documentation, which states verbatim: "These traces are licensed
+      under the same license as CacheLib." facebook/CacheLib is confirmed
+      Apache License 2.0 via GitHub's license API. Apache-2.0 permits
+      reproduction, distribution, and derivative works with attribution and
+      notice preservation; our tracked derived rows are covered.
+      `https://github.com/cacheMon/cache_dataset` (this entry's
+      previously-recorded source_url) is a third-party mirror/redistributor
+      that separately asserts a blanket CC BY 4.0 license over its entire
+      collection -- this conflicts with CacheLib's own stated Apache-2.0
+      basis for this specific trace. The primary source (Meta/CacheLib)
+      governs; cacheMon is documented here only as a known secondary mirror
+      path, not the license basis. See dataset_card/LICENSE_DATA.md and
+      THIRD_PARTY_DATA.md for the required attribution/notice text.
+      Provenance confidence: STRONG (family/source/format match; no
+      independently recorded checksum against a specific upstream release).
     required_citation: true
-    review_status: needs_review
+    review_status: reviewed_2026_09_15
     recommended_for_v0_2_preview: false
     v0_2_preview_redistribution_status: UNCLEAR
 
   - family: metacdn
-    source_name: MetaCDN trace family via open cache trace collection
-    source_url: https://github.com/cacheMon/cache_dataset
-    upstream_license: open_trace_collection_needs_citation_review
-    redistribution_status: eligible_pending_final_review
-    publication_clearance: not_cleared_pending_final_review
+    source_name: Meta MetaCDN production CDN request trace (via CacheLib)
+    source_url: https://cachelib.org/docs/Cache_Library_User_Guides/Cachebench_FB_HW_eval/
+    upstream_license: Apache License 2.0
+    redistribution_status: cleared
+    publication_clearance: cleared_for_public_release
     recommended_for_v0_1_open: true
     privacy_risk: low
-    notes: Candidate for lafc-evict-v0.1-open if final redistribution and attribution checks stay clear.
+    notes: >-
+      Reviewed 2026-09-15. Same provenance and licensing structure as
+      `metakv`: primary source is Meta's own CacheLib documentation
+      ("These traces are licensed under the same license as CacheLib",
+      i.e. Apache License 2.0, confirmed via facebook/CacheLib's GitHub
+      license API). `https://github.com/cacheMon/cache_dataset` is a
+      documented third-party mirror only; its own blanket CC BY 4.0 claim
+      conflicts with CacheLib's stated Apache-2.0 basis and is not the
+      license basis used here. See dataset_card/LICENSE_DATA.md and
+      THIRD_PARTY_DATA.md for the required attribution/notice text.
+      Provenance confidence: STRONG (family/source/format match; no
+      independently recorded checksum against a specific upstream release).
     required_citation: true
-    review_status: needs_review
+    review_status: reviewed_2026_09_15
     recommended_for_v0_2_preview: false
     v0_2_preview_redistribution_status: UNCLEAR
 
   - family: cloudphysics
-    source_name: CloudPhysics / open cache trace collection block I/O family
-    source_url: https://github.com/cacheMon/cache_dataset
-    upstream_license: open_trace_collection_needs_citation_review
-    redistribution_status: eligible_pending_final_review
-    publication_clearance: not_cleared_pending_final_review
+    source_name: Alibaba Cloud Elastic Block Storage (EBS) production block trace
+    source_url: https://github.com/alibaba/block-traces
+    upstream_license: CC BY 4.0
+    redistribution_status: cleared
+    publication_clearance: cleared_for_public_release
     recommended_for_v0_1_open: true
     privacy_risk: low
-    notes: Candidate for lafc-evict-v0.1-open if the specific open trace collection provenance and attribution terms are confirmed.
+    historical_key_note: >-
+      IMPORTANT: `cloudphysics` is a historical/internal family key retained
+      for reproducibility (it appears throughout committed manifests,
+      analysis directories, figures, tables, and experiment outputs, and is
+      never renamed retroactively). It does NOT identify the VMware/
+      CloudPhysics trace. Per docs/V0_3_V1_DATA_INVENTORY.md, the actual
+      local trace behind this key is `cloudphysics_alibaba_block_head_50k`
+      -- genuine Alibaba Cloud EBS block-storage trace data, confirmed by an
+      explicit recorded checksum
+      (`expected_sha256=fedb3d31ee3c1dd847d25f967392cdf0fdec1e9c1fbb6808772e281bc8d4fb57`
+      in analysis/closed_loop_production_tier1_20260913/scripts/tier1_core.py)
+      and consistent naming across every analysis directory that uses this
+      family. No VMware/CloudPhysics-specific data, claim, or characteristic
+      appears anywhere in this repository or the manuscript.
+    notes: >-
+      Reviewed 2026-09-15. Primary source is Alibaba's own GitHub
+      repository (github.com/alibaba/block-traces), which states directly:
+      "The trace data and document are licensed under CC-4.0" (Creative
+      Commons Attribution 4.0 International), linking to the standard CC BY
+      4.0 legal text. This is a direct primary-source statement, not a
+      third-party redistributor's claim. Associated publication: the
+      IISWC 2020 paper on Alibaba Cloud block storage workloads referenced
+      from that repository. cacheMon/cache_dataset separately mirrors a
+      distinct, differently-attributed "CloudPhysics" trace (VMware
+      vscsiStats, Waldspurger et al. FAST'15) that is NOT the data used by
+      this project; that mirror is unrelated to this family and must not be
+      cited as this family's source. See dataset_card/LICENSE_DATA.md and
+      THIRD_PARTY_DATA.md for the required attribution text and the
+      historical-naming disclosure. Provenance confidence: STRONG (the
+      local trace name and a recorded checksum tie this family
+      unambiguously to the Alibaba release; no independently recorded
+      checksum against the specific upstream GitHub/S3 artifact itself).
     required_citation: true
-    review_status: needs_review
+    review_status: reviewed_2026_09_15
     recommended_for_v0_2_preview: false
     v0_2_preview_redistribution_status: UNCLEAR
 

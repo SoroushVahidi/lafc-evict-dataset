@@ -28,6 +28,12 @@ FAMILY_COLOR = {
     "twemcache": "#8172B2",
     "wiki2018": "#999999",
 }
+# Display-only relabeling: the internal family key "cloudphysics" is a
+# historical identifier that does not reflect true trace provenance (see
+# THIRD_PARTY_DATA.md) -- the underlying data is Alibaba's Cloud EBS block
+# trace. Data lookups/keys above are unchanged; only the rendered text uses
+# this mapping.
+DISPLAY_NAME = {"cloudphysics": "alibaba-block"}
 MARKER = {32: "o", 128: "^"}
 
 
@@ -67,7 +73,8 @@ def main():
         ax.grid(alpha=0.3, linewidth=0.4)
 
     fam_handles = [plt.Line2D([0], [0], marker="s", color="w",
-                               markerfacecolor=c, markersize=8, label=f)
+                               markerfacecolor=c, markersize=8,
+                               label=DISPLAY_NAME.get(f, f))
                    for f, c in FAMILY_COLOR.items()]
     cap_handles = [plt.Line2D([0], [0], marker=m, color="black", linestyle="",
                                markersize=7, label=f"cap={c}")

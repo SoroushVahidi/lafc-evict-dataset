@@ -20,6 +20,12 @@ SRC = REPO_ROOT / "analysis/sigmod_target_discriminativeness_20260913/outputs/ph
 OUT = REPO_ROOT / "paper/performance_evaluation/latex/figures/figure2_discriminativeness.pdf"
 
 FAMILIES = ["metacdn", "twemcache", "metakv", "cloudphysics", "wiki2018"]
+# Display-only relabeling: the internal family key "cloudphysics" is a
+# historical identifier that does not reflect true trace provenance (see
+# THIRD_PARTY_DATA.md) -- the underlying data is Alibaba's Cloud EBS block
+# trace. FAMILIES above (used for data lookups) is unchanged; only the
+# rendered tick labels use this mapping.
+DISPLAY_NAME = {"cloudphysics": "alibaba-block"}
 CAPACITIES = [32, 64, 128, 256]
 HORIZONS = [4, 8, 16]
 COLORS = {32: "#4C72B0", 64: "#55A868", 128: "#C44E52", 256: "#8172B2"}
@@ -49,7 +55,8 @@ def main():
             offs = [xi + (i - 1.5) * width for xi in x]
             ax.bar(offs, vals, width=width, color=COLORS[cap], label=f"cap={cap}")
         ax.set_xticks(list(x))
-        ax.set_xticklabels(FAMILIES, rotation=35, ha="right", fontsize=8)
+        ax.set_xticklabels([DISPLAY_NAME.get(f, f) for f in FAMILIES],
+                            rotation=35, ha="right", fontsize=8)
         ax.set_title(f"H={h}", fontsize=10)
         ax.set_ylim(0, 1.02)
         ax.grid(axis="y", linewidth=0.4, alpha=0.5)

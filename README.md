@@ -61,9 +61,12 @@ The publication repository focuses on:
 - conservative release documentation for provenance, licensing, schema, and limitations.
 
 Large release artifacts remain outside Git history and are represented by
-manifests and host records. Scientific/source data live in
-`/home/soroush/Augmented-caching`; KBS reviewer outputs live in
-`/home/soroush/Augmented-caching-kbs-second-revision`.
+manifests and host records. Scientific/source data and KBS
+reviewer-response history are tracked in separate internal working
+repositories outside this public release; they are not required to build,
+audit, or reproduce anything in this repository, which is self-contained
+via the compact validated evidence under `analysis/` and the manifests
+above.
 
 ## Scientific framing
 

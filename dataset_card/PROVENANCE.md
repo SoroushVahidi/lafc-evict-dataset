@@ -9,7 +9,7 @@ These originate from external providers, public dumps, or upstream workload repo
 - Twemcache,
 - MetaKV,
 - MetaCDN,
-- CloudPhysics,
+- Alibaba Block (this project's internal family key for this source is `cloudphysics`, a historical identifier that does **not** refer to the VMware/CloudPhysics dataset -- see `THIRD_PARTY_DATA.md`),
 - Wikimedia pageviews,
 - CitiBike,
 - Brightkite.
@@ -59,6 +59,8 @@ These benchmark tasks are authored in this project and are distinct from the ups
 ## 6. Current release boundary
 
 Wiki2018 is currently cleared for the published derived preview with
-attribution and caveat requirements. CloudPhysics, MetaCDN, MetaKV, and
-Twemcache remain `eligible_pending_final_review` but are not publication
-cleared. CitiBike and Brightkite remain blocked pending license/privacy review.
+attribution and caveat requirements. As of 2026-09-15, Twemcache, MetaKV,
+MetaCDN, and the Alibaba Block trace (internal key `cloudphysics`) are also
+`cleared_for_public_release` per `manifests/source_family_registry.yaml`,
+`dataset_card/LICENSE_DATA.md`, and `THIRD_PARTY_DATA.md`. CitiBike and
+Brightkite remain blocked pending license/privacy review.

@@ -80,11 +80,18 @@ data remain in `Augmented-caching`.
 ## Current public scope
 
 The published v0.3 release (like v0.2 before it) contains only Wiki2018-derived
-rows. CloudPhysics, MetaCDN, MetaKV, and Twemcache are not currently cleared
-for public release. CitiBike and Brightkite remain blocked. A separate,
-substantially larger internal multi-family research build exists (see
-`RELEASE_SCOPE.md`, `lafc-evict-full-heavy_r1`) but is not part of any public
-release and is not in scope for the AWS Open Data submission.
+rows. As of 2026-09-15, Twemcache, MetaKV, MetaCDN, and the Alibaba Block
+trace (this project's internal family key for it is `cloudphysics`, a
+historical identifier that does not refer to the VMware/CloudPhysics
+dataset -- see `THIRD_PARTY_DATA.md`) are license-cleared for public release
+per `manifests/source_family_registry.yaml`; this clears the way to expand
+a future dataset release to include them, but the currently *published*
+v0.3 package itself has not been rebuilt or re-released to include them --
+that remains a separate release-engineering task. CitiBike and Brightkite
+remain blocked. A separate, substantially larger internal multi-family
+research build exists (see `RELEASE_SCOPE.md`, `lafc-evict-full-heavy_r1`)
+but is not part of any public release and is not in scope for the AWS Open
+Data submission.
 
 ## Intended benchmark views
 

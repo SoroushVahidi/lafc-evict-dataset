@@ -29,7 +29,7 @@ boundary; every claim in this paper should be read as bounded by it.
   \label{fig:pipeline}
 \end{figure}
 
-The evaluated dataset covers five trace families -- \texttt{cloudphysics},
+The evaluated dataset covers five trace families -- \texttt{cloudphysics}\footnote{\texttt{cloudphysics} is a historical internal family identifier retained throughout this project's manifests, evidence, and code for reproducibility. The underlying workload is Alibaba Cloud's Elastic Block Storage production block-storage trace, not the VMware/CloudPhysics dataset; see the repository's \texttt{THIRD\_PARTY\_DATA.md} for full provenance and attribution. Reader-facing prose below refers to this workload as ``alibaba-block.''},
 \texttt{metacdn}, \texttt{metakv}, \texttt{twemcache}, and
 \texttt{wiki2018} -- chosen to span a CDN workload, a key-value workload,
 two additional production-derived workloads, and one intentionally

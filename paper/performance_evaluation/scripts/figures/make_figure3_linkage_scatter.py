@@ -7,8 +7,10 @@ Source (validated, frozen, not recomputed):
 n=10 family x capacity cells per pair per horizon; this figure plots H=16
 only (the primary horizon; see RQ-CL4 in
 analysis/closed_loop_offline_linkage_20260914/SCIENTIFIC_SUMMARY.md), and
-annotates the two discordant cells (cloudphysics/cap32, metakv/cap128)
-named in RQ-CL1. Explicitly not a large-sample inference (n=10).
+annotates the two discordant cells (displayed as alibaba-block/cap32,
+metakv/cap128; internal family key "cloudphysics" for the former -- see
+THIRD_PARTY_DATA.md) named in RQ-CL1. Explicitly not a large-sample
+inference (n=10).
 """
 import csv
 import pathlib
@@ -28,6 +30,12 @@ FAMILY_COLOR = {
     "twemcache": "#8172B2",
     "wiki2018": "#999999",
 }
+# Display-only relabeling: the internal family key "cloudphysics" is a
+# historical identifier that does not reflect true trace provenance (see
+# THIRD_PARTY_DATA.md) -- the underlying data is Alibaba's Cloud EBS block
+# trace. Data lookups/keys above are unchanged; only the rendered text uses
+# this mapping.
+DISPLAY_NAME = {"cloudphysics": "alibaba-block"}
 PAIR_MARKER = {"mru_vs_lru": "o", "random_vs_lru": "^"}
 DISCORDANT = {("cloudphysics", 32), ("metakv", 128)}
 
@@ -51,7 +59,8 @@ def main():
                    edgecolor="black" if (fam, cap) in DISCORDANT else "none",
                    linewidth=1.2, zorder=3)
         if (fam, cap) in DISCORDANT and pair == "mru_vs_lru":
-            ax.annotate(f"{fam}/cap{cap}", (x, y), textcoords="offset points",
+            ax.annotate(f"{DISPLAY_NAME.get(fam, fam)}/cap{cap}", (x, y),
+                        textcoords="offset points",
                         xytext=(6, 6), fontsize=7.5)
 
     ax.axhline(0, color="grey", linewidth=0.6)
@@ -61,7 +70,8 @@ def main():
     ax.set_title("Offline vs. closed-loop gap, H=16 (n=10 cells x 2 pairs)", fontsize=10)
 
     fam_handles = [plt.Line2D([0], [0], marker="s", color="w",
-                               markerfacecolor=c, markersize=8, label=f)
+                               markerfacecolor=c, markersize=8,
+                               label=DISPLAY_NAME.get(f, f))
                    for f, c in FAMILY_COLOR.items()]
     pair_handles = [plt.Line2D([0], [0], marker=m, color="black", linestyle="",
                                 markersize=7, label=p.replace("_", " "))

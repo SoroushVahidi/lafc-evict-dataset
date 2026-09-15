@@ -12,20 +12,62 @@ The machine-readable source-family registry in `manifests/source_family_registry
 
 ## Trace-family review checklist
 
-| Trace family | Current status | Redistribution note |
-| --- | --- | --- |
-| `twemcache` | eligible_pending_final_review; not publication-cleared | Internal candidate only; citation and final review still required. |
-| `metakv` | eligible_pending_final_review; not publication-cleared | Internal candidate only; citation and final review still required. |
-| `metacdn` | eligible_pending_final_review; not publication-cleared | Internal candidate only; citation and final review still required. |
-| `cloudphysics` | eligible_pending_final_review; not publication-cleared | Internal candidate only; provenance and attribution review still required. |
-| `wiki2018` | cleared for v0.2 published preview | Wikimedia pageview-derived proxy; attribution and caveat wording required. |
-| `citibike` | blocked_pending_review | Excluded from `lafc-evict-v0.1-open` until redistribution and privacy review are complete. |
-| `brightkite` | blocked_pending_review | Excluded from `lafc-evict-v0.1-open` until license and privacy review are complete. |
+Reviewed 2026-09-15. Full evidence, primary-source URLs, and reasoning for
+each row are in `manifests/source_family_registry.yaml` and
+`THIRD_PARTY_DATA.md`; this table is a summary, not the authoritative
+record.
+
+| Internal family key | Actual upstream source | License | Public status |
+| --- | --- | --- | --- |
+| `wiki2018` | Wikimedia public pageviews | CC0 1.0 | cleared (see `docs/WIKI2018_PROVENANCE_REVIEW.md`) |
+| `twemcache` | Twitter production cache traces (`github.com/twitter/cache-trace`) | CC BY 4.0 | cleared |
+| `metakv` | Meta MetaKV production cache trace, via CacheLib | Apache License 2.0 | cleared |
+| `metacdn` | Meta MetaCDN production cache trace, via CacheLib | Apache License 2.0 | cleared |
+| `cloudphysics` (historical key -- see note) | **Alibaba Cloud EBS block-storage trace** (`github.com/alibaba/block-traces`) | CC BY 4.0 | cleared |
+| `citibike` | Citi Bike trip-data | source terms require review | blocked_pending_review |
+| `brightkite` | SNAP Brightkite check-ins | source terms and privacy require review | blocked_pending_review |
+
+**Historical-key note on `cloudphysics`:** this project's internal family
+key `cloudphysics` is retained for reproducibility -- it is embedded
+throughout committed manifests, analysis directories, figures, tables, and
+experiment outputs, and is deliberately **not** renamed retroactively. It
+does **not** identify the VMware/CloudPhysics trace. The actual workload
+behind this key is Alibaba's Cloud EBS block-storage trace (confirmed by
+`docs/V0_3_V1_DATA_INVENTORY.md`'s recorded local trace name
+`cloudphysics_alibaba_block_head_50k` and a matching checksum in
+`analysis/closed_loop_production_tier1_20260913/scripts/tier1_core.py`).
+Public-facing prose and figures/tables should identify this workload as
+"Alibaba Block" (or similar) at first mention rather than implying it is
+VMware/CloudPhysics data; the internal key may remain `cloudphysics` in
+code, manifests, and evidence paths.
+
+**Code-license vs. data-license scope:** the repository's `LICENSE` (MIT)
+covers this repository's *code* only. It does not, and is not intended to,
+relicense the third-party trace data described above. Every trace family's
+own upstream license governs redistribution of material derived from it;
+LAFC-Evict's derived/transformed artifacts are distributed subject to the
+applicable upstream attribution/notice requirements (CC BY 4.0 attribution
+for `wiki2018`/`twemcache`/`cloudphysics`, Apache-2.0 attribution and
+notice preservation for `metakv`/`metacdn`), not under MIT.
+
+**On the `cacheMon/cache_dataset` mirror:** this collection separately
+redistributes `metakv`, `metacdn`, and a *different* trace it calls
+"CloudPhysics" (the genuine VMware/vscsiStats trace, unrelated to this
+project's `cloudphysics` key), all under its own blanket CC BY 4.0 claim.
+Where that blanket claim conflicts with a primary source's own stated
+license (as it does for `metakv`/`metacdn`, which Meta's CacheLib
+documentation states are licensed under Apache-2.0), this document treats
+the primary source as authoritative and cacheMon as a documented secondary
+mirror path only, not the license basis.
 
 ## Release guidance
 
 - The published v0.2 release includes only `wiki2018`.
 - The v0.1-open trees are historical unpublished local artifacts.
-- `cloudphysics`, `metacdn`, `metakv`, and `twemcache` remain excluded from public releases until final review and explicit clearance.
-- `lafc-evict-full-heavy_r1` remains an internal or reproducibility target until redistribution questions are resolved.
+- `cloudphysics` (Alibaba), `metacdn`, `metakv`, and `twemcache` are now
+  `cleared_for_public_release` per the 2026-09-15 review recorded above and
+  in `manifests/source_family_registry.yaml`.
+- `lafc-evict-full-heavy_r1` remains an internal or reproducibility target
+  until redistribution questions are resolved for its other constituent
+  families (`citibike`, `brightkite`).
 - `lafc-evict-sample` may remain fully synthetic and license-clean.
