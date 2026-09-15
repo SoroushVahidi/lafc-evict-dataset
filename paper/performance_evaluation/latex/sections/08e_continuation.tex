@@ -2,60 +2,90 @@
 \label{sec:continuation}
 
 The canonical labels (Section~\ref{sec:label-generation}) use LRU as the
-continuation policy after a forced eviction. RQ4 asks how sensitive the
-resulting labels are to that choice. This section reports \textbf{only the
-validated sampled study}, at capacities 32 and 128. Source: repository
-path
-\texttt{analysis/continuation\_\allowbreak policy\_\allowbreak sensitivity\_\allowbreak full\_\allowbreak 20260914/},
-RUN\_ID \texttt{20260914T040333Z\_1f66342be435}: 5,000 primary decisions
-(stratified 500 per family$\times$capacity, by baseline-LRU discriminative
-status at $H=16$) + 500 diagnostic (high-regret oversample, reported
-separately, never pooled into primary statements); 16{,}500
-decision-horizon pairs, 0 failed; prelaunch LRU-equivalence gate:
-1{,}271{,}616/1{,}271{,}616 comparisons; \texttt{FULL\_EXPERIMENT\_VALID:
-true}.
-
-% TODO-CENSUS: once experiment/continuation-mru-population-census-20260914
-% finishes and is independently validated, extend this section (and
-% table_linkage_continuation_summary) with population-scale MRU
-% continuation results at all four capacities, alongside -- not replacing
-% -- the sampled-study numbers below. Do not integrate before validation.
+continuation policy after a forced eviction. This choice matters because a
+deployed learned policy would control later evictions, not necessarily
+LRU. RQ4 therefore asks whether the optimal-candidate set and regret
+ordering induced by the canonical labels are materially changed when the
+same forced eviction is followed by a different continuation policy.
 
 \input{tables/table_linkage_continuation_summary}
 
-\textbf{Both alternative continuation policies classify ROBUST}, by the
-pre-registered rule (median Jaccard $\geq 0.8$ and cross-continuation
-regret $\leq 1$ miss for $\geq 80\%$ of LRU-optimal candidates, within the
-discriminative-under-LRU stratum, Set C, $n=6597$), applied verbatim, not
-re-derived after seeing results. \textbf{MRU continuation} is close to
-exact agreement with LRU continuation at both capacities: median Jaccard
-1.000, mean Jaccard 0.9958 (cap 32) / 0.9999 (cap 128), mean
-cross-continuation regret 0.0018 / 0.0001 misses, strict reversal fraction
-$2.7\times10^{-5}$ / $0.0$. \textbf{Mean-random continuation} (10 CRN
-seeds) also classifies ROBUST but is visibly more perturbing: median
-Jaccard remains 1.000 at both capacities, but \emph{mean} Jaccard is
-noticeably lower (0.7251 at cap 32, 0.8522 at cap 128), mean
-cross-continuation regret is an order of magnitude larger than MRU's
-(0.0463 / 0.0197), and the strict reversal fraction, while still small, is
-also an order of magnitude larger ($1.0\times10^{-3}$ / $1.5\times10^{-6}$).
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/figure5_continuation_robustness.pdf}
+  \caption{Continuation-policy sensitivity in the pre-registered
+  informative stratum (Set C: decisions discriminative under LRU).
+  Sampled MRU and mean-random evidence covers capacities 32 and 128 only;
+  full-population MRU evidence covers capacities 32, 64, 128, and 256.
+  No population-scale random-continuation result is shown or implied.}
+  \label{fig:continuation-robustness}
+\end{figure}
 
-\textbf{A horizon-dependent nuance that must not be smoothed over}: pooled
-across both capacities, random continuation's median Jaccard is 1.000 at
-$H=4$ and $H=8$ but drops to \textbf{0.881 at $H=16$} -- still above the
-0.8 ROBUST threshold, but a real, measurable erosion of robustness as the
-horizon lengthens, not a flat "always 1.0" result. MRU continuation's
-median Jaccard stays at 1.000 across all three horizons. Reporting only
-the pooled-by-capacity median (which happens to be 1.0 at both capacities
-because it mixes horizons) would obscure this; both breakdowns are given
-in Table~\ref{tab:linkage-continuation-summary} for exactly this reason.
+\textbf{Sampled MRU/random study.} The pre-registered sampled study
+(\texttt{analysis/continuation\_\allowbreak policy\_\allowbreak sensitivity\_\allowbreak full\_\allowbreak 20260914/},
+RUN\_ID \texttt{20260914T040333Z\_1f66342be435}) evaluates 5{,}000
+primary decisions plus 500 diagnostic oversample decisions at capacities
+32 and 128. Its prelaunch LRU-equivalence gate audited 1{,}271{,}616
+candidate-horizon comparisons with 0 mismatches, and the run is validated
+(\texttt{FULL\_EXPERIMENT\_VALID: true}). By the pre-registered Set-C rule
+(median Jaccard $\geq 0.8$ and cross-continuation regret $\leq 1$ miss for
+$\geq 80\%$ of LRU-optimal candidates), both MRU and mean-random
+continuation classify ROBUST at this sampled scope. MRU is very close to
+LRU: Set-C mean Jaccard is 0.9958 at capacity 32 and 0.9999 at capacity
+128, with mean cross-continuation regret 0.0018 and 0.0001 misses,
+respectively. Mean-random continuation also classifies ROBUST, but it is
+visibly more perturbing: mean Jaccard is 0.7251 at capacity 32 and 0.8522
+at capacity 128, with mean cross-continuation regret 0.0463 and 0.0197.
 
-\textbf{Scope discipline.} This robustness result covers capacities 32 and
-128 only, and a stratified 5,000/500-decision sample, not the full
-population. \textbf{Capacities 64 and 256 are not validated for
-continuation sensitivity as of this writing.} A separate full-population
-MRU continuation census is running to extend this result; its results are
-UNVALIDATED and INCOMPLETE and are not used anywhere in this paper. Every
-sentence in this section that reports a continuation-robustness number
-should be read with the "sampled study, capacities 32/128" qualifier
-attached, per the caveat discipline in
-Section~\ref{sec:experimental-methodology}.
+\textbf{Full-population MRU census.} The full-population MRU census
+(\texttt{analysis/continuation\_\allowbreak policy\_\allowbreak mru\_\allowbreak population\_\allowbreak census\_\allowbreak 20260914/validated/20260914T042528Z\_\allowbreak 1a29e773a113/})
+extends the MRU side of that result to all five families, capacities 32,
+64, 128, and 256, and horizons 4, 8, and 16. The census validates 60/60
+chunks and 2{,}363{,}286/2{,}363{,}286 decision-horizon records, with 0
+duplicate, missing, or extra decision-horizon keys; 30/30 mandatory gates
+and an independent recheck pass, and \texttt{FULL\_CENSUS\_VALID: true}.
+Across all decision-horizon units, mean optimal-set Jaccard is
+0.9994054593, median Jaccard is 1.0, 98.69\% of records have exact
+Jaccard 1, mean cross-continuation regret is 0.000304471 misses, median
+and p95 regret are both 0, the maximum mean regret is 0.193548 misses, and
+99.9708\% of LRU-optimal candidates remain MRU-optimal on average. Strict
+preference reversals are rare: 4{,}646 discordant candidate pairs out of
+24{,}791{,}643{,}360 pairwise comparisons, a fraction of
+$1.87\times10^{-7}$.
+
+\textbf{Informative-stratum result.} Aggregate numbers alone would be
+misleading because both-tied decisions are common: 67.31\% of all
+decision-horizon records are all-tied under both LRU and MRU. The
+pre-registered decisive stratum is therefore Set C, excluding decisions
+already all-tied under LRU. In this informative stratum, the census has
+764{,}282 decision-horizon units from 299{,}905 eviction decisions. Set-C
+mean Jaccard is 0.9984587309, median Jaccard is 1.0, the strict reversal
+fraction is $5.38\times10^{-7}$, mean cross-continuation regret is
+0.000638213 misses, and the mean fraction of LRU-optimal candidates still
+MRU-optimal is 0.9993955215. Since wiki2018 contributes no Set-C records,
+the Set-C result is not inflated by the degenerate negative control; the
+all-family and excluding-wiki Set-C summaries are identical.
+
+\textbf{Capacity and horizon effects.} Sensitivity is largest at the
+smallest capacity and longest horizon, but remains small in absolute
+terms. By capacity in Set C, mean Jaccard and mean cross-continuation
+regret are 0.994809/0.002067 at capacity 32, 0.998859/0.000530 at
+capacity 64, 0.999806/0.000096 at capacity 128, and
+0.999959/0.000019 at capacity 256. Thus the new population-only
+capacities, 64 and 256, reveal no hidden sensitivity and cross no
+pre-registered robustness threshold. By horizon in Set C, mean Jaccard
+declines modestly from 0.999820 at $H=4$ to 0.999222 at $H=8$ and
+0.996869 at $H=16$, while mean cross-continuation regret rises from
+0.000039 to 0.000283 and 0.001355 misses. The direction is real but the
+magnitude remains far below a practically meaningful miss-count change.
+
+\textbf{Worst cell and scope.} The worst Set-C family/capacity/horizon cell
+is cloudphysics/capacity 32/$H=16$: mean Jaccard 0.980433, median Jaccard
+1.0, mean cross-continuation regret 0.003899 misses, and strict reversal
+fraction $3.45\times10^{-5}$. Even this cell satisfies the
+pre-registered robustness criterion. These results address the reviewer
+concern within the evaluated scope: sampled MRU and random at capacities
+32/128, and full-population MRU at capacities 32/64/128/256. They do not
+establish population-scale random-continuation robustness, and they do not
+show that every possible deployed continuation policy would preserve the
+same ordering.

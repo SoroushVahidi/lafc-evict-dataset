@@ -49,7 +49,7 @@ Section "What was actually changed" below for the exact copy performed.
 | `08_characterization.tex` | 5. Target discriminativeness + 8. Mechanistic workload analysis | SPLIT — the existing target-discriminativeness content becomes Section 5; the new mechanistic-analysis evidence (not present in this section at all currently) becomes Section 8. |
 | (none — did not exist) | 6. Closed-loop policy evaluation | NEW — Tier-1 results (`analysis/closed_loop_tier1_evidence_20260914/`); no prior manuscript section covers this. |
 | (none — did not exist) | 7. Offline<->closed-loop correspondence | NEW — linkage results (`analysis/closed_loop_offline_linkage_20260914/`); no prior manuscript section covers this. |
-| (none — did not exist) | 9. Continuation-policy sensitivity | NEW — sampled full-study results (`analysis/continuation_policy_sensitivity_full_20260914/`), with the single `% TODO-CENSUS` marker for future population-scale extension. |
+| (none — did not exist) | 9. Continuation-policy sensitivity | UPDATED — sampled full-study results (`analysis/continuation_policy_sensitivity_full_20260914/`) plus validated full-population MRU census (`analysis/continuation_policy_mru_population_census_20260914/validated/20260914T042528Z_1a29e773a113/`). |
 | (none — did not exist) | 10. Practical implications / guidance | NEW — synthesis section answering RQ5; did not exist in the SIGMOD-derived draft. |
 | `09_limitations_ethics.tex` | 11. Limitations | REWRITE — the existing limitations section predates every caveat in `PE_CLAIM_EVIDENCE_LEDGER.md`'s cross-cutting-caveats block (finite-horizon labels, LRU-canonical continuation, tie-dominated target, wiki2018 degeneracy, unit-capacity/unconditional-admission abstraction, MetaCDN validation-window caveat, MetaKV cold-start caveat, sampled-continuation-scope caveat); every one of those must be added. Ethics content, if still applicable, stays merged here or splits to artifact info. |
 | `10_related_work.tex` | 12. Related work | REWRITE per `PE_LITERATURE_SEARCH_GAPS.md` and `PE_CITATION_AUDIT.md`; fix the LeCaR author-metadata error identified in this task. |
@@ -101,8 +101,8 @@ and `09_limitations_ethics.tex`; fixed the LeCaR citation.
    discriminativeness (RQ1), with Figure 2.
 6. Added four new results sections: `08b_closed_loop.tex` (RQ2 part 1,
    Table 2), `08c_linkage.tex` (RQ2 part 2/RQ3, Figure 3),
-   `08d_mechanistic.tex` (RQ3 part 2), `08e_continuation.tex` (RQ4, with
-   one `% TODO-CENSUS` marker, no final Figure 5).
+   `08d_mechanistic.tex` (RQ3 part 2), `08e_continuation.tex` (RQ4, now
+   updated with validated population-MRU census evidence and final Figure 5).
 7. Added `08f_practical_implications.tex` (RQ5) and `09b_discussion.tex`
    (Discussion).
 8. Extended `sections/06_release_validation.tex` with a provenance

@@ -39,12 +39,13 @@ closed-loop performance claim.
 
 \textbf{How should continuation-policy assumptions be interpreted?} As a
 tested, not assumed, robustness property, and one with real limits: the
-labels are close to unaffected by switching to MRU continuation, more
-(though still boundedly) affected by random continuation, and that effect
-grows somewhat with horizon (Section~\ref{sec:continuation}). This
-supports using the canonical LRU-continuation labels with reasonable
-confidence at capacities 32/128, not a claim that continuation choice is
-irrelevant.
+labels are close to unaffected by switching to MRU continuation at
+population scale across capacities 32/64/128/256, more (though still
+boundedly) affected by random continuation in the validated sample at
+capacities 32/128, and the sampled random effect grows somewhat with
+horizon (Section~\ref{sec:continuation}). This supports using the
+canonical LRU-continuation labels with reasonable confidence in the
+evaluated regimes, not a claim that continuation choice is irrelevant.
 
 \textbf{What capacity-scale reuse tells you before running anything.} The
 single trace statistic most predictive of both offline informativeness and

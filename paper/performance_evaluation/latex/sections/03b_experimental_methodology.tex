@@ -64,11 +64,14 @@ cross-continuation regret (in misses), and strict-reversal fraction,
 comparing the canonical LRU-continuation label against MRU- and
 mean-random-continuation (10 CRN seeds) relabelings of the same decisions,
 on a pre-registered, stratified 5,000-primary + 500-diagnostic decision
-sample (Section~\ref{sec:continuation}). The primary statistical unit here
-is the \emph{decision} (not the candidate row or the continuation seed):
-every reported statistic is a decision-level cluster statistic, and the
-one reported bootstrap confidence interval resamples at the decision
-level.
+sample at capacities 32 and 128, plus a full-population MRU census over
+all five families, capacities 32/64/128/256, and horizons 4/8/16
+(Section~\ref{sec:continuation}). The primary statistical unit here is
+the \emph{decision} (not the candidate row or the continuation seed):
+every reported sampled-study statistic is a decision-level cluster
+statistic, and the one reported bootstrap confidence interval resamples at
+the decision level; the MRU census is reported as a complete population
+enumeration, not an inferential sample.
 
 \textbf{Tie-aware analysis.} Every metric above that could be silently
 distorted by ties (optimal-set membership, pairwise preference,
@@ -83,6 +86,6 @@ continuation analyses; see Section~\ref{sec:release-validation} for the
 full provenance chain and \texttt{docs/PE\_CLAIM\_EVIDENCE\_LEDGER.md} in
 the accompanying artifact for the exact source of every reported value).
 No number in this paper is read from a partial or unvalidated intermediate
-run; in particular, a full-population continuation-sensitivity census is
-in progress at submission time and is not used anywhere in this paper
-(Section~\ref{sec:continuation}).
+run; the full-population MRU continuation census is used only after its
+60/60 chunks, 2{,}363{,}286/2{,}363{,}286 records, 30/30 validity gates,
+and independent recheck passed.

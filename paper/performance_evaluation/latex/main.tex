@@ -94,9 +94,11 @@ closed-loop evidence more strongly than shorter horizons. How sensitive
 are the labels to the continuation-policy assumption used to construct
 them? A pre-registered, stratified 5,500-decision sampled study at
 capacities 32 and 128 finds both MRU and mean-random continuation classify
-robust, though random continuation is measurably more perturbing than MRU
-and this robustness erodes somewhat at longer horizons -- a result we
-report with its exact scope rather than as a blanket robustness claim.
+robust, and a separate full-population MRU census over capacities 32, 64,
+128, and 256 also satisfies the same robustness criterion. Random
+continuation is measurably more perturbing than MRU in the sample, and no
+population-scale random census is claimed; we report this with its exact
+scope rather than as a blanket robustness claim.
 What does this imply in practice? We argue, and the evidence here
 supports, that this offline supervision complements rather than replaces
 closed-loop evaluation, and give concrete guidance for when the offline
@@ -104,9 +106,8 @@ signal can be trusted. \lafc\ also releases the underlying candidate-level,
 decision-level, and pairwise supervision (277,995,072 candidate rows,
 2,363,286 decisions, five trace families) for reuse by other researchers.
 Every quantitative claim in this paper traces to an independently
-validated, gate-checked artifact; a population-scale extension of the
-continuation-sensitivity result is in progress and is explicitly not used
-here.
+validated, gate-checked artifact, including the completed and independently
+rechecked full-population MRU continuation census.
 \end{sloppypar}
 \end{abstract}
 

@@ -13,17 +13,14 @@ Sections~\ref{sec:closed-loop} and~\ref{sec:linkage} evaluate closed-loop
 behavior directly rather than relying on the offline label alone.
 
 Second, the canonical labels use LRU as the continuation policy after a
-forced eviction. Section~\ref{sec:continuation} reports a sampled
-continuation-policy sensitivity study, at capacities 32 and 128 only,
-showing both MRU and mean-random continuation classify as robust on
-the pre-registered rule (median optimal-set Jaccard 1.0 at both
-capacities pooled; mean cross-continuation regret and strict reversal
-fractions small but not identically zero, and visibly larger under random
-than under MRU continuation; median Jaccard under random continuation
-drops to 0.881, specifically at $H=16$, still above but closer to the 0.8
-robustness threshold). This robustness result is a sampled-study finding
-at two capacities, not a population-scale or all-capacity guarantee; a
-separate full-population census is in progress and is not reported here.
+forced eviction. Section~\ref{sec:continuation} reports two bounded
+continuation-policy checks: a sampled study at capacities 32 and 128,
+where both MRU and mean-random continuation classify as robust on the
+pre-registered rule, and a full-population MRU census across capacities
+32, 64, 128, and 256, which also satisfies the MRU robustness criterion.
+This does not prove continuation-independence in general. Random
+continuation is not validated at population scale, and no experiment here
+covers every possible stateful deployment policy.
 
 Third, the target is substantially tied. Across the full audited canonical
 dataset, the all-tied fraction is approximately 0.68 and the unique-winner

@@ -1,0 +1,155 @@
+{
+  "FULL_CENSUS_VALID": true,
+  "gates": [
+    {
+      "detail": "jsonl=60",
+      "name": "expected_chunk_count",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "all_chunks_done",
+      "passed": true
+    },
+    {
+      "detail": "observed=2363286",
+      "name": "expected_total_records",
+      "passed": true
+    },
+    {
+      "detail": "duplicates=0",
+      "name": "unique_decision_horizon_keys",
+      "passed": true
+    },
+    {
+      "detail": "missing=0",
+      "name": "no_missing_keys",
+      "passed": true
+    },
+    {
+      "detail": "extra=0",
+      "name": "no_extra_keys",
+      "passed": true
+    },
+    {
+      "detail": "['cloudphysics', 'metacdn', 'metakv', 'twemcache', 'wiki2018']",
+      "name": "expected_families",
+      "passed": true
+    },
+    {
+      "detail": "[32, 64, 128, 256]",
+      "name": "expected_capacities",
+      "passed": true
+    },
+    {
+      "detail": "[4, 8, 16]",
+      "name": "expected_horizons",
+      "passed": true
+    },
+    {
+      "detail": "['lru', 'mru']",
+      "name": "only_expected_policies",
+      "passed": true
+    },
+    {
+      "detail": "errors=0",
+      "name": "schema_valid",
+      "passed": true
+    },
+    {
+      "detail": "errors=0",
+      "name": "finite_numeric_values",
+      "passed": true
+    },
+    {
+      "detail": "errors=0",
+      "name": "no_invalid_negative_values",
+      "passed": true
+    },
+    {
+      "detail": "errors=0",
+      "name": "jaccard_bounds",
+      "passed": true
+    },
+    {
+      "detail": "errors=0",
+      "name": "fraction_bounds",
+      "passed": true
+    },
+    {
+      "detail": "errors=0",
+      "name": "optimal_set_cardinality_consistency",
+      "passed": true
+    },
+    {
+      "detail": "errors=0",
+      "name": "taxonomy_consistency",
+      "passed": true
+    },
+    {
+      "detail": "errors=0",
+      "name": "nonnegative_cross_continuation_regret",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "manifest_consistency",
+      "passed": true
+    },
+    {
+      "detail": "20260914T042528Z_1a29e773a113",
+      "name": "run_id_consistency",
+      "passed": true
+    },
+    {
+      "detail": "1a29e773a113c8d47b13debe9893f4f5a9050099",
+      "name": "source_commit_consistency",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "trace_hash_consistency",
+      "passed": true
+    },
+    {
+      "detail": "{\"coverage\": \"5 families x 4 capacities (incl. 64,256) x 3 horizons x 25 random decisions/cell\", \"gate\": \"LRU_EQUIVALENCE_MISMATCHES\", \"gate_pass\": true, \"gate_value\": 0, \"max_abs_difference\": 0, \"mismatches\": [], \"n_mismatches\": 0, \"total_candidate_horizon_comparisons\": 180000}",
+      "name": "lru_equivalence_gate_passed",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "expected_per_chunk_record_counts",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "progress_per_chunk_counts",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "no_raw_file_hash_changed_during_validation",
+      "passed": true
+    },
+    {
+      "detail": "observed=2363286",
+      "name": "independent_record_count_match",
+      "passed": true
+    },
+    {
+      "detail": "unique=2363286 duplicates=0",
+      "name": "independent_unique_key_match",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "independent_coverage_match",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "independent_headline_metric_match",
+      "passed": true
+    }
+  ]
+}

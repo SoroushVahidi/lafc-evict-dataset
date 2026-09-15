@@ -93,27 +93,20 @@ nuance).
 
 ## 4. Currently Running: Full-Population MRU Continuation Census
 
-- tmux session: `lafc-mru-census-20260914` (confirmed alive at this task's
-  start via `tmux list-sessions`; not attached to, not signaled, not
-  interpreted beyond that liveness check)
+- tmux session: `lafc-mru-census-20260914` (exited after successful run)
 - Branch: `experiment/continuation-mru-population-census-20260914`
 - Harness HEAD: `1a29e77` (worktree at
   `.claude/worktrees/continuation-mru-population-census-20260914`)
 - RUN_ID: `20260914T042528Z_1a29e773a113`
 
-**Status: UNVALIDATED / INCOMPLETE.** Do not read scientific values from any
-partial chunk output it may have produced. Do not interpret it until it
-finishes and passes its own validity gates. Do not use it in any manuscript
-claim until that validation is complete and documented. This task did not
-touch its worktree, branch, or process beyond the one-time liveness check
-described above.
-
-When it finishes and validates: the correct action is to extend
-`docs/PE_CLAIM_EVIDENCE_LEDGER.md` C10 with population-scale numbers
-(alongside, not replacing, the sampled-study numbers, which remain valid
-evidence), update any `% TODO-CENSUS:` LaTeX markers left in the manuscript
-(see `docs/PE_MANUSCRIPT_RESTRUCTURING_PLAN.md`), and re-run the manuscript
-build/claims-verification pass described in that plan.
+**Status: VALIDATED AND INTEGRATED.** Validation branch
+`analysis/continuation-mru-census-validation-20260915` commit `95e3a41`
+records 60/60 chunks, 2{,}363{,}286/2{,}363{,}286 records, 0 duplicate/
+missing/extra keys, 30/30 gates PASS, independent recheck PASS, and
+`FULL_CENSUS_VALID: true`. Manuscript integration imports only compact
+evidence under
+`analysis/continuation_policy_mru_population_census_20260914/validated/20260914T042528Z_1a29e773a113/`;
+raw census output remains outside the manuscript branch.
 
 ## 5. Hypothesis Map (updated)
 
@@ -123,7 +116,7 @@ build/claims-verification pass described in that plan.
 | H_OFFLINE_CLOSED_LOOP | SUPPORTED IN PILOT ONLY (2 cells) | **SUPPORTED AT TIER-1 SCALE** (8/9 non-degenerate cells concordant at H=16, r=0.6-0.9 magnitude correlation); two named, characterized exceptions — see ledger C5-C9 |
 | H_LEARNED_POLICY | NOT SUPPORTED AS SUPERIOR TO LRU | Unchanged; Tier 2 not run and not authorized by this task |
 | H_WIKI | NOT SUPPORTED AS DISCRIMINATIVE TARGET | Unchanged, now mechanistically explained (ledger C3, `CAUSALLY_ESTABLISHED`) |
-| H_CONTINUATION | UNKNOWN / NOT TESTED | **SAMPLED-ROBUST at capacities 32/128** (ledger C10); population-scale still UNKNOWN pending census validation |
+| H_CONTINUATION | UNKNOWN / NOT TESTED | **ROBUST WITHIN EVALUATED SCOPE**: sampled MRU/random at capacities 32/128; full-population MRU at capacities 32/64/128/256 (ledger C10). Population-scale random and arbitrary deployed policies remain untested. |
 | H_PRACTICAL_USE | PARTIALLY SUPPORTED, STRENGTHENED BY PILOT | Further strengthened by Tier-1/linkage/mechanistic evidence chain; see ledger C11 |
 | H_PAIRWISE | OLD SHIPPED SAMPLE NOT CANONICAL | Unchanged; see `docs/PE_PAIRWISE_VIEW_JUSTIFICATION.md` (new in this task) for the provenance-remaining-issue assessment |
 | H_MECHANISM | (did not exist in prior handoff) | Two of four candidate mechanisms DIRECTLY_SUPPORTED (MetaCDN LRU/MRU separation, wiki2018 degeneracy); two PLAUSIBLE_BUT_NOT_ESTABLISHED (MetaKV cold-start interaction, Twemcache SIEVE-vs-random) — see ledger C8 |

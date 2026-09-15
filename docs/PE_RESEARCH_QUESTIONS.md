@@ -36,10 +36,11 @@ instruction to avoid too many RQs.
 
 - Maps to: ledger C10.
 - Evidence: `analysis/continuation_policy_sensitivity_full_20260914/`
-  (sampled study, capacities 32/128; population census pending).
-- Planned figures/tables: Figure 5 (continuation-policy robustness), with
-  an explicit `% TODO-CENSUS` extension point once the population census
-  validates.
+  (sampled MRU/random, capacities 32/128) and
+  `analysis/continuation_policy_mru_population_census_20260914/validated/20260914T042528Z_1a29e773a113/`
+  (full-population MRU, capacities 32/64/128/256).
+- Planned figures/tables: Figure 5 (continuation-policy robustness),
+  distinguishing sampled random from population MRU evidence.
 
 ## RQ5 — Practical guidance: What does this imply for researchers choosing between offline and closed-loop evaluation?
 
@@ -69,11 +70,10 @@ instruction to avoid too many RQs.
 | RQ1 | target-discriminativeness audit, mechanistic Q9 | Fig 2, scope table |
 | RQ2 | Tier-1 closed-loop, linkage RQ-CL1 | Fig 3, closed-loop results table |
 | RQ3 | linkage RQ-CL3, mechanistic Q1-Q8/Q10 | Fig 4 |
-| RQ4 | continuation pilot + full sampled study | Fig 5, sensitivity summary table |
+| RQ4 | continuation pilot + full sampled study + validated population MRU census | Fig 5, sensitivity summary table |
 | RQ5 | synthesis + worked example | Fig 1 (worked example), prose only |
 
 No validated experiment in the current evidence chain lacks an RQ home; no
-RQ lacks at least one validated evidential source. Tier-2/learned-policy and
-population-census results are the only evidence categories currently
-without a place in the main-text RQ structure (by design, per the
-constraints of this task).
+RQ lacks at least one validated evidential source. Tier-2/learned-policy
+evidence and population-scale random-continuation evidence remain outside
+the current validated evidence chain.

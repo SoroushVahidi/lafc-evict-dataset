@@ -30,8 +30,10 @@ row here rather than restating numbers from memory.
 - **LIMITATION**: not a positive claim; a boundary condition to disclose.
 - **NOT_SUPPORTED**: no current evidence; do not write this claim.
 - **Census-dependent**: whether `experiment/continuation-mru-population-census-20260914`
-  (currently running, UNVALIDATED/INCOMPLETE) could later strengthen,
-  weaken, or extend this claim once it finishes and is validated.
+  and its validated evidence branch `analysis/continuation-mru-census-validation-20260915`
+  strengthen, weaken, or extend this claim. As of commit `95e3a41`, the
+  MRU population census is valid and usable; population random remains
+  untested.
 
 ---
 
@@ -112,18 +114,25 @@ row here rather than restating numbers from memory.
 - Caveats: differences between horizons are modest in absolute terms (e.g. r=0.746 to 0.835 for MRU-vs-LRU, H=4 to H=16); n=8-10 per horizon.
 - Census-dependent: NO.
 
-### C10. Sampled continuation-policy sensitivity at capacities 32/128: MRU and mean-random continuation both classify ROBUST
+### C10. Continuation-policy sensitivity: sampled MRU/random at capacities 32/128 and population MRU at capacities 32/64/128/256 classify ROBUST
 
 - Status: SUPPORTED, at the stated scope only
-- Evidence: `analysis/continuation_policy_sensitivity_full_20260914/outputs/20260914T040333Z_1f66342be435/scientific_analysis.json` (`ROBUSTNESS_CLASSIFICATION`, `PRIMARY_ANALYSIS`), `validity_gates.json`, `provenance.json`
+- Sampled-study evidence: `analysis/continuation_policy_sensitivity_full_20260914/outputs/20260914T040333Z_1f66342be435/scientific_analysis.json` (`ROBUSTNESS_CLASSIFICATION`, `PRIMARY_ANALYSIS`), `validity_gates.json`, `provenance.json`
 - Validated HEAD: `experiment/continuation-sensitivity-full-20260914` @ `484417c326f3c1af8bd48eb85168fa5f6ae93801` (RUN_ID `20260914T040333Z_1f66342be435`; 16,500 decision-horizon pairs; 0 failed; prelaunch LRU-equivalence gate: 1,271,616 comparisons, 0 mismatches; `FULL_EXPERIMENT_VALID: true`).
 - Sample: 5,000 primary decisions (500 per family x capacity stratum, stratified by baseline-LRU discriminative status at H=16) + 500 diagnostic decisions (high-regret oversample, reported separately, never pooled into primary statements).
 - Values, Set C (discriminative-under-LRU, n=6597 decisions, primary sample only):
   - **MRU continuation**: cap32 (n=3021) median Jaccard 1.0, mean Jaccard 0.9958, mean cross-continuation regret (CCR) 0.00183, strict reversal fraction 2.74e-05; cap128 (n=3576) median Jaccard 1.0, mean Jaccard 0.99990, mean CCR 6.52e-05, strict reversal fraction 0.0 exactly. Bootstrap (2000 resamples) mean-CCR 95% CI [0.00073, 0.00103].
   - **Mean-random continuation** (10 CRN seeds): cap32 median Jaccard 1.0, mean Jaccard 0.7251 (lower than MRU's mean, though median is unaffected), mean CCR 0.0463, strict reversal fraction 1.03e-03; cap128 median Jaccard 1.0, mean Jaccard 0.8522, mean CCR 0.0197, strict reversal fraction 1.51e-06.
   - Classification: both `mru` and `random_mean` -> `ROBUST` at both capacities per the pre-registered DESIGN.md Section 3 rule, applied verbatim (not re-derived after seeing results).
-- Caveats (must appear in every manuscript sentence using this result): (a) capacities 32 and 128 only, not 64/256; (b) a stratified 5,000/500-decision *sample*, not the full population — the population-scale MRU continuation census is running separately and is explicitly UNVALIDATED/INCOMPLETE as of this writing; (c) median Jaccard is a robust central-tendency statistic and stays exactly 1.0 under both continuations, but mean Jaccard under random continuation is measurably lower (0.725-0.852) than under MRU (0.996-0.9999) — "robust" is a formal classification outcome under the pre-registered rule, not a claim that random continuation never perturbs the optimal set; report the mean/median distinction honestly rather than only the headline "ROBUST" label.
-- Census-dependent: **YES, but do not use census numbers now.** The population census (`experiment/continuation-mru-population-census-20260914`, RUN_ID `20260914T042528Z_1a29e773a113`) is designed to validate MRU continuation robustness at full population scale; when it finishes and is independently validated, this claim's evidentiary base should be extended (not replaced — the sampled study remains valid evidence in its own right) to include population-scale results, and the "sampled" qualifier can be relaxed once that validation is documented. Until then, every manuscript sentence citing continuation robustness must say "sampled study, capacities 32/128" explicitly.
+- Population-census evidence: `analysis/continuation_policy_mru_population_census_20260914/validated/20260914T042528Z_1a29e773a113/VALIDATION_REPORT.json`, `validity_gates.json`, `summary_overall.json`, `summary_by_capacity.csv`, `summary_by_horizon.csv`, `summary_by_family_capacity_horizon.csv`, `sampled_vs_population_mru.csv`, `figure5_mru_continuation_data.csv`, `EVIDENCE_MANIFEST.json`.
+- Population validation: `analysis/continuation-mru-census-validation-20260915` @ `95e3a41`; RUN_ID `20260914T042528Z_1a29e773a113`; 60/60 chunks, 2,363,286/2,363,286 records, 0 duplicate/missing/extra keys, 30/30 gates PASS, independent recheck PASS, `FULL_CENSUS_VALID: true`, raw output unmodified.
+- Population MRU values:
+  - Overall: mean Jaccard 0.9994054593, median 1.0, Jaccard=1 fraction 0.9869262544, strict reversal count 4,646, strict reversal fraction 1.874e-07, mean CCR 0.000304471, median CCR 0.0, p95 CCR 0.0, max CCR 0.193548, nonzero-regret fraction 0.0106635422, still-optimal fraction 0.9997084155, both-tied fraction 0.6730687695.
+  - Set C (discriminative under LRU): n=764,282 decision-horizon units; mean Jaccard 0.9984587309, median 1.0, strict reversal fraction 5.378e-07, mean CCR 0.000638213, still-optimal fraction 0.9993955215.
+  - Set C by capacity: c32 J=0.9948091745 / CCR=0.002066944; c64 J=0.9988592298 / CCR=0.000529716; c128 J=0.9998063823 / CCR=0.000096333; c256 J=0.9999591646 / CCR=0.000019153.
+  - Worst Set-C cell: cloudphysics/c32/H16, mean Jaccard 0.9804326227, median 1.0, mean CCR 0.003899105, strict reversal fraction 3.453e-05.
+- Caveats (must appear in every manuscript sentence using this result): (a) sampled MRU and mean-random evidence covers capacities 32 and 128 only; (b) full-population evidence covers MRU only, not random; (c) no result here proves robustness to every possible stateful deployed continuation policy; (d) wiki2018 is a degenerate negative control and must not be used to inflate the robustness story without Set-C/informative-stratum reporting.
+- Census-dependent: RESOLVED for population MRU; still not resolved for population random or arbitrary continuation policies.
 
 ### C11. LAFC-Evict complements rather than replaces closed-loop evaluation
 
@@ -166,12 +175,12 @@ row here rather than restating numbers from memory.
 - The target can be highly tied; unique winners are absent in the audited canonical target (unique-winner fraction 0.0, C1).
 - MetaCDN closed-loop evidence throughout Tier-1/linkage/mechanistic analysis is **validation-window** evidence, not a temporally held-out test window (Twemcache is test-window).
 - MetaKV has a first-window/cold-start caveat (`evictions = misses - capacity` identity; only family whose scored window starts at request 0) — see C8.
-- Sampled continuation validation (C10) covers capacities 32/128 until the population census validates further.
+- Continuation validation (C10) covers sampled MRU/random at capacities 32/128 and full-population MRU at capacities 32/64/128/256.
 - The historical full-release generator commit provenance remains incomplete/unknown (carried over from prior handoff documentation; not re-investigated in this task since it is orthogonal to the manuscript-evidence questions above).
 - Predictor-field issue: `candidate_is_predictor_victim == candidate_is_lru_victim` throughout the audited canonical data; predictor/bucket/confidence fields include constant or placeholder values. Any manuscript claim involving predictor fields must be avoided or explicitly caveated (carried over from the prior handoff, unchanged, not re-investigated in this task).
 
 ## Not-yet-claimed items intentionally excluded from this ledger
 
-- Any number from `experiment/continuation-mru-population-census-20260914` (running, unvalidated).
-- Any capacity-64/256 continuation-sensitivity number (out of scope for both the pilot and full sampled study).
+- Any full-population random-continuation number.
+- Any claim of continuation-independence for arbitrary deployed policies.
 - Any Tier-2 / learned-policy closed-loop result (Tier 2 was never run; out of scope for this task and explicitly forbidden from being launched here).

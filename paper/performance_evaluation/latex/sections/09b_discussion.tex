@@ -44,18 +44,20 @@ even after dedicated mechanistic analysis (Section~\ref{sec:mechanisms}).
 
 \textbf{Continuation robustness as currently validated.} The robustness
 finding in Section~\ref{sec:continuation} is deliberately reported with
-its exact scope attached (capacities 32/128, a stratified sample, a
-horizon-dependent erosion under random continuation) rather than as a
-blanket "labels are continuation-robust" statement. This is a case where
-narrowing the claim to match the evidence produces a more useful result
-for a future reader than a broader, less careful one would: a practitioner
-working at capacity 64 or 256, or caring specifically about $H=16$ under
-random-like continuation dynamics, now knows exactly what is and is not
-yet established.
+its exact scope attached: sampled MRU and mean-random continuation at
+capacities 32/128, and full-population MRU continuation at capacities
+32/64/128/256. Within that scope, the LRU continuation used for label
+generation is not driving the target ordering to a practically meaningful
+degree: Set-C median Jaccard remains 1.0, mean cross-continuation regret
+is below 0.001 misses in the population MRU census, and capacities 64/256
+do not reveal hidden sensitivity. The result does not say that every
+stateful deployed continuation policy would preserve the same ordering;
+it says the tested alternatives did, with random tested only in the
+validated sample.
 
 \textbf{Methodological limitations that shape every result above} are
 collected in Section~\ref{sec:limitations} rather than repeated here;
 Section~\ref{sec:characterization}'s target-discriminativeness numbers,
 Section~\ref{sec:linkage}'s small $n$, and Section~\ref{sec:continuation}'s
-capacity scope are the three limitations most load-bearing for the claims
-in this discussion specifically.
+continuation-policy scope are the three limitations most load-bearing for
+the claims in this discussion specifically.

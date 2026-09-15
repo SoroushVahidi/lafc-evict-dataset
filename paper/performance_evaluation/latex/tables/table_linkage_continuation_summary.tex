@@ -1,11 +1,14 @@
 \begin{table}[t]
   \centering
   \footnotesize
-  \caption{Offline$\leftrightarrow$closed-loop correspondence and sampled continuation-policy robustness, summarized. Top: H=16 concordance/correlation across the 10 family$\times$capacity cells (\texttt{analysis/closed\_loop\_offline\_linkage\_20260914/}). Bottom: sampled continuation study, Set C (discriminative-under-LRU, $n{=}6597$ primary-sample decisions; \texttt{analysis/continuation\_policy\_sensitivity\_full\_20260914/}), capacities 32/128 only --- population-scale evidence pending census validation.}
+  \caption{Offline$\leftrightarrow$closed-loop correspondence and
+  continuation-policy robustness, summarized. The continuation rows use
+  Set C (discriminative-under-LRU). Sampled random evidence is available
+  only at capacities 32/128; full-population evidence is MRU-only.}
   \label{tab:linkage-continuation-summary}
   \begin{tabularx}{\columnwidth}{@{}Lrr@{}}
     \toprule
-    \multicolumn{3}{@{}l}{\textit{Offline$\leftrightarrow$closed-loop, H=16 (n=10 cells; SIEVE excluded, no offline counterpart)}} \\
+    \multicolumn{3}{@{}l}{\textit{Offline$\leftrightarrow$closed-loop, H=16 (n=10 cells; SIEVE excluded)}} \\
     \midrule
     metric & MRU-vs-LRU & random-vs-LRU \\
     \midrule
@@ -25,12 +28,16 @@
     random mean cross-cont.\ regret & 0.0463 & 0.0197 \\
     random strict reversal fraction & 1.0$\times10^{-3}$ & 1.5$\times10^{-6}$ \\
     \midrule
-    \multicolumn{3}{@{}l}{\textit{Sampled continuation robustness, Set C, by horizon (both capacities pooled)}} \\
+    \multicolumn{3}{@{}l}{\textit{Full-population MRU census, Set C}} \\
     \midrule
-    metric & H=4 & H=16 \\
+    metric & all capacities & new capacities 64/256 \\
     \midrule
-    MRU median Jaccard & 1.000 & 1.000 \\
-    random median Jaccard & 1.000 & 0.881 \\
+    Scope & 764{,}282 decision-H units & 391{,}499 decision-H units \\
+    median / mean Jaccard & 1.000 / 0.998459 & 1.000 / 0.999425 \\
+    mean cross-cont.\ regret & 0.000638 & 0.000267 \\
+    strict reversal fraction & 5.38$\times10^{-7}$ & 2.83$\times10^{-7}$ \\
+    LRU-opt.\ still MRU-opt.\ fraction & 0.999396 & 0.999745 \\
+    robustness classification & ROBUST & ROBUST \\
     \bottomrule
   \end{tabularx}
 \end{table}
