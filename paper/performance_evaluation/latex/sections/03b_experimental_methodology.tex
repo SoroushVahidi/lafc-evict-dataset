@@ -81,12 +81,10 @@ broken arbitrarily; Section~\ref{sec:background}'s worked example shows
 the base case this generalizes from.
 
 \textbf{Provenance and validation strategy.} Every number in this paper
-traces to a frozen, gate-validated artifact (14/14 gates for Tier-1;
-independent dual-code-path recomputation for the linkage, mechanistic, and
-continuation analyses; see Section~\ref{sec:release-validation} for the
-full provenance chain and \texttt{docs/PE\_CLAIM\_EVIDENCE\_LEDGER.md} in
-the accompanying artifact for the exact source of every reported value).
-No number in this paper is read from a partial or unvalidated intermediate
-run; the full-population MRU continuation census is used only after its
-60/60 chunks, 2{,}363{,}286/2{,}363{,}286 records, 30/30 validity gates,
-and independent recheck passed.
+traces to a validated evidence record. The closed-loop, linkage,
+mechanistic, and continuation analyses were checked by reproducible scripts
+and, where applicable, by independent recomputation of headline values
+(Section~\ref{sec:release-validation}). No number in this paper is read
+from a partial or unvalidated intermediate run; the full-population MRU
+continuation census is used only after complete-record validation and an
+independent recheck.

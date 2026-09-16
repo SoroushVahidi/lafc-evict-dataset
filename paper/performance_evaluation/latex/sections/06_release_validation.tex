@@ -24,23 +24,15 @@ Table~\ref{tab:artifact-layout} summarizes the release-package components used i
 
 \subsection{Provenance of the evaluation results in this paper}
 
-Beyond the released dataset artifact above, every result reported in
+Beyond the released dataset above, every result reported in
 Sections~\ref{sec:characterization}--\ref{sec:continuation} traces to an
-independently frozen, gate-validated analysis artifact, each with its own
-committed scripts, provenance record, and (where applicable) an
-independent second code path that recomputes headline numbers and
-requires exact agreement: the target-discriminativeness audit, the Tier-1
-closed-loop production evidence (14/14 validity gates; a byte-verified
-evidence freeze recording the SHA256 of every output file both before and
-after freezing), the offline$\leftrightarrow$closed-loop linkage analysis,
-the mechanistic workload analysis, and the continuation-policy sensitivity
-pilot and full sampled study (prelaunch LRU-equivalence gate;
-post-completion validity gates; an independent recheck script requiring
-$10^{-9}$ numerical agreement with the primary analysis), plus the
-full-population MRU continuation census (60/60 chunks, 2{,}363{,}286
-decision-horizon records, 30/30 validity gates, independent recheck
-passed). All six are scripted, reproducible, and checked into the
-repository alongside this manuscript as compact evidence artifacts.
+independently validated analysis record. These records cover target
+discriminativeness, Tier-1 closed-loop behavior,
+offline$\leftrightarrow$closed-loop linkage, mechanistic workload
+analysis, sampled continuation sensitivity, and the full-population MRU
+continuation census. Each record includes reproducible scripts and, where
+applicable, an independent recomputation of headline values. The manuscript
+reports only results whose validation and recheck steps completed.
 
 \textbf{Two label sources must not be conflated.} The candidate-level
 \texttt{y\_loss}/\texttt{y\_value} labels released and evaluated throughout
@@ -53,19 +45,17 @@ the purpose of measuring sensitivity -- these sensitivity-study outputs
 are not an alternative release and are not used anywhere in this paper as
 if they were the canonical label.
 
-\textbf{The population-scale MRU continuation census is frozen evidence.}
-The census run \texttt{20260914T042528Z\_1a29e773a113} is complete,
-validated, independently rechecked, and frozen via
-\texttt{analysis/continuation\_\allowbreak policy\_\allowbreak mru\_\allowbreak population\_\allowbreak census\_\allowbreak 20260914/validated/20260914T042528Z\_\allowbreak 1a29e773a113/EVIDENCE\_\allowbreak MANIFEST.json}.
-The raw 1.6 GB census output is preserved separately outside this
-manuscript branch; the manuscript imports only compact summaries,
+\textbf{The population-scale MRU continuation census is complete
+evidence.} The census covers all 2{,}363{,}286 decision-horizon records in
+the evaluated corpus and passed an independent recheck before its summaries
+were imported into this manuscript. The raw 1.6 GB census output is
+preserved separately; the manuscript uses only compact summaries,
 validation reports, manifests, and Figure~\ref{fig:continuation-robustness}
 source data.
 
-\textbf{A known, unresolved provenance limitation, carried forward
-honestly rather than hidden:} the exact historical commit provenance of
+\textbf{A known, unresolved provenance limitation:} the exact historical commit provenance of
 the full-release label generator is incomplete. This does not affect the
-validity of the frozen analysis artifacts above, each of which independently
-records its own generation provenance, but it means the full historical
-lineage of the generator code itself predating those artifacts is not
-completely reconstructable from repository history alone.
+validity of the validated analyses above, each of which independently
+records its own generation context, but it means the full historical
+lineage of the generator code itself is not completely reconstructable from
+repository history alone.

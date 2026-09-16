@@ -31,10 +31,9 @@ continuation-sensitivity evidence referenced throughout this section.
 
 \textbf{Sampled MRU/random study.} The pre-registered sampled study
 evaluates 5{,}000 primary decisions plus 500 diagnostic oversample
-decisions at capacities 32 and 128, validated end-to-end (prelaunch
-LRU-equivalence gate: 1{,}271{,}616 candidate-horizon comparisons, 0
-mismatches; Section~\ref{sec:release-validation} gives the exact run
-identifier and full gate provenance). By the pre-registered Set-C rule
+decisions at capacities 32 and 128. The implementation rechecked the LRU
+baseline labels exactly before evaluating alternative continuation
+policies. By the pre-registered Set-C rule
 (median Jaccard $\geq 0.8$ and cross-continuation regret $\leq 1$ miss for
 $\geq 80\%$ of LRU-optimal candidates), both MRU and mean-random
 continuation classify ROBUST at this sampled scope. MRU is very close to
@@ -52,10 +51,9 @@ point estimates above.
 \textbf{Full-population MRU census.} The full-population MRU census
 extends the MRU side of that result to all five families, capacities 32,
 64, 128, and 256, and horizons 4, 8, and 16, over the complete population
-of 2{,}363{,}286 decision-horizon records (60/60 chunks, 0 duplicate/
-missing/extra keys, all validity gates and an independent recheck passing
--- Section~\ref{sec:release-validation} gives the exact run identifier and
-full gate provenance). Across all decision-horizon units, mean optimal-set Jaccard is
+of 2{,}363{,}286 decision-horizon records. Validation found no duplicate,
+missing, or extra decision keys, and an independent recheck passed before
+these summaries were used. Across all decision-horizon units, mean optimal-set Jaccard is
 0.9994054593, median Jaccard is 1.0, 98.69\% of records have exact
 Jaccard 1, mean cross-continuation regret is 0.000304471 misses, median
 and p95 regret are both 0, the maximum mean regret is 0.193548 misses, and
