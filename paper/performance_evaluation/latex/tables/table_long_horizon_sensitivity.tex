@@ -1,0 +1,25 @@
+\begin{center}
+  \begin{minipage}{0.96\textwidth}
+  \centering
+  \refstepcounter{table}
+  \label{tab:long-horizon-sensitivity}
+  \small
+  \textbf{Table~\thetable: Extended horizon sensitivity for the offline
+  target.} Rows are decision-micro summaries over the five-family corpus. H16
+  reuses the canonical H16-eligible decision population; H32--H128 use the
+  completed long-horizon production denominator, so paired cell-level deltas
+  are used for within-cell interpretation.
+
+  \medskip
+  \begin{tabular}{rrrrr}
+    \toprule
+    Horizon & Decisions & All-tied & Discriminative & Random regret \\
+    \midrule
+    16  & 787{,}762 & 0.6193 & 0.3807 & 0.0132 \\
+    32  & 706{,}888 & 0.6367 & 0.3633 & 0.0152 \\
+    64  & 706{,}888 & 0.6082 & 0.3918 & 0.0232 \\
+    128 & 706{,}888 & 0.5961 & 0.4039 & 0.0367 \\
+    \bottomrule
+  \end{tabular}
+  \end{minipage}
+\end{center}

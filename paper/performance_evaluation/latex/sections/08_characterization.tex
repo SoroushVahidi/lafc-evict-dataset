@@ -61,6 +61,32 @@ candidates' fates to diverge.
   \label{fig:discriminativeness}
 \end{figure}
 
+\input{tables/table_long_horizon_sensitivity}
+
+The extended long-horizon comparison asks whether this picture changes
+when the look-ahead window grows beyond the release horizons.
+Table~\ref{tab:long-horizon-sensitivity} and
+Figure~\ref{fig:long-horizon-sensitivity} summarize the validated
+$H\in\{16,32,64,128\}$ comparison. H16 is not regenerated: it is adapted
+from the canonical decision-view audit, while H32--H128 come from the
+completed Wulver long-horizon campaign. In paired family$\times$capacity
+cells, the mean discriminative-fraction deltas are +0.0427 from H16 to
+H32, +0.0246 from H32 to H64, and +0.0095 from H64 to H128. Thus the
+changes diminish between H64 and H128, but a saturation claim would be too
+strong: effects remain heterogeneous by family and capacity. The target
+also remains strongly tie-degenerate at H128: the decision-micro all-tied
+fraction is 0.5961 and the cell-macro all-tied mean is 0.4681.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/figure6_long_horizon_sensitivity.pdf}
+  \caption{Extended horizon sensitivity for discriminativeness,
+  random-optimal probability, and mean random regret. Thin gray lines are
+  individual family$\times$capacity cells; the dark line is the
+  decision-micro aggregate.}
+  \label{fig:long-horizon-sensitivity}
+\end{figure}
+
 \subsection{Interpretation}
 
 The scientific contribution here is partly \emph{characterizing} where the

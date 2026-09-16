@@ -80,8 +80,10 @@ counterfactual information needed to actually evaluate an eviction choice.
 This paper introduces \lafc, a reusable way to construct that
 counterfactual evidence at scale: for every resident candidate at every
 full-cache miss, a finite-horizon counterfactual miss-cost label, computed
-for real cache traces across five workload families, four cache
-capacities, and three horizons. We evaluate this supervision surface
+for real cache traces across five workload families and four cache
+capacities. The reusable release covers $H\in\{4,8,16\}$, and a validated
+extended sensitivity study compares $H\in\{16,32,64,128\}$ without
+regenerating the canonical H16 labels. We evaluate this supervision surface
 against five questions. \textbf{(RQ1: is the target discriminative?)}
 Not uniformly: two-thirds of decisions are fully tied in aggregate and no
 audited decision has a strict unique winner, but discriminativeness varies
@@ -96,9 +98,11 @@ offline signal is not near zero, with two characterized exceptions.
 (trace-derived LRU hit rate) correlates with both offline
 discriminativeness ($r=0.83$) and closed-loop separation ($r=0.90$), and
 discriminativeness and closed-loop separation correlate with each other
-($r=0.97$) (all $n=10$, exploratory). The correspondence is strongest at
-$H=16$, the longest of the three evaluated horizons ($H\in\{4,8,16\}$);
-this is not evidence about horizons beyond 16. \textbf{(RQ4: how sensitive
+($r=0.97$) (all $n=10$, exploratory). The original correspondence check is
+strongest at $H=16$ within the release horizons; the extended
+$H\in\{16,32,64,128\}$ sensitivity analysis shows that longer horizons
+generally add discrimination but that strong tie-degeneracy persists even
+at $H=128$. \textbf{(RQ4: how sensitive
 are the labels to the continuation policy assumed after a forced
 eviction?)} A pre-registered sampled study (5,500 decisions, capacities 32
 and 128) and a full-population MRU census (capacities 32, 64, 128, and
@@ -151,7 +155,7 @@ learned cache eviction \sep benchmark datasets \sep counterfactual supervision \
 \input{sections/11_conclusion}
 
 \section*{Acknowledgments}
-The author gratefully acknowledges Prof. Ioannis (Yiannis) Koutis for his guidance and support. The author also acknowledges support from the Google Cloud Research Credits Program; Cohere Labs through the Catalyst Grant Program, which provided \$1,000 in API credits; and CloudRift AI through the AI Builder Grant, which provided 1,000 credits. The author further thanks Amazon Web Services, through the AWS Open Data Sponsorship Program, for sponsored hosting of up to 600 GB for two years to support public access to \lafc.
+The author gratefully acknowledges Prof. Ioannis (Yiannis) Koutis for his guidance and support. Computationally intensive experiments used the Wulver high-performance computing system at the New Jersey Institute of Technology. The author also acknowledges support from the Google Cloud Research Credits Program; Cohere Labs through the Catalyst Grant Program, which provided \$1,000 in API credits; and CloudRift AI through the AI Builder Grant, which provided 1,000 credits. The author further thanks Amazon Web Services, through the AWS Open Data Sponsorship Program, for sponsored hosting of up to 600 GB for two years to support public access to \lafc.
 
 % ---------------------------------------------------------------------------
 % Elsevier-mandated end-of-manuscript declarations (Performance Evaluation).
