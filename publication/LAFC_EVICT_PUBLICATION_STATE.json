@@ -1,7 +1,7 @@
 {
   "document_type": "lafc_evict_publication_state",
-  "document_version": 3,
-  "last_verified": "2026-09-13",
+  "document_version": 4,
+  "last_verified": "2026-09-16",
   "canonical_publication_repository": "github.com/SoroushVahidi/lafc-evict-dataset (branch: master)",
   "scientific_source_repository": "github.com/SoroushVahidi/Augmented-caching (branch: main)",
   "kbs_reviewer_repository": "github.com/SoroushVahidi/Augmented-caching, branch kbs/second-revision-science (KBS second-revision reviewer materials; not a separate GitHub repository)",
@@ -185,10 +185,10 @@
       "canonical_local_source": "docs/V0_3_V1_RELEASE_DESIGN.md",
       "included_families": ["wiki2018"],
       "excluded_families": ["brightkite", "citibike"],
-      "license_state": "conditional_on_explicit_family_clearance",
-      "provenance_state": "additional_families_uncleared",
+      "license_state": "four_additional_families_cleared_2026_09_15_brightkite_citibike_still_blocked",
+      "provenance_state": "cloudphysics_metacdn_metakv_twemcache_cleared_not_yet_built_brightkite_citibike_blocked",
       "upload_status": "NOT_BUILT",
-      "notes": "Additional families may enter only after explicit APPROVED_* clearance and a full quality-gate pass."
+      "notes": "Cloudphysics (Alibaba Block), metacdn, metakv, and twemcache are cleared for public release per the 2026-09-15 review (dataset_card/LICENSE_DATA.md, manifests/source_family_registry.yaml) but have not been packaged, built, or uploaded for any public release. Brightkite and citibike remain blocked pending license/privacy review and are excluded from v1.0 planning until that review completes."
     }
   ],
   "authoritative_records": {

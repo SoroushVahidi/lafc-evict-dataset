@@ -82,11 +82,32 @@ release bundles conceptually separate.
 
 ## Provenance boundary
 
-`wiki2018` is the only family currently cleared for the published derived
-release, with attribution and caveat requirements. `cloudphysics`, `metacdn`,
-`metakv`, and `twemcache` remain uncleared pending final review. `brightkite`
-and `citibike` remain blocked pending license/privacy review. The registry is a
-governance record, not legal advice.
+**Legal/license clearance** (as of the 2026-09-15 review; see
+`dataset_card/LICENSE_DATA.md` and `manifests/source_family_registry.yaml`
+for full evidence): all five evaluated families are cleared for public
+derived-data redistribution under their applicable upstream terms --
+`wiki2018` (CC0 1.0), `twemcache` and `cloudphysics` ("Alibaba Block", CC BY
+4.0), and `metakv`/`metacdn` (Apache License 2.0). `brightkite` and
+`citibike` remain blocked pending license/privacy review; they are not part
+of this clearance.
+
+**Current packaging/hosting status** (a separate, operational question from
+legal clearance): `wiki2018` is the only family actually packaged and
+publicly hosted in the current v0.3 derived-data release (Hugging Face and
+AWS Open Data, see above). `twemcache`, `cloudphysics` (Alibaba Block),
+`metakv`, and `metacdn` are legally cleared but **not yet packaged or
+hosted** in any public release -- this is a release-packaging backlog, not
+a licensing limitation. Do not describe these four families' derived rows
+as currently downloadable; they are not.
+
+The registry is a governance record, not legal advice.
+
+**Historical note:** an earlier version of this section (accurate as of
+2026-09-13, superseded by the 2026-09-15 review above) stated that
+`cloudphysics`, `metacdn`, `metakv`, and `twemcache` "remain uncleared
+pending final review." That was correct at the time it was written but is
+no longer the current legal-clearance status; it is preserved here only as
+historical context, not as current guidance.
 
 ## Hosting boundary
 

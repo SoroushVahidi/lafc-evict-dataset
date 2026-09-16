@@ -11,21 +11,26 @@
 ## Current
 
 - Review v0.3 candidate metadata and publication readiness.
-- Complete provenance review for additional families before including them in a
-  public release.
+- Package and host the four additional families now cleared for public
+  release (cloudphysics/Alibaba Block, metacdn, metakv, twemcache; see
+  `dataset_card/LICENSE_DATA.md`, reviewed 2026-09-15) -- legal clearance is
+  resolved, packaging/upload has not started.
 - Keep the published v0.2 scientific payload immutable.
 
 ## Future
 
 - Possible v0.3 publication, only after separate approval and final gates.
-- v1.0 stable/full release after explicit provenance clearance.
+- v1.0 stable/full release after the newly-cleared families are packaged,
+  hosted, and pass the same quality gates as the current release.
 - Expanded configs where scientifically justified and independently validated.
 
 ## Guardrails
 
 - No upload or Zenodo publication is implied by this roadmap.
-- Brightkite and CitiBike remain blocked; cloudphysics, metacdn, metakv, and
-  twemcache remain uncleared pending review.
+- Brightkite and CitiBike remain blocked pending license/privacy review.
+  Cloudphysics (Alibaba Block), metacdn, metakv, and twemcache are cleared
+  for public release as of the 2026-09-15 review but are not yet packaged
+  or hosted in any public release.
 
 ## Benchmark usability
 
