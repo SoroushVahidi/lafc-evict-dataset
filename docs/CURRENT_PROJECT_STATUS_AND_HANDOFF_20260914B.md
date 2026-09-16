@@ -1,5 +1,16 @@
 # LAFC-Evict Current Project Status and Handoff (2026-09-14, successor)
 
+> **Pointer added 2026-09-15/16 (Query 2 preservation pass):** for
+> current/active PE experiment status (the long-horizon Wulver DAG, the
+> publication-grade learned-model retraining attempts, the Tier-2 LFU
+> campaign, and the do-not-recompute list), see
+> `docs/PE_CURRENT_PROJECT_STATUS_AND_HANDOFF.md` and
+> `docs/PE_DO_NOT_RECOMPUTE.md` in the `augmented-caching` repository — that
+> is the operational home for experiment/compute status since it hosts the
+> actual experiment code and evidence. This document remains the canonical
+> handoff for this repository's own scope (manuscript, release, and
+> cleanup state) and is not duplicated there.
+
 This document supersedes `docs/CURRENT_PROJECT_STATUS_AND_HANDOFF.md` (the
 `polish/final-handoff-20260914` @ `d37d084` version), which predates the
 Tier-1 closed-loop evaluation, the offline/closed-loop linkage analysis, the
