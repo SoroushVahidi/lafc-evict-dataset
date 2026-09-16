@@ -32,6 +32,11 @@ in model class, target signal, and deployment setting, but all study how
 to make a cache choose better online or with lower overhead. LRB, LHD,
 GL-Cache, and 3L-Cache are one such
 cluster~\cite{song2020lrb,beckmann2018lhd,yang2023glcache,zhou2025threelcache}.
+Within this cluster, 3L-Cache specifically targets the computational-overhead
+barrier to deploying a learned per-object eviction policy, using
+bidirectional sampling and parameter auto-tuning to cut CPU cost while
+remaining a per-object policy rather than a reusable supervision
+artifact~\cite{zhou2025threelcache}.
 LeCaR, CACHEUS, MAT, and ALPS are
 another~\cite{vietri2018lecar,rodriguez2021cacheus,yang2023mat,shahout2024alps}.
 HR-Cache, Parrot, Hawkeye, and Mockingjay round out this
@@ -60,9 +65,21 @@ designs~\cite{einziger2017tinylfu,einziger2018wtinylfu,yang2023s3fifo}.
 Lazy-promotion/quick-demotion, SIEVE, and LAH/S4-FIFO round out this
 group, each emphasizing a different robustness/overhead
 tradeoff~\cite{yang2023lazypromotion,zhang2024sieve,xia2026lah}.
+LAH departs from per-object scoring by instead learning the cache-level
+parameters of a static heuristic (S3-FIFO, as S4-FIFO) with an
+asynchronous control-plane/data-plane split; \lafc\ does not propose a
+replacement policy or controller at either granularity, and instead
+exposes the counterfactual supervision such controllers could be trained
+or evaluated against~\cite{xia2026lah}.
 Learning-augmented caching theory instead studies algorithms with
 predictions and robustness/consistency guarantees
 ~\cite{lykouris2021mladvice,wei2020learningaugcache,chledowski2021robustlac,im2022parsimoniouslac}.
+Recent work in this line narrows the robustness gap for
+learning-augmented paging to within an additive constant of the optimal
+competitive ratio~\cite{chen2026robustpaging}; \lafc\ does not supply
+such a guarantee -- it instead asks how reusable per-decision supervision
+for eviction choices can be constructed and characterized, a
+complementary rather than competing question.
 The subsampling study of Wang et al. identifies extremely long decision and
 reward horizons as a practical obstacle for reinforcement-learning cache
 policies and uses subsampling to reduce that horizon~\cite{wang2019subsampling};
