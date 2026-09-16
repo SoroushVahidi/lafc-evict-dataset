@@ -21,9 +21,15 @@ closed-loop linkage). The canonical LRU-continuation labels are not
 an artifact of that specific continuation choice within the tested scope
 (RQ4, detailed below). Taken together, these findings support concrete,
 scope-limited guidance on when the offline signal can be trusted in
-practice (RQ5, Section~\ref{sec:practical-implications}).
+practice (RQ5, Section~\ref{sec:practical-implications}). A separate,
+frozen learned-policy closed-loop check (Section~\ref{sec:learned-closed-loop})
+puts that guidance to a direct test: the model did not consistently
+out-perform LRU, SIEVE, or random under its own held-out protocol, which
+is itself informative -- offline supervision quality on this target does
+not automatically translate into closed-loop gains for this frozen
+configuration.
 \end{sloppypar}
 
 \begin{sloppypar}
-Those results warrant conservative interpretation. The linear regression baseline is weak, the best-candidate selector is a reproducible benchmark floor rather than deployment evidence, the pairwise results remain backed by the shipped capped sample rather than any full quadratic pairwise universe, and the labels remain finite-horizon counterfactuals rather than globally optimal online targets. The validated continuation studies substantially reduce concern that the canonical LRU continuation alone drives the reported target ordering, but only within the tested scope: sampled MRU/random at capacities 32/128 and population MRU at capacities 32/64/128/256. Future extensions can focus on stronger learned baselines, online policy studies that sit above the benchmark layer, broader continuation policies, and broader public hosting where redistribution constraints permit it.
+Those results warrant conservative interpretation. The linear regression baseline is weak, the best-candidate selector is a reproducible benchmark floor rather than deployment evidence, the pairwise results remain backed by the shipped capped sample rather than any full quadratic pairwise universe, and the labels remain finite-horizon counterfactuals rather than globally optimal online targets. The validated continuation studies substantially reduce concern that the canonical LRU continuation alone drives the reported target ordering, but only within the tested scope: sampled MRU/random at capacities 32/128 and population MRU at capacities 32/64/128/256. The frozen learned-policy check is similarly a single confirmatory point, not an exhaustive study of learned-policy design space; it does not license re-tuning against the same held-out cells used to obtain it. Future extensions can instead focus on alternative training targets, tie-aware objectives, other learned architectures evaluated on fresh held-out data, policies designed explicitly for the closed-loop state distribution a policy induces, online policy studies that sit above the benchmark layer, broader continuation policies, and broader public hosting where redistribution constraints permit it.
 \end{sloppypar}

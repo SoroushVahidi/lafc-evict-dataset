@@ -1,0 +1,19 @@
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \caption{Frozen learned-policy closed-loop check: win/tie/loss count for the learned policy against each comparator across the same 10 predetermined cells (5 families $\times$ capacities 32, 128), under a held-out protocol distinct from Table~\ref{tab:tier1-closed-loop}. A tie is exact floating-point equality; every observed tie is one of the two wiki2018 cells, where all 6 policies score miss ratio 1.0. Macro miss ratio is the unweighted mean over the 10 cells (lower is better).}
+  \label{tab:learned-closed-loop}
+  \begin{tabularx}{\columnwidth}{@{}lrrrr@{}}
+    \toprule
+    comparator & learned wins & ties & learned losses & macro miss ratio (comparator) \\
+    \midrule
+    LRU    & 1 & 2 & 7 & 0.7117 \\
+    MRU    & 8 & 2 & 0 & 0.8484 \\
+    SIEVE  & 1 & 2 & 7 & 0.7096 \\
+    LFU    & 5 & 2 & 3 & 0.7825 \\
+    random (20-seed mean) & 1 & 2 & 7 & 0.7228 \\
+    \midrule
+    \multicolumn{4}{l}{learned macro miss ratio} & 0.7629 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

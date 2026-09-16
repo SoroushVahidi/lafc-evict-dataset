@@ -72,8 +72,13 @@ orthogonal to the audited evidence reported in this paper but is disclosed
 here for reproducibility completeness.
 
 Finally, this paper reports closed-loop results for LRU, MRU, random, and
-SIEVE (Section~\ref{sec:closed-loop}); it does not report a publication-grade
-closed-loop evaluation of any learned policy trained on these labels.
-Earlier exploratory learned-policy pilots are outside the evidence base of
-this manuscript, so learned-policy closed-loop competitiveness remains
-future work rather than a claim of this paper.
+SIEVE under the Tier-1 protocol (Section~\ref{sec:closed-loop}), and,
+separately, a frozen learned-policy closed-loop check under an
+independently constructed held-out protocol
+(Section~\ref{sec:learned-closed-loop}). That check covers one model
+class, one feature set, one target ($H=16$ \texttt{y\_loss}), and two
+capacities; it found no consistent closed-loop improvement over LRU,
+SIEVE, or random, and should be read as a single confirmatory result, not
+an exhaustive study of learned-policy architectures, targets, or tuning,
+and not a general claim about learned cache eviction beyond this frozen
+configuration.

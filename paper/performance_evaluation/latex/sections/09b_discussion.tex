@@ -49,6 +49,20 @@ essentially unchanged. This is a statement about the tested alternatives,
 not a claim that every stateful deployed continuation policy would
 preserve the same ordering.
 
+\textbf{What the frozen learned-policy check adds.} Section~\ref{sec:learned-closed-loop}
+connects this paper's larger message to an actual trained model: offline
+supervision can be highly structured (Section~\ref{sec:characterization})
+and even correspond to closed-loop behavior in most non-learned-policy
+regimes (Section~\ref{sec:linkage}), yet a model selected on that
+supervision's own offline criterion did not translate into consistent
+closed-loop improvement over strong non-learned baselines. Predicting a
+per-decision label well and inducing a good cache-state trajectory through
+a sequence of self-caused actions are different objects, and family
+heterogeneity persists in this check exactly as it does throughout the
+paper (Section~\ref{sec:closed-loop}). This is evidence about one frozen
+model under one protocol, not a general claim that learned eviction cannot
+work.
+
 \textbf{Methodological limits} are collected in
 Section~\ref{sec:limitations}. For this discussion, the load-bearing ones
 are target discriminativeness, small-$n$ linkage evidence, and the tested

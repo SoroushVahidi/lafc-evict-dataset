@@ -38,6 +38,10 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{amsmath}
 \usepackage{graphicx}
+% Used only by table_learned_closed_loop's [H] placement, to pin that one
+% new table at its citation point rather than let it join the pre-existing
+% float queue from earlier sections and drift several pages away.
+\usepackage{float}
 
 \newcommand{\lafc}{LAFC-Evict}
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
@@ -111,7 +115,15 @@ alternatives. Random continuation is measurably more perturbing than MRU;
 we make no population-scale claim for random continuation. \textbf{(RQ5:
 what should this mean in practice?)} This offline supervision complements
 rather than replaces closed-loop evaluation, and we give concrete guidance
-for when it can be trusted. \lafc\ also releases the underlying candidate-,
+for when it can be trusted. As a separate confirmatory check, we froze one
+model trained on this supervision and evaluated it in closed loop against
+matched LRU, MRU, SIEVE, LFU, and random baselines on a held-out protocol
+distinct from RQ2's: it did not consistently outperform LRU, SIEVE, or
+random (1 win, 2 degenerate ties, 7 losses against each, on the same
+10 cells), while consistently beating MRU and more often than not beating
+LFU -- evidence that offline predictive structure on this target does not
+automatically translate into closed-loop gains for this frozen model.
+\lafc\ also releases the underlying candidate-,
 decision-, and pairwise-level supervision for reuse, with every
 quantitative claim traced to independently validated evidence.
 \end{sloppypar}
@@ -141,6 +153,7 @@ learned cache eviction \sep benchmark datasets \sep counterfactual supervision \
 \input{sections/08d_mechanistic}
 \input{sections/08e_continuation}
 \input{sections/08f_practical_implications}
+\input{sections/08g_learned_closed_loop}
 
 % Force any floats still queued from Sections 9-14 (found via full-document
 % visual QA: table_linkage_continuation_summary, cited near the start of
