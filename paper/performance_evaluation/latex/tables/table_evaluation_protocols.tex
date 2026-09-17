@@ -1,0 +1,17 @@
+\begin{table*}[t]
+  \centering
+  \small
+  \caption{Canonical evaluation protocol and workload specifications per trace family. Every family has release capacities of $\{32, 64, 128, 256\}$ and horizons of $\{4, 8, 16\}$, while closed-loop evaluation focuses on capacities $\{32, 128\}$.}
+  \label{tab:evaluation-protocols}
+  \begin{tabularx}{\textwidth}{@{}lP{0.14\textwidth}lP{0.14\textwidth}llL@{}}
+    \toprule
+    Family & Workload Type & Splits & Closed-Loop Split & Scored Chunks & Init / Warm-up & Key Characteristics \& Caveats \\
+    \midrule
+    \texttt{alibaba-block} & Block Storage & train/val/test & test & 2 chunks (8,192 req.) & Warm & Near-zero offline gap, cap32 sign flips (weak signal). \\
+    \texttt{metacdn} & CDN Cache & train/val & validation & 3 chunks (20,480 req.) & Warm & Validation-only (no test chunks); learned closed-loop is blocked. \\
+    \texttt{metakv} & Key-Value & train/val/test & test & 1 chunk (4,096 req.) & Cold Start & Cold start (no unscored warmup); random gap flips at cap128. \\
+    \texttt{twemcache} & Memcached & train/val/test & test & 2 chunks (8,192 req.) & Warm & Highly discriminative, strong-agreement, clear separation. \\
+    \texttt{wiki2018} & Wikipedia & train/val/test & test & 1 chunk (4,096 req.) & Warm & Negative-control family; 100\% tie-degenerate (zero random regret). \\
+    \bottomrule
+  \end{tabularx}
+\end{table*}

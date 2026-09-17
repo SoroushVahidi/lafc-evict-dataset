@@ -21,10 +21,14 @@ production closed-loop evaluation on which all three later sections
 depend, not a data-availability limitation, and it is stated here once
 rather than repeated in each section.
 
-\textbf{Split terminology and two family-specific caveats.} ``test''
-denotes a temporally held-out scoring window; ``validation'' denotes a
+\textbf{Split terminology and two family-specific caveats.} Split assignments
+are inherited from the frozen upstream generation metadata rather than reassigned
+by the release pipeline; test windows are chronologically later where available and
+represent a temporally held-out scoring window, whereas ``validation'' denotes a
 window used during earlier development that is not temporally held out in
-the same sense. Two caveats apply and recur throughout the paper: (i)
+the same sense. The exact scored chunks, request counts, and protocol settings are
+summarized centrally in Table~\ref{tab:evaluation-protocols}. Two caveats
+apply and recur throughout the paper: (i)
 \textbf{metacdn's closed-loop evidence is validation-window evidence, not
 test-window}, for both of its evaluated capacities; every result that
 includes metacdn should be read with this in mind, and Section~\ref{sec:linkage}
