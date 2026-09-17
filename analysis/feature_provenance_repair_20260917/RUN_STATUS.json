@@ -1,0 +1,42 @@
+{
+  "task": "problem_2_feature_provenance_repair",
+  "phase": "5_of_9_complete_synchronously",
+  "start_time": "2026-09-17T00:00:00Z",
+  "end_time": "2026-09-17T01:00:00Z",
+  "execution_mode": "SYNCHRONOUS_FOREGROUND",
+  "execution_mode_reason": "Phase 1 forensic profiling (DuckDB, 26 columns x 4 aggregates, 277,995,072 rows) completed in 5.9s; the Phase 5 clean-feature linear regression fit (205,726,368-row train split, normal equations) completed in 1.75s; full evaluation and pairwise reruns completed in under one minute total. The historical 8-hour Wulver SLURM budget documented in analysis/closed_loop_feasibility_20260913/REPORT.md Phase 10 did not apply to this DuckDB/Parquet-based implementation. No SLURM job or detached tmux session was launched, per this task's own instruction to verify computation cost empirically rather than assume it.",
+  "success": true,
+  "exit_code": 0,
+  "phases_completed": {
+    "phase_0_canonical_state": "done: branch repair/feature-provenance-and-modeling-20260917 created from release/v1-five-family-packaging-20260916 @ c766d63",
+    "phase_1_forensic_audit": "done: analysis/feature_provenance_repair_20260917/FEATURE_PROVENANCE_AUDIT.md, artifacts/feature_inventory.csv, artifacts/feature_dependency_map.json",
+    "phase_2_repair_decisions": "done: 18 ACCIDENTAL_PLACEHOLDER + 1 REDUNDANT_ALIAS -> DEPRECATE_FROM_MODEL_FEATURES; 7 VALID_MODEL_FEATURE -> KEEP; no reconstruction, no fabrication, no data values altered",
+    "phase_3_corrected_schema": "done: metadata/model_feature_schema_v2.json",
+    "phase_4_validators_tests": "done: scripts/validate_model_features.py, tests/test_model_feature_schema.py (9 tests, all passing, including 2 functional regression-detection tests)",
+    "phase_5_rerun_baselines": "done synchronously: analysis/feature_provenance_repair_20260917/LEGACY_VS_CLEAN_RESULTS.md",
+    "phase_6_frozen_model_impact": "done: Case A confirmed (no rerun needed) -- see FEATURE_PROVENANCE_AUDIT.md section 5 and feature_dependency_map.json frozen_model_impact block",
+    "phase_7_overnight_plan": "not needed -- see execution_mode_reason",
+    "phase_8_health_check": "not applicable -- no background job was launched",
+    "phase_9_documentation": "partial: dataset_card/SCHEMA.md and manuscript disclosure text updated with real, verified numbers (see git diff on this branch)"
+  },
+  "outputs": [
+    "analysis/feature_provenance_repair_20260917/FEATURE_PROVENANCE_AUDIT.md",
+    "analysis/feature_provenance_repair_20260917/LEGACY_VS_CLEAN_RESULTS.md",
+    "analysis/feature_provenance_repair_20260917/artifacts/feature_profile_raw.json",
+    "analysis/feature_provenance_repair_20260917/artifacts/feature_inventory.csv",
+    "analysis/feature_provenance_repair_20260917/artifacts/feature_dependency_map.json",
+    "analysis/feature_provenance_repair_20260917/artifacts/alias_leakage_checks.json",
+    "analysis/feature_provenance_repair_20260917/artifacts/clean_linear_regression_fit.json",
+    "analysis/feature_provenance_repair_20260917/artifacts/clean_linear_regression_eval.json",
+    "analysis/feature_provenance_repair_20260917/artifacts/clean_pairwise_features.parquet",
+    "analysis/feature_provenance_repair_20260917/artifacts/clean_pairwise_logistic_eval.json",
+    "analysis/feature_provenance_repair_20260917/artifacts/clean_remaining_baselines.json",
+    "analysis/feature_provenance_repair_20260917/artifacts/clean_linear_score_pairwise.json",
+    "metadata/model_feature_schema_v2.json",
+    "scripts/validate_model_features.py",
+    "tests/test_model_feature_schema.py"
+  ],
+  "job_ids": null,
+  "tmux_session": null,
+  "slurm_jobs": null
+}

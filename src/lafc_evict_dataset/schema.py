@@ -48,6 +48,38 @@ FEATURE_COLUMNS: Final[list[str]] = [
     "recent_candidate_hit_rate",
 ]
 
+ACTIVE_MODEL_FEATURES: Final[list[str]] = [
+    "candidate_recency_rank",
+    "candidate_age_norm",
+    "candidate_lru_score",
+    "candidate_is_lru_victim",
+    "score_gap_to_lru_victim",
+    "recent_candidate_request_rate",
+    "recent_candidate_hit_rate",
+]
+
+DEPRECATED_LEGACY_FEATURES: Final[list[str]] = [
+    "request_bucket",
+    "request_confidence",
+    "candidate_bucket",
+    "candidate_confidence",
+    "candidate_predictor_score",
+    "candidate_is_predictor_victim",
+    "score_gap_to_predictor_best",
+    "bucket_gap_to_predictor_best",
+    "bucket_gap_to_lru_victim",
+    "confidence_gap_to_predictor_best",
+    "confidence_gap_to_lru_victim",
+    "cache_bucket_mean",
+    "cache_bucket_std",
+    "cache_bucket_min",
+    "cache_bucket_max",
+    "cache_unique_bucket_count",
+    "cache_confidence_mean",
+    "cache_confidence_std",
+    "predictor_lru_disagree",
+]
+
 CANONICAL_COLUMNS: Final[list[str]] = [*BASE_REQUIRED_COLUMNS, *FEATURE_COLUMNS]
 
 STRING_COLUMNS: Final[list[str]] = [

@@ -1,0 +1,57 @@
+{
+  "generator_repository": "SoroushVahidi/Augmented-caching (local: /home/soroush/projects/augmented-caching/repo)",
+  "generator_function": "compute_candidate_features_v1 (src/lafc/evict_value_features_v1.py)",
+  "generator_callers": [
+    "src/lafc/evict_value_dataset_v1.py:build_evict_value_examples_v1 (introduced by an earlier commit; local dev/small-scale path)",
+    "src/lafc/evict_value_wulver_v1.py (Wulver-scale generator, commit 58f4530, the actual path that produced the released candidate rows per release_manifest.json's source_manifest field)"
+  ],
+  "root_cause": {
+    "summary": "bucket_by_page and confidence_by_page (dicts keyed by page id) are populated ONLY from req.metadata.get('bucket') / req.metadata.get('confidence') while replaying each trace. No code path in either evict_value_dataset_v1.py or evict_value_wulver_v1.py ever calls a bucket/confidence-annotation step (grep-verified: zero writes to metadata['bucket']/['confidence'] anywhere in src/lafc/). A working annotation function, attach_perfect_buckets(), exists in src/lafc/predictors/buckets.py, but it was built for a different, separate experiment (atlas_v1 policy comparisons; buckets.py predates evict_value_wulver_v1.py in git history) and was never wired into the evict_value dataset-generation path. As a result bucket_by_page/confidence_by_page are permanently empty dicts for every trace this generator ever processes, so every .get(page, default) call returns the hardcoded default (0 for bucket, 0.5 for confidence) for every row.",
+    "evidence": [
+      "grep -rn \"metadata\\['bucket'\\]\\s*=\\|metadata\\['confidence'\\]\\s*=\" src/lafc/ -> zero matches (confirmed nothing ever writes these keys)",
+      "src/lafc/evict_value_wulver_v1.py lines 182-185: bucket_by_page[pid]=... / conf_by_page[pid]=... guarded by 'if req.metadata.get(\"bucket\") is not None' -- never true because nothing upstream sets it",
+      "src/lafc/learned_gate/features.py compute_predictor_scores(): explicit fallback branch 'if len(uniq) == 1: return {p: 0.5 for p in candidates}' -- fires on every decision because bucket_by_page.get(p, 0) is 0 for every candidate, so uniq={0} always",
+      "git log --follow --diff-filter=A -- src/lafc/evict_value_wulver_v1.py -> single commit 58f4530 introduced the file complete, without ever importing lafc.predictors.buckets",
+      "git log --follow -- src/lafc/predictors/buckets.py -> earliest commit 7c7e45e ('Add first-pass cross-policy comparison study outputs'), predates 58f4530, built for atlas_v1 experiments, never imported by evict_value_wulver_v1.py or evict_value_dataset_v1.py"
+    ],
+    "classification": "RECOVERABLE_GENERATION_BUG at the code level (the missing wiring is a provable, fixable gap), but NOT SCIENTIFICALLY_RECONSTRUCTABLE for this release: the only available bucket-annotation function, attach_perfect_buckets(), derives bucket purely from req.actual_next (perfect future ground truth), which would (a) inject genuine future-information leakage into columns the benchmark otherwise carefully keeps online-computable, and (b) fabricate a 'perfect oracle predictor' and present it as if it were an authentic historical fallible predictor's output -- both explicitly forbidden by this repair's hard rules. No other predictor implementation in the codebase produces a non-oracle, non-fabricated bucket/confidence score for these specific traces (Request.predicted_next defaults to math.inf and is only ever populated by (a) trace files that already embed real external predictions -- not the case for any of this release's five raw traces -- or (b) noisy.py's synthetic noise-injection wrapper, which perturbs actual_next and is itself an experimental construct, not a historical value)."
+  },
+  "dependency_edges": [
+    {"feature": "request_bucket", "depends_on": [], "note": "req.metadata.get('bucket', 0); metadata never populated -> always default 0"},
+    {"feature": "request_confidence", "depends_on": [], "note": "req.metadata.get('confidence', 0.5); always default 0.5"},
+    {"feature": "candidate_bucket", "depends_on": ["bucket_by_page"], "note": "bucket_by_page.get(candidate, 0); bucket_by_page permanently empty -> always 0"},
+    {"feature": "candidate_confidence", "depends_on": ["confidence_by_page"], "note": "confidence_by_page.get(candidate, 0.5); always 0.5"},
+    {"feature": "candidate_predictor_score", "depends_on": ["candidate_bucket", "bucket_by_page"], "note": "compute_predictor_scores() falls into its len(uniq)==1 branch (all bucket values identical) and returns 0.5 for every candidate"},
+    {"feature": "candidate_is_predictor_victim", "depends_on": ["candidate_predictor_score"], "note": "argmax over all-tied 0.5 scores, tie-broken by list order -- coincides with candidate_is_lru_victim's own tie-break for the same candidate ordering; proven bit-identical (0 mismatches / 277,995,072 rows)"},
+    {"feature": "score_gap_to_predictor_best", "depends_on": ["candidate_predictor_score"], "note": "0.5 - 0.5 = 0.0 always"},
+    {"feature": "bucket_gap_to_predictor_best", "depends_on": ["candidate_bucket"], "note": "0 - 0 = 0.0 always"},
+    {"feature": "bucket_gap_to_lru_victim", "depends_on": ["candidate_bucket"], "note": "0 - 0 = 0.0 always (LRU victim's bucket is also the same default constant)"},
+    {"feature": "confidence_gap_to_predictor_best", "depends_on": ["candidate_confidence"], "note": "0.5 - 0.5 = 0.0 always"},
+    {"feature": "confidence_gap_to_lru_victim", "depends_on": ["candidate_confidence"], "note": "0.5 - 0.5 = 0.0 always"},
+    {"feature": "cache_bucket_mean", "depends_on": ["candidate_bucket"], "note": "mean of an all-zero list -> 0.0 always"},
+    {"feature": "cache_bucket_std", "depends_on": ["candidate_bucket"], "note": "std of an all-zero list -> 0.0 always"},
+    {"feature": "cache_bucket_min", "depends_on": ["candidate_bucket"], "note": "min of an all-zero list -> 0.0 always"},
+    {"feature": "cache_bucket_max", "depends_on": ["candidate_bucket"], "note": "max of an all-zero list -> 0.0 always"},
+    {"feature": "cache_unique_bucket_count", "depends_on": ["candidate_bucket"], "note": "len(set(all-zero list)) -> 1.0 always"},
+    {"feature": "cache_confidence_mean", "depends_on": ["candidate_confidence"], "note": "mean of an all-0.5 list -> 0.5 always"},
+    {"feature": "cache_confidence_std", "depends_on": ["candidate_confidence"], "note": "std of an all-0.5 list -> 0.0 always"},
+    {"feature": "predictor_lru_disagree", "depends_on": ["candidate_is_predictor_victim", "candidate_is_lru_victim"], "note": "pred_victim != lru_victim; always False given the alias relationship -> 0.0 always"},
+    {"feature": "score_gap_to_lru_victim", "depends_on": ["candidate_lru_score"], "note": "VALID: proven exact deterministic transform, score_gap_to_lru_victim = candidate_lru_score - MAX(candidate_lru_score) within the same decision (0 mismatches / 277,995,072 rows); candidate_lru_score itself is independent of the bucket/confidence bug"},
+    {"feature": "candidate_recency_rank", "depends_on": [], "note": "VALID: candidates.index(candidate), pure recency order"},
+    {"feature": "candidate_age_norm", "depends_on": ["candidate_recency_rank"], "note": "VALID: recency_rank / (len(candidates)-1), independent of bucket/confidence"},
+    {"feature": "candidate_lru_score", "depends_on": [], "note": "VALID: compute_lru_scores(), pure recency order, independent of bucket/confidence"},
+    {"feature": "candidate_is_lru_victim", "depends_on": ["candidate_lru_score"], "note": "VALID: argmax of candidate_lru_score"},
+    {"feature": "recent_candidate_request_rate", "depends_on": [], "note": "VALID: rolling window over recent_req_hist, independent of bucket/confidence"},
+    {"feature": "recent_candidate_hit_rate", "depends_on": [], "note": "VALID: rolling window over recent_hit_hist, independent of bucket/confidence"}
+  ],
+  "frozen_model_impact": {
+    "artifacts_inspected": [
+      "models/evict_value_wulver_v1_best.pkl (wulver_h4_random_forest)",
+      "models/evict_value_wulver_v1_best_heavy_r1.pkl (wulver_h4_random_forest)",
+      "models/evict_value_wulver_v1_h16_hist_gb.pkl (wulver_h16_hist_gb, HistGradientBoostingRegressor)"
+    ],
+    "confirmed_feature_columns": "all three pickles store an explicit feature_columns list; confirmed identical to schema.py's 26-column FEATURE_COLUMNS, same order",
+    "empirical_split_check": "loaded evict_value_wulver_v1_h16_hist_gb.pkl and enumerated every non-leaf node's feature_idx across all 150 boosting iterations: only indices {4,5,7,8,24,25} (candidate_recency_rank, candidate_age_norm, candidate_lru_score, candidate_is_predictor_victim, recent_candidate_request_rate, recent_candidate_hit_rate) were ever split on; none of the 18 globally-constant feature indices were split on (mathematically guaranteed: a constant column has no valid split threshold)",
+    "conclusion": "Deprecating the 18 constant features + candidate_is_predictor_victim from the OFFICIAL modeling feature set does not require retraining or invalidate this frozen model, because Problem 2's repair changes no data VALUES (see hard rules: never alter y_loss/y_value, never fabricate). The frozen model's predictions are a deterministic function of the exact same 26 column values it always had; nothing in this repair mutates those values, so its output is provably unchanged for any input it is asked to score. This holds independent of the empirical split-index check above, which is corroborating evidence, not the load-bearing argument."
+  }
+}

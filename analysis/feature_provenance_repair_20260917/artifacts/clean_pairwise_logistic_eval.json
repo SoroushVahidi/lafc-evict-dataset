@@ -1,0 +1,51 @@
+{
+  "features": [
+    "candidate_recency_rank",
+    "candidate_age_norm",
+    "candidate_lru_score",
+    "candidate_is_lru_victim",
+    "score_gap_to_lru_victim",
+    "recent_candidate_request_rate",
+    "recent_candidate_hit_rate"
+  ],
+  "coefficients": [
+    -0.012045712806253215,
+    -0.30354519598761637,
+    0.30354519598756197,
+    0.15646702807049312,
+    0.30354519599133256,
+    5.355707792097134,
+    -14.139372342527286
+  ],
+  "intercept": 0.002107482325581218,
+  "results": {
+    "train": {
+      "n": 75311,
+      "accuracy": 0.9592091460742787,
+      "log_loss": 0.09462246871566195,
+      "wilson_ci_95": [
+        0.9577728430848196,
+        0.9605986048298154
+      ]
+    },
+    "val": {
+      "n": 44216,
+      "accuracy": 0.9895060611543333,
+      "log_loss": 0.03807942260773606,
+      "wilson_ci_95": [
+        0.9885128163552703,
+        0.9904142573727024
+      ]
+    },
+    "test": {
+      "n": 2211,
+      "accuracy": 0.7033016734509272,
+      "log_loss": 0.5587001748519841,
+      "wilson_ci_95": [
+        0.6839216512569806,
+        0.7219764758613127
+      ]
+    }
+  },
+  "fit_seconds": 1.990288257598877
+}

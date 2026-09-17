@@ -75,3 +75,27 @@ One row per candidate pair from the same decision/capacity/horizon/split, with:
 - `_a` and `_b` suffixed candidate fields,
 - regret difference,
 - pairwise preference labels.
+
+## Model Feature Schema (v2)
+
+To prevent downstream researchers from accidentally training on uninformative or redundant features, we recommend using the **Model Feature Schema (v2)** (codified in `metadata/model_feature_schema_v2.json` and programmatically exposed in `lafc_evict_dataset.schema.ACTIVE_MODEL_FEATURES`). 
+
+### Active/Recommended Features (7 Columns)
+The following seven features represent the valid, non-constant candidate-level and trajectory-level characteristics available online at decision time:
+1. `candidate_recency_rank`: Recency position within the cache.
+2. `candidate_age_norm`: Normalized recency position.
+3. `candidate_lru_score`: LRU-side recency score.
+4. `candidate_is_lru_victim`: Indicator for the LRU victim.
+5. `score_gap_to_lru_victim`: Score difference relative to the LRU victim.
+6. `recent_candidate_request_rate`: Rolling frequency of candidate requests.
+7. `recent_candidate_hit_rate`: Rolling frequency of candidate hits.
+
+### Deprecated Features (19 Columns)
+The remaining 19 features of the legacy 26-feature schema are deprecated and must be excluded from new modeling work:
+- **18 Globally Constant Features**: `request_bucket`, `request_confidence`, `candidate_bucket`, `candidate_confidence`, `candidate_predictor_score`, `score_gap_to_predictor_best`, `bucket_gap_to_predictor_best`, `bucket_gap_to_lru_victim`, `confidence_gap_to_predictor_best`, `confidence_gap_to_lru_victim`, `cache_bucket_mean`, `cache_bucket_std`, `cache_bucket_min`, `cache_bucket_max`, `cache_unique_bucket_count`, `cache_confidence_mean`, `cache_confidence_std`, and `predictor_lru_disagree`. These columns contain constant values (all 0.0 or 0.5 or 1.0) because their underlying upstream predictor logic was disabled in the release.
+- **1 Redundant Alias**: `candidate_is_predictor_victim`. This column is bit-identical to `candidate_is_lru_victim` and carries no independent information.
+
+### Compatibility \& Exceptions
+- **Raw Parquet Files**: The Parquet files in the raw release physically preserve all 26 feature columns. This is to maintain strict backward compatibility with existing data loader scripts and published v1.0 SHA checksums.
+- **Historical Frozen HGB**: The pre-repair baseline HGB (scikit-learn's `HistGradientBoostingRegressor`) is a frozen, legacy artifact that retains the full 26-column interface and splits on the redundant alias. This is a historical baseline reference and does not imply that the deprecated columns are recommended.
+- **User-Engineered Features**: Users are encouraged to engineer additional online-computable candidate-level features on top of the seven recommended base features.

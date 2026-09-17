@@ -1,0 +1,22 @@
+{
+  "lru_score_pairwise_train": {
+    "n": 75311,
+    "accuracy": 0.9141294100463412
+  },
+  "lru_score_pairwise_val": {
+    "n": 44216,
+    "accuracy": 0.9508322779084494
+  },
+  "lru_score_pairwise_test": {
+    "n": 2211,
+    "accuracy": 0.6426956128448665
+  },
+  "random_non_tie_test": {
+    "n": 2211,
+    "accuracy": 0.5110809588421529
+  },
+  "majority_non_tie_test": {
+    "n": 2211,
+    "accuracy": 0.5146992311171416
+  }
+}

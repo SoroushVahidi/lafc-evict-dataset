@@ -1,0 +1,24 @@
+{
+  "n_train": 205726368,
+  "features": [
+    "intercept",
+    "candidate_recency_rank",
+    "candidate_age_norm",
+    "candidate_lru_score",
+    "candidate_is_lru_victim",
+    "score_gap_to_lru_victim",
+    "recent_candidate_request_rate",
+    "recent_candidate_hit_rate"
+  ],
+  "coefficients": [
+    4.716661794724734,
+    -0.0002452454507674874,
+    1.4982799136242062,
+    3.2183818741732093,
+    -0.05168592568921663,
+    -1.4982799136241778,
+    19.34310902500568,
+    -15.198022321439037
+  ],
+  "fit_seconds": 1.7504322528839111
+}
