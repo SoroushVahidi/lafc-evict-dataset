@@ -14,36 +14,20 @@ Section~\ref{sec:experimental-methodology}.
 \input{tables/table_tier1_closed_loop}
 
 \textbf{LRU is the best policy in 9 of 10 cells.} The sole exception is
-metakv/cap128, where SIEVE (miss ratio 0.6982) beats LRU (0.7290) by
-4.22\% relative -- the only cell in the entire evaluation where a
-non-LRU policy wins outright. \textbf{MRU is the worst policy in every
-non-degenerate cell}, by a wide margin (relative miss-ratio increase over
-LRU ranging from 1.65\% at alibaba-block/cap32, a near-zero-signal regime,
-up to 54.93\% at metacdn/cap128). \textbf{Random-policy seed variability is small for the larger policy separations but can exceed the smallest observed policy gaps}: the largest random-policy standard deviation observed is 0.0025 absolute miss ratio (twemcache/cap32), which is nearly two orders of magnitude smaller than twemcache's own MRU gaps over LRU (27.12\%/52.98\% relative, $\approx 0.20$--$0.33$ absolute miss ratio at twemcache's LRU miss ratios). This margin does not hold uniformly, however: the smallest non-degenerate policy gap in the table (metakv/cap32 SIEVE, $+0.03\%$ relative on a $0.7410$ LRU miss ratio, which is $\approx 0.00024$ absolute) is substantially smaller than the corresponding random-policy standard deviation ($0.0011$ absolute), so in that low-signal cell the reported SIEVE/random differences are within the seed-noise floor, and very small gaps should not be interpreted as practically meaningful relative to stochastic variation.
+metakv/cap128, where SIEVE beats LRU by 4.22\% relative. Conversely,
+\textbf{MRU is the worst policy in every non-degenerate cell} by a wide
+margin. Random-policy seed variability is small (maximum standard
+deviation 0.0025), which is sufficient to reliably separate wide gaps but
+means very narrow differences in low-signal cells (like metakv/cap32) fall within
+the stochastic noise floor. No universal ranking holds for SIEVE vs.\ random;
+their relative ordering is strictly family-dependent.
 
-\textbf{wiki2018 is a complete, exact tie across every policy}: miss ratio
-1.0 for LRU, MRU, SIEVE, and every one of random's 20 seeds, at both
-capacities, with random's standard deviation exactly 0.0. This is not
-approximate degeneracy -- it is byte-for-byte identical across all 4
-policies and 20 seeds. Section~\ref{sec:mechanisms} shows this follows
-deductively from zero reuse events in the scored window, not as a
-statistical artifact of this particular closed-loop run.
-
-\textbf{alibaba-block is a near-tie regime at both capacities}: every
-policy's relative gap to LRU stays under 4.5\%, an order of magnitude
-smaller than metacdn's or twemcache's gaps. \textbf{The metakv/cap128 cell is the one genuine exception to "LRU
-dominates"}, and there both SIEVE (miss ratio 0.6982) and random-mean
-(approximately 0.7137, relative gap $-2.07\%$) beat LRU (0.7290), while
-MRU remains worst; Section~\ref{sec:mechanisms} investigates, but does not
-fully resolve, why. metacdn's results should be read as validation-window
-evidence throughout (Section~\ref{sec:experimental-methodology});
-twemcache's are test-window.
-
-No universal middle-of-the-pack ranking is claimed for SIEVE vs.\ random:
-SIEVE beats random-mean at metacdn and metakv/cap32, but random-mean beats
-SIEVE at twemcache (both capacities), alibaba-block (both capacities), and
-metakv/cap128 -- the relative order of these two policies is
-family-dependent, not fixed. Only one ordering statement holds across
-every non-degenerate cell: \textbf{MRU is worst everywhere}. LRU is best
-in 9 of 10 cells and falls only as low as third place, at metakv/cap128,
-in the tenth.
+The traces cluster into three regimes. First, \textbf{wiki2018 is completely degenerate},
+with a 1.0 miss ratio and exactly zero standard deviation for all policies, following
+deductively from its lack of reuse (Section~\ref{sec:mechanisms}). Second,
+\textbf{alibaba-block is a near-tie regime} where all policy gaps remain small. Third,
+the highly discriminative families (metacdn and twemcache) show massive separation
+between LRU and MRU. The metakv/cap128 cell remains the only genuine exception to LRU's
+dominance, where both SIEVE and random outperform it. As noted in Section~\ref{sec:benchmark-design},
+metacdn's results derive from validation-window evidence, while the rest are
+test-window.

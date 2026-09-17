@@ -4,103 +4,17 @@
 \begingroup
 \sloppy
 
-\subsection{Infrastructure, Traces, and Benchmarks}
+\subsection{Caching Infrastructure and Benchmarks}
+Cache studies rely on realistic traces and reusable tooling. The UMass Trace Repository and production workload studies provide traces for evaluation~\cite{umasstracerepo,atikoglu2012kvworkload,yang2020twemcache}. CacheLib, libCacheSim, and cache\_dataset provide cache-engine simulation~\cite{berg2020cachelib,libcachesim,cachedataset}, while broader systems artifacts like YCSB and Park show the value of reusable learning-augmented evaluation infrastructure~\cite{cooper2010ycsb,difallah2013oltpbench,leis2018job,mao2019park}.
 
-Cache studies rely on realistic traces and reusable tooling. The UMass
-Trace Repository and production workload studies provide realistic traces
-for trace-driven evaluation~\cite{umasstracerepo,atikoglu2012kvworkload,yang2020twemcache}.
-CacheLib, libCacheSim, and cache\_dataset provide cache-engine context and
-simulation support for the same
-purpose~\cite{berg2020cachelib,libcachesim,cachedataset}.
-Broader systems artifacts such as YCSB, OLTP-Bench, Join Order Benchmark,
-and Park show the value of reusable evaluation infrastructure for systems
-and learning-augmented systems research~\cite{cooper2010ycsb,difallah2013oltpbench,leis2018job,mao2019park}.
-Most directly, Cache-Coliseum is a NeurIPS 2025 benchmark for evaluating
-learning-augmented caching algorithms, with multiple algorithm
-implementations and predictors~\cite{chen2025guard,cachecoliseumrepo}. It
-benchmarks algorithms against each other; \lafc\ instead supplies the
-labels an algorithm would train or evaluate against -- reusable
-per-decision, per-candidate finite-horizon counterfactual supervision,
-plus decision and pairwise derived views (full positioning in
-Section~\ref{sec:positioning}).
+\subsection{Learned and Adaptive Replacement}
+Recent learned-caching work typically contributes a policy, policy-selection scheme, or learning framework. LRB, LHD, GL-Cache, and 3L-Cache focus on low-overhead or feature-rich per-object eviction~\cite{song2020lrb,beckmann2018lhd,yang2023glcache,zhou2025threelcache}. LeCaR, CACHEUS, MAT, and ALPS form another cluster of adaptive policies~\cite{vietri2018lecar,rodriguez2021cacheus,yang2023mat,shahout2024alps}, while HR-Cache, Parrot, Hawkeye, and Mockingjay further explore eviction decisions~\cite{torabi2024hrcache,liu2020parrot,jain2016hawkeye,shah2022mockingjay}. Baleen addresses the adjacent admission/prefetching axis~\cite{wong2024baleen}.
 
-\subsection{Learned and Adaptive Cache Replacement}
-
-Recent learned-caching work typically contributes a policy,
-policy-selection scheme, or learning framework; the systems below differ
-in model class, target signal, and deployment setting, but all study how
-to make a cache choose better online or with lower overhead. LRB, LHD,
-GL-Cache, and 3L-Cache are one such
-cluster~\cite{song2020lrb,beckmann2018lhd,yang2023glcache,zhou2025threelcache}.
-Within this cluster, 3L-Cache specifically targets the computational-overhead
-barrier to deploying a learned per-object eviction policy, using
-bidirectional sampling and parameter auto-tuning to cut CPU cost while
-remaining a per-object policy rather than a reusable supervision
-artifact~\cite{zhou2025threelcache}.
-LeCaR, CACHEUS, MAT, and ALPS are
-another~\cite{vietri2018lecar,rodriguez2021cacheus,yang2023mat,shahout2024alps}.
-HR-Cache, Parrot, Hawkeye, and Mockingjay round out this
-group~\cite{torabi2024hrcache,liu2020parrot,jain2016hawkeye,shah2022mockingjay}.
-HALP~\cite{song2023halp} takes the same general approach and is discussed
-further below for its similarity to \lafc's pairwise view.
-HALP is especially close to \lafc's pairwise view because it trains from
-preference comparisons between candidate evictions in production, but its
-signal is generated and consumed online by a deployed policy. \lafc's
-pairwise view is instead a static reformatting of already-materialized
-finite-horizon counterfactual labels. Baleen addresses the adjacent
-admission/prefetching axis rather than per-candidate eviction labels
-~\cite{wong2024baleen}.
-
-\subsection{Heuristics and Learning-Augmented Caching}
-
-Classical and modern policies define the policy landscape that \lafc\
-interfaces with. Belady's look-ahead optimum is the offline-optimal
-reference point against which all of the below are
-measured~\cite{belady1966study}. LIRS, ARC, CLOCK-Pro, and GreedyDual-Size
-are classical recency/frequency-aware
-policies~\cite{jiang2002lirs,megiddo2003arc,jiang2005clockpro,cao1997greedydual}.
-TinyLFU, W-TinyLFU, and S3-FIFO are more recent lightweight,
-admission-aware
-designs~\cite{einziger2017tinylfu,einziger2018wtinylfu,yang2023s3fifo}.
-Lazy-promotion/quick-demotion, SIEVE, and LAH/S4-FIFO round out this
-group, each emphasizing a different robustness/overhead
-tradeoff~\cite{yang2023lazypromotion,zhang2024sieve,xia2026lah}.
-LAH departs from per-object scoring by instead learning the cache-level
-parameters of a static heuristic (S3-FIFO, as S4-FIFO) with an
-asynchronous control-plane/data-plane split; \lafc\ does not propose a
-replacement policy or controller at either granularity, and instead
-exposes the counterfactual supervision such controllers could be trained
-or evaluated against~\cite{xia2026lah}.
-Learning-augmented caching theory instead studies algorithms with
-predictions and robustness/consistency guarantees
-~\cite{lykouris2021mladvice,wei2020learningaugcache,chledowski2021robustlac,im2022parsimoniouslac}.
-Recent work in this line narrows the robustness gap for
-learning-augmented paging to within an additive constant of the optimal
-competitive ratio~\cite{chen2026robustpaging}; \lafc\ does not supply
-such a guarantee -- it instead asks how reusable per-decision supervision
-for eviction choices can be constructed and characterized, a
-complementary rather than competing question.
-The subsampling study of Wang et al. identifies extremely long decision and
-reward horizons as a practical obstacle for reinforcement-learning cache
-policies and uses subsampling to reduce that horizon~\cite{wang2019subsampling};
-this motivates treating temporal horizon as a first-class difficulty, but
-does not validate \lafc's particular $H\in\{4,8,16\}$ choices.
+\subsection{Heuristics and Learning-Augmented Theory}
+Classical and modern heuristics define the landscape \lafc\ interfaces with, ranging from recency/frequency-aware policies (LIRS, ARC, CLOCK-Pro, GreedyDual-Size~\cite{jiang2002lirs,megiddo2003arc,jiang2005clockpro,cao1997greedydual}) to lightweight admission-aware designs (TinyLFU, S3-FIFO, SIEVE, LAH~\cite{einziger2017tinylfu,yang2023s3fifo,zhang2024sieve,xia2026lah}). Learning-augmented caching theory studies algorithms with predictions and robustness guarantees~\cite{lykouris2021mladvice,wei2020learningaugcache,chledowski2021robustlac,im2022parsimoniouslac,chen2026robustpaging}. \lafc\ does not supply algorithmic guarantees, but asks how reusable per-decision supervision can be constructed and characterized. The subsampling study of Wang et al. identifies extremely long decision horizons as a practical obstacle for reinforcement learning~\cite{wang2019subsampling}, motivating our focus on finite-horizon supervision.
 
 \subsection{Offline versus Deployed Evaluation}
-
-Offline and deployed behavior need not agree when actions affect future
-observations. DAgger formalizes this distribution-shift problem for
-imitation learning and structured prediction; \lafc\ does not implement
-DAgger, but its closed-loop checks are motivated by the same caution
-~\cite{ross2011dagger}. In recommender systems, Castells and Moffat
-similarly survey why offline evaluation should not be equated with online
-utility~\cite{castells2022offline}. Within caching, Qiu, Yang, and
-Harchol-Balter show a cache-local metric can even move opposite to
-end-to-end performance: beyond a point, higher hit ratio can reduce
-throughput because it changes hit-path contention~\cite{qiu2026hitratio}.
-This paper asks a narrower question -- whether finite-horizon
-counterfactual miss-cost gaps align with closed-loop miss-ratio gaps -- and
-reports a bounded, regime-characterized answer.
+Offline and deployed behavior need not agree when actions affect future observations. DAgger formalizes this distribution-shift problem for imitation learning~\cite{ross2011dagger}, and similar gaps are documented in recommender systems~\cite{castells2022offline} and caching throughput optimizations~\cite{qiu2026hitratio}. This paper asks a specific question in this space: whether finite-horizon counterfactual miss-cost gaps align with closed-loop miss-ratio gaps for cache eviction.
 
 \subsection{Positioning \lafc}
 \label{sec:positioning}

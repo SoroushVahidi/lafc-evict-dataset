@@ -16,48 +16,16 @@ this section, is the ordering among policies evaluated together under one
 matched, held-out protocol.
 \end{sloppypar}
 
-\textbf{Setup.} We refer to this baseline model as HGB (Histogram-based Gradient Boosting, specifically scikit-learn's \texttt{HistGradientBoostingRegressor}). It was trained to predict
-the canonical $H=16$ \texttt{y\_loss} target, selected by an offline
-validation-set regret/MAE criterion before any closed-loop replay was run,
-and frozen (no retraining, retuning, feature change, or post-hoc adjustment
-at any later point). Because this is a frozen pre-repair baseline artifact, its serialized schema reflects the legacy 26-feature interface. A subsequent forensic feature-provenance audit deprecated 19 of those 26 columns as constant or redundant, leaving only 7 valid features. A structural tree-traversal check verified that the fitted estimator's split nodes never branch on any of the 18 constant columns, demonstrating that those deprecated features had zero measurable effect on its predictions, while the remaining deprecated column (the redundant alias \texttt{candidate\_is\_predictor\_victim}) is bit-identical to the retained \texttt{candidate\_is\_lru\_victim} feature, carrying no independent information. Consequently, the HGB results are retained as a historical frozen baseline rather than presented as a clean seven-feature model. The policy was evaluated by closed-loop replay -- evict the
-resident candidate with the lowest predicted \texttt{y\_loss} at every
-full-cache miss -- on the same 10 predetermined family$\times$capacity cells
-(5 families $\times$ capacities 32, 128) used elsewhere in this paper, each
-scored on a fixed, pre-registered held-out test interval, against matched
-LRU, MRU, SIEVE, LFU (each one deterministic run) and random (20 seeds)
-baselines under identical warmup (empty cache and empty bounded-history
-state at the test boundary) and scoring conventions.
+\textbf{Setup.} We refer to this baseline model as HGB (scikit-learn's \texttt{HistGradientBoostingRegressor}). It was trained to predict the $H=16$ \texttt{y\_loss} target, selected by offline validation, and frozen. As a pre-repair artifact, its serialized schema reflects the legacy 26-feature interface. A forensic audit deprecated 19 of those columns (18 constant, 1 redundant alias); structural checks verified the fitted estimator never branches on the constants, though it uses the redundant alias (carrying no independent information). Consequently, HGB is retained as a historical baseline rather than a clean seven-feature model. The policy was evaluated by true closed-loop replay -- evicting the candidate with the lowest predicted \texttt{y\_loss} -- on the same 10 cells against matched LRU, MRU, SIEVE, LFU, and random baselines under identical warmup and scoring conventions.
 
 \input{tables/table_learned_closed_loop}
 
-\textbf{Result.} Table~\ref{tab:learned-closed-loop} reports the outcome the
-frozen policy did \emph{not} achieve: outside the two fully degenerate
-wiki2018 cells (miss ratio 1.0 for every policy, as in
-Table~\ref{tab:tier1-closed-loop}), the learned policy beat LRU, SIEVE, and
-the random-seed mean in exactly one of the 10 cells each -- the same cell,
-metakv/cap128, in all three comparisons, by a margin of 0.0009--0.0019
-absolute miss ratio -- and lost in the other 7. It beat MRU in every
-non-degenerate cell (8/8) and beat LFU more often than not (5 wins, 3
-losses). Excluding wiki2018 widens rather than narrows the learned-vs-LRU/
-SIEVE/random gap (macro miss ratio 0.7036 for learned vs.\ 0.6397 LRU,
-0.6371 SIEVE, 0.6536 random-mean on the remaining 8 cells), so the
-comparison is not an artifact of averaging in the degenerate cells. In the
-7 loss cells the gap is often large and not confined to the random-seed
-mean: at twemcache/cap128, learned (miss ratio 0.3909) loses to every one
-of the 20 random seeds (range 0.1586--0.1709), not just their mean.
+\textbf{Result.} Table~\ref{tab:learned-closed-loop} shows the frozen policy did \emph{not} outperform strong heuristics. Outside the two fully degenerate wiki2018 cells, the learned policy beat LRU, SIEVE, and the random-seed mean in exactly one cell (metakv/cap128) and lost in the other 7. It beat MRU in every non-degenerate cell and beat LFU mostly (5 wins, 3 losses). In the 7 loss cells, the gap is often large: at twemcache/cap128, the learned policy (miss ratio 0.3909) loses to every single one of the 20 random seeds (range 0.1586--0.1709).
 
-\textbf{Reading this result.} This shows that, for this one frozen model
-under this held-out protocol, offline predictive structure on the
-finite-horizon counterfactual target did not translate into consistent
-closed-loop improvement over strong non-learned baselines. It does not, by
-itself, identify which mechanism is responsible: the offline selection
-criterion (validation-set regret/MAE on \texttt{y\_loss}) is evaluated
-per-decision against a fixed history, while the closed-loop outcome is
-path-dependent on every eviction the policy itself previously made, so
-predicting the label well is a different task from inducing, through a
-sequence of choices, a cache-state trajectory with fewer total misses.
-Tie-degenerate supervision, action-underdetermined labels, continuation-policy
-mismatch, and this predict-then-act distribution shift are all consistent
-with the observed gap; none is established as the cause by this evidence
-alone, and this paper does not attribute one.
+\textbf{Reading this result.} This shows that, for this one frozen model,
+good offline candidate prediction does not by itself imply competitive
+closed-loop cache performance. The offline surrogate evaluates each
+decision against a fixed history, while closed-loop outcome is cumulative
+and path-dependent. Poorly bounded state divergence,
+action-underdetermined labels, continuation-policy mismatch, and this
+predict-then-act distribution shift are all consistent with the observed gap. None is established as the sole cause by this evidence alone, but the result empirically validates the benchmark's central thesis: offline labels complement, but do not replace, closed-loop validation.

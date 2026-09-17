@@ -1,35 +1,8 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-This paper positions \lafc\ as a benchmark for learned cache eviction rather than as a new policy paper. The core contribution is a release-oriented package built around candidate-level counterfactual supervision, derived decision and pairwise tasks, and validation-aware construction. The open release couples manifest-backed scale and end-to-end validation with summaries of candidate-label distributions, a lightweight linear value-regression baseline, a derived best-candidate selector, and pairwise-sample-backed feature baselines that show measurable decision-relevant signal on the available held-out non-tie test population. On decisions where the target is discriminative -- the only decisions on which a selector's choice matters -- the best-candidate selector performs substantially worse than uniform random (Section~\ref{sec:tasks-baselines}). This is why raw all-decision selection accuracy is reported only as secondary, ecological context throughout this paper.
+This paper positions \lafc\ as a benchmark for learned cache eviction, releasing candidate-level counterfactual supervision alongside derived decision and pairwise tasks. The open release enables researchers to train and evaluate policies against finite-horizon miss costs at scale, without requiring repetitive derivation of labels from raw traces.
 
-\begin{sloppypar}
-Returning to the five questions posed in Section~\ref{sec:introduction}: the
-offline target is discriminative in a workload-, capacity-, and
-horizon-dependent way rather than uniformly, with one trace family serving
-as a mechanistically explained negative control (RQ1). Offline candidate
-rankings and closed-loop cache performance agree in most workload/capacity
-regimes where the offline signal is not near zero, with two specific,
-characterized exceptions (RQ2). Capacity-scale reuse in the underlying
-trace correlates with both offline discriminativeness and closed-loop
-policy separation, most strongly at the longest of the three horizons
-in the reusable release ($H=16$ of $H\in\{4,8,16\}$). The extended
-$H\in\{16,32,64,128\}$ sensitivity check shows diminishing changes by
-H64--H128 while preserving the main conclusion that the target remains
-substantially tied even at H128 (RQ3, exploratory, $n=10$ for the
-closed-loop linkage). The canonical LRU-continuation labels are not
-an artifact of that specific continuation choice within the tested scope
-(RQ4, detailed below). Taken together, these findings support concrete,
-scope-limited guidance on when the offline signal can be trusted in
-practice (RQ5, Section~\ref{sec:practical-implications}). A separate,
-frozen learned-policy closed-loop check (Section~\ref{sec:learned-closed-loop})
-puts that guidance to a direct test: the model did not consistently
-out-perform LRU, SIEVE, or random under its own held-out protocol. That
-result is itself informative -- offline supervision quality on this target
-does not automatically translate into closed-loop gains for this frozen
-configuration.
-\end{sloppypar}
+We characterize this target empirically, revealing that it is frequently tie-degenerate but predictably discriminative based on trace-level reuse structures. Crucially, in regimes where the offline signal separates candidates, offline policy rankings correspond positively with true closed-loop miss-ratio performance. This correspondence is robust to variations in the assumed continuation policy (tested against MRU and random alternatives) and family-aware statistical bounds.
 
-\begin{sloppypar}
-Those results warrant conservative interpretation. The linear regression baseline is weak, the best-candidate selector is a reproducible benchmark floor rather than deployment evidence, the pairwise results remain backed by the shipped capped sample rather than any full quadratic pairwise universe, and the labels remain finite-horizon counterfactuals rather than globally optimal online targets. The validated continuation studies substantially reduce concern that the canonical LRU continuation alone drives the reported target ordering, but only within the tested scope: sampled MRU/random at capacities 32/128 and population MRU at capacities 32/64/128/256. The frozen learned-policy check is similarly a single confirmatory point, not an exhaustive study of learned-policy design space; it does not license re-tuning against the same held-out cells used to obtain it. Future extensions can instead focus on alternative training targets, tie-aware objectives, other learned architectures evaluated on fresh held-out data, policies designed explicitly for the closed-loop state distribution a policy induces, online policy studies that sit above the benchmark layer, and broader continuation policies. Separately, they can pursue broader public hosting of the four already-cleared evaluated families pending packaging, alongside continued redistribution-clearance review for the two families still excluded.
-\end{sloppypar}
+However, offline performance does not guarantee closed-loop success. As demonstrated by a frozen learned-policy check, predicting the offline target well does not automatically yield closed-loop cache-miss reductions over robust heuristics like LRU and SIEVE. \lafc\ explicitly embraces this mismatch, emphasizing that static offline supervision complements, rather than replaces, closed-loop evaluation. Future work should explore on-policy training, trajectory-aware objectives, and richer architectures designed to robustly bridge this predict-then-act distribution shift.

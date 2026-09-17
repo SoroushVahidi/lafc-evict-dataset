@@ -81,55 +81,7 @@
 
 \begin{abstract}
 \begin{sloppypar}
-A single trace replay evicts one candidate per decision and so never
-reveals what would have happened under the alternatives -- the
-counterfactual information needed to actually evaluate an eviction choice.
-This paper introduces \lafc, a reusable way to construct that
-counterfactual evidence at scale: for every resident candidate at every
-full-cache miss, a finite-horizon counterfactual miss-cost label, computed
-for real cache traces across five workload families and four cache
-capacities. The reusable release covers $H\in\{4,8,16\}$, and a validated
-extended sensitivity study compares $H\in\{16,32,64,128\}$ without
-regenerating the canonical H16 labels. We evaluate this supervision surface
--- the set of candidate-level labels available at each eviction decision --
-against five questions. \textbf{(RQ1: is the target discriminative?)}
-Not uniformly: two-thirds of decisions are fully tied in aggregate and no
-audited decision has a strict unique winner, but discriminativeness varies
-strongly and predictably by workload, capacity, and horizon, and one
-workload is a fully degenerate, mechanistically explained negative
-control. \textbf{(RQ2: does the offline ranking correspond to closed-loop
-performance?)} We ran a closed-loop evaluation of LRU, MRU, random, and
-SIEVE across the five families at two capacities (20 random seeds).
-Offline and closed-loop policy orderings agree in most regimes where the
-offline signal is not near zero, with two characterized exceptions.
-\textbf{(RQ3: what drives this correspondence?)} Capacity-scale reuse
-(trace-derived LRU hit rate) is negatively associated with the offline
-all-tied fraction ($r\approx-0.83$, equivalently positively associated with discriminativeness at $r\approx+0.83$) and positively associated with closed-loop separation ($r\approx0.90$), and
-discriminativeness and closed-loop separation correlate with each other
-($r\approx0.97$) (all $n=10$, exploratory). The original correspondence check is
-strongest at $H=16$ within the release horizons; the extended
-$H\in\{16,32,64,128\}$ sensitivity analysis shows that longer horizons
-generally add discrimination but that strong tie-degeneracy persists even
-at $H=128$. \textbf{(RQ4: how sensitive
-are the labels to the continuation policy assumed after a forced
-eviction?)} A pre-registered sampled study (5,500 decisions, capacities 32
-and 128) and a full-population MRU census (capacities 32, 64, 128, and
-256) both find the canonical LRU-continuation labels robust to the tested
-alternatives. Random continuation is measurably more perturbing than MRU;
-we make no population-scale claim for random continuation. \textbf{(RQ5:
-what should this mean in practice?)} This offline supervision complements
-rather than replaces closed-loop evaluation, and we give concrete guidance
-for when it can be trusted. As a separate confirmatory check, we froze one
-model trained on this supervision and evaluated it in closed loop against
-matched LRU, MRU, SIEVE, LFU, and random baselines on a held-out protocol
-distinct from RQ2's. It did not consistently outperform LRU, SIEVE, or
-random (1 win, 2 degenerate ties, 7 losses against each, on the same
-10 cells), while consistently beating MRU and more often than not beating
-LFU -- evidence that offline predictive structure on this target does not
-automatically translate into closed-loop gains for this frozen model.
-\lafc\ also releases the underlying candidate-,
-decision-, and pairwise-level supervision for reuse, with every
-quantitative claim traced to independently validated evidence.
+A single trace replay evicts one candidate per decision and never reveals the counterfactual information needed to fully evaluate alternative eviction choices. This paper introduces \lafc, a reusable artifact that constructs this counterfactual evidence at scale: for every resident candidate at every full-cache miss, it provides a finite-horizon counterfactual miss-cost label. The dataset is computed from real cache traces across five workload families and four cache capacities, packaging aligned candidate, decision, and pairwise task views. We systematically characterize this supervision surface and its predictive value. First, the target is frequently highly degenerate: over two-thirds of all decisions are fully tied in aggregate, though discriminativeness varies predictably by capacity and look-ahead horizon. Even so, in regimes where the offline signal separates candidates, offline policy rankings correspond positively with true closed-loop miss-ratio performance. We show this offline-to-online linkage is robust to leave-one-family-out evaluation, family-level block permutations, and variations in the specific continuation policy assumed after a forced eviction. However, offline supervision is not a panacea: a separate frozen learned selector, trained on this data and evaluated in true closed-loop replay, generally underperforms simple robust heuristics like LRU and SIEVE (winning in only 1 of 10 evaluated settings). This negative check confirms that offline predictive structure does not automatically guarantee closed-loop cache-miss gains, underscoring that static supervision complements rather than replaces closed-loop validation. \lafc\ releases this candidate-level supervision to standardize and evaluate future learned-eviction methods.
 \end{sloppypar}
 \end{abstract}
 

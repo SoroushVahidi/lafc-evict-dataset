@@ -1,89 +1,15 @@
 \section{Limitations, Ethics, and Reuse}
 \label{sec:limitations}
 
-This evaluation surface has several important constraints, and the
-practical guidance in Section~\ref{sec:practical-implications} should be
-read together with them rather than instead of them.
+The evaluations and claims in this paper are bounded by several explicit constraints:
 
-First, the main label is a finite-horizon, continuation-policy-specific
-counterfactual miss cost, not an offline-optimal label for the full future
-control problem. Good performance on this label does not automatically
-imply online deployment gains, which is exactly why
-Sections~\ref{sec:closed-loop} and~\ref{sec:linkage} evaluate closed-loop
-behavior directly rather than relying on the offline label alone.
-
-Second, horizon-dependent results have two scopes. The reusable release
-uses $H\in\{4,8,16\}$. The extended sensitivity experiment (Section~\ref{sec:characterization})
-evaluates $H\in\{16,32,64,128\}$ on a matched physical decision population
-of 787,762 decisions to ensure strict consistency across horizons, using
-existing H16 evidence and completed long-horizon high-performance computing (HPC)
-outputs, but it does not change the public release contents.
-
-Third, the canonical labels use LRU continuation after a forced eviction;
-Section~\ref{sec:continuation}'s sampled and full-population studies
-establish robustness only within their tested scope -- random continuation
-is not validated at population scale, and no experiment covers every
-deployment policy.
-
-Fourth, the target is substantially tied (all-tied fraction
-$\approx$0.68, unique-winner fraction 0.0; Section~\ref{sec:characterization}
-quantifies this by family, capacity, and horizon, and
-Section~\ref{sec:mechanisms} gives the causal explanation for wiki2018's
-complete degeneracy).
-
-Fifth, the evaluated dataset uses unit-object, count-based capacities (32,
-64, 128, or 256 objects) with unconditional admission of the requested
-object. Variable object sizes, byte-weighted miss cost, latency-aware cost,
-and dirty-write cost are not modeled by this label family, and admission
-is never withheld. Claims in this paper should be read as scoped to this
-abstraction and not generalized to byte-addressable or admission-gated
-cache models without further evidence.
-
-Sixth, closed-loop evidence carries two family-specific caveats, defined
-in Section~\ref{sec:experimental-methodology} and revisited in
-Section~\ref{sec:mechanisms}: metacdn's evidence is validation-window, not
-test-window, and metakv's scored window begins at a cold start, plausibly
-linked to metakv's one Tier-1 policy-ranking exception.
-
-Seventh, a known data-generation issue remains open: in the audited
-canonical data, the predictor-victim flag is identical to the LRU-victim
-flag throughout -- an exact redundancy, not merely a correlation -- and
-related predictor, bucket, and confidence fields include constant or
-placeholder values -- specifically, 18 of the 26 candidate-level feature
-columns used by the pairwise feature-difference model
-(Section~\ref{sec:tasks-baselines}) are hard-coded constants across the
-entire release. Together with the redundant predictor-victim flag, 19 of
-the 26 supplied features provide no additional independent variation,
-leaving seven that are nonconstant and nonredundant. This paper does not
-make any claim that depends on those predictor fields, or the seven
-remaining features, being informative beyond nonconstancy.
-
-Eighth, benchmark reuse must preserve provenance distinctions. The release
-exposes generated supervision and derived views, but it does not erase the
-attribution, citation, or licensing requirements of the upstream raw traces
-from which candidate rows were derived; those raw traces remain external
-artifacts with their own governance constraints. The currently hosted
-open subset is also narrower than the full generated corpus, but for two
-distinct reasons that should not be conflated: four of the five evaluated
-families (alibaba-block, metacdn, metakv, twemcache) are cleared for
-public redistribution as of a 2026-09-15 review but are not yet packaged
-into a hosted public release, a packaging backlog rather than a licensing
-limitation, while two further families (brightkite, citibike) remain
-excluded for unresolved redistribution reasons (see the Data Availability
-statement for current clearance and hosting status). Not every selected
-family appears in every split of the evaluated release package. The full
-historical release corpus's generator-commit provenance is also
-incomplete, orthogonal to the audited evidence reported here
-(Section~\ref{sec:release-validation} gives the exact scope).
-
-Finally, this paper reports closed-loop results for LRU, MRU, random, and
-SIEVE under the Tier-1 protocol (Section~\ref{sec:closed-loop}), and,
-separately, a frozen learned-policy closed-loop check under an
-independently constructed held-out protocol
-(Section~\ref{sec:learned-closed-loop}). That check covers one model
-class, one feature set, one target ($H=16$ \texttt{y\_loss}), and two
-capacities; it found no consistent closed-loop improvement over LRU,
-SIEVE, or random, and should be read as a single confirmatory result, not
-an exhaustive study of learned-policy architectures, targets, or tuning,
-and not a general claim about learned cache eviction beyond this frozen
-configuration.
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Target Scope:} The label is a finite-horizon counterfactual miss cost under a specified continuation policy, not an offline-optimal label for the full future control problem. The canonical release uses $H\in\{4,8,16\}$; the matched extended sensitivity check ($H\in\{16,32,64,128\}$) uses a separate simulation pool that does not alter the public release.
+  \item \textbf{Continuation Policy:} Canonical labels assume LRU continuation. The sampled and full-population studies establish robustness only within their tested limits (MRU and mean-random); arbitrary continuation policies remain outside this claim.
+  \item \textbf{Cache Abstraction:} The evaluated dataset assumes unit-object caching, count-based capacities (32--256), and unconditional admission. Variable sizes, byte-weighted costs, and admission-gated models are not covered.
+  \item \textbf{Target Degeneracy:} The target is substantially tied (aggregate all-tied fraction $\approx$0.68), heavily influenced by trace-level reuse structures (Section~\ref{sec:characterization}).
+  \item \textbf{Family Caveats:} As noted in Section~\ref{sec:benchmark-design}, metacdn's closed-loop evidence relies on a validation-window split, and metakv is evaluated from a cold start.
+  \item \textbf{Feature Schema:} A forensic audit found 19 of the 26 historical candidate-level feature columns to be constant or redundant; only 7 carry independent nonconstant variation. No claim relies on the deprecated fields being informative.
+  \item \textbf{Governance and Provenance:} Reuse must preserve the attribution and licensing constraints of upstream traces. While five families are cleared for redistribution, only wiki2018 is currently hosted in the v0.3 release due to a packaging backlog.
+  \item \textbf{Learned-Policy Bounds:} The frozen learned-policy check (Section~\ref{sec:learned-closed-loop}) covers only one model class, target, and feature set. It demonstrates offline-to-online divergence for that specific configuration, but does not serve as an exhaustive study of learned architectures or represent a ceiling on learned-eviction performance.
+\end{itemize}

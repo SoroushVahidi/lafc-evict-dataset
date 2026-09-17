@@ -96,17 +96,9 @@ this stratum -- the only decisions on which a selector's choice can
 affect realized regret -- the uniform-random selector's expected
 optimal-selection rate falls to 0.9729 (expected regret 0.0273), while
 the linear-score selector's optimal-selection rate falls to 0.6145 (mean
-regret 0.3867). These discriminative-only linear-selector figures follow
-exactly from the reported all-decision totals, since every all-tied
-decision necessarily contributes optimal-selection~$=1$ and regret~$=0$
-for any selector: writing $N=2{,}363{,}286$ for all decisions and
-$N_{\text{tied}}=1{,}599{,}004$ for all-tied decisions,
-\[
-  \text{rate}_{\text{disc}} = \frac{0.8753\,N - N_{\text{tied}}}{N - N_{\text{tied}}} = 0.6145
-\]
-\[
-  \text{regret}_{\text{disc}} = \frac{0.1251\,N}{N - N_{\text{tied}}} = 0.3867
-\]
+regret 0.3867). These discriminative-only figures follow exactly from the
+aggregate all-decision totals, because every all-tied decision necessarily
+contributes optimal-selection~$=1$ and regret~$=0$ for any selector.
 On the decisions where the finite-horizon target actually distinguishes
 candidates, the linear score is therefore substantially worse than
 uniform random -- not merely comparable to it -- and we report this

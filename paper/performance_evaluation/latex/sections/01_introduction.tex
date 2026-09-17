@@ -32,51 +32,32 @@ concrete example first.
 \begin{sloppypar}
 The contribution of this paper is not a new eviction policy. It is an
 evaluation of a reusable offline supervision surface against closed-loop
-cache-policy behavior, organized around five questions.
-\textbf{(RQ1)} Is the target discriminative between candidates, and when
-does it degenerate to an uninformative tie? Not uniformly: aggregate tie
-rates are substantial and no audited decision has a strict unique winner,
-but discriminativeness varies strongly and predictably by workload,
-capacity, and horizon, and one workload is a genuine, mechanistically
-explained negative control.
-\textbf{(RQ2)} Does the offline ranking correspond to actual closed-loop
-performance? In most workload/capacity regimes where the offline signal
-is not near zero, yes, with two specific, characterized exceptions.
-\textbf{(RQ3)} What drives that correspondence, and does it depend on
-horizon? Capacity-scale locality in the underlying trace correlates with
-both offline discriminativeness and closed-loop policy separation. Among
-the three horizons this paper evaluates ($H\in\{4,8,16\}$), $H=16$ aligns
-offline and closed-loop evidence most strongly, though modestly; this
-paper also includes a separate long-horizon sensitivity study showing that
-the target remains substantially tied through $H=128$.
-\textbf{(RQ4)} How sensitive are the labels to the continuation policy
-assumed after a forced eviction? Robust to the tested alternatives: a
-sampled study at two capacities finds the labels robust to MRU and
-mean-random continuation by a pre-registered criterion. A full-population
-census extends the MRU result across all four evaluated capacities --
-arbitrary continuation policies remain outside this claim.
-\textbf{(RQ5)} What does this mean in practice for a researcher choosing
-between offline and closed-loop evaluation? The offline supervision this
-dataset provides complements rather than replaces closed-loop evaluation;
-we give concrete, evidenced guidance for when the offline signal can be
-trusted. Taken together, these answers quantify when finite-horizon
-counterfactual supervision is discriminative, continuation-stable, and
-aligned -- or measurably misaligned -- with closed-loop policy behavior
-across workloads and capacities.
+cache-policy behavior, organized around five research questions:
+\textbf{(RQ1) Is the target discriminative between candidates?} We find massive
+tie-degeneracy overall, but discriminativeness varies predictably by workload,
+capacity, and horizon.
+\textbf{(RQ2 \& RQ3) Does the offline ranking correspond to actual closed-loop
+performance, and what drives it?} Offline and closed-loop orderings agree in
+most regimes where the offline signal is not near zero, driven heavily by
+capacity-scale locality in the underlying trace.
+\textbf{(RQ4) How sensitive are the labels to the assumed continuation policy?}
+A pre-registered study finds the canonical labels robust to MRU and random
+continuation, though random continuation is measurably more perturbing.
+\textbf{(RQ5) What does this mean in practice?} Offline supervision complements
+rather than replaces closed-loop evaluation; we provide concrete, evidenced
+guidance for when the offline signal can be trusted. Taken together, these
+answers quantify when finite-horizon counterfactual supervision is aligned
+-- or measurably misaligned -- with closed-loop policy behavior.
 \end{sloppypar}
 
 Every quantitative claim in this paper traces to a specific, independently
 validated evidence artifact. Sections~\ref{sec:tasks-baselines}
-through~\ref{sec:characterization} and the limitations discussion in
+through~\ref{sec:learned-closed-loop} and the limitations discussion in
 Section~\ref{sec:limitations} state the exact scope, sample sizes, and
-caveats attached to each result rather than presenting them as unqualified
-findings. The underlying release also exposes candidate-level, decision-level,
+caveats attached to each result. The underlying release also exposes candidate-level, decision-level,
 and pairwise derived views of the same supervision at production scale
-(Table~\ref{tab:dataset-scale}), which supports the evaluation methodology
-in this paper and is also intended for reuse by other researchers studying
-learned cache eviction. Release construction, schema, and validation are
-described in Sections~\ref{sec:benchmark-design}--\ref{sec:release-validation},
-but are not the paper's central argument.
+(Table~\ref{tab:dataset-scale}), intended for reuse by other researchers studying
+learned cache eviction.
 
 Section~\ref{sec:related-work} positions this contribution precisely
 against learned-caching, benchmark, and offline-vs-deployed-evaluation
@@ -86,15 +67,10 @@ this scale together with a direct evaluation of its relationship to
 closed-loop cache-policy behavior.
 
 The rest of the paper proceeds as follows. Section~\ref{sec:background}
-gives the worked example and motivates decision-aligned counterfactual
-supervision. Sections~\ref{sec:benchmark-design}--\ref{sec:release-validation}
-describe construction, label definition, schema, and release validation.
-Section~\ref{sec:tasks-baselines} defines the benchmark tasks. Section~\ref{sec:characterization}
-reports target discriminativeness (RQ1) and, together with material drawn
-from the closed-loop production evaluation, addresses RQ2--RQ4 (offline/
-closed-loop correspondence, workload/capacity/horizon dependence, and
-continuation-policy robustness); practical implications (RQ5) are
-synthesized alongside it. Section~\ref{sec:learned-closed-loop} then reports
-a separate, frozen learned-policy closed-loop check under its own held-out
-protocol. Section~\ref{sec:limitations} states limitations,
-ethics, and reuse constraints, followed by related work and conclusion.
+gives the worked example. Sections~\ref{sec:benchmark-design}--\ref{sec:release-validation}
+describe construction, schema, and release validation. Section~\ref{sec:tasks-baselines}
+defines the benchmark tasks. Section~\ref{sec:characterization}
+reports target discriminativeness and, together with the closed-loop production evaluation,
+addresses offline/closed-loop correspondence and continuation-policy robustness.
+Section~\ref{sec:learned-closed-loop} reports a separate frozen learned-policy closed-loop
+check. Section~\ref{sec:limitations} states limitations, followed by related work and conclusion.

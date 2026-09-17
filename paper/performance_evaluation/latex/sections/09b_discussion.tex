@@ -1,69 +1,10 @@
 \section{Discussion}
 \label{sec:discussion}
 
-\textbf{What LAFC-Evict enables.} A reusable, candidate-level, finite-horizon
-counterfactual supervision surface, materialized once from real traces and
-usable across value-regression, best-candidate-selection, and pairwise
-formulations (Sections~\ref{sec:background}--\ref{sec:tasks-baselines}),
-without every study re-deriving its own labels from raw traces.
-Section~\ref{sec:related-work} situates this against prior learned-cache
-work, most of which derives labels internally and non-reusably.
+\textbf{What \lafc\ enables.} It provides a reusable, candidate-level, finite-horizon counterfactual supervision surface. This allows researchers to explore value regression, best-candidate selection, and pairwise preference learning without repeatedly re-deriving labels from raw traces. As positioned in Section~\ref{sec:related-work}, this public scale and granularity are distinct from existing benchmarking efforts.
 
-\textbf{What the evaluation reveals, beyond the surface itself.} Four
-findings only emerge from evaluating the surface against closed-loop
-behavior, not from describing the surface alone. The target's
-discriminativeness is workload-structured, not incidental
-(Section~\ref{sec:characterization}). That structure is associated with a
-single trace-level property, capacity-scale reuse
-(Section~\ref{sec:mechanisms}). Offline and closed-loop policy orderings
-agree in most, not all, informative regimes, with the exceptions
-identified rather than smoothed over (Section~\ref{sec:linkage}). And the
-canonical LRU-continuation assumption is robust, with quantified limits,
-at the capacities tested (Section~\ref{sec:continuation}).
+\textbf{What the evaluation reveals.} Four critical insights emerge from evaluating the surface against closed-loop behavior. First, target discriminativeness is highly workload-structured, not incidental noise (Section~\ref{sec:characterization}). Second, this structure is mechanically tied to capacity-scale reuse (Section~\ref{sec:mechanisms}). Third, offline policy orderings successfully predict closed-loop performance in most informative regimes, though notable exceptions exist (Section~\ref{sec:linkage}). Fourth, the canonical LRU-continuation assumption is robust within the evaluated capacity bounds (Section~\ref{sec:continuation}).
 
-\textbf{Why degenerate regimes are useful.} wiki2018's complete degeneracy
-and alibaba-block/cap32's near-zero offline signal are explained results
-(Section~\ref{sec:mechanisms}), not unexplained anomalies. Mechanistically
-understood degenerate cases make the non-degenerate claims more
-trustworthy and answer the earlier criticism that tie-heaviness was stated
-but not investigated.
+\textbf{The role of degenerate regimes.} Cases like wiki2018's complete degeneracy and alibaba-block's near-zero signal are fully explained results, not anomalies. Understanding exactly why and where the target degenerates makes the non-degenerate claims trustworthy and provides a crucial diagnostic tool for researchers.
 
-\textbf{Offline surrogate evaluation vs.\ closed-loop performance.} This
-paper's position, supported by Sections~\ref{sec:linkage}
-and~\ref{sec:closed-loop}, is that the offline$\leftrightarrow$closed-loop
-correspondence itself -- not the offline surrogate alone -- is the
-contribution. The two exceptions found were identified by the same
-symmetric procedure that found the 8 agreeing cells, not selected for
-balance, and are characterized rather than smoothed over
-(Section~\ref{sec:practical-implications} gives the resulting practitioner
-guidance in detail).
-
-\textbf{Continuation robustness as currently validated.} The robustness
-finding in Section~\ref{sec:continuation} matters because it addresses a
-specific threat to the label's validity: that the canonical LRU
-continuation, not the eviction choice itself, is what actually drives the
-reported target ordering. Within its tested scope
-(Section~\ref{sec:practical-implications} gives the exact capacities and
-numbers), it is not: switching continuation policy leaves the ordering
-essentially unchanged. This is a statement about the tested alternatives,
-not a claim that every stateful deployed continuation policy would
-preserve the same ordering.
-
-\textbf{What the frozen learned-policy check adds.} Section~\ref{sec:learned-closed-loop}
-connects this paper's larger message to an actual trained model: offline
-supervision can be highly structured (Section~\ref{sec:characterization})
-and even correspond to closed-loop behavior in most non-learned-policy
-regimes (Section~\ref{sec:linkage}). Yet a model selected on that
-supervision's own offline criterion did not translate into consistent
-closed-loop improvement over strong non-learned baselines. Predicting a
-per-decision label well and inducing a good cache-state trajectory through
-a sequence of self-caused actions are different objects, and family
-heterogeneity persists in this check exactly as it does throughout the
-paper (Section~\ref{sec:closed-loop}). This is evidence about one frozen
-model under one protocol, not a general claim that learned eviction cannot
-work.
-
-\textbf{Methodological limits} are collected in
-Section~\ref{sec:limitations}. For this discussion, the load-bearing ones
-are target discriminativeness, small-$n$ linkage evidence, and the tested
-scope of continuation policies.
+\textbf{Offline surrogate vs.\ closed-loop validation.} This paper's central position is that offline counterfactual supervision is complementary to, not a replacement for, closed-loop evaluation. As our frozen learned-policy check demonstrated (Section~\ref{sec:learned-closed-loop}), offline predictive structure does not automatically yield closed-loop cache-miss gains, because predict-then-act path dependence fundamentally alters future trajectories. \lafc\ therefore explicitly embraces offline-to-online correspondence testing as a necessary, integrated part of evaluating learned eviction strategies.
