@@ -16,11 +16,11 @@ this section, is the ordering among policies evaluated together under one
 matched, held-out protocol.
 \end{sloppypar}
 
-\textbf{Setup.} A single HistGradientBoostingRegressor was trained to predict
+\textbf{Setup.} We refer to this baseline model as HGB (Histogram-based Gradient Boosting, specifically scikit-learn's \texttt{HistGradientBoostingRegressor}). It was trained to predict
 the canonical $H=16$ \texttt{y\_loss} target, selected by an offline
 validation-set regret/MAE criterion before any closed-loop replay was run,
 and frozen (no retraining, retuning, feature change, or post-hoc adjustment
-at any later point). It was evaluated by closed-loop replay -- evict the
+at any later point). Because this is a frozen pre-repair baseline artifact, its serialized schema reflects the legacy 26-feature interface. A subsequent forensic feature-provenance audit deprecated 19 of those 26 columns as constant or redundant, leaving only 7 valid features. A structural tree-traversal check verified that the fitted estimator's split nodes never branch on any of the 18 constant columns, demonstrating that those deprecated features had zero measurable effect on its predictions, while the remaining deprecated column (the redundant alias \texttt{candidate\_is\_predictor\_victim}) is bit-identical to the retained \texttt{candidate\_is\_lru\_victim} feature, carrying no independent information. Consequently, the HGB results are retained as a historical frozen baseline rather than presented as a clean seven-feature model. The policy was evaluated by closed-loop replay -- evict the
 resident candidate with the lowest predicted \texttt{y\_loss} at every
 full-cache miss -- on the same 10 predetermined family$\times$capacity cells
 (5 families $\times$ capacities 32, 128) used elsewhere in this paper, each
