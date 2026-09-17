@@ -1,0 +1,98 @@
+paragraph_id,section,source_file,approx_words,role,disposition,reason,information_loss_risk,estimated_words_saved,dependency_or_cross_reference
+P-ABS-1,Abstract,main.tex,230,CORE_ARGUMENT,KEEP,"Already tight, one sentence per claim",none,0,none
+P-INT-1,Introduction,01_introduction.tex,105,CORE_ARGUMENT,KEEP,"Problem statement paragraph, load-bearing",none,0,none
+P-INT-2,Introduction,01_introduction.tex,150,DEFINITION,KEEP,"Defines y_loss/y_value once, needed before Sec.2",none,0,none
+P-INT-3,Introduction,01_introduction.tex,280,RESULT_PRIMARY,KEEP,"RQ1-RQ5 summary; this is the paper's own index of findings, not yet stated elsewhere",none,0,none
+P-INT-4,Introduction,01_introduction.tex,45,REPRODUCIBILITY_REQUIRED,SHORTEN,"'Every quantitative claim traces to...' slightly wordy lead-in",low,10,Sec 6 (release validation) is PRIMARY
+P-INT-5,Introduction,01_introduction.tex,35,RELATED_WORK_POSITIONING,KEEP,"Novelty-scope sentence, single occurrence here in this form",none,0,Sec 10 Positioning
+P-INT-6,Introduction,01_introduction.tex,90,TRANSITION,SHORTEN,"Roadmap paragraph could compress by naming section ranges only, not restating what each does",low,20,none
+P-BKG-1,Background,02_background.tex,180,RELATED_WORK_POSITIONING,KEEP,"Sets up cross-paper comparability problem; distinct from Sec 10's positioning (this motivates, Sec 10 positions against literature)",none,0,Sec 10
+P-BKG-2,Background,02_background.tex,70,CORE_ARGUMENT,KEEP,"States LAFC-Evict's core move in one paragraph",none,0,none
+P-BKG-3,Background,02_background.tex,120,DEFINITION,KEEP,"Worked example setup (cache state, miss, candidates) -- required, precedes formalism",none,0,none
+P-BKG-4,Background,02_background.tex,140,DEFINITION,KEEP,"Worked example scoring (y_loss derivation, tie) -- required, this IS the worked example",none,0,none
+P-BKG-5,Background,02_background.tex,185,DEFINITION,KEEP,"Decision view / pairwise view definitions, needed before Sec 4/5/7",none,0,none
+P-BD-1,BenchmarkDesign,03_benchmark_design.tex,130,DEFINITION,KEEP,"Trace/cache-state/eviction-decision definitions",none,0,none
+P-BD-2,BenchmarkDesign,03_benchmark_design.tex,75,LIMITATION,KEEP,"Unit-object abstraction scope statement, PRIMARY location per REPETITION_AUDIT.md item 9",none,0,09_limitations item 5 (SECONDARY there)
+P-BD-3,BenchmarkDesign,03_benchmark_design.tex,180,METHOD_REQUIRED,KEEP,"Five-family definition incl. cloudphysics/alibaba-block footnote -- naming provenance is reviewer-sensitive, keep",none,0,none
+P-BD-4,BenchmarkDesign,03_benchmark_design.tex,90,METHOD_REQUIRED,SHORTEN,"Four-requirement enumerate list slightly verbose (each item could drop its parenthetical section pointer down to one shared pointer)",low,15,none
+P-EXM-1,ExpMethodology,03b_experimental_methodology.tex,25,META_COMMENTARY,SHORTEN,"'This section consolidates...stated once rather than scattered' is meta-commentary about the manuscript itself",low,12,none
+P-EXM-2,ExpMethodology,03b_experimental_methodology.tex,90,METHOD_REQUIRED,KEEP,"Workload/capacity/horizon scope per section -- load-bearing, prevents scope confusion flagged by SIGMOD reviewers",none,0,none
+P-EXM-3,ExpMethodology,03b_experimental_methodology.tex,110,METHOD_REQUIRED,KEEP,"Split terminology + MetaCDN/MetaKV caveats -- PRIMARY location, referenced 4+ times elsewhere",none,0,08b/08d/09/08f (SECONDARY)
+P-EXM-4,ExpMethodology,03b_experimental_methodology.tex,55,METHOD_REQUIRED,KEEP,"Policies/seeds protocol",none,0,none
+P-EXM-5,ExpMethodology,03b_experimental_methodology.tex,45,METHOD_REQUIRED,KEEP,"Offline metrics definitions",none,0,none
+P-EXM-6,ExpMethodology,03b_experimental_methodology.tex,35,METHOD_REQUIRED,KEEP,"Closed-loop metrics definitions",none,0,none
+P-EXM-7,ExpMethodology,03b_experimental_methodology.tex,60,METHOD_REQUIRED,KEEP,"Linkage metrics + explicit n=10 caveat",none,0,none
+P-EXM-8,ExpMethodology,03b_experimental_methodology.tex,90,METHOD_REQUIRED,KEEP,"Continuation-sensitivity metrics + sample sizes -- needed to interpret Sec 08e",none,0,none
+P-EXM-9,ExpMethodology,03b_experimental_methodology.tex,35,METHOD_REQUIRED,KEEP,"Tie-aware analysis statement",none,0,none
+P-EXM-10,ExpMethodology,03b_experimental_methodology.tex,95,REPRODUCIBILITY_REQUIRED,SHORTEN,"Repeats exact MRU-census gate stats (60/60 chunks; 2363286 records; 30/30 gates) that are given in full again in Sec 6 and Sec 08e -- 3rd near-identical restatement across the paper",low,35,"Sec 6 (PRIMARY); Sec 08e (also restates, see P-CONT-2)"
+P-LBL-1,LabelGeneration,04_label_generation.tex,120,DEFINITION,KEEP,"Formal y_loss definition, load-bearing equation",none,0,none
+P-LBL-2,LabelGeneration,04_label_generation.tex,90,DEFINITION,KEEP,"y_value duality explanation",none,0,none
+P-LBL-3,LabelGeneration,04_label_generation.tex,60,DEFINITION,KEEP,"Optimal set / regret formal definitions -- these ARE the equations Problem 7 audits",none,0,none
+P-LBL-4,LabelGeneration,04_label_generation.tex,70,LIMITATION,SHORTEN,"Scope disclaimer ('generated, not upstream...') restates the continuation-policy caveat also in Sec 6 box and Sec 9 item 3",low,15,"Sec 9 item 3 (PRIMARY for the reader-facing version)"
+P-SCH-1,SchemaViews,05_schema_views.tex,90,ARTIFACT_DOCUMENTATION,MOVE_TO_APPENDIX,"Column-group description could point to the appendix table only rather than narrate groups in prose -- but this is already the SHORTEST section (261 words) so payoff is small",low,20,Table already summarizes this
+P-SCH-2,SchemaViews,05_schema_views.tex,150,DEFINITION,KEEP,"Decision view / pairwise view definitions -- duplicate of Background but at production-schema level (columns named); acceptable since Background gives the concept and this gives the concrete schema",none,0,02_background.tex (concept-level)
+P-REL-1,ReleaseValidation,06_release_validation.tex,90,ARTIFACT_DOCUMENTATION,SHORTEN,"Validation-checks list is release-engineering enumeration (schema completeness, duplicate candidates, checksums) -- keep the fact of validation, trim the itemized mechanism list",medium,25,Table 'artifact_layout' already covers component list
+P-REL-2,ReleaseValidation,06_release_validation.tex,60,ARTIFACT_DOCUMENTATION,SHORTEN,"'Passed metadata repair, full verification suite, publication-bundle validation...' is pipeline-stage narration",low,20,none
+P-REL-3,ReleaseValidation,06_release_validation.tex,110,REPRODUCIBILITY_REQUIRED,KEEP,"Provenance-of-results paragraph -- this is the PRIMARY location for the six-artifact provenance claim, must stay full",none,0,none
+P-REL-4,ReleaseValidation,06_release_validation.tex,35,REPETITION,SHORTEN,"'Two label sources must not be conflated' box restates Sec 4's closing scope statement and Sec 9 item 3",low,15,"Sec 4 P-LBL-4, Sec 9 item 3"
+P-REL-5,ReleaseValidation,06_release_validation.tex,70,REPRODUCIBILITY_REQUIRED,KEEP,"MRU census frozen-evidence paragraph -- this should remain the PRIMARY full statement of the gate stats (see P-EXM-10, P-CONT-2 which should defer to this one)",none,0,none
+P-REL-6,ReleaseValidation,06_release_validation.tex,70,LIMITATION,KEEP,"Provenance-limitation disclosure -- single occurrence, load-bearing honesty item",none,0,none
+P-TB-1,TasksBaselines,07_tasks_baselines.tex,190,DEFINITION,KEEP,"Four task definitions -- required",none,0,none
+P-TB-2,TasksBaselines,07_tasks_baselines.tex,90,RESULT_SECONDARY,KEEP,"Linear-regression baseline result (weak-baseline finding)",none,0,none
+P-TB-3,TasksBaselines,07_tasks_baselines.tex,240,ARTIFACT_DOCUMENTATION,SHORTEN,"Feature-quality-disclosure paragraph: root-cause narrative (upstream generator bug, hardcoded default) reads as an incident report; the SCIENTIFIC fact needed is just 'only 7/26 columns are usable, refit reproduces results' -- root-cause mechanism can compress",medium,60,Full root cause stays in analysis/feature_provenance_repair_20260917/
+P-TB-4,TasksBaselines,07_tasks_baselines.tex,80,METHOD_REQUIRED,KEEP,"Pairwise-sample tie-rate + non-tie-only protocol statement",none,0,none
+P-TB-5,TasksBaselines,07_tasks_baselines.tex,100,RESULT_PRIMARY,KEEP,"Fitting/evaluation protocol + headline pairwise accuracy result, corrects an earlier stale figure -- load-bearing",none,0,none
+P-TB-6,TasksBaselines,07_tasks_baselines.tex,90,METHOD_REQUIRED,KEEP,"Best-candidate evaluator protocol + selector roster -- needed before Sec 8's informativeness analysis",none,0,08_characterization
+P-CHAR-1,Characterization,08_characterization.tex,110,RESULT_PRIMARY,KEEP,"Headline degeneracy statement -- this is the PRIMARY location, must stay in full",none,0,Abstract/Intro/Sec9/Sec11 (SECONDARY, already 1 clause each)
+P-CHAR-2,Characterization,08_characterization.tex,280,RESULT_PRIMARY,KEEP,"Per-family discriminativeness breakdown -- dense but each family's number is distinct evidence, not restated elsewhere at this granularity",none,0,none
+P-CHAR-3,Characterization,08_characterization.tex,120,RESULT_PRIMARY,KEEP,"Matched long-horizon result -- PRIMARY location for the Problem-4 finding",none,0,Abstract (1 clause), Sec9 item 2
+P-CHAR-4,Characterization,08_characterization.tex,150,METHOD_REQUIRED,KEEP,"Informativeness-stratification protocol (pre-registration, quartile procedure) -- needed to interpret the stratified result",none,0,none
+P-CHAR-5,Characterization,08_characterization.tex,230,RESULT_PRIMARY,KEEP,"Stratified separation result -- central RQ1 finding, only stated here",none,0,none
+P-CHAR-6,Characterization,08_characterization.tex,150,INTERPRETATION,KEEP,"'headline random-optimal probability is less catastrophic' decomposition -- distinct new numeric breakdown (67.66/31.66/0.68 pct groups), not given anywhere else",none,0,none
+P-CHAR-7,Characterization,08_characterization.tex,130,INTERPRETATION,SHORTEN,"Interpretation subsection restates 'high tie rates are not hidden', 'informativeness-stratified separates two facts' -- largely a recap of P-CHAR-1/5 in different words",medium,40,none
+P-CL-1,ClosedLoop,08b_closed_loop.tex,100,RESULT_PRIMARY,KEEP,"LRU-best/MRU-worst/variability headline -- PRIMARY",none,0,none
+P-CL-2,ClosedLoop,08b_closed_loop.tex,90,RESULT_PRIMARY,KEEP,"wiki2018 exact-tie closed-loop result",none,0,08d (mechanism)
+P-CL-3,ClosedLoop,08b_closed_loop.tex,90,RESULT_SECONDARY,KEEP,"alibaba-block near-tie + metakv/cap128 exception restated with numbers",none,0,none
+P-CL-4,ClosedLoop,08b_closed_loop.tex,90,REPETITION,SHORTEN,"Closing paragraph restates '9 of 10' and 'MRU worst everywhere' already established at the top of the section (P-CL-1) -- intra-section repeat of the same fact",low,20,P-CL-1 already states this
+P-CL-5,ClosedLoop,08b_closed_loop.tex,140,METHOD_REQUIRED,KEEP,"Expanded-comparator-set rationale + ARC/LIRS/S3-FIFO validation description -- needed to trust the added policies",none,0,none
+P-CL-6,ClosedLoop,08b_closed_loop.tex,180,RESULT_PRIMARY,KEEP,"Expanded-comparator headline result (4/10, metakv widening, correlation unchanged) -- central Problem-5 finding",none,0,Abstract (1 clause)
+P-LNK-1,Linkage,08c_linkage.tex,140,RESULT_PRIMARY,KEEP,"Rank-agreement result (RQ-CL1)",none,0,none
+P-LNK-2,Linkage,08c_linkage.tex,90,RESULT_PRIMARY,KEEP,"Gap-magnitude correlations (RQ-CL2)",none,0,none
+P-LNK-3,Linkage,08c_linkage.tex,80,RESULT_SECONDARY,KEEP,"Workload/capacity dependence (RQ-CL3)",none,0,08d (mechanism)
+P-LNK-4,Linkage,08c_linkage.tex,110,RESULT_SECONDARY,KEEP,"Horizon result (RQ-CL4)",none,0,none
+P-LNK-5,Linkage,08c_linkage.tex,60,INTERPRETATION,KEEP,"Answer-to-RQ2/RQ3 synthesis sentence -- single occurrence in this exact form",none,0,none
+P-MECH-1,Mechanistic,08d_mechanistic.tex,110,RESULT_PRIMARY,KEEP,"Capacity-scale-reuse correlation -- PRIMARY explanatory result",none,0,08c (states the same correlation number from the other side, kept since each paper reports it from its own analysis)
+P-MECH-2,Mechanistic,08d_mechanistic.tex,110,RESULT_PRIMARY,KEEP,"alibaba-block/cap32 case study -- specific evidence, no duplicate",none,0,none
+P-MECH-3,Mechanistic,08d_mechanistic.tex,120,RESULT_PRIMARY,KEEP,"metakv/cap128 case study -- PRIMARY investigation location",none,0,08b/08c/08f/09 (all SECONDARY, 1 clause each already)
+P-MECH-4,Mechanistic,08d_mechanistic.tex,110,RESULT_PRIMARY,KEEP,"twemcache case study -- specific negative finding (SIEVE-bimodality story not supported), no duplicate",none,0,none
+P-MECH-5,Mechanistic,08d_mechanistic.tex,110,RESULT_PRIMARY,KEEP,"wiki2018 deductive proof -- PRIMARY location for this fact",none,0,08b/08_characterization/09 (SECONDARY, already brief)
+P-CONT-1,Continuation,08e_continuation.tex,120,RESULT_PRIMARY,KEEP,"Sampled MRU/random study result",none,0,none
+P-CONT-2,Continuation,08e_continuation.tex,130,REPETITION,SHORTEN,"Full-population MRU census paragraph restates the same 60/60-chunk, 2,363,286-record, 30/30-gate provenance stats already given in full in Sec 6 (P-REL-5) and Sec 03b (P-EXM-10) -- 3rd occurrence",low,30,Sec 6 P-REL-5 (should be PRIMARY)
+P-CONT-3,Continuation,08e_continuation.tex,110,RESULT_PRIMARY,KEEP,"Informative-stratum (Set C) result -- distinct finding, not given elsewhere",none,0,none
+P-CONT-4,Continuation,08e_continuation.tex,110,RESULT_SECONDARY,KEEP,"Capacity/horizon effects breakdown -- fine-grained evidence, single occurrence",none,0,none
+P-CONT-5,Continuation,08e_continuation.tex,110,RESULT_SECONDARY,KEEP,"Worst-cell + explicit scope-boundary closing sentence",none,0,none
+P-PI-1,PracticalImplications,08f_practical_implications.tex,90,INTERPRETATION,KEEP,"When to trust the signal -- distinct guidance",none,0,none
+P-PI-2,PracticalImplications,08f_practical_implications.tex,80,INTERPRETATION,KEEP,"When to be cautious -- distinct guidance",none,0,none
+P-PI-3,PracticalImplications,08f_practical_implications.tex,90,INTERPRETATION,KEEP,"Tie-rate interpretation guidance",none,0,none
+P-PI-4,PracticalImplications,08f_practical_implications.tex,60,INTERPRETATION,KEEP,"Why still run closed-loop -- short, distinct framing (not a repeat, this is guidance not the linkage result itself)",none,0,08c (result), this (guidance)
+P-PI-5,PracticalImplications,08f_practical_implications.tex,80,INTERPRETATION,KEEP,"Continuation-assumption guidance",none,0,none
+P-PI-6,PracticalImplications,08f_practical_implications.tex,70,INTERPRETATION,KEEP,"Capacity-scale-reuse screening-signal guidance",none,0,none
+P-DISC-1,Discussion,09b_discussion.tex,80,TRANSITION,SHORTEN,"Roadmap-style recap of what Secs 8/8b/8c/8d/8e each did -- already known from reading them; low new information",medium,45,none
+P-DISC-2,Discussion,09b_discussion.tex,80,CORE_ARGUMENT,KEEP,"'Offline<->closed-loop correspondence is the central empirical contribution' framing sentence -- distinct, worth keeping, arguably belongs in Introduction/Conclusion instead of a standalone Discussion section",none,0,candidate to MERGE into 11_conclusion
+P-DISC-3,Discussion,09b_discussion.tex,40,REPETITION,SHORTEN,"Closing sentence re-lists limitations already stated in full in Sec 9",medium,25,Sec 9 (PRIMARY)
+P-LIM-1,Limitations,09_limitations_ethics.tex,50,LIMITATION,KEEP,item1,none,0,none
+P-LIM-2,Limitations,09_limitations_ethics.tex,75,LIMITATION,KEEP,item2 (matched-horizon scope),none,0,08_characterization P-CHAR-3
+P-LIM-3,Limitations,09_limitations_ethics.tex,55,LIMITATION,KEEP,item3 (continuation scope),none,0,08e
+P-LIM-4,Limitations,09_limitations_ethics.tex,90,REPETITION,SHORTEN,"item4 restates exact 0.68/0.0 numbers AND re-derives the wiki2018 deductive-proof claim ('Sec mechanisms proves this follows deductively from zero reuse events') that is already fully stated in 08d -- the deductive claim itself should be a cross-reference only here",low,25,08d P-MECH-5 (PRIMARY)
+P-LIM-5,Limitations,09_limitations_ethics.tex,80,LIMITATION,KEEP,item5 (unit-object scope) -- cross-references Sec 3 already,none,0,03_benchmark_design P-BD-2
+P-LIM-6,Limitations,09_limitations_ethics.tex,60,LIMITATION,KEEP,item6 (MetaCDN/MetaKV caveats) -- already a short cross-reference,none,0,03b P-EXM-3
+P-LIM-7,Limitations,09_limitations_ethics.tex,50,LIMITATION,KEEP,item7 (predictor-flag data-quality issue) -- single occurrence,none,0,none
+P-LIM-8,Limitations,09_limitations_ethics.tex,130,LIMITATION,KEEP,item8 (provenance/reuse/licensing) -- single occurrence, required for reuse,none,0,none
+P-LIM-9,Limitations,09_limitations_ethics.tex,150,LIMITATION,KEEP,"final paragraph (policy-set scope, prior pilot disclosure) -- single occurrence, important honest-negative-result disclosure",none,0,none
+P-RW-1,RelatedWork,10_related_work.tex,150,RELATED_WORK_POSITIONING,KEEP,"Infrastructure/benchmarks subsection -- positions against Cache-Coliseum etc., not mere summary",none,0,none
+P-RW-2,RelatedWork,10_related_work.tex,170,RELATED_WORK_POSITIONING,SHORTEN,"Learned/adaptive replacement subsection: first sentence lists 12 citations in one breath ('LRB, LHD, GL-Cache...') which is closer to B (summarize) than A (position) by the section's own Phase-6 test; the HALP/Baleen sentences that follow ARE positioning and should stay",low,25,none
+P-RW-3,RelatedWork,10_related_work.tex,110,RELATED_WORK_POSITIONING,KEEP,"Heuristics/learning-augmented subsection -- explicitly ties to Sec 8b's expanded comparator experiment, is positioning not summary",none,0,08b
+P-RW-4,RelatedWork,10_related_work.tex,110,RELATED_WORK_POSITIONING,KEEP,"Offline-vs-deployed subsection -- each citation is used to motivate a specific paper design choice, not just summarized",none,0,none
+P-RW-5,RelatedWork,10_related_work.tex,110,CORE_ARGUMENT,KEEP,"Positioning paragraph -- PRIMARY location for the 'not a new policy / not first' scope claims",none,0,Introduction (1 clause), Conclusion (1 clause)
+P-CON-1,Conclusion,11_conclusion.tex,180,CORE_ARGUMENT,KEEP,"First paragraph -- genuine synthesis (already rewritten in Problem 6), not a re-list",none,0,none
+P-CON-2,Conclusion,11_conclusion.tex,110,LIMITATION,SHORTEN,"'not a new eviction policy' clause restates Sec 10 Positioning (P-RW-5) with no new information",low,8,10_related_work P-RW-5 (PRIMARY)
