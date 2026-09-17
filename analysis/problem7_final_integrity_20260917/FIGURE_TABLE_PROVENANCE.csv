@@ -1,0 +1,23 @@
+label,type,source_script_or_dir,manuscript_ref,values_match_canonical,orphan_or_duplicate,notes
+table_dataset_scale,table,external HF v1.0 release + release manifest,sections/07_tasks_baselines.tex,YES (live HF check this pass),NO,candidate/decision row counts
+table_regret_tie_stats,table,analysis/problem3_informativeness_20260917 (moved into body during Problem 6),sections/07_tasks_baselines.tex,YES,NO,headline tie/regret stats
+table_tier1_closed_loop,table,analysis/closed_loop_tier1_evidence_20260914,sections/08b_closed_loop.tex,YES,NO,4-policy closed-loop miss ratios
+table_problem5_expanded_closed_loop,table,analysis/problem5_expanded_closed_loop_20260917,sections/08b_closed_loop.tex,YES,NO,7-policy expanded results
+table_matched_long_horizon_sensitivity,table,analysis/problem4_matched_horizon_20260917,sections/08_characterization.tex,YES,NO,H16/32/64/128 matched-population stats
+table_linkage_continuation_summary,table,analysis/closed_loop_offline_linkage_20260914 + continuation_policy_*_20260914,sections/08c_linkage.tex;sections/08e_continuation.tex,YES,NO,shared by two sections; no duplication of values found
+table_informativeness_strata,table,analysis/problem3_informativeness_20260917,sections/08_characterization.tex,YES,NO,Q1-Q4 stratum definitions
+table_candidate_count_stats,table,release manifest,sections/03_benchmark_design.tex or appendix,YES,NO,per-family candidate counts
+table_decision_breakdown,table,release manifest,sections/07_tasks_baselines.tex,YES,NO,per-horizon decision counts (787762 x4)
+table_pairwise_feature_baselines,table,analysis/feature_provenance_repair_20260917,sections/07_tasks_baselines.tex,YES,NO,baseline model results on clean 7-feature schema
+table_pairwise_sample_stats,table,analysis/pairwise_provenance_repair_20260913,sections/07_tasks_baselines.tex or appendix,YES,NO,pairwise sample composition
+table_split_counts,table,release manifest,appendix,YES,NO,train/val/test split sizes
+table_artifact_layout,table,repository structure (release packaging),appendix (sec 13),N/A (structural, not a numeric claim),NO,file/column layout reference; correctly placed in appendix per Problem 6's Phase 6
+figure1_worked_example,figure,hand-authored (Section 2 worked example),sections/02_background.tex,N/A (illustrative),NO,precedes formalism per Phase 10 requirement
+figure2_discriminativeness,figure,analysis/problem3_informativeness_20260917,sections/08_characterization.tex,YES,NO,informativeness stratification plot
+figure3_linkage_scatter,figure,analysis/closed_loop_offline_linkage_20260914,sections/08c_linkage.tex,YES,NO,offline vs closed-loop scatter
+figure4_locality,figure,analysis/closed_loop_mechanistic_analysis_20260914/outputs/mechanism_comparison.csv,sections/08d_mechanistic.tex,YES,NO,"caption now correctly implies both correlations are shown; underlying robustness asymmetry now stated in prose (this pass), not yet reflected in the caption itself -- see REMAINING_LIMITATIONS in the final report"
+figure5_continuation_robustness,figure,analysis/continuation_policy_sensitivity_full_20260914 + continuation_policy_mru_population_census_20260914,sections/08e_continuation.tex,YES,NO,caption explicitly scopes sampled vs population-scale evidence
+figure_problem3_improvement_vs_random,figure,analysis/problem3_informativeness_20260917,sections/08_characterization.tex,YES,NO,Q1-Q4 separation plot
+figure_problem4_matched_long_horizon_sensitivity,figure,analysis/problem4_matched_horizon_20260917,sections/08_characterization.tex,YES,NO,matched-horizon sensitivity plot
+figure_problem5_policy_spread_vs_discriminativeness,figure,analysis/problem5_expanded_closed_loop_20260917,sections/08b_closed_loop.tex,YES,NO,r=0.96/0.96 policy-spread correlation plot
+"(unused .png siblings of the 4 figure_problemN_*.pdf files)",asset,N/A,N/A,N/A,COSMETIC_DUPLICATE_UNUSED,"each figure_problemN_*.pdf has a same-named .png in figures/ that is never \includegraphics'd; harmless (not compiled in), likely a leftover matplotlib dual-export; not fixed (zero effect on the PDF, out of scope for a text-integrity pass)"

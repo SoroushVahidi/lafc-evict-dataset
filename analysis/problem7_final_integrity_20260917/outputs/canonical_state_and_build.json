@@ -1,0 +1,19 @@
+{
+  "source_branch": "polish/problem6-scientific-narrative-readability-20260917",
+  "source_sha": "54f122dec52c188d817842a414723b2dedbe0553",
+  "problem7_branch": "audit/problem7-final-scientific-integrity-20260917",
+  "worktree": "worktrees/audit-problem7-final-scientific-integrity-20260917",
+  "build_before": {
+    "pages": 50,
+    "exit_code": 0,
+    "undefined_refs": 0,
+    "warnings": 121
+  },
+  "build_after": {
+    "pages": 51,
+    "exit_code": 0,
+    "undefined_refs": 0,
+    "warnings": 121,
+    "note": "page count +1 solely from the added 08d_mechanistic.tex robustness-caveat sentence; identical warning signatures, no new overfull/underfull boxes"
+  }
+}

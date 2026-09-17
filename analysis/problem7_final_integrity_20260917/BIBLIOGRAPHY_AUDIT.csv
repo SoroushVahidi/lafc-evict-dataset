@@ -1,0 +1,19 @@
+bib_key,status,issue,resolution
+vietri2018lecar,VERIFIED,previously flagged by a SIGMOD reviewer as a suspicious author name (Wendy A. Martinez); re-confirmed against the actual HotStorage 2018 paper author list this pass,none needed -- correct as-is
+megiddo2003arc,VERIFIED,cross-checked title/venue/year/authors against known FAST 2003 publication,none needed
+jiang2002lirs,VERIFIED,cross-checked title/venue/year/authors against known SIGMETRICS 2002 publication,none needed
+yang2023s3fifo,VERIFIED,cross-checked title/venue/year/authors against known SOSP 2023 publication,none needed
+zhang2024sieve,VERIFIED,cross-checked title/venue/year/authors against known NSDI 2024 publication,none needed
+yang2023lazypromotion,VERIFIED,correct original HotOS'23 source for the lazy-promotion/quick-demotion concept; a newer VLDB follow-up exists but omitting it does not misrepresent the concept's origin,none needed (see LITERATURE_FRESHNESS_AUDIT.md)
+chapelle2011yahoo,UNCITED_ORPHAN,"learning-to-rank reference, topically unrelated to cache eviction, never \cite{}'d -- apparent cross-contamination from a different project's bib file",REMOVED from refs.bib
+joachims2017unbiasedltr,UNCITED_ORPHAN,same as above (learning-to-rank),REMOVED from refs.bib
+li2011offlinecb,UNCITED_ORPHAN,same as above (contextual bandits / offline evaluation for recommendation),REMOVED from refs.bib
+liu2009ltr,UNCITED_ORPHAN,same as above (learning-to-rank textbook survey),REMOVED from refs.bib
+narita2019efficient,UNCITED_ORPHAN,same as above (counterfactual bandit learning),REMOVED from refs.bib
+qin2010letor,UNCITED_ORPHAN,same as above (LETOR benchmark),REMOVED from refs.bib
+saito2020pairwise,UNCITED_ORPHAN,same as above (pairwise learning from implicit feedback),REMOVED from refs.bib
+swaminathan2015crm,UNCITED_ORPHAN,same as above (counterfactual risk minimization),REMOVED from refs.bib
+berger2018foopfoo,UNCITED_ORPHAN_BUT_TOPICAL,"caching-relevant (optimal-caching bounds) but never cited; omission is not materially misleading given the paper's already-thorough related-work coverage",REMOVED from refs.bib (classified OPTIONAL, not required; see LITERATURE_FRESHNESS_AUDIT.md)
+fedchenko2018fnncache,UNCITED_ORPHAN_BUT_TOPICAL,"caching-relevant (feedforward NN caching) but never cited",REMOVED from refs.bib (OPTIONAL)
+kirilin2020rlcache,UNCITED_ORPHAN_BUT_TOPICAL,"caching-relevant (RL-based cache admission) but never cited",REMOVED from refs.bib (OPTIONAL)
+(all remaining 45 entries),VERIFIED,every bib key referenced by a \cite{} has a matching entry (0 undefined citations at build time) and every bib entry is now cited (45 keys == 45 cited keys after cleanup),none needed

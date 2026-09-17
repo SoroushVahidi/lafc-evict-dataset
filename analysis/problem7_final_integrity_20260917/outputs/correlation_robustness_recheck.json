@@ -1,0 +1,24 @@
+{
+  "note": "Recomputes the manuscript's reported r=-0.83 (hit-rate vs. all-tied fraction, i.e. r=+0.83 vs. discriminativeness) and r=0.90 (hit-rate vs. closed-loop MRU-LRU gap) claims from sections/08d_mechanistic.tex directly from the existing mechanism_comparison.csv artifact, then checks leave-one-family-out (LOFO) stability and an exact family-level permutation test (5! = 120 permutations, the only exact test defensible at n=10 drawn from 5 family clusters).",
+  "n": 10,
+  "pearson_r_hit_rate_vs_discriminativeness_full": 0.8318484233147998,
+  "pearson_p_hit_rate_vs_discriminativeness_full": 0.002840183552825898,
+  "pearson_r_hit_rate_vs_cl_mru_lru_gap_full": 0.8986376954329001,
+  "pearson_p_hit_rate_vs_cl_mru_lru_gap_full": 0.0004079952662192592,
+  "lofo_r_discriminativeness_by_excluded_family": {
+    "cloudphysics": 0.8492706700063817,
+    "metacdn": 0.6909462491547558,
+    "metakv": 0.977046653475276,
+    "twemcache": 0.8213643462229234,
+    "wiki2018": 0.7500817552807019
+  },
+  "lofo_r_cl_gap_by_excluded_family": {
+    "cloudphysics": 0.8818279418841175,
+    "metacdn": 0.8271469098240359,
+    "metakv": 0.9832540700098817,
+    "twemcache": 0.9146399400122256,
+    "wiki2018": 0.8591222543137871
+  },
+  "exact_family_permutation_p_discriminativeness": 0.11666666666666667,
+  "conclusion": "The hit-rate vs. discriminativeness correlation (manuscript's r=-0.83) is NOT robust: excluding metacdn drops it from 0.832 to 0.691, and the exact family-level permutation p=0.117 does not clear a nominal 0.05 threshold. The hit-rate vs. closed-loop-gap correlation (manuscript's r=0.90) IS robust: LOFO range is 0.827-0.983 across all five exclusions, always strongly positive. This asymmetry was not previously disclosed in the manuscript text; sections/08d_mechanistic.tex is corrected in this Problem-7 pass to state it."
+}
