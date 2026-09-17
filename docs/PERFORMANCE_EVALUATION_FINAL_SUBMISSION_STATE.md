@@ -5,7 +5,7 @@ Recorded on **2026-09-17**.
 ## Submission Metadata
 
 - **Final Master SHA:** `7906ade0aaffa9a8227bcc549be5426f3563e9cb`
-- **Final PDF Path:** `paper/performance_evaluation/LAFC-Evict-A-Large-Scale-Counterfactual-Benchmark-for-Learned-Cache-Eviction.pdf`
+- **Final PDF Path:** `paper/performance_evaluation/LAFC-Evict-Performance-Evaluation.pdf`
 - **Final PDF SHA-256:** `29a2b417de4d8883367d7c442549e9a9924cde41b5c8caa14c3ad33357c03715`
 - **Final Page Count:** 53 pages
 - **Build Command:** `latexmk -pdf main.tex` (executed inside `paper/performance_evaluation/latex/`)

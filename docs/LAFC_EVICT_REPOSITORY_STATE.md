@@ -9,7 +9,7 @@ Audit date: 2026-09-15.
 - Remote: `origin`
 - Repository: `SoroushVahidi/lafc-evict-dataset`
 - Paper: LAFC-Evict: A Large-Scale Counterfactual Benchmark for Learned Cache Eviction
-- Canonical manuscript PDF: `paper/performance_evaluation/LAFC-Evict-A-Large-Scale-Counterfactual-Benchmark-for-Learned-Cache-Eviction.pdf`
+- Canonical manuscript PDF: `paper/performance_evaluation/LAFC-Evict-Performance-Evaluation.pdf`
 - LaTeX source entry point: `paper/performance_evaluation/latex/main.tex`
 - Manuscript status: integrated into `master`, validated to build successfully at 45 pages.
 
