@@ -1,0 +1,214 @@
+{
+  "headline": {
+    "mru_vs_lru": {
+      "n": 10,
+      "pearson": 0.8352854926939955,
+      "spearman": 0.9146341463414634,
+      "kendall": 0.7727272727272727,
+      "sign_concordance": {
+        "agree": 7,
+        "disagree": 1,
+        "tied": 2
+      }
+    },
+    "random_vs_lru": {
+      "n": 10,
+      "pearson": 0.754879673340972,
+      "spearman": 0.829268292682927,
+      "kendall": 0.5909090909090909,
+      "sign_concordance": {
+        "agree": 6,
+        "disagree": 2,
+        "tied": 2
+      }
+    }
+  },
+  "lofo": {
+    "mru_vs_lru": {
+      "cloudphysics": {
+        "excluded": "cloudphysics",
+        "n": 8,
+        "pearson": 0.8021245973621156,
+        "spearman": 0.9036144578313252,
+        "kendall": 0.7777777777777778,
+        "sign_concordance": {
+          "agree": 6,
+          "disagree": 0,
+          "tied": 2
+        }
+      },
+      "metacdn": {
+        "excluded": "metacdn",
+        "n": 8,
+        "pearson": 0.884898374311281,
+        "spearman": 0.9036144578313252,
+        "kendall": 0.7777777777777778,
+        "sign_concordance": {
+          "agree": 5,
+          "disagree": 1,
+          "tied": 2
+        }
+      },
+      "metakv": {
+        "excluded": "metakv",
+        "n": 8,
+        "pearson": 0.8383433598257698,
+        "spearman": 0.8554216867469879,
+        "kendall": 0.7037037037037037,
+        "sign_concordance": {
+          "agree": 5,
+          "disagree": 1,
+          "tied": 2
+        }
+      },
+      "twemcache": {
+        "excluded": "twemcache",
+        "n": 8,
+        "pearson": 0.9933132182269169,
+        "spearman": 0.9036144578313252,
+        "kendall": 0.7777777777777778,
+        "sign_concordance": {
+          "agree": 5,
+          "disagree": 1,
+          "tied": 2
+        }
+      },
+      "wiki2018": {
+        "excluded": "wiki2018",
+        "n": 8,
+        "pearson": 0.7940433941148602,
+        "spearman": 0.9047619047619048,
+        "kendall": 0.7857142857142856,
+        "sign_concordance": {
+          "agree": 7,
+          "disagree": 1,
+          "tied": 0
+        }
+      }
+    },
+    "random_vs_lru": {
+      "cloudphysics": {
+        "excluded": "cloudphysics",
+        "n": 8,
+        "pearson": 0.7461127718523407,
+        "spearman": 0.8313253012048192,
+        "kendall": 0.6296296296296297,
+        "sign_concordance": {
+          "agree": 5,
+          "disagree": 1,
+          "tied": 2
+        }
+      },
+      "metacdn": {
+        "excluded": "metacdn",
+        "n": 8,
+        "pearson": 0.8328376646379405,
+        "spearman": 0.7349397590361445,
+        "kendall": 0.4814814814814815,
+        "sign_concordance": {
+          "agree": 4,
+          "disagree": 2,
+          "tied": 2
+        }
+      },
+      "metakv": {
+        "excluded": "metakv",
+        "n": 8,
+        "pearson": 0.7467646228976612,
+        "spearman": 0.8313253012048192,
+        "kendall": 0.6296296296296297,
+        "sign_concordance": {
+          "agree": 5,
+          "disagree": 1,
+          "tied": 2
+        }
+      },
+      "twemcache": {
+        "excluded": "twemcache",
+        "n": 8,
+        "pearson": 0.8666660626544679,
+        "spearman": 0.7590361445783131,
+        "kendall": 0.5555555555555555,
+        "sign_concordance": {
+          "agree": 4,
+          "disagree": 2,
+          "tied": 2
+        }
+      },
+      "wiki2018": {
+        "excluded": "wiki2018",
+        "n": 8,
+        "pearson": 0.7163318189936789,
+        "spearman": 0.8571428571428572,
+        "kendall": 0.6428571428571428,
+        "sign_concordance": {
+          "agree": 6,
+          "disagree": 2,
+          "tied": 0
+        }
+      }
+    }
+  },
+  "exclusions": {
+    "mru_vs_lru": {
+      "exclude_metacdn": {
+        "n": 8,
+        "pearson": 0.884898374311281,
+        "spearman": 0.9036144578313252,
+        "kendall": 0.7777777777777778,
+        "sign_concordance": {
+          "agree": 5,
+          "disagree": 1,
+          "tied": 2
+        }
+      },
+      "exclude_wiki2018": {
+        "n": 8,
+        "pearson": 0.7940433941148602,
+        "spearman": 0.9047619047619048,
+        "kendall": 0.7857142857142856,
+        "sign_concordance": {
+          "agree": 7,
+          "disagree": 1,
+          "tied": 0
+        }
+      }
+    },
+    "random_vs_lru": {
+      "exclude_metacdn": {
+        "n": 8,
+        "pearson": 0.8328376646379405,
+        "spearman": 0.7349397590361445,
+        "kendall": 0.4814814814814815,
+        "sign_concordance": {
+          "agree": 4,
+          "disagree": 2,
+          "tied": 2
+        }
+      },
+      "exclude_wiki2018": {
+        "n": 8,
+        "pearson": 0.7163318189936789,
+        "spearman": 0.8571428571428572,
+        "kendall": 0.6428571428571428,
+        "sign_concordance": {
+          "agree": 6,
+          "disagree": 2,
+          "tied": 0
+        }
+      }
+    }
+  },
+  "family_permutation": {
+    "mru_vs_lru": {
+      "null_hypothesis": "The assignment of closed-loop family blocks to offline family blocks is arbitrary. Permuting the 5 blocks preserves the 2-capacity internal structure of each family.",
+      "n_permutations": 120,
+      "exact_p_value_pearson": 0.008333333333333333
+    },
+    "random_vs_lru": {
+      "null_hypothesis": "The assignment of closed-loop family blocks to offline family blocks is arbitrary. Permuting the 5 blocks preserves the 2-capacity internal structure of each family.",
+      "n_permutations": 120,
+      "exact_p_value_pearson": 0.025
+    }
+  }
+}
