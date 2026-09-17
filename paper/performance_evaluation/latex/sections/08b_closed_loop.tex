@@ -50,6 +50,68 @@ SIEVE beats random-mean at metacdn and metakv/cap32, but random-mean beats
 SIEVE at twemcache (both capacities), alibaba-block (both capacities), and
 metakv/cap128 -- the relative order of these two policies is
 family-dependent, not fixed. Only one ordering statement holds across
-every non-degenerate cell: \textbf{MRU is worst everywhere}. LRU is best
-in 9 of 10 cells and falls only as low as third place, at metakv/cap128,
-in the tenth.
+every non-degenerate cell: \textbf{MRU is worst everywhere}. Among this
+four-policy comparator set, LRU is best in 9 of 10 cells and falls only as
+low as third place, at metakv/cap128, in the tenth.
+
+\subsection{Robustness to an Expanded Comparator Set}
+\label{sec:expanded-comparators}
+
+\begin{sloppypar}
+LRU/MRU/random/SIEVE is a deliberately small, diagnostic comparator set,
+not a full policy-landscape comparison (Section~\ref{sec:related-work}
+surveys the broader landscape of classical and modern replacement
+policies \lafc\ interfaces with). To test whether the conclusions above
+are an artifact of that narrow set, we add three representative stronger
+baselines under the identical Tier-1 protocol (same 5 families, same
+capacities 32/128, same scored windows and trace hashes): \textbf{ARC}
+\cite{megiddo2003arc} (adaptive recency/frequency), \textbf{LIRS}
+\cite{jiang2002lirs} (inter-reference-recency), and \textbf{S3-FIFO}
+\cite{yang2023s3fifo} (modern lightweight FIFO-family, using its own
+published default ratios, not tuned to any trace). All three are
+deterministic, reference C implementations from libCacheSim, the same
+simulator family as the SIEVE reference implementation already used in
+Table~\ref{tab:tier1-closed-loop}, independently validated before
+production use (hand-derived tiny-trace tracing for ARC, a cross-check of
+the library's own LRU engine against this manuscript's already-trusted
+LRU implementation, and a scan-resistance property check). A fourth
+candidate, W-TinyLFU, was pre-registered but dropped after validation
+found its reference implementation non-functional at capacity 32 under
+its own published default configuration; see this experiment's
+\texttt{COMPARATOR\_PROTOCOL.md} for the full pre-registration and this
+finding.
+\end{sloppypar}
+
+\input{tables/table_problem5_expanded_closed_loop}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/figure_problem5_policy_spread_vs_discriminativeness.pdf}
+  \caption{Closed-loop policy spread (max$-$min miss ratio across all 7
+  policies) versus offline discriminative fraction at $H=16$, one point per
+  family$\times$capacity cell. The offline-discriminativeness$\leftrightarrow$
+  closed-loop-separation association (Section~\ref{sec:linkage}) is
+  essentially unchanged when the policy landscape is expanded ($r=0.96$
+  with the original 4-policy spread vs.\ $r=0.96$ with the expanded
+  7-policy spread, $n=10$).}
+  \label{fig:policy-spread}
+\end{figure}
+
+Under the expanded 7-policy set, LRU is strictly the best policy in 4 of
+10 cells (down from 9 of 10 among the original four). However, four of
+the six cells where a new policy edges out LRU do so by less than 3.2\%
+relative miss ratio -- comparable in size to gaps this manuscript already
+treats as near-ties elsewhere (e.g.\ alibaba-block's sub-4.5\% policy
+gaps) -- so most of this apparent reordering reflects fine-grained
+jockeying among already-close policies, not a qualitative reversal. The
+one cell with a clearly large margin is the already-known exception,
+\textbf{metakv/cap128}, where the gap to LRU widens under the broader set
+(S3-FIFO's miss ratio is 8.07\% below LRU's, versus SIEVE's previously
+reported 4.22\%); no new family/capacity cell crosses that magnitude. LRU
+remains worst-case-safe and near-best almost everywhere; it is not
+displaced as the practical default, but it is no longer accurate to say it
+wins outright in nearly every cell once the comparator set is broadened.
+Most importantly for RQ3, the link between offline discriminativeness and
+closed-loop policy separation is not an artifact of the narrow original
+comparator set: it is essentially identical whether policy separation is
+measured across 4 or 7 policies (Figure~\ref{fig:policy-spread}).

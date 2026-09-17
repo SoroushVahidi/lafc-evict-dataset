@@ -143,16 +143,33 @@ def main() -> None:
             "(Problem 5).}\n"
         )
         fh.write("  \\label{tab:expanded-closed-loop}\n")
+        fh.write("  \\resizebox{\\columnwidth}{!}{%\n")
         fh.write("  \\begin{tabular}{llrrrrrrr}\n    \\toprule\n")
         fh.write("    Family & Cap. & LRU & MRU & Random & SIEVE & ARC & LIRS & S3-FIFO \\\\\n    \\midrule\n")
+        # Manuscript-facing family display names: "cloudphysics" is the
+        # internal ingestion-path id for the family the manuscript always
+        # calls "alibaba-block" (see table_tier1_closed_loop.tex, which
+        # uses the same mapping). Row order matches that existing table.
+        display_family = {
+            "cloudphysics": "alibaba-block",
+            "metacdn": "metacdn",
+            "metakv": "metakv",
+            "twemcache": "twemcache",
+            "wiki2018": "wiki2018",
+        }
+        row_order = ["metacdn", "twemcache", "metakv", "cloudphysics", "wiki2018"]
+        by_family = {}
         for row in rows:
-            fh.write(
-                f"    {row['family']} & {row['capacity']} & "
-                f"{row['lru']:.4f} & {row['mru']:.4f} & {row['random']:.4f} & "
-                f"{row['sieve']:.4f} & {row['arc']:.4f} & {row['lirs']:.4f} & "
-                f"{row['s3fifo']:.4f} \\\\\n"
-            )
-        fh.write("    \\bottomrule\n  \\end{tabular}\n\\end{table}\n")
+            by_family.setdefault(row["family"], []).append(row)
+        for fam in row_order:
+            for row in sorted(by_family[fam], key=lambda r: r["capacity"]):
+                fh.write(
+                    f"    {display_family[fam]} & {row['capacity']} & "
+                    f"{row['lru']:.4f} & {row['mru']:.4f} & {row['random']:.4f} & "
+                    f"{row['sieve']:.4f} & {row['arc']:.4f} & {row['lirs']:.4f} & "
+                    f"{row['s3fifo']:.4f} \\\\\n"
+                )
+        fh.write("    \\bottomrule\n  \\end{tabular}%\n  }\n\\end{table}\n")
 
     # --- Policy spread vs informativeness (Phase 7) ---
     spread_fields = [

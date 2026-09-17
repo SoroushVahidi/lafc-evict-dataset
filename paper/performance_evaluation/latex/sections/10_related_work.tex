@@ -44,6 +44,10 @@ interfaces with: Belady's look-ahead optimum, LIRS, ARC, CLOCK-Pro,
 GreedyDual-Size, TinyLFU/W-TinyLFU, S3-FIFO, lazy-promotion/quick-demotion,
 SIEVE, and LAH/S4-FIFO all emphasize different practical signals or
 robustness/overhead tradeoffs~\cite{belady1966study,jiang2002lirs,megiddo2003arc,jiang2005clockpro,cao1997greedydual,einziger2017tinylfu,einziger2018wtinylfu,yang2023s3fifo,yang2023lazypromotion,zhang2024sieve,xia2026lah}.
+Section~\ref{sec:expanded-comparators} empirically tests three of these
+(ARC, LIRS, S3-FIFO) under \lafc's closed-loop protocol, to check whether
+its closed-loop conclusions are specific to the smaller LRU/MRU/random/SIEVE
+comparator set used elsewhere in this paper.
 Learning-augmented caching theory instead studies algorithms with
 predictions and robustness/consistency guarantees
 ~\cite{lykouris2021mladvice,wei2020learningaugcache,chledowski2021robustlac,im2022parsimoniouslac}.

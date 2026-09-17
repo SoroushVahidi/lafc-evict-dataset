@@ -19,6 +19,16 @@ ANALYSIS_DIR = Path(__file__).resolve().parents[1]
 OUT_DIR = ANALYSIS_DIR / "outputs"
 FIG_DIR = ANALYSIS_DIR / "figures"
 
+# "cloudphysics" is the internal ingestion-path id for the family the
+# manuscript always displays as "alibaba-block" (matches
+# table_tier1_closed_loop.tex's naming).
+DISPLAY_FAMILY = {
+    "cloudphysics": "alibaba-block",
+    "metacdn": "metacdn",
+    "metakv": "metakv",
+    "twemcache": "twemcache",
+    "wiki2018": "wiki2018",
+}
 FAMILY_MARKERS = {
     "cloudphysics": "o",
     "metacdn": "s",
@@ -52,7 +62,7 @@ def main() -> None:
             [x], [y], marker=marker, s=90,
             facecolors=color if fillstyle == "full" else "none",
             edgecolors=color, linewidths=1.6,
-            label=f"{fam} (cap {cap})",
+            label=f"{DISPLAY_FAMILY[fam]} (cap {cap})",
         )
 
     ax.set_xlabel("Offline discriminative fraction (H=16, 1 - all-tied)")
@@ -68,7 +78,7 @@ def main() -> None:
     handles = [
         plt.Line2D([0], [0], marker=FAMILY_MARKERS[f], color="w",
                    markerfacecolor=FAMILY_COLORS[f], markeredgecolor=FAMILY_COLORS[f],
-                   markersize=9, label=f)
+                   markersize=9, label=DISPLAY_FAMILY[f])
         for f in FAMILY_MARKERS
     ]
     ax.legend(handles=handles, loc="upper left", fontsize=8, frameon=False)

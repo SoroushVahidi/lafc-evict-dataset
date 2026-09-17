@@ -78,8 +78,13 @@ orthogonal to the audited evidence reported in this paper but is disclosed
 here for reproducibility completeness.
 
 Finally, this paper reports closed-loop results for LRU, MRU, random, and
-SIEVE (Section~\ref{sec:closed-loop}); it does not report a closed-loop
-evaluation of any learned policy trained on these labels. A frozen pilot
+SIEVE (Section~\ref{sec:closed-loop}), plus ARC, LIRS, and S3-FIFO under
+the identical protocol (Section~\ref{sec:expanded-comparators}); it does
+not report a closed-loop evaluation of any learned policy trained on these
+labels, and the seven-policy set is still representative rather than
+exhaustive -- CLOCK-Pro, GreedyDual-Size, and TinyLFU-family admission
+variants beyond W-TinyLFU (excluded after a validation failure at capacity
+32; see Section~\ref{sec:expanded-comparators}) remain untested here. A frozen pilot
 (not the production Tier-1 evaluation reported here) previously found a
 simple learned policy competitive with random and SIEVE but not with LRU
 on one family, with the other pilot family blocked on the absence of an

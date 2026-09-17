@@ -81,10 +81,14 @@ discriminativeness varies strongly and predictably by workload, capacity,
 and horizon, and one workload is a fully degenerate, mechanistically
 explained negative control. \textbf{(RQ2)} Does the offline ranking
 correspond to closed-loop cache performance? A closed-loop evaluation over
-production-derived traces (LRU, MRU, random, SIEVE; five families, two
-capacities, 20 seeds) shows offline and closed-loop policy orderings agree
-in most regimes where the offline signal is not near zero, with two
-characterized exceptions. \textbf{(RQ3)} Capacity-scale reuse correlates with
+production-derived traces (representative classical, adaptive, randomized,
+and modern lightweight replacement policies -- LRU, MRU, random, SIEVE,
+ARC, LIRS, S3-FIFO; five families, two capacities, 20 random seeds) shows
+offline and closed-loop policy orderings agree in most regimes where the
+offline signal is not near zero, with two characterized exceptions; LRU
+remains near-best almost everywhere but, once the comparator set is
+broadened beyond the original four policies, no longer wins outright in
+nearly every cell. \textbf{(RQ3)} Capacity-scale reuse correlates with
 both offline discriminativeness and closed-loop separation
 ($r=0.83$--$0.97$, $n=10$, exploratory); this correlation is strongest at
 the longest of the three main-release horizons ($H=16$ of
