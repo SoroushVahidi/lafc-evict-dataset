@@ -107,14 +107,18 @@ reports a bounded, regime-characterized answer.
 
 Given this literature, \lafc's contribution is a public cache-eviction
 artifact that releases reusable candidate-level finite-horizon
-counterfactual supervision, together with decision-level and pairwise task
-views, at production scale and decoupled from any particular downstream
-learned method. It complements traces, simulators, Cache-Coliseum-style
-algorithm benchmarks, learned/adaptive policies, and learning-augmented
-theory by supplying a reusable label surface for offline value regression,
-best-candidate selection, preference learning, and label characterization
--- not a new online eviction policy, and not a claim to be the first use
-of future-access supervision, preference learning, or benchmarking in this
-space (scope stated once here rather than repeated per subsection above).
+counterfactual supervision, together with decision-aligned candidate, decision,
+and pairwise task views, at production scale and decoupled from any particular
+downstream learned method. To clarify \lafc's novelty boundaries relative to the
+closest prior works, we distinguish it on several axes:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Ch\l{}edowski et al. \cite{chledowski2021robustlac}} provide an experimental study of robust learning-augmented caching and release valuable workload/data resources. \lafc\ differs in artifact granularity and intended use: rather than evaluating online policies with predictions under theoretical bounds, it materializes reusable candidate-level finite-horizon counterfactual miss costs plus derived decision/pairwise views, and systematically evaluates their correspondence with closed-loop behavior.
+  \item \textbf{Cache-Coliseum \cite{cachecoliseumrepo}} provides a comprehensive algorithm and execution benchmark for evaluating learning-augmented caching policies. In contrast, \lafc\ is a data-centric supervision benchmark providing static, pre-computed counterfactual labels. The two resources benchmark different objects: Cache-Coliseum benchmarks policy execution frameworks, while \lafc\ packages the standardized label surface those policies can train or be audited against.
+  \item \textbf{HALP \cite{song2023halp}} leverages preference-based learning for eviction, where preference signals are generated and consumed online during policy training and deployment. In contrast, \lafc\ provides a static, materialized offline dataset of counterfactual $y_{\text{loss}}$ labels and a deterministic pairwise preference view derived directly from it, reusable independently of a particular deployed learned policy.
+  \item \textbf{Belady's look-ahead optimum \cite{belady1966study}} represents the theoretical full-future offline-optimal policy. In contrast, \lafc's primary supervision target ($y_{\text{loss}}$) represents the candidate-level finite-horizon counterfactual miss cost under a specified continuation policy. This distinction is conceptually crucial, as the local finite-horizon "optimal set" under a continuation policy is not equivalent to Belady's full-future global optimal choice.
+\end{itemize}
+
+Ultimately, \lafc\ does not claim to propose a new online eviction policy, nor to be the first use of future-access supervision, preference learning, or benchmarking in this space. Rather, its novelty lies in providing a public, reusable, candidate-level finite-horizon counterfactual supervision artifact at production scale; supplying aligned candidate, decision, and pairwise views; systematically characterizing when the target is informative; conducting continuation-policy robustness analysis; and providing a direct empirical comparison against closed-loop policy behavior.
 
 \endgroup
