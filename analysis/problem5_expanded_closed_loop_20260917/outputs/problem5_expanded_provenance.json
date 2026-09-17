@@ -1,0 +1,79 @@
+{
+  "capacities": [
+    32,
+    128
+  ],
+  "expanded_policies": [
+    "arc",
+    "lirs",
+    "s3fifo"
+  ],
+  "families": [
+    "cloudphysics",
+    "metacdn",
+    "metakv",
+    "twemcache",
+    "wiki2018"
+  ],
+  "lafc_evict_branch": "experiment/problem5-expanded-closed-loop-baselines-20260917",
+  "lafc_evict_head": "2997030671ba37e8e88ee3be2b210d02cbfc8547",
+  "n_executions": 30,
+  "run_timestamp_utc": "2026-09-17T15:31:07Z",
+  "simulator_check": {
+    "actual_head": "ceb36705b59d0d16db55d0fc0bfb63a5c7a2a6a1",
+    "clean": true,
+    "dependency_file_sha256": {
+      "src/lafc/policies/base.py": "ff958dc938a9b6ab819da14f99a5a4eb9240682ab0f0c2c9d65fede67f699860",
+      "src/lafc/policies/lru.py": "f8b8d0a03a9493940f7bf1dd478373b6f672dfff8bed0827b683c286159e3429",
+      "src/lafc/policies/sieve.py": "0646822f9fd283824911e61041a5fa79d9430d41eb0a63c2e66c56bfd11257d0",
+      "src/lafc/runner/run_policy.py": "efa56c850984d666a10d19b85267bab6975b2d9ae4fb3e834c45c018ea81f555",
+      "src/lafc/simulator/cache_state.py": "77c91d7e72044d98e09a664eeaaf19bdcb899e799b59079d0934a8b393196c3c",
+      "src/lafc/simulator/request_trace.py": "74954f778cef26cb470b659ac48a3e42306023495829684fc71b369ba5c989c6",
+      "src/lafc/types.py": "7f61e55143406abc5fcff58d484c6736206563ef9bee2b80c645de65b98c10ad"
+    },
+    "expected_head": "ceb36705b59d0d16db55d0fc0bfb63a5c7a2a6a1",
+    "head_matches_expected": true,
+    "ok": true,
+    "worktree": "/home/soroush/projects/augmented-caching/worktrees/problem5-expanded-baselines-20260917"
+  },
+  "tier1_evidence_path": "analysis/closed_loop_tier1_evidence_20260914/",
+  "tier1_reference_run_id": "20260914T023445Z_8a4cd32402a1",
+  "total_runtime_sec": 8.158603865653276,
+  "trace_check": {
+    "cloudphysics": {
+      "actual_sha256": "fedb3d31ee3c1dd847d25f967392cdf0fdec1e9c1fbb6808772e281bc8d4fb57",
+      "exists": true,
+      "expected_sha256": "fedb3d31ee3c1dd847d25f967392cdf0fdec1e9c1fbb6808772e281bc8d4fb57",
+      "path": "/home/soroush/projects/augmented-caching/repo/data/processed/cloudphysics/trace.jsonl",
+      "sha256_matches": true
+    },
+    "metacdn": {
+      "actual_sha256": "7301f02e1373cb7e06f1ed2c417a8ebe16581319354780f811c8d032391f4e73",
+      "exists": true,
+      "expected_sha256": "7301f02e1373cb7e06f1ed2c417a8ebe16581319354780f811c8d032391f4e73",
+      "path": "/home/soroush/projects/augmented-caching/repo/data/processed/metacdn/trace.jsonl",
+      "sha256_matches": true
+    },
+    "metakv": {
+      "actual_sha256": "4c229e841d546cd57a2edb6e3ddc53461ff4dc03d366e9d24e4239a89db7e0de",
+      "exists": true,
+      "expected_sha256": "4c229e841d546cd57a2edb6e3ddc53461ff4dc03d366e9d24e4239a89db7e0de",
+      "path": "/home/soroush/projects/augmented-caching/repo/data/processed/metakv/trace.jsonl",
+      "sha256_matches": true
+    },
+    "twemcache": {
+      "actual_sha256": "62df27062ce2595c843fd91e01d26c9783ff8f165f6b26e983696eda7ada0bb9",
+      "exists": true,
+      "expected_sha256": "62df27062ce2595c843fd91e01d26c9783ff8f165f6b26e983696eda7ada0bb9",
+      "path": "/home/soroush/projects/augmented-caching/repo/data/processed/twemcache/trace.jsonl",
+      "sha256_matches": true
+    },
+    "wiki2018": {
+      "actual_sha256": "3813084bebfcf463ac22a685494b46aea45aded55d314411c9fbb058b5d67608",
+      "exists": true,
+      "expected_sha256": "3813084bebfcf463ac22a685494b46aea45aded55d314411c9fbb058b5d67608",
+      "path": "/home/soroush/projects/augmented-caching/repo/data/processed/wiki2018/trace.jsonl",
+      "sha256_matches": true
+    }
+  }
+}

@@ -13,8 +13,9 @@ Section~\ref{sec:experimental-methodology}.
 
 \input{tables/table_tier1_closed_loop}
 
-\textbf{LRU is the best policy in 9 of 10 cells.} The sole exception is
-metakv/cap128, where SIEVE beats LRU by 4.22\% relative. Conversely,
+\textbf{LRU is the best of the four Tier-1 comparators in 9 of 10 cells.}
+The sole exception is metakv/cap128, where SIEVE beats LRU by 4.22\% relative.
+Conversely,
 \textbf{MRU is the worst policy in every non-degenerate cell} by a wide
 margin. Random-policy seed variability is small (maximum standard
 deviation 0.0025), which is sufficient to reliably separate wide gaps but
@@ -31,3 +32,27 @@ between LRU and MRU. The metakv/cap128 cell remains the only genuine exception t
 dominance, where both SIEVE and random outperform it. As noted in Section~\ref{sec:benchmark-design},
 metacdn's results derive from validation-window evidence, while the rest are
 test-window.
+
+\paragraph{Expanded comparator robustness.}
+Table~\ref{tab:tier1-closed-loop} compares four policies; to check that its
+conclusions are not an artifact of that narrow set, we re-ran the identical
+Tier-1 protocol with three additional deterministic comparators --
+ARC~\cite{megiddo2003arc}, LIRS~\cite{jiang2002lirs}, and
+S3-FIFO~\cite{yang2023s3fifo} (full results:
+Table~\ref{tab:expanded-closed-loop}). Under the expanded seven-policy set,
+LRU is strictly best in 4 of the 10 cells rather than 9 of 10, but five of
+the six cells in which another policy now leads LRU do so by less than 3.2\%
+relative (0.45\%, 0.91\%, 1.29\%, 1.68\%, 3.19\%) -- comparable to gaps this
+paper already treats as near-ties -- so most of the reordering is fine-grained
+jockeying among already-close policies. The substantive exception remains
+metakv/cap128, where S3-FIFO now beats LRU by 8.07\% relative (versus SIEVE's
+4.22\% under the original four). Importantly for
+Section~\ref{sec:linkage}, the association between offline discriminativeness
+and closed-loop policy spread (max$-$min miss ratio across the compared
+policies) is unchanged at $r=0.96$ under either the four-policy or the
+seven-policy spread definition ($n=10$ family$\times$capacity cells,
+exploratory), so the offline$\leftrightarrow$closed-loop correspondence is not
+an artifact of the original comparator set. W-TinyLFU was preregistered for
+this expansion but excluded after its reference implementation proved
+non-functional at capacity 32 under its own default configuration
+(\texttt{COMPARATOR\_PROTOCOL.md}); it contributes no results here.
