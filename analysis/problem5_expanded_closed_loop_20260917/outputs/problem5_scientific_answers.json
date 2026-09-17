@@ -1,0 +1,131 @@
+{
+  "Q1_lru_competitive": {
+    "conclusion": "LRU remains the best or tied-best policy in 4/10 cells under the expanded 7-policy landscape (vs. previously best in 9/10 under the 4-policy landscape).",
+    "exceptions_of_7": [
+      {
+        "best_miss_ratio": 0.970947265625,
+        "best_policy": "s3fifo",
+        "capacity": 32,
+        "family": "cloudphysics",
+        "lru_miss_ratio": 0.983642578125,
+        "relative_gap_pct": 1.2906428394142466
+      },
+      {
+        "best_miss_ratio": 0.925537109375,
+        "best_policy": "lirs",
+        "capacity": 128,
+        "family": "cloudphysics",
+        "lru_miss_ratio": 0.9560546875,
+        "relative_gap_pct": 3.192032686414709
+      },
+      {
+        "best_miss_ratio": 0.5765625,
+        "best_policy": "arc",
+        "capacity": 32,
+        "family": "metacdn",
+        "lru_miss_ratio": 0.579150390625,
+        "relative_gap_pct": 0.44684259337323623
+      },
+      {
+        "best_miss_ratio": 0.54404296875,
+        "best_policy": "arc",
+        "capacity": 128,
+        "family": "metacdn",
+        "lru_miss_ratio": 0.5490234375,
+        "relative_gap_pct": 0.9071504802561405
+      },
+      {
+        "best_miss_ratio": 0.728515625,
+        "best_policy": "s3fifo",
+        "capacity": 32,
+        "family": "metakv",
+        "lru_miss_ratio": 0.740966796875,
+        "relative_gap_pct": 1.6803953871499175
+      },
+      {
+        "best_miss_ratio": 0.670166015625,
+        "best_policy": "s3fifo",
+        "capacity": 128,
+        "family": "metakv",
+        "lru_miss_ratio": 0.72900390625,
+        "relative_gap_pct": 8.070997990622907
+      }
+    ],
+    "n_cells": 10,
+    "n_cells_lru_is_best_of_4_old": 9,
+    "n_cells_lru_is_best_of_7": 4
+  },
+  "Q2_discriminativeness_vs_spread": {
+    "conclusion": "Correlation between offline discriminativeness and closed-loop policy spread computed both for the original 4-policy landscape and the expanded 7-policy landscape; see pearson_r fields.",
+    "n": 10,
+    "pearson_r_offline_discriminative_fraction_vs_policy_spread_all7": 0.9568610237996042,
+    "pearson_r_offline_discriminative_fraction_vs_policy_spread_old4": 0.9596802395485983
+  },
+  "Q3_new_exceptions": {
+    "conclusion": "5 new exception(s) found: [{'family': 'cloudphysics', 'capacity': 32, 'best_policy': 's3fifo', 'lru_miss_ratio': 0.983642578125, 'best_miss_ratio': 0.970947265625, 'relative_gap_pct': 1.2906428394142466}, {'family': 'cloudphysics', 'capacity': 128, 'best_policy': 'lirs', 'lru_miss_ratio': 0.9560546875, 'best_miss_ratio': 0.925537109375, 'relative_gap_pct': 3.192032686414709}, {'family': 'metacdn', 'capacity': 32, 'best_policy': 'arc', 'lru_miss_ratio': 0.579150390625, 'best_miss_ratio': 0.5765625, 'relative_gap_pct': 0.44684259337323623}, {'family': 'metacdn', 'capacity': 128, 'best_policy': 'arc', 'lru_miss_ratio': 0.5490234375, 'best_miss_ratio': 0.54404296875, 'relative_gap_pct': 0.9071504802561405}, {'family': 'metakv', 'capacity': 32, 'best_policy': 's3fifo', 'lru_miss_ratio': 0.740966796875, 'best_miss_ratio': 0.728515625, 'relative_gap_pct': 1.6803953871499175}]",
+    "new_exceptions_from_expansion": [
+      {
+        "best_miss_ratio": 0.970947265625,
+        "best_policy": "s3fifo",
+        "capacity": 32,
+        "family": "cloudphysics",
+        "lru_miss_ratio": 0.983642578125,
+        "relative_gap_pct": 1.2906428394142466
+      },
+      {
+        "best_miss_ratio": 0.925537109375,
+        "best_policy": "lirs",
+        "capacity": 128,
+        "family": "cloudphysics",
+        "lru_miss_ratio": 0.9560546875,
+        "relative_gap_pct": 3.192032686414709
+      },
+      {
+        "best_miss_ratio": 0.5765625,
+        "best_policy": "arc",
+        "capacity": 32,
+        "family": "metacdn",
+        "lru_miss_ratio": 0.579150390625,
+        "relative_gap_pct": 0.44684259337323623
+      },
+      {
+        "best_miss_ratio": 0.54404296875,
+        "best_policy": "arc",
+        "capacity": 128,
+        "family": "metacdn",
+        "lru_miss_ratio": 0.5490234375,
+        "relative_gap_pct": 0.9071504802561405
+      },
+      {
+        "best_miss_ratio": 0.728515625,
+        "best_policy": "s3fifo",
+        "capacity": 32,
+        "family": "metakv",
+        "lru_miss_ratio": 0.740966796875,
+        "relative_gap_pct": 1.6803953871499175
+      }
+    ],
+    "old_4_policy_exceptions": [
+      {
+        "capacity": 128,
+        "family": "metakv"
+      }
+    ]
+  },
+  "Q4_offline_closedloop_link_survives": {
+    "note": "The original MRU-vs-LRU and random-vs-LRU offline<->closed-loop correspondence (r=0.83-0.97, n=10) is untouched by this analysis (Problem 5 does not recompute it); this question is instead answered via the policy_spread correlation above, which is the closed-loop-only, no-offline-counterpart-required generalization described in COMPARATOR_PROTOCOL.md Phase 7."
+  },
+  "Q5_new_policy_changes_interpretation": {
+    "conclusion": "1 cell(s) show a substantial new winner: [{'family': 'metakv', 'capacity': 128, 'best_policy': 's3fifo', 'lru_miss_ratio': 0.72900390625, 'best_miss_ratio': 0.670166015625, 'relative_gap_pct': 8.070997990622907}]",
+    "substantial_new_winners_ge_5pct": [
+      {
+        "best_miss_ratio": 0.670166015625,
+        "best_policy": "s3fifo",
+        "capacity": 128,
+        "family": "metakv",
+        "lru_miss_ratio": 0.72900390625,
+        "relative_gap_pct": 8.070997990622907
+      }
+    ]
+  }
+}

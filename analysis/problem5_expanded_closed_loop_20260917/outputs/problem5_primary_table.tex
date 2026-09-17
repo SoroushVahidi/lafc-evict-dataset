@@ -1,0 +1,22 @@
+\begin{table}[t]
+  \centering
+  \small
+  \caption{Expanded Tier-1 closed-loop comparison: miss ratio by family, capacity, and policy. LRU/MRU/random/SIEVE reproduced byte-for-byte from the frozen Tier-1 evidence (\texttt{analysis/closed\_loop\_tier1\_evidence\_20260914/}); ARC, LIRS, S3-FIFO added under the identical protocol (Problem 5).}
+  \label{tab:expanded-closed-loop}
+  \begin{tabular}{llrrrrrrr}
+    \toprule
+    Family & Cap. & LRU & MRU & Random & SIEVE & ARC & LIRS & S3-FIFO \\
+    \midrule
+    cloudphysics & 32 & 0.9836 & 0.9999 & 0.9864 & 0.9856 & 0.9740 & 0.9719 & 0.9709 \\
+    cloudphysics & 128 & 0.9561 & 0.9989 & 0.9642 & 0.9698 & 0.9274 & 0.9255 & 0.9325 \\
+    metacdn & 32 & 0.5792 & 0.8535 & 0.6103 & 0.5838 & 0.5766 & 0.6082 & 0.5983 \\
+    metacdn & 128 & 0.5490 & 0.8506 & 0.5654 & 0.5510 & 0.5440 & 0.5890 & 0.5576 \\
+    metakv & 32 & 0.7410 & 0.8152 & 0.7444 & 0.7412 & 0.7432 & 0.7952 & 0.7285 \\
+    metakv & 128 & 0.7290 & 0.7915 & 0.7139 & 0.6982 & 0.6865 & 0.7202 & 0.6702 \\
+    twemcache & 32 & 0.7511 & 0.9548 & 0.7826 & 0.8147 & 0.7545 & 0.8745 & 0.8549 \\
+    twemcache & 128 & 0.6205 & 0.9492 & 0.6688 & 0.7153 & 0.6241 & 0.8435 & 0.7687 \\
+    wiki2018 & 32 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 \\
+    wiki2018 & 128 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
