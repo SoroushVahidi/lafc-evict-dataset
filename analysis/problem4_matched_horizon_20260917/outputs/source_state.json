@@ -1,0 +1,12 @@
+{
+  "canonical_regen_manifest": "/home/soroush/projects/augmented-caching/worktrees/pe-h16-h128-comparative-integration-20260916/configs/pe_long_horizon_canonical_regen_20260916/manifest.json",
+  "decision_view": "/home/soroush/projects/lafc-evict-dataset/repo/release/lafc-evict-v0.1-open-current-contract-preserved/data/decision_view/decision_view.parquet",
+  "matched_core_raw_files": [
+    "matched_cell_horizon_metrics_raw.csv",
+    "matched_cell_pair_transitions_raw.csv",
+    "matched_cell_monotonicity_raw.csv"
+  ],
+  "source_branch": "fix/problem4-matched-long-horizon-population-20260917",
+  "source_sha": "d3736b21e66a87c117894ee01ab145410fa2fe53",
+  "worktree": "/home/soroush/projects/lafc-evict-dataset/worktrees/problem4-matched-long-horizon-population-20260917"
+}

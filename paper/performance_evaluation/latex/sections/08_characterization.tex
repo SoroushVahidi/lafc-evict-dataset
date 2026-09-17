@@ -48,14 +48,29 @@ trace, and treats wiki2018 as a genuine negative control rather than a
 benchmark failure). Discriminativeness also tends to increase with horizon
 within non-degenerate families: a longer look-ahead window resolves more
 ties, consistent with more future requests giving more opportunities for
-candidates' fates to diverge. A longer-horizon audit extends this check
-from $H=16$ to $H\in\{32,64,128\}$ for the same five families: pooled mean
-random regret rises from 0.0132 at $H=16$ to 0.0367 at $H=128$, and 16 of
-20 family$\times$capacity cells become more discriminative between $H=16$
-and $H=128$. Horizon length is not the whole explanation, however: at
-$H=128$, the pooled all-tied fraction remains 0.596, wiki2018 remains
-exactly all-tied at every capacity, and MetaKV remains mostly
-low-information (all-tied fractions 0.79--0.86 across capacities).
+candidates' fates to diverge. For horizon sensitivity, we use the exact
+same canonical physical eviction-decision population at
+$H\in\{16,32,64,128\}$ (Table~\ref{tab:matched-long-horizon} and
+Figure~\ref{fig:matched-long-horizon}). This removes the denominator
+ambiguity from an earlier aggregate audit: every row has 787,762
+decisions, and the H16 row matches the canonical release exactly. On this
+matched population, pooled mean random regret rises from 0.0132 at $H=16$
+to 0.0361 at $H=128$, while all-tied mass falls from 0.619 to 0.543.
+Horizon length is not the whole explanation, however: at $H=128$, more
+than half of decisions remain all-tied, wiki2018 remains exactly all-tied
+at every capacity, and MetaKV remains mostly low-information.
+
+\input{tables/table_matched_long_horizon_sensitivity}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/figure_problem4_matched_long_horizon_sensitivity.pdf}
+  \caption{Matched-population long-horizon sensitivity. Thin gray lines are
+  family$\times$capacity cells and the blue line is the decision-micro
+  aggregate; every trajectory follows the same physical eviction decisions
+  across $H\in\{16,32,64,128\}$.}
+  \label{fig:matched-long-horizon}
+\end{figure}
 
 \begin{figure}[t]
   \centering

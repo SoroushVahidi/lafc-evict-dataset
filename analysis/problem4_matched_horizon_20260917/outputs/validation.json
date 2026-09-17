@@ -1,0 +1,1391 @@
+{
+  "common_population_total": 787762,
+  "equal_count_every_horizon": true,
+  "h16_matches_canonical_release": [
+    {
+      "abs_diff": 0.0,
+      "canonical": 49241.0,
+      "capacity": 32,
+      "field": "n_decisions",
+      "matched": 49241.0,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.8695599195792124,
+      "capacity": 32,
+      "field": "all_tied_fraction",
+      "matched": 0.8695599195792124,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.9920562894742186,
+      "capacity": 32,
+      "field": "random_optimal_probability",
+      "matched": 0.9920562894742186,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 9.8879238130678e-17,
+      "canonical": 0.007971634410349098,
+      "capacity": 32,
+      "field": "expected_random_regret",
+      "matched": 0.007971634410349,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 8.326672684688674e-17,
+      "canonical": 0.1313336447269552,
+      "capacity": 32,
+      "field": "mean_loss_range",
+      "matched": 0.1313336447269551,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 48511.0,
+      "capacity": 64,
+      "field": "n_decisions",
+      "matched": 48511.0,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.7665477932839975,
+      "capacity": 64,
+      "field": "all_tied_fraction",
+      "matched": 0.7665477932839974,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.993381655706953,
+      "capacity": 64,
+      "field": "random_optimal_probability",
+      "matched": 0.993381655706953,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 7.979727989493313e-17,
+      "canonical": 0.00684219816124178,
+      "capacity": 64,
+      "field": "expected_random_regret",
+      "matched": 0.0068421981612417,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.2371627053657933,
+      "capacity": 64,
+      "field": "mean_loss_range",
+      "matched": 0.2371627053657933,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 47620.0,
+      "capacity": 128,
+      "field": "n_decisions",
+      "matched": 47620.0,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.6617387652246955,
+      "capacity": 128,
+      "field": "all_tied_fraction",
+      "matched": 0.6617387652246955,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 2.220446049250313e-16,
+      "canonical": 0.9951712450125998,
+      "capacity": 128,
+      "field": "random_optimal_probability",
+      "matched": 0.9951712450125996,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 4.85722573273506e-17,
+      "canonical": 0.004837122007559849,
+      "capacity": 128,
+      "field": "expected_random_regret",
+      "matched": 0.0048371220075598,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 5.551115123125783e-17,
+      "canonical": 0.3387232255354893,
+      "capacity": 128,
+      "field": "mean_loss_range",
+      "matched": 0.3387232255354892,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 46701.0,
+      "capacity": 256,
+      "field": "n_decisions",
+      "matched": 46701.0,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.5701805100533179,
+      "capacity": 256,
+      "field": "all_tied_fraction",
+      "matched": 0.5701805100533179,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.9967550380345175,
+      "capacity": 256,
+      "field": "random_optimal_probability",
+      "matched": 0.9967550380345174,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 5.5077470362263625e-17,
+      "canonical": 0.003263530893342755,
+      "capacity": 256,
+      "field": "expected_random_regret",
+      "matched": 0.0032635308933427,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.4306760026551894,
+      "capacity": 256,
+      "field": "mean_loss_range",
+      "matched": 0.4306760026551894,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 29348.0,
+      "capacity": 32,
+      "field": "n_decisions",
+      "matched": 29348.0,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 8.673617379884035e-18,
+      "canonical": 0.012164372359274908,
+      "capacity": 32,
+      "field": "all_tied_fraction",
+      "matched": 0.0121643723592749,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.9404484547498978,
+      "capacity": 32,
+      "field": "random_optimal_probability",
+      "matched": 0.9404484547498978,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 6.938893903907228e-17,
+      "canonical": 0.06007010699195857,
+      "capacity": 32,
+      "field": "expected_random_regret",
+      "matched": 0.0600701069919585,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.9984666757530326,
+      "capacity": 32,
+      "field": "mean_loss_range",
+      "matched": 0.9984666757530326,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 28552.0,
+      "capacity": 64,
+      "field": "n_decisions",
+      "matched": 28552.0,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 8.153200337090993e-17,
+      "canonical": 0.010226954328943681,
+      "capacity": 64,
+      "field": "all_tied_fraction",
+      "matched": 0.0102269543289436,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.9670562701386943,
+      "capacity": 64,
+      "field": "random_optimal_probability",
+      "matched": 0.9670562701386944,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 9.020562075079397e-17,
+      "canonical": 0.03306467147660409,
+      "capacity": 64,
+      "field": "expected_random_regret",
+      "matched": 0.033064671476604,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.994466237041188,
+      "capacity": 64,
+      "field": "mean_loss_range",
+      "matched": 0.994466237041188,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 27683.0,
+      "capacity": 128,
+      "field": "n_decisions",
+      "matched": 27683.0,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 4.5102810375396984e-17,
+      "canonical": 0.008488964346349746,
+      "capacity": 128,
+      "field": "all_tied_fraction",
+      "matched": 0.0084889643463497,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.9816592651627353,
+      "capacity": 128,
+      "field": "random_optimal_probability",
+      "matched": 0.9816592651627352,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 1.3877787807814457e-17,
+      "canonical": 0.018351176714951414,
+      "capacity": 128,
+      "field": "expected_random_regret",
+      "matched": 0.0183511767149514,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.9921973774518658,
+      "capacity": 128,
+      "field": "mean_loss_range",
+      "matched": 0.9921973774518656,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 26737.0,
+      "capacity": 256,
+      "field": "n_decisions",
+      "matched": 26737.0,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 7.719519468096792e-17,
+      "canonical": 0.006657440999364177,
+      "capacity": 256,
+      "field": "all_tied_fraction",
+      "matched": 0.0066574409993641,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.9897828559206343,
+      "capacity": 256,
+      "field": "random_optimal_probability",
+      "matched": 0.9897828559206344,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 6.938893903907228e-18,
+      "canonical": 0.010219773862063807,
+      "capacity": 256,
+      "field": "expected_random_regret",
+      "matched": 0.0102197738620638,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.9936417698320679,
+      "capacity": 256,
+      "field": "mean_loss_range",
+      "matched": 0.9936417698320678,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 38032.0,
+      "capacity": 32,
+      "field": "n_decisions",
+      "matched": 38032.0,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.8668489692890198,
+      "capacity": 32,
+      "field": "all_tied_fraction",
+      "matched": 0.8668489692890197,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.9953410943416071,
+      "capacity": 32,
+      "field": "random_optimal_probability",
+      "matched": 0.9953410943416072,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 5.551115123125783e-17,
+      "canonical": 0.004660549011358856,
+      "capacity": 32,
+      "field": "expected_random_regret",
+      "matched": 0.0046605490113588,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 8.326672684688674e-17,
+      "canonical": 0.13320361800588978,
+      "capacity": 32,
+      "field": "mean_loss_range",
+      "matched": 0.1332036180058897,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 37977.0,
+      "capacity": 64,
+      "field": "n_decisions",
+      "matched": 37977.0,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.8623903941859546,
+      "capacity": 64,
+      "field": "all_tied_fraction",
+      "matched": 0.8623903941859546,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.9976227387629355,
+      "capacity": 64,
+      "field": "random_optimal_probability",
+      "matched": 0.9976227387629356,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 3.903127820947816e-17,
+      "canonical": 0.002377261237064539,
+      "capacity": 64,
+      "field": "expected_random_regret",
+      "matched": 0.0023772612370645,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 5.551115123125783e-17,
+      "canonical": 0.13760960581404535,
+      "capacity": 64,
+      "field": "mean_loss_range",
+      "matched": 0.1376096058140453,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 37856.0,
+      "capacity": 128,
+      "field": "n_decisions",
+      "matched": 37856.0,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.8559013102282333,
+      "capacity": 128,
+      "field": "all_tied_fraction",
+      "matched": 0.8559013102282333,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.9987113997781065,
+      "capacity": 128,
+      "field": "random_optimal_probability",
+      "matched": 0.9987113997781064,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 9.128982292327947e-17,
+      "canonical": 0.0012886002218934912,
+      "capacity": 128,
+      "field": "expected_random_regret",
+      "matched": 0.0012886002218934,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.1440986897717667,
+      "capacity": 128,
+      "field": "mean_loss_range",
+      "matched": 0.1440986897717667,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 37486.0,
+      "capacity": 256,
+      "field": "n_decisions",
+      "matched": 37486.0,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.8328442618577603,
+      "capacity": 256,
+      "field": "all_tied_fraction",
+      "matched": 0.8328442618577602,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.9991181082604172,
+      "capacity": 256,
+      "field": "random_optimal_probability",
+      "matched": 0.9991181082604172,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 1.6046192152785466e-17,
+      "canonical": 0.0008822043562930161,
+      "capacity": 256,
+      "field": "expected_random_regret",
+      "matched": 0.000882204356293,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 2.7755575615628914e-17,
+      "canonical": 0.16723576802006082,
+      "capacity": 256,
+      "field": "mean_loss_range",
+      "matched": 0.1672357680200608,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 37849.0,
+      "capacity": 32,
+      "field": "n_decisions",
+      "matched": 37849.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 5.551115123125783e-17,
+      "canonical": 0.24270126027107716,
+      "capacity": 32,
+      "field": "all_tied_fraction",
+      "matched": 0.2427012602710771,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.9347340748764829,
+      "capacity": 32,
+      "field": "random_optimal_probability",
+      "matched": 0.9347340748764827,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 1.3877787807814457e-17,
+      "canonical": 0.06696428571428571,
+      "capacity": 32,
+      "field": "expected_random_regret",
+      "matched": 0.0669642857142857,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.7818172210626436,
+      "capacity": 32,
+      "field": "mean_loss_range",
+      "matched": 0.7818172210626436,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 34748.0,
+      "capacity": 64,
+      "field": "n_decisions",
+      "matched": 34748.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.1443536318637044,
+      "capacity": 64,
+      "field": "all_tied_fraction",
+      "matched": 0.1443536318637044,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.9554965393691723,
+      "capacity": 64,
+      "field": "random_optimal_probability",
+      "matched": 0.9554965393691724,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 9.71445146547012e-17,
+      "canonical": 0.045000791412455395,
+      "capacity": 64,
+      "field": "expected_random_regret",
+      "matched": 0.0450007914124553,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.8679924024404282,
+      "capacity": 64,
+      "field": "mean_loss_range",
+      "matched": 0.8679924024404281,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 31195.0,
+      "capacity": 128,
+      "field": "n_decisions",
+      "matched": 31195.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 5.551115123125783e-17,
+      "canonical": 0.10174707485173906,
+      "capacity": 128,
+      "field": "all_tied_fraction",
+      "matched": 0.101747074851739,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.9713503265747716,
+      "capacity": 128,
+      "field": "random_optimal_probability",
+      "matched": 0.9713503265747716,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 6.938893903907228e-17,
+      "canonical": 0.02891514064753967,
+      "capacity": 128,
+      "field": "expected_random_regret",
+      "matched": 0.0289151406475396,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.9074851739060746,
+      "capacity": 128,
+      "field": "mean_loss_range",
+      "matched": 0.9074851739060746,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 28706.0,
+      "capacity": 256,
+      "field": "n_decisions",
+      "matched": 28706.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 8.326672684688674e-17,
+      "canonical": 0.08412875357068209,
+      "capacity": 256,
+      "field": "all_tied_fraction",
+      "matched": 0.084128753570682,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.9838283753831951,
+      "capacity": 256,
+      "field": "random_optimal_probability",
+      "matched": 0.9838283753831952,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 1.0408340855860843e-17,
+      "canonical": 0.01622088478889431,
+      "capacity": 256,
+      "field": "expected_random_regret",
+      "matched": 0.0162208847888943,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 1.1102230246251565e-16,
+      "canonical": 0.9183445969483731,
+      "capacity": 256,
+      "field": "mean_loss_range",
+      "matched": 0.9183445969483732,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 49968.0,
+      "capacity": 32,
+      "field": "n_decisions",
+      "matched": 49968.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 1.0,
+      "capacity": 32,
+      "field": "all_tied_fraction",
+      "matched": 1.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 1.0,
+      "capacity": 32,
+      "field": "random_optimal_probability",
+      "matched": 1.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.0,
+      "capacity": 32,
+      "field": "expected_random_regret",
+      "matched": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.0,
+      "capacity": 32,
+      "field": "mean_loss_range",
+      "matched": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 49936.0,
+      "capacity": 64,
+      "field": "n_decisions",
+      "matched": 49936.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 1.0,
+      "capacity": 64,
+      "field": "all_tied_fraction",
+      "matched": 1.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 1.0,
+      "capacity": 64,
+      "field": "random_optimal_probability",
+      "matched": 1.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.0,
+      "capacity": 64,
+      "field": "expected_random_regret",
+      "matched": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.0,
+      "capacity": 64,
+      "field": "mean_loss_range",
+      "matched": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 49872.0,
+      "capacity": 128,
+      "field": "n_decisions",
+      "matched": 49872.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 1.0,
+      "capacity": 128,
+      "field": "all_tied_fraction",
+      "matched": 1.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 1.0,
+      "capacity": 128,
+      "field": "random_optimal_probability",
+      "matched": 1.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.0,
+      "capacity": 128,
+      "field": "expected_random_regret",
+      "matched": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.0,
+      "capacity": 128,
+      "field": "mean_loss_range",
+      "matched": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 49744.0,
+      "capacity": 256,
+      "field": "n_decisions",
+      "matched": 49744.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 1.0,
+      "capacity": 256,
+      "field": "all_tied_fraction",
+      "matched": 1.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 1.0,
+      "capacity": 256,
+      "field": "random_optimal_probability",
+      "matched": 1.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.0,
+      "capacity": 256,
+      "field": "expected_random_regret",
+      "matched": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "abs_diff": 0.0,
+      "canonical": 0.0,
+      "capacity": 256,
+      "field": "mean_loss_range",
+      "matched": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    }
+  ],
+  "h32_h64_h128_old_artifact_comparison": [
+    {
+      "capacity": 32,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 1.1102230246251565e-16,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 32,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 1.1102230246251565e-16,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 32,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 1.1102230246251565e-16,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 64,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 64,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 1.1102230246251565e-16,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 64,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 128,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 128,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 5.551115123125783e-17,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 128,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 1.1102230246251565e-16,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 256,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 256,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 1.1102230246251565e-16,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 256,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 32,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 32,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 32,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 1.1102230246251565e-16,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 64,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 64,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 64,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 2.220446049250313e-16,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 128,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 2.220446049250313e-16,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 128,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 1.1102230246251565e-16,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 128,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 2.220446049250313e-16,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 256,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 1.1102230246251565e-16,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 256,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 256,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 32,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 32,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 2.220446049250313e-16,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 32,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 2.220446049250313e-16,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 64,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 2.220446049250313e-16,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 64,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 64,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 1.1102230246251565e-16,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 128,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 2.220446049250313e-16,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 128,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 1.1102230246251565e-16,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 128,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 1.1102230246251565e-16,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 256,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 2.220446049250313e-16,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 256,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 256,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 32,
+      "expected_to_match_old": false,
+      "horizon": 32,
+      "max_abs_diff": 14678.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 32,
+      "expected_to_match_old": false,
+      "horizon": 64,
+      "max_abs_diff": 14678.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 32,
+      "expected_to_match_old": false,
+      "horizon": 128,
+      "max_abs_diff": 14678.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 64,
+      "expected_to_match_old": false,
+      "horizon": 32,
+      "max_abs_diff": 14358.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 64,
+      "expected_to_match_old": false,
+      "horizon": 64,
+      "max_abs_diff": 14358.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 64,
+      "expected_to_match_old": false,
+      "horizon": 128,
+      "max_abs_diff": 14358.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 128,
+      "expected_to_match_old": false,
+      "horizon": 32,
+      "max_abs_diff": 26663.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 128,
+      "expected_to_match_old": false,
+      "horizon": 64,
+      "max_abs_diff": 26663.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 128,
+      "expected_to_match_old": false,
+      "horizon": 128,
+      "max_abs_diff": 26663.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 256,
+      "expected_to_match_old": false,
+      "horizon": 32,
+      "max_abs_diff": 25175.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 256,
+      "expected_to_match_old": false,
+      "horizon": 64,
+      "max_abs_diff": 25175.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 256,
+      "expected_to_match_old": false,
+      "horizon": 128,
+      "max_abs_diff": 25175.0,
+      "pass": true,
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 32,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "capacity": 32,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "capacity": 32,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "capacity": 64,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "capacity": 64,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "capacity": 64,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "capacity": 128,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "capacity": 128,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "capacity": 128,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "capacity": 256,
+      "expected_to_match_old": true,
+      "horizon": 32,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "capacity": 256,
+      "expected_to_match_old": true,
+      "horizon": 64,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    },
+    {
+      "capacity": 256,
+      "expected_to_match_old": true,
+      "horizon": 128,
+      "max_abs_diff": 0.0,
+      "pass": true,
+      "trace_family": "wiki2018"
+    }
+  ],
+  "source_branch": "fix/problem4-matched-long-horizon-population-20260917",
+  "source_head": "d3736b21e66a87c117894ee01ab145410fa2fe53",
+  "status": "PASS"
+}
