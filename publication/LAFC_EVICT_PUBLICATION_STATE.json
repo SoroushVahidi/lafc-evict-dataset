@@ -1,11 +1,11 @@
 {
   "document_type": "lafc_evict_publication_state",
-  "document_version": 4,
-  "last_verified": "2026-09-16",
+  "document_version": 5,
+  "last_verified": "2026-09-17",
   "canonical_publication_repository": "github.com/SoroushVahidi/lafc-evict-dataset (branch: master)",
   "scientific_source_repository": "github.com/SoroushVahidi/Augmented-caching (branch: main)",
   "kbs_reviewer_repository": "github.com/SoroushVahidi/Augmented-caching, branch kbs/second-revision-science (KBS second-revision reviewer materials; not a separate GitHub repository)",
-  "current_public_release": "v0.3 wiki2018-only on Hugging Face and AWS Open Data; v0.2 remains the current DOI-backed version on Zenodo pending v0.3 Zenodo authentication",
+  "current_public_release": "v1.0 (full five-family release) on Hugging Face at the v1.0 branch/revision of SoroushVahidi/lafc-evict, independently verified; v0.3 wiki2018-only remains served on the main branch/revision, and on AWS Open Data; v0.2 remains the current DOI-backed version on Zenodo (neither v0.3 nor v1.0 has a Zenodo version yet)",
   "aws_open_data_status": "AWS Open Data Sponsorship Program: v0.3 wiki2018-only payload is publicly hosted in bucket lafc-evict-open-data, region us-west-2. Recorded public payload: 18 objects, approximately 106.1 MiB, CC0-1.0, anonymous public download previously verified PASS. AWS Open Data Registry PR #3335 is pending maintainer activity unless later local documentation proves it merged. Fork branch: add-lafc-evict-dataset; known PR head: e12ac8f90714daf2bc88987725cc2a48b916cd59. Sponsorship support: up to 600 GB hosted for two years beginning 2026-08-18.",
   "releases": [
     {
@@ -179,9 +179,15 @@
       "version": "v1.0",
       "display_name": "v1.0 stable/full five-family release",
       "scope": "Full five-family candidate-row corpus matching the Performance Evaluation manuscript's evaluated benchmark",
-      "status": "LOCAL_BUILT_AND_VALIDATED_NOT_YET_UPLOADED",
-      "published": false,
-      "publication_hosts": [],
+      "status": "PUBLISHED_HUGGINGFACE_AWS_AND_ZENODO_PENDING",
+      "published": true,
+      "publication_hosts": ["huggingface"],
+      "hf_repo": "SoroushVahidi/lafc-evict",
+      "hf_revision": "37173bc96de2a615455bf9713bb90d846156af29",
+      "hf_branch": "v1.0",
+      "hf_publication_date": "2026-09-17",
+      "hf_verification": "Independently verified post-upload: anonymous unauthenticated HTTPS GET of metadata/release_manifest.json and data/pairwise_sample/pairwise_sample.parquet both returned HTTP 200; downloaded pairwise_sample.parquet SHA-256 (d6d3a6720de3abfdc68969862de2e86bca723558981564a2fcd7c99880d59152) matched the locally recorded checksum exactly; one wiki2018 and one non-wiki2018 candidate_rows partition and decision_view.parquet were each downloaded and checksum-matched; full remote file listing (177 files: the 176 local package files plus HF's own .gitattributes) matched the local package with no missing or unexpected files; main branch's file listing (17 files) was confirmed unchanged before and after this publish.",
+      "hf_main_branch_status": "UNCHANGED_EXCEPT_README_POINTER: main's README.md was updated (commit c8ae80880ecb26d463156051bfef2966d2d6b9a4) to add a pointer to the new v1.0 branch; all 17 of main's other files (including its v0.3 data payload) are byte-unchanged and were verified present before and after the v1.0 publish.",
       "canonical_local_source": "release/lafc-evict-v1.0",
       "built_from": "release/lafc-evict-v0.1-open-current-contract-preserved (no label regeneration; wiki2018 candidate_page_id/optimal_candidate_page_ids pseudonymized, all other families repackaged unchanged)",
       "build_script": "scripts/build_v1_five_family_release.py",
@@ -195,10 +201,12 @@
       "manuscript_correspondence": "candidate_row_count and decision_row_count are byte-for-byte the same figures the manuscript cites (277,995,072 / 2,363,286); independently re-verified via DuckDB recount at build time, not just copied from the manifest",
       "license_state": "all_five_included_families_cleared_2026_09_15_brightkite_citibike_still_blocked",
       "provenance_state": "cloudphysics_metacdn_metakv_twemcache_wiki2018_all_cleared_for_public_release_per_2026_09_15_registry_review",
-      "upload_status": "NOT_UPLOADED",
+      "upload_status": "HF_PUBLISHED_AND_VERIFIED_AWS_NOT_ATTEMPTED_ZENODO_NOT_ATTEMPTED",
       "validation_status": "PASSED",
-      "validation_evidence": "release/lafc-evict-v1.0/metadata/validation_report.md (scripts/validate_real_release.py, DuckDB-based, full-tree); tests/ pytest suite (113 passed) including tests/test_governance.py's fail-closed clearance assertion",
-      "notes": "Packaging and local validation complete. cloudphysics (Alibaba Block), metacdn, metakv, and twemcache are cleared for public release per the 2026-09-15 review (dataset_card/LICENSE_DATA.md, manifests/source_family_registry.yaml). Uploading this package to Hugging Face / AWS Open Data / Zenodo was NOT performed in this pass: publishing ~2.8 GB of newly-redistributed third-party production trace data to permanent public hosts is a user-facing, hard-to-reverse action and was treated as requiring explicit user go-ahead, not something to do unilaterally even though repository publication credentials are configured in this environment. Brightkite and citibike remain blocked pending license/privacy review and are excluded."
+      "validation_evidence": "release/lafc-evict-v1.0/metadata/validation_report.md (scripts/validate_real_release.py, DuckDB-based, full-tree); tests/ pytest suite (113 passed) including tests/test_governance.py's fail-closed clearance assertion; all 175 local files re-verified against metadata/checksums.sha256 immediately before publish",
+      "aws_status": "NOT_ATTEMPTED: no AWS credentials or region configured in this environment, and no documented/automated AWS Open Data publish script exists in this repository (unlike scripts/publish_to_huggingface.py). Requires manual account/console action or new reviewed tooling.",
+      "zenodo_status": "NOT_ATTEMPTED_BUT_TOKEN_SCOPE_CONFIRMED: the previously-documented HTTP 403 on deposition-management calls no longer reproduces as of 2026-09-17 (GET /api/deposit/depositions and GET /api/deposit/depositions/21895844 both return HTTP 200). Creating/publishing a new Zenodo version was not attempted this pass: it requires a further ~2.8 GB flat-layout upload and an irreversible publish action, and is not required for the public-release problem to be considered resolved.",
+      "notes": "Packaging, local validation, and Hugging Face publication complete and independently verified. cloudphysics (Alibaba Block), metacdn, metakv, and twemcache are cleared for public release per the 2026-09-15 review (dataset_card/LICENSE_DATA.md, manifests/source_family_registry.yaml). Published to Hugging Face as a new 'v1.0' branch/revision rather than overwriting 'main', so the existing v0.2/v0.3 public revisions remain fully accessible and pinnable, unchanged. Brightkite and citibike remain blocked pending license/privacy review and are excluded from every release."
     }
   ],
   "authoritative_records": {

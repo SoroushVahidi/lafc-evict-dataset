@@ -148,28 +148,33 @@ influence the work reported in this paper.
 \section*{Data availability}
 \begin{sloppypar}
 The \lafc\ repository is public at
-\url{https://github.com/SoroushVahidi/lafc-evict-dataset} and is released
-under CC0-1.0 per its \texttt{CITATION.cff}. The current publicly
-\emph{hosted} derived-data snapshot (v0.3) is wiki2018-only and is
-distributed through Hugging Face
-(\url{https://huggingface.co/datasets/SoroushVahidi/lafc-evict}) and AWS
-Open Data. Zenodo currently archives v0.2 only (version DOI
+\url{https://github.com/SoroushVahidi/lafc-evict-dataset}; repository code
+is released under MIT, and the derived dataset is separately multi-licensed
+by trace family (see below and \texttt{THIRD\_PARTY\_DATA.md}). The
+scientific evaluation in this paper uses a five-family corpus
+(alibaba-block, metacdn, metakv, twemcache, wiki2018); all five families
+are cleared for public derived-data redistribution under their respective
+upstream licenses (CC0-1.0 for wiki2018; CC~BY~4.0 for alibaba-block and
+twemcache; Apache License 2.0 for metacdn and metakv). The exact evaluated
+corpus (277{,}995{,}072 candidate rows; 2{,}363{,}286 decisions; plus a
+1{,}000{,}000-row canonical pairwise sample) is publicly downloadable on
+Hugging Face as release \texttt{v1.0}
+(\url{https://huggingface.co/datasets/SoroushVahidi/lafc-evict/tree/v1.0},
+revision \texttt{37173bc96de2a615455bf9713bb90d846156af29}), independently
+verified after publication by anonymous, unauthenticated download and
+checksum comparison against the locally recorded manifest. A wiki2018-only
+v0.3 snapshot (22{,}356{,}992 rows) remains separately published, unchanged,
+on the same repository's \texttt{main} branch/revision and on AWS Open
+Data. Neither \texttt{v0.3} nor \texttt{v1.0} has yet been archived on
+Zenodo, which currently serves only the earlier \texttt{v0.2} release
+(version DOI
 \href{https://doi.org/10.5281/zenodo.21895844}{10.5281/zenodo.21895844};
-concept DOI \href{https://doi.org/10.5281/zenodo.21895843}{10.5281/zenodo.21895843});
-no v0.3 Zenodo version DOI has been minted. The scientific evaluation in
-this paper uses a five-family corpus (alibaba-block, metacdn, metakv,
-twemcache, wiki2018); as of this revision all five families are cleared for
-public derived-data redistribution under their respective upstream licenses
-(CC0-1.0 for wiki2018; CC~BY~4.0 for alibaba-block and twemcache; Apache
-License 2.0 for metacdn and metakv), and the exact evaluated corpus
-(277{,}995{,}072 candidate rows; 2{,}363{,}286 decisions) has been packaged
-and locally validated as release \texttt{v1.0} in the repository. Public
-hosting of \texttt{v1.0} on Hugging Face, AWS Open Data, and Zenodo is in
-progress at the time of this revision; until that upload completes, the
-four families beyond wiki2018 are represented through validated
-summary/provenance artifacts in the repository rather than a public
-download of their generated rows. Brightkite and citibike were excluded
-from data collection and are not part of the evaluated benchmark.
+concept DOI
+\href{https://doi.org/10.5281/zenodo.21895843}{10.5281/zenodo.21895843});
+do not cite this concept DOI as identifying \texttt{v1.0}. Brightkite and
+citibike were excluded from data collection, remain blocked pending
+license/privacy review, and are not part of the evaluated benchmark or any
+release.
 \end{sloppypar}
 
 \section*{Funding}

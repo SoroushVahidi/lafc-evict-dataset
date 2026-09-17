@@ -97,6 +97,8 @@ class HuggingFaceUploadResult:
     private: bool
     uploaded_files: tuple[str, ...]
     verified_remote_paths: tuple[str, ...]
+    revision: str = "main"
+    commit_sha: str | None = None
 
 
 @dataclass(frozen=True)
@@ -836,6 +838,10 @@ def execute_huggingface_upload(
     repo_type: str,
     private: bool,
     large_folder: bool,
+    revision: str | None = None,
+    create_branch_from: str | None = None,
+    delete_patterns: list[str] | None = None,
+    commit_message: str | None = None,
 ) -> HuggingFaceUploadResult:
     token = hf_api_token()
     if not token:
@@ -846,21 +852,37 @@ def execute_huggingface_upload(
     api = HfApi(token=token)
     api.create_repo(repo_id=repo_id, repo_type=repo_type, private=private, exist_ok=True)
 
-    if large_folder and hasattr(api, "upload_large_folder"):
-        api.upload_large_folder(
+    if revision and revision != "main" and create_branch_from:
+        api.create_branch(
             repo_id=repo_id,
+            branch=revision,
+            revision=create_branch_from,
             repo_type=repo_type,
-            folder_path=str(inventory.release_dir),
-        )
-    else:
-        api.upload_folder(
-            repo_id=repo_id,
-            repo_type=repo_type,
-            folder_path=str(inventory.release_dir),
+            exist_ok=True,
         )
 
-    repo_info = api.repo_info(repo_id=repo_id, repo_type=repo_type)
-    remote_files = tuple(sorted(api.list_repo_files(repo_id=repo_id, repo_type=repo_type)))
+    upload_kwargs: dict[str, object] = {
+        "repo_id": repo_id,
+        "repo_type": repo_type,
+        "folder_path": str(inventory.release_dir),
+    }
+    if revision:
+        upload_kwargs["revision"] = revision
+    if delete_patterns:
+        upload_kwargs["delete_patterns"] = delete_patterns
+    if commit_message:
+        upload_kwargs["commit_message"] = commit_message
+
+    if large_folder and hasattr(api, "upload_large_folder"):
+        api.upload_large_folder(**upload_kwargs)
+        commit_sha = None
+    else:
+        commit_info = api.upload_folder(**upload_kwargs)
+        commit_sha = getattr(commit_info, "oid", None)
+
+    resolved_revision = revision or "main"
+    repo_info = api.repo_info(repo_id=repo_id, repo_type=repo_type, revision=resolved_revision)
+    remote_files = tuple(sorted(api.list_repo_files(repo_id=repo_id, repo_type=repo_type, revision=resolved_revision)))
     expected = expected_hf_remote_paths(inventory)
     verified: list[str] = []
     for expected_path in expected:
@@ -881,6 +903,8 @@ def execute_huggingface_upload(
         private=private_flag,
         uploaded_files=remote_files,
         verified_remote_paths=tuple(verified),
+        revision=resolved_revision,
+        commit_sha=commit_sha,
     )
 
 

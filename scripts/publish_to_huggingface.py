@@ -33,6 +33,19 @@ def main() -> None:
     parser.add_argument("--large-folder", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--execute", action="store_true")
+    parser.add_argument("--revision", default=None, help="Branch/revision to publish to (default: main)")
+    parser.add_argument(
+        "--create-branch-from",
+        default=None,
+        help="If --revision is a new branch, create it from this existing revision first",
+    )
+    parser.add_argument(
+        "--delete-patterns",
+        default=None,
+        help="Comma-separated glob patterns of remote paths to remove from the target revision "
+        "that are not part of this upload (e.g. '*' to make the revision exactly match the local folder)",
+    )
+    parser.add_argument("--commit-message", default=None)
     args = parser.parse_args()
 
     if not args.execute:
@@ -66,12 +79,17 @@ def main() -> None:
         except Exception as exc:
             parser.exit(1, f"Execute mode requires huggingface_hub: {exc}\n")
 
+        delete_patterns = args.delete_patterns.split(",") if args.delete_patterns else None
         result = execute_huggingface_upload(
             inventory,
             repo_id=args.repo_id,
             repo_type=args.repo_type,
             private=args.private,
             large_folder=args.large_folder,
+            revision=args.revision,
+            create_branch_from=args.create_branch_from,
+            delete_patterns=delete_patterns,
+            commit_message=args.commit_message,
         )
         print(
             json.dumps(
@@ -82,6 +100,8 @@ def main() -> None:
                     "private": result.private,
                     "large_folder": args.large_folder,
                     "repo_url": result.repo_url,
+                    "revision": result.revision,
+                    "commit_sha": result.commit_sha,
                     "verified_remote_paths": list(result.verified_remote_paths),
                     "remote_file_count": len(result.uploaded_files),
                 },
