@@ -74,22 +74,26 @@ consistent and not cherry-picked.
 \textbf{Family-aware robustness.} The headline statistics above are computed
 over $n=10$ cells ($5\text{ families} \times 2\text{ capacities}$). Because
 capacities within the same family are not independent workload replicates, we
-conducted rigorous family-aware sensitivity checks at $H=16$. In a leave-one-family-out
-(LOFO) bounds check, excluding both cells of any single family leaves the
-MRU-vs-LRU Pearson correlation positive and strong, ranging from $r=0.794$ (when
-wiki2018 is excluded) to $r=0.993$ (when twemcache is excluded). The random-vs-LRU
-correlation remains similarly stable, ranging from $r=0.716$ (wiki2018 excluded)
-to $r=0.867$ (twemcache excluded). Furthermore, excluding the metacdn family
-entirely (the only family evaluated on a validation window rather than test window
-in closed loop) yields $r=0.885$ (MRU-vs-LRU) and $r=0.833$ (random-vs-LRU),
-indicating the association is not an artifact of that specific window choice.
-Finally, an exact family-level block permutation test (which permutes the 5
-family blocks while preserving the 2-capacity internal structure, yielding
-$5!=120$ possible assignments) returns an exact two-sided $p=0.0083$ for
-MRU-vs-LRU and $p=0.025$ for random-vs-LRU. While the number of trace families
-is small ($n_{\text{clusters}}=5$), limiting broad inferential generalization,
-these tests confirm the linkage is remarkably stable across the evaluated
-families and not driven by any single workload.
+conducted rigorous family-aware sensitivity checks at $H=16$. The observed
+association is stable under leave-one-family-out (LOFO) sensitivity: excluding both
+cells of any single family leaves the MRU-vs-LRU Pearson correlation positive and
+strong, ranging from $r=0.794$ (when wiki2018 is excluded) to $r=0.993$ (when
+twemcache is excluded). The random-vs-LRU correlation remains similarly stable,
+ranging from $r=0.716$ (wiki2018 excluded) to $r=0.867$ (twemcache excluded).
+Furthermore, excluding the metacdn family entirely (the only family evaluated on
+a validation window rather than test window in closed loop) yields $r=0.885$
+(MRU-vs-LRU) and $r=0.833$ (random-vs-LRU), indicating the association is not
+an artifact of that specific window choice. Finally, we evaluate an exact
+family-level block permutation test under the null hypothesis that the mapping
+between offline family blocks and closed-loop family blocks is exchangeable while
+preserving the two capacities within each family block. Under this exact family-block
+reassignment null (yielding $5!=120$ possible permutations), the observed
+MRU-vs-LRU alignment is more extreme than all other block assignments (two-sided
+$|r|$ $p=0.0083$), and the Random-vs-LRU result has $p=0.025$. These exact
+permutation results quantify robustness within the evaluated family structure;
+they do not establish population-level generalization beyond the five trace families,
+as the limited number of trace clusters ($n_{\text{clusters}}=5$) bounds broad
+inferential generalization.
 
 \textbf{Answer to RQ2/RQ3.} Offline and closed-loop policy orderings agree
 in the large majority of workload/capacity regimes where the offline
