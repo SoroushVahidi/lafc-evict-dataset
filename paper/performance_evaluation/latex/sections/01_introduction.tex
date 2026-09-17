@@ -6,27 +6,28 @@ When a cache request misses and the cache is full, a system must pick one
 resident object to evict before admitting the requested object. Evaluating
 whether a given eviction decision was a good one requires knowing what
 would have happened to each candidate victim if it, rather than another
-object, had been evicted -- information that is not directly observable
+object, had been evicted. That information is not directly observable
 from a single trace replay, because only one candidate is actually evicted
 at each decision. This paper studies a reusable way to construct that
-counterfactual evidence at scale, and evaluates when it is informative,
-when it degenerates, how it relates to actual closed-loop cache
-performance, and how sensitive it is to one of its own modeling
+counterfactual evidence at scale. It evaluates when the evidence is
+informative, when it degenerates, how it relates to actual closed-loop
+cache performance, and how sensitive it is to one of its own modeling
 assumptions.
 \end{sloppypar}
 
 \lafc\ materializes, for real cache traces, a per-decision, per-candidate
-finite-horizon counterfactual miss cost: for each object that could have
-been evicted at a full-cache miss, how many additional misses would occur
-over the next $H$ requests if that object, specifically, had been the one
-evicted. This candidate-level quantity is stored as \texttt{y\_loss} (a
+finite-horizon counterfactual miss cost. For each object that could have
+been evicted at a full-cache miss, the cost counts how many additional
+misses would occur over the next $H$ requests if that object,
+specifically, had been the one evicted. This candidate-level quantity is
+stored as \texttt{y\_loss} (a
 convenience alias \texttt{y\_value} $= -\texttt{y\_loss}$ is also provided;
 see Section~\ref{sec:tasks-baselines}). Section~\ref{sec:background} works
 through one full decision by hand -- resident objects, a forced eviction, a
 future request window, and the resulting candidate costs, including a case
 where two candidates tie for optimal -- before any aggregate statistic is
-introduced, so that every quantity used later in the paper is grounded in
-a concrete example first.
+introduced. This grounds every quantity used later in the paper in a
+concrete example first.
 
 \begin{sloppypar}
 The contribution of this paper is not a new eviction policy. It is an
@@ -51,18 +52,21 @@ the target remains substantially tied through $H=128$.
 \textbf{(RQ4)} How sensitive are the labels to the continuation policy
 assumed after a forced eviction? Robust to the tested alternatives: a
 sampled study at two capacities finds the labels robust to MRU and
-mean-random continuation by a pre-registered criterion, and a
-full-population census extends the MRU result across all four evaluated
-capacities -- arbitrary continuation policies remain outside this claim.
+mean-random continuation by a pre-registered criterion. A full-population
+census extends the MRU result across all four evaluated capacities --
+arbitrary continuation policies remain outside this claim.
 \textbf{(RQ5)} What does this mean in practice for a researcher choosing
 between offline and closed-loop evaluation? The offline supervision this
 dataset provides complements rather than replaces closed-loop evaluation;
 we give concrete, evidenced guidance for when the offline signal can be
-trusted.
+trusted. Taken together, these answers quantify when finite-horizon
+counterfactual supervision is discriminative, continuation-stable, and
+aligned -- or measurably misaligned -- with closed-loop policy behavior
+across workloads and capacities.
 \end{sloppypar}
 
 Every quantitative claim in this paper traces to a specific, independently
-validated evidence artifact; Sections~\ref{sec:tasks-baselines}
+validated evidence artifact. Sections~\ref{sec:tasks-baselines}
 through~\ref{sec:characterization} and the limitations discussion in
 Section~\ref{sec:limitations} state the exact scope, sample sizes, and
 caveats attached to each result rather than presenting them as unqualified
@@ -70,13 +74,13 @@ findings. The underlying release also exposes candidate-level, decision-level,
 and pairwise derived views of the same supervision at production scale
 (Table~\ref{tab:dataset-scale}), which supports the evaluation methodology
 in this paper and is also intended for reuse by other researchers studying
-learned cache eviction; release construction, schema, and validation are
-described in Sections~\ref{sec:benchmark-design}--\ref{sec:release-validation}
+learned cache eviction. Release construction, schema, and validation are
+described in Sections~\ref{sec:benchmark-design}--\ref{sec:release-validation},
 but are not the paper's central argument.
 
 Section~\ref{sec:related-work} positions this contribution precisely
 against learned-caching, benchmark, and offline-vs-deployed-evaluation
-literature; in brief, existing public cache-replacement resources do not
+literature. In brief, existing public cache-replacement resources do not
 provide a reusable candidate-level counterfactual supervision surface at
 this scale together with a direct evaluation of its relationship to
 closed-loop cache-policy behavior.

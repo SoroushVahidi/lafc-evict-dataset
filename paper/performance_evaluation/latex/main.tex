@@ -42,6 +42,9 @@
 % new table at its citation point rather than let it join the pre-existing
 % float queue from earlier sections and drift several pages away.
 \usepackage{float}
+% \FloatBarrier keeps a still-queued [t] table from being overtaken in
+% render order by a later [H]-pinned table (see 08e_continuation.tex).
+\usepackage{placeins}
 
 \newcommand{\lafc}{LAFC-Evict}
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
@@ -88,6 +91,7 @@ for real cache traces across five workload families and four cache
 capacities. The reusable release covers $H\in\{4,8,16\}$, and a validated
 extended sensitivity study compares $H\in\{16,32,64,128\}$ without
 regenerating the canonical H16 labels. We evaluate this supervision surface
+-- the set of candidate-level labels available at each eviction decision --
 against five questions. \textbf{(RQ1: is the target discriminative?)}
 Not uniformly: two-thirds of decisions are fully tied in aggregate and no
 audited decision has a strict unique winner, but discriminativeness varies
@@ -118,7 +122,7 @@ rather than replaces closed-loop evaluation, and we give concrete guidance
 for when it can be trusted. As a separate confirmatory check, we froze one
 model trained on this supervision and evaluated it in closed loop against
 matched LRU, MRU, SIEVE, LFU, and random baselines on a held-out protocol
-distinct from RQ2's: it did not consistently outperform LRU, SIEVE, or
+distinct from RQ2's. It did not consistently outperform LRU, SIEVE, or
 random (1 win, 2 degenerate ties, 7 losses against each, on the same
 10 cells), while consistently beating MRU and more often than not beating
 LFU -- evidence that offline predictive structure on this target does not
@@ -155,13 +159,9 @@ learned cache eviction \sep benchmark datasets \sep counterfactual supervision \
 \input{sections/08f_practical_implications}
 \input{sections/08g_learned_closed_loop}
 
-% Force any floats still queued from Sections 9-14 (found via full-document
-% visual QA: table_linkage_continuation_summary, cited near the start of
-% Section 13, was drifting all the way to page 44/45 in the pristine
-% baseline -- a pre-existing defect, not introduced by earlier polish
-% passes) to flush here, near their citation point, rather than cascading
-% behind Discussion/Limitations/Related-Work/Conclusion.
-\clearpage
+% Keep any remaining result-section floats near their citation point rather
+% than letting them drift behind Discussion/Limitations/Related-Work/Conclusion.
+\FloatBarrier
 \input{sections/09b_discussion}
 \input{sections/09_limitations_ethics}
 \input{sections/10_related_work}
@@ -185,18 +185,23 @@ influence the work reported in this paper.
 \begin{sloppypar}
 The \lafc\ repository is public at
 \url{https://github.com/SoroushVahidi/lafc-evict-dataset}. Code in the
-repository is released under the MIT License; the dataset itself is
-released under CC0-1.0 per its \texttt{CITATION.cff} dataset-metadata
-record. Upstream trace governance is separate from both: alibaba-block,
-metacdn, metakv, and twemcache remain uncleared for public derived-data
-redistribution under their own source licensing/usage terms, independent
-of this repository's own code and dataset licenses, so they are
-represented here through validated summaries rather than a public download
-of their generated rows. The current public
-derived-data snapshot (v0.3) is wiki2018-only and is distributed through
-Hugging Face
+repository is released under the MIT License where currently documented.
+The scientific evaluation in this paper uses a five-family evaluated
+corpus -- alibaba-block, metacdn, metakv, twemcache, and wiki2018. As of a
+2026-09-15 licensing review, all five evaluated families are cleared for
+public redistribution of derived \lafc\ artifacts under their applicable
+upstream terms; the dataset is not uniformly CC0-1.0. The currently
+hosted wiki2018-derived v0.3 slice is released under CC0-1.0 per its
+\texttt{CITATION.cff} dataset-metadata record; twemcache and alibaba-block
+are cleared under CC~BY~4.0, and metakv and metacdn under the Apache
+License, Version 2.0. Only wiki2018 is currently packaged and hosted in
+the public v0.3 derived-data snapshot, distributed through Hugging Face
 (\url{https://huggingface.co/datasets/SoroushVahidi/lafc-evict}) and AWS
-Open Data. Zenodo currently archives v0.2 only (version DOI
+Open Data; the remaining four evaluated families are legally cleared but
+not yet packaged or hosted in any public release -- a packaging/hosting
+state, not a licensing limitation -- and are represented here through
+validated summaries rather than a public download of their generated
+rows. Zenodo currently archives v0.2 only (version DOI
 \href{https://doi.org/10.5281/zenodo.21895844}{10.5281/zenodo.21895844};
 concept DOI \href{https://doi.org/10.5281/zenodo.21895843}{10.5281/zenodo.21895843});
 no v0.3 Zenodo version DOI has been minted.

@@ -11,6 +11,7 @@ Table~\ref{tab:linkage-continuation-summary} summarizes the linkage and
 continuation-sensitivity evidence referenced throughout this section.
 
 \input{tables/table_linkage_continuation_summary}
+\FloatBarrier
 
 \begin{figure}[t]
   \centering
@@ -54,10 +55,10 @@ extends the MRU side of that result to all five families, capacities 32,
 of 2{,}363{,}286 decision-horizon records. Validation found no duplicate,
 missing, or extra decision keys, and an independent recheck passed before
 these summaries were used. Across all decision-horizon units, mean optimal-set Jaccard is
-0.9994054593, median Jaccard is 1.0, 98.69\% of records have exact
-Jaccard 1, mean cross-continuation regret is 0.000304471 misses, median
-and p95 regret are both 0, the maximum mean regret is 0.193548 misses, and
-99.9708\% of LRU-optimal candidates remain MRU-optimal on average. Strict
+0.99941, median Jaccard is 1.0, 98.69\% of records have exact
+Jaccard 1, mean cross-continuation regret is 0.000304 misses, median
+and p95 regret are both 0, the maximum mean regret is 0.1935 misses, and
+99.97\% of LRU-optimal candidates remain MRU-optimal on average. Strict
 preference reversals are rare: 4{,}646 discordant candidate pairs out of
 24{,}791{,}643{,}360 pairwise comparisons, a fraction of
 $1.87\times10^{-7}$.
@@ -68,10 +69,10 @@ decision-horizon records are all-tied under both LRU and MRU. The
 pre-registered decisive stratum is therefore Set C, excluding decisions
 already all-tied under LRU. In this informative stratum, the census has
 764{,}282 decision-horizon units from 299{,}905 eviction decisions. Set-C
-mean Jaccard is 0.9984587309, median Jaccard is 1.0, the strict reversal
+mean Jaccard is 0.99846, median Jaccard is 1.0, the strict reversal
 fraction is $5.38\times10^{-7}$, mean cross-continuation regret is
-0.000638213 misses, and the mean fraction of LRU-optimal candidates still
-MRU-optimal is 0.9993955215. Since wiki2018 contributes no Set-C records,
+0.000638 misses, and the mean fraction of LRU-optimal candidates still
+MRU-optimal is 0.99940. Since wiki2018 contributes no Set-C records,
 the Set-C result is not inflated by the degenerate negative control; the
 all-family and excluding-wiki Set-C summaries are identical.
 

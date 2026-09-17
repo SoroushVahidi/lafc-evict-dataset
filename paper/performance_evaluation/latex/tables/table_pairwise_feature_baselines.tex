@@ -3,7 +3,12 @@
   \footnotesize
   \caption{Feature-based pairwise baselines on non-tie rows only
   (121,738 of 1,000,000 sampled pairs; 878,262 ties omitted). Models are
-  fit on \texttt{train}; \texttt{test} is the primary held-out result.}
+  fit on \texttt{train}; \texttt{test} is the primary held-out result.
+  Test accuracy 95\% Wilson CI: $[0.688, 0.726]$. The 2,211-row test
+  non-tie subset is 94.98\% twemcache/alibaba-block and contains zero
+  metacdn or wiki2018 rows (Section~\ref{sec:tasks-baselines}), so this
+  result should be read as held-out signal on the available non-tie
+  population, not cross-family generalization.}
   \label{tab:pairwise-feature-baselines}
   \begin{tabularx}{\columnwidth}{@{}P{0.22\columnwidth}L P{0.09\columnwidth}P{0.1\columnwidth} P{0.09\columnwidth}P{0.09\columnwidth}@{}}
     \toprule

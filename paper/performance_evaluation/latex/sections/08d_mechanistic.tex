@@ -17,7 +17,13 @@ capacity-scale reuse measure, computed independently of the labels)
 correlates with offline discriminativeness at $r=0.83$ and with
 closed-loop $|\text{MRU}-\text{LRU}|$ separation at $r=0.90$ (pooled
 $n=10$). Figure~\ref{fig:locality} shows both relationships directly.
-This is an $n=10$, exploratory finding, consistent with but not
+The two associations are not equally robust to workload composition:
+leave-one-family-out sensitivity analysis leaves the separation correlation
+comparatively stable, but reduces the discriminativeness correlation from
+$r=0.83$ to $r\approx0.69$ when metacdn is excluded (exact family-level
+permutation $p\approx0.117$), so we treat the discriminativeness pairing
+as consistent with, rather than robust confirmation of, the proposed
+mechanism. This is an $n=10$, exploratory finding, consistent with but not
 independent evidence from RQ-CL3's own exploratory correlation
 (Section~\ref{sec:linkage}) -- the same underlying trace property is
 driving both.
@@ -27,9 +33,7 @@ driving both.
   \includegraphics[width=\columnwidth]{figures/figure4_locality.pdf}
   \caption{Trace-derived LRU hit rate vs.\ offline discriminativeness
   (left) and closed-loop policy separation (right), $n=10$ family$\times$capacity
-  cells. Reproducible from
-  \texttt{paper/performance\_evaluation/scripts/figures/make\_figure4\_locality.py}
-  against \texttt{outputs/mechanism\_comparison.csv}.}
+  cells.}
   \label{fig:locality}
 \end{figure}
 

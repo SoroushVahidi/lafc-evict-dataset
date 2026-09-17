@@ -29,10 +29,10 @@ and horizon -- consistent with prior large-scale production evidence that
 cache workloads vary substantially in access pattern and reuse structure
 even within a single deployment~\cite{yang2020twemcache}, which is why
 this section reports per-family results rather than only the pooled
-figure above. Figure~\ref{fig:discriminativeness} shows discriminativeness
+aggregate above. Figure~\ref{fig:discriminativeness} shows discriminativeness
 (1 -- all-tied fraction) across all five families, four capacities, and
 three horizons (source data: same audit, per-stratum breakdown,
-\texttt{outputs/phase4\_stratified\_family\_capacity\_horizon.csv}, 60
+\path{outputs/phase4_stratified_family_capacity_horizon.csv}, 60
 family$\times$capacity$\times$horizon cells). Two families,
 \textbf{metacdn} and \textbf{twemcache}, are substantially more
 discriminative than the aggregate figure suggests -- at $H=16$, metacdn's
@@ -55,9 +55,8 @@ candidates' fates to diverge.
   \centering
   \includegraphics[width=\columnwidth]{figures/figure2_discriminativeness.pdf}
   \caption{Target discriminativeness (1 -- all-tied fraction) by family,
-  capacity, and horizon. Reproducible from
-  \texttt{paper/performance\_evaluation/scripts/figures/make\_figure2\_discriminativeness.py}
-  against the frozen audit CSV; no number is hand-entered.}
+  capacity, and horizon; every value is computed directly from the frozen
+  validated audit, not hand-entered.}
   \label{fig:discriminativeness}
 \end{figure}
 

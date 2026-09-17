@@ -3,22 +3,13 @@
 
 The release pipeline is designed to package existing generated candidate rows into a benchmark artifact without requiring raw traces in the release package. The builder uses an out-of-core DuckDB path to ingest candidate shards, normalize split values, emit partitioned Parquet candidate rows, derive the decision view, optionally create a capped pairwise sample, and write release metadata and checksums.
 
-The validation surface is part of the benchmark contribution. The validation workflow includes:
-\begin{itemize}[leftmargin=*]
-  \item schema completeness for candidate partitions,
-  \item split normalization and split-set consistency,
-  \item presence of selected families and absence of blocked families,
-  \item duplicate candidate detection within decision groups,
-  \item consistency of decision metadata within a decision,
-  \item decision-view schema and count consistency,
-  \item checksum verification.
-\end{itemize}
+The validation surface is part of the benchmark contribution: reproducible scripts verify candidate-partition schema completeness, split-set consistency, family inclusion/exclusion, within-decision duplicate and metadata consistency, decision-view schema/count consistency, and checksum integrity.
 
 \begin{sloppypar}
-The evaluated open-release snapshot passed metadata repair, the provided verification suite, publication-bundle validation, and end-to-end release validation. The validation evidence comes from manifest-backed counts, schema checks, split checks, duplicate detection, and checksum verification implemented in reproducible scripts. The manuscript therefore reports validation of the release package without relying on unpublished hosting details. It does not claim that final public hosting or DOI assignment is complete. It also does not treat superseded status notes as the authoritative source of scientific evidence.
+The evaluated release package passed this full validation suite via those reproducible scripts, independent of unpublished hosting details and superseded internal status notes; this validates the release package's construction, not final public hosting or DOI completeness.
 \end{sloppypar}
 
-Table~\ref{tab:artifact-layout} summarizes the release-package components used in the evaluation: candidate rows, derived benchmark views, manifest metadata, and checksums. Validation claims rely on those package contents together with reproducible validation scripts rather than on any standalone status note.
+Table~\ref{tab:artifact-layout} summarizes the release-package components used in the evaluation: candidate rows, derived benchmark views, manifest metadata, and checksums.
 
 \input{tables/table_artifact_layout}
 
@@ -34,16 +25,11 @@ continuation census. Each record includes reproducible scripts and, where
 applicable, an independent recomputation of headline values. The manuscript
 reports only results whose validation and recheck steps completed.
 
-\textbf{Two label sources must not be conflated.} The candidate-level
-\texttt{y\_loss}/\texttt{y\_value} labels released and evaluated throughout
-this paper use the canonical LRU continuation policy
-(Section~\ref{sec:label-generation}). The continuation-sensitivity study
-(Section~\ref{sec:continuation}) additionally computes MRU- and
-random-continuation \emph{relabelings} of sampled decisions and an
-MRU-continuation relabeling of the full census population, strictly for
-the purpose of measuring sensitivity -- these sensitivity-study outputs
-are not an alternative release and are not used anywhere in this paper as
-if they were the canonical label.
+\textbf{Two label sources must not be conflated:} released labels use
+canonical LRU continuation (Section~\ref{sec:label-generation}); the
+MRU/random \emph{relabelings} used for the sensitivity study
+(Section~\ref{sec:continuation}) are diagnostic only, not an alternative
+release.
 
 \textbf{The population-scale MRU continuation census is complete
 evidence.} The census covers all 2{,}363{,}286 decision-horizon records in
@@ -53,9 +39,9 @@ preserved separately; the manuscript uses only compact summaries,
 validation reports, manifests, and Figure~\ref{fig:continuation-robustness}
 source data.
 
-\textbf{A known, unresolved provenance limitation:} the exact historical commit provenance of
-the full-release label generator is incomplete. This does not affect the
-validity of the validated analyses above, each of which independently
-records its own generation context, but it means the full historical
-lineage of the generator code itself is not completely reconstructable from
-repository history alone.
+\textbf{A known, unresolved provenance limitation:} the exact historical
+commit provenance of the full-release label generator is incomplete. This
+does not affect the validity of the validated analyses above, each of
+which independently records its own generation context, but it means the
+full historical lineage of the generator code itself is not completely
+reconstructable from repository history alone.

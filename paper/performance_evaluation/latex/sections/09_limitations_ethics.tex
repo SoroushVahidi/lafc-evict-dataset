@@ -21,19 +21,17 @@ use the long-horizon-eligible production denominator; this is why paired
 family$\times$capacity deltas are the safest basis for interpreting
 within-cell horizon trends.
 
-Third, the canonical labels use LRU continuation after a forced eviction.
-The sampled MRU/random study and full-population MRU census in
-Section~\ref{sec:continuation} support robustness only within their stated
-scopes; random continuation is not validated at population scale, and no
-experiment covers every deployment policy.
+Third, the canonical labels use LRU continuation after a forced eviction;
+Section~\ref{sec:continuation}'s sampled and full-population studies
+establish robustness only within their tested scope -- random continuation
+is not validated at population scale, and no experiment covers every
+deployment policy.
 
-Fourth, the target is substantially tied. Across the full audited canonical
-dataset, the all-tied fraction is approximately 0.68 and the unique-winner
-fraction is exactly 0.0 -- no audited decision in this dataset has a single
-uniquely-best candidate victim. Discriminativeness varies strongly by
-family, capacity, and horizon; one family, wiki2018, is a fully degenerate
-negative control at every capacity and horizon tested
-(Section~\ref{sec:mechanisms} gives the causal explanation).
+Fourth, the target is substantially tied (all-tied fraction
+$\approx$0.68, unique-winner fraction 0.0; Section~\ref{sec:characterization}
+quantifies this by family, capacity, and horizon, and
+Section~\ref{sec:mechanisms} gives the causal explanation for wiki2018's
+complete degeneracy).
 
 Fifth, the evaluated dataset uses unit-object, count-based capacities (32,
 64, 128, or 256 objects) with unconditional admission of the requested
@@ -43,33 +41,42 @@ is never withheld. Claims in this paper should be read as scoped to this
 abstraction and not generalized to byte-addressable or admission-gated
 cache models without further evidence.
 
-Sixth, closed-loop evidence itself has two family-specific caveats that
-must be carried alongside any result that uses it. metacdn's closed-loop
-evidence is validation-window evidence, not a temporally held-out test
-window (twemcache's is test-window). metakv is the only family whose
-scored window begins at an empty cache (a cold start, identifiable from
-the identity evictions = misses - capacity); this is plausibly, but not
-conclusively, connected to metakv being the one Tier-1 cell where LRU
-falls to third place, behind both SIEVE and random-mean
-(Section~\ref{sec:mechanisms}).
+Sixth, closed-loop evidence carries two family-specific caveats, defined
+in Section~\ref{sec:experimental-methodology} and revisited in
+Section~\ref{sec:mechanisms}: metacdn's evidence is validation-window, not
+test-window, and metakv's scored window begins at a cold start, plausibly
+linked to metakv's one Tier-1 policy-ranking exception.
 
 Seventh, a known data-generation issue remains open: in the audited
 canonical data, the predictor-victim flag is identical to the LRU-victim
-flag throughout, and related predictor, bucket, and confidence fields
-include constant or placeholder values. This paper does not make any claim
-that depends on those predictor fields being informative.
+flag throughout -- an exact redundancy, not merely a correlation -- and
+related predictor, bucket, and confidence fields include constant or
+placeholder values -- specifically, 18 of the 26 candidate-level feature
+columns used by the pairwise feature-difference model
+(Section~\ref{sec:tasks-baselines}) are hard-coded constants across the
+entire release. Together with the redundant predictor-victim flag, 19 of
+the 26 supplied features provide no additional independent variation,
+leaving seven that are nonconstant and nonredundant. This paper does not
+make any claim that depends on those predictor fields, or the seven
+remaining features, being informative beyond nonconstancy.
 
 Eighth, benchmark reuse must preserve provenance distinctions. The release
 exposes generated supervision and derived views, but it does not erase the
 attribution, citation, or licensing requirements of the upstream raw traces
 from which candidate rows were derived; those raw traces remain external
-artifacts with their own governance constraints. The open subset is also
-intentionally narrower than the full generated corpus for redistribution
-reasons, and not every selected family appears in every split of the
-evaluated release package. The exact generator commit for the full
-historical release corpus is not completely reconstructed; this is
-orthogonal to the audited evidence reported in this paper but is disclosed
-here for reproducibility completeness.
+artifacts with their own governance constraints. The currently hosted
+open subset is also narrower than the full generated corpus, but for two
+distinct reasons that should not be conflated: four of the five evaluated
+families (alibaba-block, metacdn, metakv, twemcache) are cleared for
+public redistribution as of a 2026-09-15 review but are not yet packaged
+into a hosted public release, a packaging backlog rather than a licensing
+limitation, while two further families (brightkite, citibike) remain
+excluded for unresolved redistribution reasons (see the Data Availability
+statement for current clearance and hosting status). Not every selected
+family appears in every split of the evaluated release package. The full
+historical release corpus's generator-commit provenance is also
+incomplete, orthogonal to the audited evidence reported here
+(Section~\ref{sec:release-validation} gives the exact scope).
 
 Finally, this paper reports closed-loop results for LRU, MRU, random, and
 SIEVE under the Tier-1 protocol (Section~\ref{sec:closed-loop}), and,

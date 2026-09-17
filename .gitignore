@@ -19,3 +19,13 @@ reports/
 .duckdb_tmp/
 *.blg
 paper/performance_evaluation/latex/main.pdf
+paper/performance_evaluation/latex/*.aux
+paper/performance_evaluation/latex/*.bbl
+paper/performance_evaluation/latex/*.fdb_latexmk
+paper/performance_evaluation/latex/*.fls
+paper/performance_evaluation/latex/*.log
+paper/performance_evaluation/latex/*.out
+paper/performance_evaluation/latex/*.toc
+paper/performance_evaluation/latex/*.lof
+paper/performance_evaluation/latex/*.lot
+paper/performance_evaluation/latex/*.synctex.gz

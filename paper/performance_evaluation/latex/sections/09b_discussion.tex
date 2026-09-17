@@ -4,20 +4,20 @@
 \textbf{What LAFC-Evict enables.} A reusable, candidate-level, finite-horizon
 counterfactual supervision surface, materialized once from real traces and
 usable across value-regression, best-candidate-selection, and pairwise
-formulations (Sections~\ref{sec:background}--\ref{sec:tasks-baselines})
-without every study re-deriving its own labels from raw traces
-(Section~\ref{sec:related-work} situates this against prior learned-cache
-work, most of which derives labels internally and non-reusably).
+formulations (Sections~\ref{sec:background}--\ref{sec:tasks-baselines}),
+without every study re-deriving its own labels from raw traces.
+Section~\ref{sec:related-work} situates this against prior learned-cache
+work, most of which derives labels internally and non-reusably.
 
 \textbf{What the evaluation reveals, beyond the surface itself.} Four
-findings that only emerge from evaluating the surface against closed-loop
-behavior, not from describing the surface alone: the target's
+findings only emerge from evaluating the surface against closed-loop
+behavior, not from describing the surface alone. The target's
 discriminativeness is workload-structured, not incidental
-(Section~\ref{sec:characterization}); that structure is explained, not
-just observed, by a single trace-level property, capacity-scale reuse
-(Section~\ref{sec:mechanisms}); offline and closed-loop policy orderings
+(Section~\ref{sec:characterization}). That structure is associated with a
+single trace-level property, capacity-scale reuse
+(Section~\ref{sec:mechanisms}). Offline and closed-loop policy orderings
 agree in most, not all, informative regimes, with the exceptions
-identified rather than smoothed over (Section~\ref{sec:linkage}); and the
+identified rather than smoothed over (Section~\ref{sec:linkage}). And the
 canonical LRU-continuation assumption is robust, with quantified limits,
 at the capacities tested (Section~\ref{sec:continuation}).
 
@@ -32,7 +32,7 @@ but not investigated.
 paper's position, supported by Sections~\ref{sec:linkage}
 and~\ref{sec:closed-loop}, is that the offline$\leftrightarrow$closed-loop
 correspondence itself -- not the offline surrogate alone -- is the
-contribution: the two exceptions found were identified by the same
+contribution. The two exceptions found were identified by the same
 symmetric procedure that found the 8 agreeing cells, not selected for
 balance, and are characterized rather than smoothed over
 (Section~\ref{sec:practical-implications} gives the resulting practitioner
@@ -53,7 +53,7 @@ preserve the same ordering.
 connects this paper's larger message to an actual trained model: offline
 supervision can be highly structured (Section~\ref{sec:characterization})
 and even correspond to closed-loop behavior in most non-learned-policy
-regimes (Section~\ref{sec:linkage}), yet a model selected on that
+regimes (Section~\ref{sec:linkage}). Yet a model selected on that
 supervision's own offline criterion did not translate into consistent
 closed-loop improvement over strong non-learned baselines. Predicting a
 per-decision label well and inducing a good cache-state trajectory through

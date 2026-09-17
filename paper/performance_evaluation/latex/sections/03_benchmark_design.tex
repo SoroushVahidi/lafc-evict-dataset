@@ -2,14 +2,15 @@
 \label{sec:benchmark-design}
 
 This section defines the scientific abstraction underlying \lafc\ before
-describing how it is packaged for release. A \emph{trace} is a sequence of
+describing how it is packaged for release (the end-to-end pipeline is
+summarized in Figure~\ref{fig:pipeline}). A \emph{trace} is a sequence of
 \emph{requests} (accesses) to objects. A \emph{cache state} is the set of
 objects resident in a bounded-capacity cache at a point in the trace. When
 a request misses and the cache is full, the system faces an
 \emph{eviction decision}: choose one resident object, a \emph{candidate
 victim}, to evict before admitting the requested object. \lafc\ treats
 every such decision, across every trace, capacity, and horizon evaluated,
-as one supervised unit; Section~\ref{sec:tasks-baselines} defines the exact
+as one supervised unit; Section~\ref{sec:label-generation} defines the exact
 formal quantities (finite-horizon counterfactual loss, optimal candidate
 set, regret) built on top of this abstraction, following directly from the
 worked example in Section~\ref{sec:background}.
@@ -39,7 +40,11 @@ useful, explained result rather than a benchmark defect). Two further
 families, \texttt{brightkite} and \texttt{citibike}, are excluded from the
 open release subset for redistribution reasons; this is a release-packaging
 boundary, not a claim that the underlying generated corpus is limited to
-five families. Not every family appears in every split (e.g.\ metacdn
+five families. This five-family evaluated corpus is itself broader than
+the currently downloadable public v0.3 subset, which packages only the
+wiki2018 slice; the Data Availability statement details the redistribution
+clearance and hosting status of the other four evaluated families. Not
+every family appears in every split (e.g.\ metacdn
 contributes train/validation but no test decisions); split assignment is
 produced upstream of this release package and is normalized and validated,
 not assigned, here.

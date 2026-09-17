@@ -58,9 +58,16 @@ PANELS = [
 # label clears both the marker and the axes. Only the two discordant cells
 # from RQ-CL1 are labeled -- every other point is left unlabeled by design.
 DISCORDANT_ANNOTATIONS = {
-    ("mru_vs_lru", "cloudphysics", 32): (24, -18),
-    ("random_vs_lru", "cloudphysics", 32): (16, 12),
-    ("random_vs_lru", "metakv", 128): (-14, -16),
+    ("mru_vs_lru", "cloudphysics", 32): (20, 62),
+    ("random_vs_lru", "cloudphysics", 32): (-2, 58),
+    ("random_vs_lru", "metakv", 128): (46, -10),
+}
+# A small number of leader lines pass close to a nearby (non-discordant)
+# marker under a straight connector; curve just those with a matplotlib
+# "arc3" connectionstyle so the line bows around the marker instead of
+# through it. Left at the default straight line ("arc3,rad=0.0") elsewhere.
+CONNECTIONSTYLE = {
+    ("random_vs_lru", "cloudphysics", 32): "arc3,rad=0.35",
 }
 
 
@@ -111,8 +118,11 @@ def main():
                     f"{annotation_name(fam)}/C={cap}", (r["x"], r["y"]),
                     xytext=offset, textcoords="offset points", fontsize=8,
                     zorder=4,
-                    arrowprops=dict(arrowstyle="-", color="black",
-                                     linewidth=0.6, shrinkA=0, shrinkB=4),
+                    arrowprops=dict(
+                        arrowstyle="-", color="black", linewidth=0.6,
+                        shrinkA=0, shrinkB=4,
+                        connectionstyle=CONNECTIONSTYLE.get((pair, fam, cap), "arc3,rad=0.0"),
+                    ),
                 )
 
         ax.axhline(0, color="grey", linewidth=0.6, zorder=1)

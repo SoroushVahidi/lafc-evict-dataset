@@ -4,16 +4,16 @@
 \lafc\ supports four benchmark tasks from one release.
 
 \paragraph{Candidate-level value prediction.}
-Predict \texttt{y\_loss} or \texttt{y\_value} from a single candidate row. This is a pointwise task over the canonical benchmark unit and measures how well a model predicts finite-horizon counterfactual eviction quality for one candidate at one decision.
+Predict \texttt{y\_loss} or \texttt{y\_value} from a single candidate row -- the pointwise view of finite-horizon counterfactual eviction quality (Table~\ref{tab:task-definitions}).
 
 \paragraph{Best-candidate selection.}
-Given all candidate rows for one decision, identify a member of the minimum-loss set. This task can be framed as ranking or decision-level classification and connects most directly to the actual cache-eviction choice because it evaluates whether a method selects a benchmark-optimal victim within that decision.
+Given all candidate rows for one decision, identify a member of the minimum-loss set. This task can be framed as ranking or decision-level classification and connects most directly to the actual cache-eviction choice because it evaluates whether a method selects a benchmark-optimal victim within that decision. We call a decision \textbf{discriminative} when \texttt{optimal\_candidate\_count < candidate\_count}, i.e.\ at least one candidate is strictly worse than the best candidate in that decision; on any other (all-tied) decision every candidate is optimal by construction, so no selector's choice can affect realized regret there. Because of this, all-decision optimal-selection rate and mean regret are reported below only as \emph{secondary, ecological} statistics describing the full target distribution, and selector performance restricted to discriminative decisions is the \textbf{primary} best-candidate-selection metric.
 
 \paragraph{Pairwise preference prediction.}
 Predict whether candidate A is better than candidate B within the same decision, where ``better'' means lower \texttt{y\_loss} or equivalently higher \texttt{y\_value}. This task uses the pairwise view or shipped pairwise sample as a simpler interface for within-decision preference modeling. Because equal losses induce ties, reports must state whether evaluation includes ties, excludes them, or treats them as a separate class. In the shipped sample, deterministic hash randomization of A/B orientation keeps the non-tie A-better/B-better split balanced (about 49.8\%/50.2\%) rather than encoding candidate-identifier order.
 
 \paragraph{Candidate-label distribution characterization.}
-Summarize the empirical label surface without training a predictive model. This characterization task studies distributions of \texttt{y\_loss}, \texttt{y\_value}, regret, tie frequency, and decision ambiguity across families, capacities, horizons, and splits. It is descriptive rather than competitive, but it is important for understanding benchmark difficulty and for interpreting downstream task results.
+Summarize the empirical label surface -- distributions of \texttt{y\_loss}, \texttt{y\_value}, regret, and tie frequency across families, capacities, horizons, and splits -- without training a predictive model; this descriptive task underpins interpretation of the other three (Table~\ref{tab:task-definitions}).
 
 The empirical scope of this paper remains intentionally narrow. Rather than presenting a large model bake-off, we report lightweight baselines that can be executed directly from the committed release views and that establish reproducible reference points for later work.
 
@@ -34,13 +34,46 @@ the feature-difference model are fit only on non-tie \texttt{train} rows,
 with fixed L2 regularization and no validation tuning. The temporally
 held-out \texttt{test} split is the generalization result; train/validation
 columns are diagnostic. On the 2,211-row test non-tie subset, the logistic
-feature-difference model reaches 0.7078 accuracy and 0.5494 log loss,
+feature-difference model reaches 0.7078 accuracy (Wilson 95\% CI
+$[0.688, 0.726]$) and 0.5494 log loss,
 ahead of random/majority checks and the 1-D score baselines
 (Table~\ref{tab:pairwise-feature-baselines}). This replaces the earlier
 overall non-tie 0.9660 figure as the number to cite. The train/validation
 gap is large, and the test non-tie subset is small and unusually tie-heavy,
 so the result supports only a capped-sample, non-tie pairwise baseline,
 not a population or online-policy claim.
+
+\begin{sloppypar}
+This test non-tie subset is also highly workload-concentrated: twemcache
+and alibaba-block together supply 94.98\% of it (58.16\% and 36.82\%
+respectively, of 2,211 rows), while metacdn contributes zero test
+non-ties because metacdn has zero decisions of any kind in the test
+split at the decision-view level (Section~\ref{sec:characterization}) --
+a full-family train/val/test partitioning property, not an artifact of
+pairwise sampling. wiki2018 likewise contributes no test non-ties,
+consistent with its complete tie-degeneracy. The 0.7078 result therefore
+demonstrates decision-relevant signal on the available held-out non-tie
+population, not generalization across all five workload families. We
+found no evidence of feature leakage: none of the 26 candidate-level
+feature columns used here reference \texttt{y\_loss}, \texttt{y\_value},
+regret, or any split-identity quantity. Separately, 18 of those 26 --
+\texttt{candidate\_predictor\_score} and seventeen related predictor-,
+bucket-, and confidence-derived fields (discussed in
+Section~\ref{sec:limitations}) -- are hard-coded placeholder constants
+across the entire release, so after standardization their feature
+difference is exactly zero and they contribute no decision signal to
+the model. A further feature, \texttt{candidate\_is\_predictor\_victim},
+is bit-identical to \texttt{candidate\_is\_lru\_victim} and is therefore
+exactly redundant. In total, 19 of the 26 supplied features provide no
+additional independent variation, leaving seven that are nonconstant
+and nonredundant; this establishes only nonconstancy, not that those
+seven carry independent predictive signal.
+The large train (0.9598) / validation (0.9896) versus test (0.7078)
+accuracy gap is most consistent with workload/split distribution shift,
+given the test set's family concentration described above, rather than a
+demonstrated leakage or sampling-bug mechanism; we have not established
+this mechanism conclusively and do not claim more than that here.
+\end{sloppypar}
 
 The best-candidate evaluator groups candidate rows by the canonical
 9-column decision key and reports 2,363,286 decisions, an exact match
@@ -51,9 +84,37 @@ expected optimal-selection rate is 0.9912 with expected regret 0.0088,
 both more favorable than the linear-score selector's observed 0.8753
 optimal-selection rate and 0.1251 mean regret, purely because of the tie
 density documented in Section~\ref{sec:characterization} -- not because
-the linear score underperforms a stronger baseline. Headline
-selection-rate and regret numbers should therefore always be read
-alongside this random floor rather than in isolation.
+the linear score underperforms a stronger baseline. These all-decision
+figures are secondary, ecological statistics; headline selection-rate
+and regret numbers should therefore never be read in isolation from
+either the random floor or the discriminative-only figures below.
+
+764,282 of 2,363,286 decisions (32.34\%) are discriminative, per the
+definition above. Restricted to
+this stratum -- the only decisions on which a selector's choice can
+affect realized regret -- the uniform-random selector's expected
+optimal-selection rate falls to 0.9729 (expected regret 0.0273), while
+the linear-score selector's optimal-selection rate falls to 0.6145 (mean
+regret 0.3867). These discriminative-only linear-selector figures follow
+exactly from the reported all-decision totals, since every all-tied
+decision necessarily contributes optimal-selection~$=1$ and regret~$=0$
+for any selector: writing $N=2{,}363{,}286$ for all decisions and
+$N_{\text{tied}}=1{,}599{,}004$ for all-tied decisions,
+\[
+  \text{rate}_{\text{disc}} = \frac{0.8753\,N - N_{\text{tied}}}{N - N_{\text{tied}}} = 0.6145
+\]
+\[
+  \text{regret}_{\text{disc}} = \frac{0.1251\,N}{N - N_{\text{tied}}} = 0.3867
+\]
+On the decisions where the finite-horizon target actually distinguishes
+candidates, the linear score is therefore substantially worse than
+uniform random -- not merely comparable to it -- and we report this
+directly rather than only the more favorable all-decision figures. We do
+not rescue this baseline with an alternative normalization or by
+excluding difficult cells; Table~\ref{tab:label-selection-summary}
+reports both views side by side.
+
+\input{tables/table_regret_tie_stats}
 
 \input{tables/table_pairwise_sample_stats}
 
@@ -69,9 +130,10 @@ alongside this random floor rather than in isolation.
     Task & Inputs & Representative outputs \\
     \midrule
     Value regression & candidate rows & MAE, RMSE, and optional rank correlation between predicted and observed values \\
-    Best-candidate selection & decision groups & Top-1 accuracy against the benchmark-optimal set and mean realized regret relative to the best available candidate \\
+    Best-candidate selection & decision groups & Optimal-selection rate and mean regret on discriminative decisions (optimal-set size smaller than candidate count) as the primary view; all-decision Top-1 accuracy against the benchmark-optimal set reported only as secondary, ecological context given extreme tie density \\
     Pairwise preference & pairwise rows from one decision & Accuracy or ROC-AUC, with tie handling stated explicitly and non-tie-only reporting marked when used \\
     Label characterization & candidate or decision aggregates & Histograms, quantiles, tie rates, regret summaries, and per-family/capacity/horizon breakdowns \\
     \bottomrule
   \end{tabularx}
 \end{table}
+\FloatBarrier
