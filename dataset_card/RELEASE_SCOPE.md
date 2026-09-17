@@ -1,53 +1,45 @@
 # Release Scope
 
+## Published `lafc-evict-v1.0` (current public release, as of 2026-09-17)
+
+Full five-family public release. **Published on Hugging Face on the `v1.0` revision.**
+
+- Contains all five evaluated workload families: Alibaba Block (`cloudphysics`), MetaCDN, MetaKV, Twemcache, and Wiki2018.
+- Consists of:
+  - 277,995,072 candidate-level rows
+  - 2,363,286 decision-horizon rows
+  - 1,000,000 canonical pairwise-sample rows
+- Applicable family-specific licensing: CC0-1.0 (wiki2018), CC BY 4.0 (Alibaba Block, Twemcache), and Apache License 2.0 (MetaCDN, MetaKV). See `THIRD_PARTY_DATA.md` for details.
+- Publicly downloadable, checksum-verified, and represents the complete evaluated corpus in the Performance Evaluation manuscript.
+
+## Published `lafc-evict-v0.3-candidate`
+
+Expanded Wiki2018-only candidate. **Published on Hugging Face main revision and AWS Open Data.**
+
+- Same two configurations as v0.2, 22,356,992 total rows, full inclusion of every available wiki2018 shard (no down-sampling).
+- Publicly hosted through AWS Open Data in bucket `lafc-evict-open-data` (`us-west-2`).
+- `release/lafc-evict-v0.3-candidate/` is the canonical package.
+
 ## Published `lafc-evict-v0.2-preview`
 
 - Wiki2018-derived supervision only.
-- Two configurations: `cross_family_evict_value_v1` and
-  `objective_ablation_scalar`.
+- Two configurations: `cross_family_evict_value_v1` and `objective_ablation_scalar`.
 - Pseudonymized derived rows; no raw traces or raw page titles.
-- Public on Hugging Face and archived on Zenodo.
+- Public on Hugging Face and archived on Zenodo (version DOI https://doi.org/10.5281/zenodo.21895844).
 
 ## Historical `lafc-evict-v0.1-open`
 
 Historical unpublished real-data staging generation.
 
-- Include only the license-clean/open-trace families selected by the source-family registry and selector output.
-- Publish candidate rows, decision view, release metadata, schema docs, manifests, and checksums.
-- Do not include ambiguous trace families until upstream review is complete.
-- CitiBike and Brightkite remain excluded until review is complete.
-- The registry and selector are release-governance tools, not legal advice.
-- Full pairwise materialization is intentionally not part of the default real release because it can grow quadratically with decision size.
-- Pairwise tasks can be derived from candidate rows or generated as capped samples with `scripts/build_real_release.py --pairwise-sample`.
-
-## Published `lafc-evict-v0.3-candidate` (current public release, as of 2026-08-13)
-
-Expanded Wiki2018-only candidate. **Published on Hugging Face and AWS Open
-Data** (this section previously said "not uploaded or published" -- corrected
-2026-09-12; the AWS public-hosting status was added in the final handoff
-documentation). Same two configurations as v0.2, 22,356,992 total rows, full
-inclusion of every available wiki2018 shard (no down-sampling).
-The `release/lafc-evict-v0.3-candidate/` and `release/lafc-evict-v0.3-zenodo-flat/`
-local packages are scientifically identical (verified via DuckDB `EXCEPT`,
-2026-09-12); they differ only in an internal `release_version` row tag
-(zenodo-flat still carries a stale pre-finalization value) and Parquet
-row-group sizing -- see `publication/LAFC_EVICT_PUBLICATION_STATE.json` for
-the full reconciliation record. `release/lafc-evict-v0.3-candidate/` is
-canonical.
+- Included only the license-clean/open-trace families selected by the source-family registry.
+- Preserved locally as `lafc-evict-v0.1-open-current-contract-preserved`.
 
 ## `lafc-evict-full-heavy_r1`
 
-Internal or pre-release heavy version.
+Internal pre-release baseline family.
 
-- Intended to reflect the larger generated dataset family used in heavier experiments.
-- Requires upstream license review before any public redistribution.
-- Remains an internal or reproducibility target until redistribution questions are resolved.
-- Must not be treated as automatically publishable just because generated labels were computed locally.
-- This is the family of internal builds (5 trace families, up to ~278M
-  candidate rows / ~788K decisions) used in the SIGMOD 2027 submission's
-  benchmark description. It is **not** part of the public v0.3 release and
-  is **not** in scope for the AWS Open Data submission -- do not conflate the
-  two when citing or reusing this dataset (added 2026-09-12).
+- This was the family of internal builds (5 trace families, up to ~278M candidate rows / ~2.36M decisions) used in the research work.
+- It has been fully materialized and publicly released under **lafc-evict-v1.0** on Hugging Face.
 
 ## `lafc-evict-sample`
 

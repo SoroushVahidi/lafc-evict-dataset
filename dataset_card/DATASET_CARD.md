@@ -6,19 +6,19 @@
 
 ## Current public release
 
-The current public release is **v0.3** (corrected 2026-09-12; this section
-previously said v0.2), available on Hugging Face:
+The current public release is **v1.0**, available on Hugging Face:
 
-- https://huggingface.co/datasets/SoroushVahidi/lafc-evict (v0.3, revision
-  `2113cc4d1edee57275d769d8760da77ed67c875d`, published 2026-08-13)
+- https://huggingface.co/datasets/SoroushVahidi/lafc-evict (v1.0, revision
+  `v1.0`, commit `37173bc96de2a615455bf9713bb90d846156af29`, published 2026-09-17)
 
-It contains Wiki2018-derived pseudonymized supervision, two configs, and
-22,356,992 rows under CC0 1.0. The prior **v0.2 published preview** (4,800,000
-rows) remains published and pinnable for reproducibility on both Hugging Face
-and Zenodo (https://doi.org/10.5281/zenodo.21895844 -- this DOI identifies
-v0.2 only; **Zenodo does not yet have a v0.3 version** due to an unresolved
-deposit-token permission error, tracked in
-`publication/LAFC_EVICT_PUBLICATION_STATE.json`).
+It contains full five-family (Alibaba Block, MetaCDN, MetaKV, Twemcache, Wiki2018)
+derived supervision, consisting of 277,995,072 candidate-level rows,
+2,363,286 decision-horizon rows, and a 1,000,000-row canonical pairwise sample.
+The older v0.3 release (wiki2018-only, 22,356,992 rows) remains available separately
+on Hugging Face `main` revision and AWS Open Data. The prior **v0.2 published preview**
+(4,800,000 rows) remains published and pinnable on both Hugging Face and Zenodo
+(https://doi.org/10.5281/zenodo.21895844 -- this DOI identifies v0.2 only; Zenodo
+does not yet have a v0.3 or v1.0 version DOI).
 
 ## Associated Paper / Preprint
 
@@ -79,19 +79,10 @@ data remain in `Augmented-caching`.
 
 ## Current public scope
 
-The published v0.3 release (like v0.2 before it) contains only Wiki2018-derived
-rows. As of 2026-09-15, Twemcache, MetaKV, MetaCDN, and the Alibaba Block
-trace (this project's internal family key for it is `cloudphysics`, a
-historical identifier that does not refer to the VMware/CloudPhysics
-dataset -- see `THIRD_PARTY_DATA.md`) are license-cleared for public release
-per `manifests/source_family_registry.yaml`; this clears the way to expand
-a future dataset release to include them, but the currently *published*
-v0.3 package itself has not been rebuilt or re-released to include them --
-that remains a separate release-engineering task. CitiBike and Brightkite
-remain blocked. A separate, substantially larger internal multi-family
-research build exists (see `RELEASE_SCOPE.md`, `lafc-evict-full-heavy_r1`)
-but is not part of any public release and is not in scope for the AWS Open
-Data submission.
+The published v1.0 release contains all five evaluated trace families: Alibaba Block
+(internal key `cloudphysics`), MetaCDN, MetaKV, Twemcache, and Wiki2018. It represents
+the full evaluated corpus described in the manuscript. CitiBike and Brightkite remain
+blocked and are excluded.
 
 ## Intended benchmark views
 
@@ -99,17 +90,9 @@ Data submission.
 - decision-level evaluation,
 - pairwise preference evaluation within each eviction decision.
 
-## Current status (updated 2026-09-12)
+## Current status (updated 2026-09-17)
 
 The v0.1-open trees are historical unpublished local staging artifacts. The
-**v0.3 tree is published** on Hugging Face (this section previously said it
-was "a locally validated candidate and is not published" -- corrected). The
-wiki2018-only v0.3 payload is also publicly hosted through AWS Open Data in
-bucket `lafc-evict-open-data` (`us-west-2`); AWS Open Data Registry PR #3335
-is pending maintainer activity unless later repository documentation proves it
-merged. Future releases still require:
-
-- upstream trace-license review,
-- redistribution review per trace family,
-- host selection and persistent identifiers,
-- release-specific manifests and checksums.
+**v1.0 tree is published** on Hugging Face. The older wiki2018-only v0.3 payload
+remains publicly hosted through AWS Open Data in bucket `lafc-evict-open-data` (`us-west-2`).
+Zenodo currently archives v0.2 only.

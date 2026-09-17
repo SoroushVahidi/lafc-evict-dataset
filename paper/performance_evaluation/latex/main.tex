@@ -138,25 +138,20 @@ influence the work reported in this paper.
 The \lafc\ repository is public at
 \url{https://github.com/SoroushVahidi/lafc-evict-dataset}. Code in the
 repository is released under the MIT License where currently documented.
-The scientific evaluation in this paper uses a five-family evaluated
-corpus -- alibaba-block, metacdn, metakv, twemcache, and wiki2018. As of a
-2026-09-15 licensing review, all five evaluated families are cleared for
-public redistribution of derived \lafc\ artifacts under their applicable
-upstream terms; the dataset is not uniformly CC0-1.0. The currently
-hosted wiki2018-derived v0.3 slice is released under CC0-1.0 per its
-\texttt{CITATION.cff} dataset-metadata record; twemcache and alibaba-block
-are cleared under CC~BY~4.0, and metakv and metacdn under the Apache
-License, Version 2.0. Only wiki2018 is currently packaged and hosted in
-the public v0.3 derived-data snapshot, distributed through Hugging Face
-(\url{https://huggingface.co/datasets/SoroushVahidi/lafc-evict}) and AWS
-Open Data; the remaining four evaluated families are legally cleared but
-not yet packaged or hosted in any public release -- a packaging/hosting
-state, not a licensing limitation -- and are represented here through
-validated summaries rather than a public download of their generated
-rows. Zenodo currently archives v0.2 only (version DOI
-\href{https://doi.org/10.5281/zenodo.21895844}{10.5281/zenodo.21895844};
+The full five-family \lafc\ v1.0 public release is available on Hugging Face
+(\url{https://huggingface.co/datasets/SoroushVahidi/lafc-evict}) under the
+\texttt{v1.0} revision, and packages all five evaluated families: alibaba-block,
+metacdn, metakv, twemcache, and wiki2018. It contains 277,995,072 candidate-level
+rows, 2,363,286 decision-horizon rows, and a 1,000,000-row canonical pairwise sample.
+The dataset is multi-licensed by family: wiki2018 is released under CC0-1.0;
+twemcache and alibaba-block under CC~BY~4.0; and metakv and metacdn under the
+Apache License, Version 2.0. The older v0.3 wiki2018-only release remains
+separately available on the Hugging Face \texttt{main} revision and AWS Open Data
+(bucket \texttt{lafc-evict-open-data}, region \texttt{us-west-2}); AWS does not yet
+host the five-family v1.0 release. Zenodo currently archives v0.2 only
+(version DOI \href{https://doi.org/10.5281/zenodo.21895844}{10.5281/zenodo.21895844};
 concept DOI \href{https://doi.org/10.5281/zenodo.21895843}{10.5281/zenodo.21895843});
-no v0.3 Zenodo version DOI has been minted.
+no v1.0 Zenodo version DOI has been minted.
 \end{sloppypar}
 
 \section*{Funding}

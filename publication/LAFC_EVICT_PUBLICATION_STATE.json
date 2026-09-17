@@ -1,11 +1,11 @@
 {
   "document_type": "lafc_evict_publication_state",
   "document_version": 3,
-  "last_verified": "2026-09-13",
+  "last_verified": "2026-09-17",
   "canonical_publication_repository": "github.com/SoroushVahidi/lafc-evict-dataset (branch: master)",
   "scientific_source_repository": "github.com/SoroushVahidi/Augmented-caching (branch: main)",
   "kbs_reviewer_repository": "github.com/SoroushVahidi/Augmented-caching, branch kbs/second-revision-science (KBS second-revision reviewer materials; not a separate GitHub repository)",
-  "current_public_release": "v0.3 wiki2018-only on Hugging Face and AWS Open Data; v0.2 remains the current DOI-backed version on Zenodo pending v0.3 Zenodo authentication",
+  "current_public_release": "v1.0 five-family release on Hugging Face (v1.0 revision); v0.3 remains separately available on HF main and AWS Open Data; v0.2 remains the current version on Zenodo",
   "aws_open_data_status": "AWS Open Data Sponsorship Program: v0.3 wiki2018-only payload is publicly hosted in bucket lafc-evict-open-data, region us-west-2. Recorded public payload: 18 objects, approximately 106.1 MiB, CC0-1.0, anonymous public download previously verified PASS. AWS Open Data Registry PR #3335 is pending maintainer activity unless later local documentation proves it merged. Fork branch: add-lafc-evict-dataset; known PR head: e12ac8f90714daf2bc88987725cc2a48b916cd59. Sponsorship support: up to 600 GB hosted for two years beginning 2026-08-18.",
   "releases": [
     {
@@ -178,17 +178,23 @@
     {
       "version": "v1.0",
       "display_name": "v1.0 stable/full release",
-      "scope": "Future stable release containing only explicitly cleared families",
-      "status": "PLANNING_ONLY",
-      "published": false,
-      "publication_hosts": [],
-      "canonical_local_source": "docs/V0_3_V1_RELEASE_DESIGN.md",
-      "included_families": ["wiki2018"],
+      "scope": "Full five-family public release containing all evaluated workload families",
+      "status": "PUBLISHED_HF_AND_ZENODO_NOT_DOI_BACKED",
+      "published": true,
+      "publication_hosts": ["huggingface"],
+      "hf_repo": "SoroushVahidi/lafc-evict",
+      "hf_revision": "37173bc96de2a615455bf9713bb90d846156af29",
+      "canonical_local_source": "release/lafc-evict-v1.0",
+      "included_families": ["cloudphysics", "metacdn", "metakv", "twemcache", "wiki2018"],
       "excluded_families": ["brightkite", "citibike"],
-      "license_state": "conditional_on_explicit_family_clearance",
-      "provenance_state": "additional_families_uncleared",
-      "upload_status": "NOT_BUILT",
-      "notes": "Additional families may enter only after explicit APPROVED_* clearance and a full quality-gate pass."
+      "license_state": "multi_licensed_by_family",
+      "provenance_state": "all_five_families_cleared_for_redistribution",
+      "upload_status": "PUBLISHED_AND_VERIFIED",
+      "publication_date_hf": "2026-09-17",
+      "candidate_rows": 277995072,
+      "decision_rows": 2363286,
+      "pairwise_sample_rows": 1000000,
+      "notes": "v1.0 five-family release is live on Hugging Face and verified after upload. Zenodo remains on v0.2. AWS remains on v0.3/wiki2018-only."
     }
   ],
   "authoritative_records": {

@@ -4,28 +4,27 @@ This is the canonical publication repository for LAFC-Evict.
 
 ## Current public release
 
-**LAFC-Evict v0.3** is the current public preview release.
+**LAFC-Evict v1.0** is the current full public release.
 
 - Hugging Face: https://huggingface.co/datasets/SoroushVahidi/lafc-evict
-- Hugging Face revision: `2113cc4d1edee57275d769d8760da77ed67c875d`
-- AWS Open Data bucket: `lafc-evict-open-data` (`us-west-2`)
-- Scope: Wiki2018-only pseudonymized derived supervision
-- Configs: `cross_family_evict_value_v1` and `objective_ablation_scalar`
-- Rows: 22,356,992
-- License: CC0 1.0
+- Hugging Face revision: `v1.0` (commit `37173bc96de2a615455bf9713bb90d846156af29`)
+- Scope: Full five-family release containing:
+  - Alibaba Block (`cloudphysics`)
+  - MetaCDN (`metacdn`)
+  - MetaKV (`metakv`)
+  - Twemcache (`twemcache`)
+  - Wiki2018 (`wiki2018`)
+- Size:
+  - 277,995,072 candidate-level rows
+  - 2,363,286 decision-horizon rows
+  - 1,000,000 canonical pairwise-sample rows
+- License: Multi-licensed by family -- CC0-1.0 (wiki2018), CC BY 4.0 (Alibaba Block, Twemcache), Apache License 2.0 (MetaCDN, MetaKV). See `THIRD_PARTY_DATA.md` and `dataset_card/LICENSE_DATA.md` for details.
 
-Zenodo remains on the DOI-backed **v0.2** release:
-https://doi.org/10.5281/zenodo.21895844. Concept DOI:
-https://doi.org/10.5281/zenodo.21895843. No v0.3 Zenodo DOI is documented.
+**AWS Open Data and Older Releases:**
+- The older wiki2018-only **v0.3** release remains available separately on AWS Open Data (bucket `lafc-evict-open-data`, region `us-west-2`) and on Hugging Face on the `main` revision.
+- Zenodo remains on the DOI-backed **v0.2** preview release (version DOI https://doi.org/10.5281/zenodo.21895844, concept DOI https://doi.org/10.5281/zenodo.21895843). No Zenodo version DOI has been minted for v0.3 or v1.0.
 
-The current public release is not the full scientific research build. The
-canonical scientific dataset used in the SIGMOD-scale analyses spans five
-families (`cloudphysics`, `metacdn`, `metakv`, `twemcache`, `wiki2018`),
-277,995,072 candidate rows, and 2,363,286 decisions. See
-[`docs/CURRENT_PROJECT_STATUS_AND_HANDOFF.md`](docs/CURRENT_PROJECT_STATUS_AND_HANDOFF.md)
-for the authoritative project state and
-[`docs/LAFC_EVICT_PUBLICATION_STATE.md`](docs/LAFC_EVICT_PUBLICATION_STATE.md)
-for the release hierarchy.
+See [`docs/LAFC_EVICT_PUBLICATION_STATE.md`](docs/LAFC_EVICT_PUBLICATION_STATE.md) for the detailed release hierarchy.
 
 This repository is a standalone, conservative package for preparing the public release of **LAFC-Evict: Counterfactual Supervision for Learned Cache Eviction**.
 
@@ -80,11 +79,7 @@ LAFC-Evict distinguishes five layers:
 
 This repository does **not** claim authorship of upstream raw traces. The main `v1` label is **finite-horizon counterfactual LRU-continuation miss count after forcing one candidate eviction**, not an offline-optimal target.
 
-The published v0.3 public release contains only `wiki2018`. `cloudphysics`,
-`metacdn`, `metakv`, and `twemcache` are part of the internal canonical
-scientific dataset but are not yet cleared for public release. `brightkite` and
-`citibike` remain blocked. The registry is a release-governance tool, not legal
-advice.
+The published v1.0 public release contains five trace families: alibaba-block (internal key `cloudphysics`), `metacdn`, `metakv`, `twemcache`, and `wiki2018`. Two further families, `brightkite` and `citibike`, remain blocked and are excluded from any public release. The registry is a release-governance tool, not legal advice.
 
 ## Repository layout
 

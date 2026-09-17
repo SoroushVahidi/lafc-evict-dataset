@@ -2,9 +2,8 @@
 
 This directory contains the release-facing documentation for LAFC-Evict.
 
-The current public release is **v0.3** (22,356,992 rows, wiki2018-only,
-published on Hugging Face 2026-08-13; corrected here 2026-09-12 — this
-directory previously still said v0.2). Release/version/host truth is
+The current public release is **v1.0** (277,995,072 rows, five-family,
+published on Hugging Face 2026-09-17). Release/version/host truth is
 maintained in `docs/LAFC_EVICT_PUBLICATION_STATE.md` and
 `publication/LAFC_EVICT_PUBLICATION_STATE.json`.
 

@@ -40,10 +40,7 @@ useful, explained result rather than a benchmark defect). Two further
 families, \texttt{brightkite} and \texttt{citibike}, are excluded from the
 open release subset for redistribution reasons; this is a release-packaging
 boundary, not a claim that the underlying generated corpus is limited to
-five families. This five-family evaluated corpus is itself broader than
-the currently downloadable public v0.3 subset, which packages only the
-wiki2018 slice; the Data Availability statement details the redistribution
-clearance and hosting status of the other four evaluated families. Not
+five families. This five-family evaluated corpus is now publicly available as the LAFC-Evict v1.0 release on the Hugging Face \texttt{v1.0} revision, while the older v0.3 wiki2018-only revision remains available separately; the Data Availability statement details the redistribution clearance and hosting status of the evaluated families. Not
 every family appears in every split (e.g.\ metacdn
 contributes train/validation but no test decisions); split assignment is
 produced upstream of this release package and is normalized and validated,
@@ -72,4 +69,4 @@ The canonical workload and evaluation parameters are summarized in Table~\ref{ta
   \item \textbf{Wiki2018 Negative Control:} Wiki2018 is a deterministic zero-reuse negative-control workload where all candidate eviction options result in identical miss costs (100\% tie-degenerate, zero random regret), acting as a baseline verification of cache boundaries.
 \end{itemize}
 
-Detailed release characteristics, including candidate scale (277M rows) and exact split breakdowns, are provided in Appendix~\ref{sec:appendix-release-tables} (Tables~\ref{tab:dataset-scale} and~\ref{tab:split-counts}).
+Detailed release characteristics, including candidate scale (277M rows) and exact split breakdowns, are provided in \ref{sec:appendix-release-tables} (Tables~\ref{tab:dataset-scale} and~\ref{tab:split-counts}).
