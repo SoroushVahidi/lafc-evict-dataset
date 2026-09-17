@@ -7,6 +7,6 @@
     "matched_cell_monotonicity_raw.csv"
   ],
   "source_branch": "fix/problem4-matched-long-horizon-population-20260917",
-  "source_sha": "d3736b21e66a87c117894ee01ab145410fa2fe53",
+  "source_sha": "d3ea6df7c20a69013ea5febba864d028cba5e4f9",
   "worktree": "/home/soroush/projects/lafc-evict-dataset/worktrees/problem4-matched-long-horizon-population-20260917"
 }

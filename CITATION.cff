@@ -8,16 +8,20 @@ authors:
     affiliation: "New Jersey Institute of Technology"
 repository-code: "https://github.com/SoroushVahidi/lafc-evict-dataset"
 abstract: >-
-  LAFC-Evict v0.3 is a wiki2018-only derived dataset for learning-augmented
-  cache-eviction research. It contains 22,356,992 candidate-level rows across
-  finite-horizon eviction-value and scalar objective-ablation configurations.
-version: "0.3"
-date-released: "2026-08-12"
-license: "CC0-1.0"
+  LAFC-Evict v1.0 is the current full public release: a five-family
+  (Alibaba Block, MetaCDN, MetaKV, Twemcache, Wiki2018) derived dataset for
+  learning-augmented cache-eviction research, containing 277,995,072
+  candidate-level rows across 2,363,286 decisions plus a 1,000,000-row
+  canonical pairwise sample. It is published on the `v1.0` branch/revision
+  of the Hugging Face repository below; the prior wiki2018-only v0.3 release
+  remains published unchanged on the `main` branch/revision.
+version: "1.0"
+date-released: "2026-09-17"
+license: "Multi-licensed by family -- CC0-1.0 (wiki2018), CC BY 4.0 (Alibaba Block, Twemcache), Apache License 2.0 (MetaCDN, MetaKV). See THIRD_PARTY_DATA.md."
 identifiers:
   - type: doi
     value: "10.5281/zenodo.21895843"
-    description: "Zenodo concept DOI; the v0.3 version DOI will be added after public release."
+    description: "Zenodo concept DOI, current version DOI 10.5281/zenodo.21895844 identifies v0.2 only. No Zenodo version exists yet for v0.3 or v1.0; do not cite the concept DOI as identifying v1.0."
 preferred-citation:
   type: article
   title: "Decision-aligned eviction-value prediction for robust learning-augmented caching"
