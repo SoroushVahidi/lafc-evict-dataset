@@ -1,0 +1,19 @@
+term,first_use_section,defined_at_first_use,conventional_term_exists,necessary,appears_before_definition,action
+eviction decision,Introduction,yes,yes (standard caching term),yes,no,keep
+candidate victim,Introduction,yes,yes (standard caching term),yes,no,keep
+counterfactual miss cost / y_loss,Introduction,yes,no (paper-specific),yes,no,keep; this is the paper's actual contribution object
+continuation policy,Background,yes,yes (used in caching literature),yes,no,keep
+trace family,Benchmark Design,yes,partially (dataset-specific grouping),yes,no,keep
+physical eviction decision,Characterization (Problem 4 material),no explicit definition on first use,no,marginal,yes (used before being distinguished from "decision"),define once at first use or drop in favor of plain "decision" -- it is a distinction without a difference in most sentences
+decision-horizon instance / decision-horizon record,Continuation,no explicit definition,no,marginal,yes,replace with "decision at a given horizon" in prose; keep compact form only in tables
+optimal set / optimal candidate set,Label Generation,yes,yes (standard),yes,no,keep
+discriminative decision,Characterization,implied via "1 - all-tied fraction" but never stated as a formal term,no,yes,no,add one explicit sentence defining it the first time it is used
+informativeness / decision informativeness,Characterization,yes (defined via the E[regret | random] formula),no,yes,no,keep -- well defined
+expected random regret,Characterization,yes (formula given),no,yes,no,keep
+release-facing provenance,Release Validation,no,no,marginal,yes,replace with plain "which artifact each number comes from"
+task view (candidate/decision/pairwise "view"),Background,yes,yes (standard in ML benchmark papers),yes,no,keep
+evaluation surface / supervision surface / label surface,Introduction onward (7+ occurrences, 4 different phrasings for close to the same idea),no single definition; used as if self-evident,no,NO -- carries no information beyond "the benchmark" or "the labels",n/a,remove nearly all instances; replace with "the benchmark," "the labels," or "the dataset" depending on context. This is the single largest jargon-inflation pattern found.
+decision-aligned (counterfactual supervision),Introduction,no,no,no -- adds a modifier without new meaning over "per-decision",n/a,drop the modifier; "per-decision" or "candidate-level" already says this
+candidate-within-decision,not actually used verbatim anywhere found,--,--,--,--,no action needed (flagged term does not occur in current text)
+resident victim candidate,not found verbatim (actual text uses "candidate victim" and "resident object"),--,--,--,--,no action needed
+unique-winner fraction,Characterization,yes,no,yes,no,keep
