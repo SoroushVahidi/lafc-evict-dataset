@@ -11,16 +11,16 @@ Classifications follow the source report's own discipline exactly:
 proven), and \textsc{causally established} (reserved for one deductive
 result below). No claim here is upgraded beyond its source classification.
 
-\textbf{Capacity-scale reuse correlates with both discriminativeness and
+\textbf{Capacity-scale reuse correlates with both the all-tied fraction and
 closed-loop separation.} Trace-derived LRU hit rate (an exact,
 capacity-scale reuse measure, computed independently of the labels)
-correlates with offline discriminativeness at $r=0.83$ and with
-closed-loop $|\text{MRU}-\text{LRU}|$ separation at $r=0.90$ (pooled
+is negatively associated with the offline all-tied fraction at $r\approx-0.83$ (equivalently positively associated with discriminativeness at $r\approx+0.83$) and positively associated with
+closed-loop $|\text{MRU}-\text{LRU}|$ separation at $r\approx0.90$ (pooled
 $n=10$). Figure~\ref{fig:locality} shows both relationships directly.
 The two associations are not equally robust to workload composition:
 leave-one-family-out sensitivity analysis leaves the separation correlation
 comparatively stable, but reduces the discriminativeness correlation from
-$r=0.83$ to $r\approx0.69$ when metacdn is excluded (exact family-level
+$r\approx0.83$ to $r\approx0.69$ when metacdn is excluded (exact family-level
 permutation $p\approx0.117$), so we treat the discriminativeness pairing
 as consistent with, rather than robust confirmation of, the proposed
 mechanism. This is an $n=10$, exploratory finding, consistent with but not
@@ -31,7 +31,7 @@ driving both.
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/figure4_locality.pdf}
-  \caption{Trace-derived LRU hit rate vs.\ offline discriminativeness
+  \caption{Trace-derived LRU hit rate vs.\ offline all-tied fraction
   (left) and closed-loop policy separation (right), $n=10$ family$\times$capacity
   cells.}
   \label{fig:locality}

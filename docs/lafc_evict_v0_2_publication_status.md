@@ -33,7 +33,7 @@ Both remote Parquet files were re-downloaded from the public Hub repository and 
 
 ## Validation
 
-- Canonical tests before publication: `100 passed`
+- Canonical tests before public release: `100 passed`
 - Preview validator: passed
 - Security/privacy scan: passed with no findings
 - `git diff --check`: passed
@@ -43,4 +43,4 @@ Both remote Parquet files were re-downloaded from the public Hub repository and 
 
 ## Preservation
 
-The historical synthetic repository `SoroushVahidi/lafc-evict-sample` was not modified. Its verified revision after publication was `c80dd3c55d837afa0405e78ef7a0475455256eb1`.
+The historical synthetic repository `SoroushVahidi/lafc-evict-sample` was not modified. Its verified revision after public release was `c80dd3c55d837afa0405e78ef7a0475455256eb1`.

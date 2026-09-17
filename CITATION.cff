@@ -17,7 +17,7 @@ license: "CC0-1.0"
 identifiers:
   - type: doi
     value: "10.5281/zenodo.21895843"
-    description: "Zenodo concept DOI; the v0.3 version DOI will be added after publication."
+    description: "Zenodo concept DOI; the v0.3 version DOI will be added after public release."
 preferred-citation:
   type: article
   title: "Decision-aligned eviction-value prediction for robust learning-augmented caching"
