@@ -18,10 +18,22 @@ Zenodo remains on the DOI-backed **v0.2** release:
 https://doi.org/10.5281/zenodo.21895844. Concept DOI:
 https://doi.org/10.5281/zenodo.21895843. No v0.3 Zenodo DOI is documented.
 
-The current public release is not the full scientific research build. The
-canonical scientific dataset used in the SIGMOD-scale analyses spans five
-families (`cloudphysics`, `metacdn`, `metakv`, `twemcache`, `wiki2018`),
-277,995,072 candidate rows, and 2,363,286 decisions. See
+The current public v0.3 release (Hugging Face, AWS Open Data) is not the
+full scientific research build. The canonical scientific dataset used in
+the Performance Evaluation manuscript's analyses spans five families
+(`cloudphysics` i.e. "Alibaba Block", `metacdn`, `metakv`, `twemcache`,
+`wiki2018`), 277,995,072 candidate rows, and 2,363,286 decisions. All five
+of these families are legally cleared for public redistribution (see
+`manifests/source_family_registry.yaml`, reviewed 2026-09-15, and
+`THIRD_PARTY_DATA.md`); `brightkite` and `citibike` are excluded and remain
+blocked pending review, and are not part of the evaluated benchmark.
+
+A full five-family package matching this exact corpus
+(`release/lafc-evict-v1.0/`) has been built and locally validated (see
+`release/lafc-evict-v1.0/metadata/validation_report.md`), but is **not yet
+uploaded** to Hugging Face, AWS Open Data, or Zenodo. Packaging/hosting the
+already-cleared four additional families is an operational publication step,
+not a licensing blocker. See
 [`docs/CURRENT_PROJECT_STATUS_AND_HANDOFF.md`](docs/CURRENT_PROJECT_STATUS_AND_HANDOFF.md)
 for the authoritative project state and
 [`docs/LAFC_EVICT_PUBLICATION_STATE.md`](docs/LAFC_EVICT_PUBLICATION_STATE.md)
@@ -80,11 +92,14 @@ LAFC-Evict distinguishes five layers:
 
 This repository does **not** claim authorship of upstream raw traces. The main `v1` label is **finite-horizon counterfactual LRU-continuation miss count after forcing one candidate eviction**, not an offline-optimal target.
 
-The published v0.3 public release contains only `wiki2018`. `cloudphysics`,
-`metacdn`, `metakv`, and `twemcache` are part of the internal canonical
-scientific dataset but are not yet cleared for public release. `brightkite` and
-`citibike` remain blocked. The registry is a release-governance tool, not legal
-advice.
+The published v0.3 public release contains only `wiki2018`. `cloudphysics`
+("Alibaba Block"), `metacdn`, `metakv`, and `twemcache` are part of the
+internal canonical scientific dataset and, as of the 2026-09-15 registry
+review, are legally **cleared for public release**; they are packaged
+(`release/lafc-evict-v1.0/`, validated locally) but not yet uploaded to a
+public host. `brightkite` and `citibike` remain blocked pending license/
+privacy review and are excluded from both the evaluated benchmark and every
+release. The registry is a release-governance tool, not legal advice.
 
 ## Repository layout
 

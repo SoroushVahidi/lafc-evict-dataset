@@ -60,8 +60,47 @@ corrected before it is ever uploaded to Zenodo.
 - **v0.2 published preview:** the previous public release (4,800,000 rows).
   Remains published and pinnable on both Hugging Face and Zenodo for
   reproducibility; not deleted or altered by the v0.3 publication.
-- **v1.0:** future stable/full release; planning only and conditional on
-  explicit provenance clearance for every included family.
+- **v1.0 (full five-family release):** built and locally validated on
+  2026-09-16 at `release/lafc-evict-v1.0/` -- **not yet uploaded to any
+  public host.** It repackages the exact corpus behind the manuscript's
+  277,995,072 candidate rows / 2,363,286 decisions (source:
+  `release/lafc-evict-v0.1-open-current-contract-preserved`, no label
+  regeneration), with `wiki2018` identifiers pseudonymized using the same
+  scheme already published for v0.2/v0.3. All five included families
+  (`cloudphysics`/"Alibaba Block", `metacdn`, `metakv`, `twemcache`,
+  `wiki2018`) are cleared for public release per the 2026-09-15 registry
+  review; `brightkite`/`citibike` remain excluded and blocked. See
+  `release/lafc-evict-v1.0/README.md` and
+  `release/lafc-evict-v1.0/metadata/validation_report.md`. Uploading this
+  package to Hugging Face / AWS Open Data / Zenodo requires an explicit,
+  user-approved publish step (see "Next required action" below) -- it was
+  not performed automatically, since publishing this much newly-redistributed
+  third-party production trace data to permanent public hosts is a
+  significant, hard-to-reverse, externally-visible action.
+
+### Next required action to make v1.0 actually public
+
+1. Review `release/lafc-evict-v1.0/` (README, manifest, validation report,
+   checksums) and confirm the packaging decisions (wiki2018-only
+   pseudonymization, pairwise_sample exclusion) are acceptable.
+2. Upload to Hugging Face: `python scripts/publish_to_huggingface.py
+   --release-root release/lafc-evict-v1.0 --repo-id
+   SoroushVahidi/lafc-evict-v1.0` (or the existing dataset repo, as a new
+   revision -- confirm which before running; this repository's own
+   `publish_to_huggingface.py` requires `HF_TOKEN`/`HUGGINGFACE_HUB_TOKEN` to
+   be set).
+3. Upload to AWS Open Data bucket `lafc-evict-open-data` following the same
+   procedure used for the v0.3 wiki2018-only payload (see
+   `publication/RELEASE_CHECKLIST.md`).
+4. Create a new Zenodo version under concept DOI
+   `10.5281/zenodo.21895843` using a flat-layout mirror of
+   `release/lafc-evict-v1.0/` (same pattern as `*-zenodo-flat` for prior
+   versions) -- note the v0.3 Zenodo upload is separately blocked by an
+   HTTP 403 on the configured token (see the v0.3 entry above); confirm
+   token scope before attempting v1.0.
+5. After upload, update this document and
+   `publication/LAFC_EVICT_PUBLICATION_STATE.json` with the actual
+   revision/DOI/verification evidence, the same way v0.2/v0.3 were recorded.
 
 ## Repository ownership
 
@@ -92,13 +131,17 @@ derived-data redistribution under their applicable upstream terms --
 of this clearance.
 
 **Current packaging/hosting status** (a separate, operational question from
-legal clearance): `wiki2018` is the only family actually packaged and
-publicly hosted in the current v0.3 derived-data release (Hugging Face and
-AWS Open Data, see above). `twemcache`, `cloudphysics` (Alibaba Block),
-`metakv`, and `metacdn` are legally cleared but **not yet packaged or
-hosted** in any public release -- this is a release-packaging backlog, not
-a licensing limitation. Do not describe these four families' derived rows
-as currently downloadable; they are not.
+legal clearance): `wiki2018` is the only family actually **publicly hosted**
+today, in the v0.3 release (Hugging Face and AWS Open Data, see above). As of
+2026-09-16, all five evaluated families (`wiki2018`, `twemcache`,
+`cloudphysics`/"Alibaba Block", `metakv`, `metacdn`) have been **packaged and
+locally validated** together in `release/lafc-evict-v1.0/`, matching the
+manuscript's evaluated corpus exactly (277,995,072 candidate rows,
+2,363,286 decisions). That package is **not yet uploaded** to Hugging Face,
+AWS Open Data, or Zenodo -- packaging is done, hosting is the remaining
+step. Do not describe `twemcache`/`cloudphysics`/`metakv`/`metacdn` derived
+rows as currently publicly downloadable; they are not, until the upload step
+in "Next required action" above is completed.
 
 The registry is a governance record, not legal advice.
 

@@ -63,10 +63,16 @@ def test_publication_clearance_is_explicit_and_fail_closed() -> None:
     registry = load_source_family_registry(_registry_path())
     clearance = {str(entry["family"]): str(entry["publication_clearance"]) for entry in registry}
 
-    assert clearance["wiki2018"] == "cleared_for_public_release"
+    # Per the 2026-09-15 registry review (manifests/source_family_registry.yaml,
+    # THIRD_PARTY_DATA.md), all five evaluated families are cleared for public
+    # redistribution under their respective upstream licenses. Only
+    # brightkite/citibike remain blocked. This assertion previously encoded
+    # the pre-review state (cloudphysics/metacdn/metakv/twemcache
+    # "not_cleared_pending_final_review") and was not updated when that
+    # review concluded; keep it in sync with the registry, not with history.
     assert all(
-        clearance[family] == "not_cleared_pending_final_review"
-        for family in ("cloudphysics", "metacdn", "metakv", "twemcache")
+        clearance[family] == "cleared_for_public_release"
+        for family in ("wiki2018", "cloudphysics", "metacdn", "metakv", "twemcache")
     )
     assert clearance["brightkite"] == "blocked"
     assert clearance["citibike"] == "blocked"

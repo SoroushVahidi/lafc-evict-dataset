@@ -294,21 +294,27 @@ def provenance_rows() -> list[dict[str, str]]:
             "reason": "reviewed 2026-08-11 (docs/WIKI2018_PROVENANCE_REVIEW.md); Wikimedia Analytics pageview data is documented CC0; preview/candidate object identifiers are pseudonymized and no raw page titles are exposed",
         }
     ]
-    unclear = [
-        ("twemcache", "Twitter cache trace / Twemcache open trace collection", "https://github.com/twitter/cache-trace"),
-        ("metakv", "MetaKV trace family via open cache trace collection", "https://github.com/cacheMon/cache_dataset"),
-        ("metacdn", "MetaCDN trace family via open cache trace collection", "https://github.com/cacheMon/cache_dataset"),
-        ("cloudphysics", "CloudPhysics / open cache trace collection block I/O family", "https://github.com/cacheMon/cache_dataset"),
+    # Per the 2026-09-15 registry review (manifests/source_family_registry.yaml,
+    # THIRD_PARTY_DATA.md), these four families are legally cleared for public
+    # redistribution under their respective upstream licenses. They are still
+    # not included in this v0.3 (wiki2018-only) release -- that is a packaging/
+    # hosting scope decision for this specific release, not a licensing block.
+    # See release/lafc-evict-v1.0/ for the packaged five-family release.
+    cleared_not_in_this_release = [
+        ("twemcache", "Twitter production cache traces (Twemcache open trace collection, CC BY 4.0)", "https://github.com/twitter/cache-trace"),
+        ("metakv", "Meta MetaKV production key-value cache trace via CacheLib (Apache License 2.0)", "https://cachelib.org/docs/Cache_Library_User_Guides/Cachebench_FB_HW_eval/"),
+        ("metacdn", "Meta MetaCDN production CDN request trace via CacheLib (Apache License 2.0)", "https://cachelib.org/docs/Cache_Library_User_Guides/Cachebench_FB_HW_eval/"),
+        ("cloudphysics", "Alibaba Cloud EBS production block-storage trace, CC BY 4.0 (internal key 'cloudphysics'; not VMware/CloudPhysics, see THIRD_PARTY_DATA.md)", "https://github.com/alibaba/block-traces"),
     ]
-    for family, name, url in unclear:
+    for family, name, url in cleared_not_in_this_release:
         rows.append(
             {
                 "family": family,
                 "source_name": name,
                 "source_url": url,
-                "redistribution_status": "LICENSE_UNCLEAR",
+                "redistribution_status": "cleared_for_public_release",
                 "included": "no",
-                "reason": "final upstream redistribution/attribution review not yet completed and recorded",
+                "reason": "cleared for public release (2026-09-15 registry review) but not included in this v0.3 wiki2018-only release; see release/lafc-evict-v1.0/ for the five-family package",
             }
         )
     for family, name, url in (
