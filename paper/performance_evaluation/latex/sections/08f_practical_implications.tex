@@ -6,12 +6,16 @@ into guidance, without turning exploratory correlations into universal
 rules.
 
 \textbf{When should the offline counterfactual signal be trusted?} Most
-directly in workload/capacity regimes with high capacity-scale reuse --
-identifiable, before running any closed-loop replay, from a low trace-derived
-all-tied fraction or a high trace-derived LRU hit rate
-(Section~\ref{sec:mechanisms}). In this dataset that means metacdn- and
-twemcache-like regimes, where offline discriminativeness is high and
-offline$\leftrightarrow$closed-loop agreement is strongest.
+directly in workload/capacity regimes with positive decision
+informativeness and high capacity-scale reuse -- identifiable, before
+running any closed-loop replay, from low all-tied mass, larger expected
+random regret, or a high trace-derived LRU hit rate
+(Sections~\ref{sec:characterization} and~\ref{sec:mechanisms}). In this
+dataset that means metacdn- and twemcache-like regimes for label
+informativeness, although the highest-information twemcache slices also
+show that LRU-like features are not always enough. The benchmark is
+therefore most useful for regime-conditioned comparison, not as a single
+pooled leaderboard.
 
 \textbf{When should a researcher be cautious?} In near-zero-offline-signal
 regimes (alibaba-block/cap32 is the concrete example here): a small offline
@@ -27,7 +31,11 @@ coexists with genuinely discriminative sub-regimes. A high tie rate is
 itself informative: it identifies where a policy comparison is unlikely to
 be resolvable by this label family at all (wiki2018 is the limiting case),
 which is useful information for deciding where \emph{not} to expect a
-learned method to outperform a heuristic on this evidence.
+learned method to outperform a heuristic on this evidence. Conversely, when
+expected random regret is positive, regret rather than raw optimal-set rate
+is the safer primary comparison: LRU and the clean pairwise selector
+separate from random in all positive-information strata, while weak
+pointwise learned selectors are exposed as worse than random.
 
 \textbf{Why still run closed-loop evaluation?} The offline/closed-loop
 association in Section~\ref{sec:linkage} is real but bounded: it holds in

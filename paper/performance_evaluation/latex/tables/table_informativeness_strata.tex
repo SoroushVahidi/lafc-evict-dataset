@@ -1,0 +1,20 @@
+\begin{table}[t]
+  \centering
+  \caption{Informativeness-stratified selector utility. Regret is mean selected loss minus the decision minimum, in misses; Opt. is the optimal-set selection rate.}
+  \label{tab:informativeness-strata}
+  \resizebox{\columnwidth}{!}{%
+  \begin{tabular}{lrrrrrrrrrrrr}
+    \toprule
+    Stratum & $n$ & E[random regret] & \multicolumn{2}{c}{Uniform random} & \multicolumn{2}{c}{LRU} & \multicolumn{2}{c}{Clean pairwise} & \multicolumn{2}{c}{Clean linear} & \multicolumn{2}{c}{Frozen HGB} \\
+    \cmidrule(lr){4-13}
+     & & & regret & opt. & regret & opt. & regret & opt. & regret & opt. & regret & opt. \\
+    \midrule
+    Z & 1,599,004 & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 1.0000 & 0.0000 & 1.0000 & 0.0000 & 1.0000 & 0.0000 & 1.0000 \\
+    Q1 & 191,086 & 0.0144 & 0.0144 & 0.9856 & 0.0007 & 0.9993 & 0.0005 & 0.9995 & 0.3581 & 0.6419 & 0.1960 & 0.8040 \\
+    Q2 & 191,078 & 0.0183 & 0.0183 & 0.9817 & 0.0010 & 0.9990 & 0.0009 & 0.9991 & 0.3810 & 0.6190 & 0.2151 & 0.7849 \\
+    Q3 & 191,066 & 0.0273 & 0.0273 & 0.9727 & 0.0020 & 0.9980 & 0.0021 & 0.9979 & 0.3885 & 0.6115 & 0.2270 & 0.7730 \\
+    Q4 & 191,052 & 0.0492 & 0.0492 & 0.9517 & 0.0341 & 0.9671 & 0.0341 & 0.9671 & 0.4193 & 0.5855 & 0.2632 & 0.7395 \\
+    \bottomrule
+  \end{tabular}%
+  }
+\end{table}

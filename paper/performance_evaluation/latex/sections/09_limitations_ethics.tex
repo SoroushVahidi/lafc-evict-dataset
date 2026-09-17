@@ -12,9 +12,14 @@ imply online deployment gains, which is exactly why
 Sections~\ref{sec:closed-loop} and~\ref{sec:linkage} evaluate closed-loop
 behavior directly rather than relying on the offline label alone.
 
-Second, every horizon-dependent result is scoped to
-$H\in\{4,8,16\}$. Statements favoring $H=16$ mean strongest among those
-three evaluated horizons only; $H>16$ remains untested.
+Second, horizon-dependent results are scoped to the horizons actually
+evaluated. Most manuscript analyses use the canonical released
+$H\in\{4,8,16\}$ decision population; the separate long-horizon audit
+extends only the discriminativeness characterization to
+$H\in\{32,64,128\}$. It shows that longer horizons increase
+informativeness in reuse-heavy workloads but do not remove degeneracy:
+substantial all-tied mass persists at $H=128$, and wiki2018 remains fully
+tied. No result here covers $H>128$.
 
 Third, the canonical labels use LRU continuation after a forced eviction.
 The sampled MRU/random study and full-population MRU census in
@@ -25,12 +30,16 @@ experiment covers every deployment policy.
 Fourth, the target is substantially tied. Across the full audited canonical
 dataset, the all-tied fraction is approximately 0.68 and the unique-winner
 fraction is exactly 0.0 -- no audited decision in this dataset has a single
-uniquely-best candidate victim. Discriminativeness varies strongly by
-family, capacity, and horizon; one
-family, wiki2018, is a fully degenerate negative control at every
-capacity and horizon tested, with zero reuse events in its scored windows,
-which is a mathematical certainty rather than a statistical property of
-that trace.
+uniquely-best candidate victim. The informativeness-stratified analysis
+shows this is not equivalent to benchmark uselessness: zero-information
+decisions correctly show no method separation, while positive-information
+strata separate LRU-like and tie-aware selectors from random and from weak
+pointwise learned selectors. The support remains conditional, not
+universal; family/capacity regimes with high expected random regret can
+also be regimes where simple recency-based selectors are less reliable.
+Wiki2018 is a fully degenerate negative control at every capacity and
+horizon tested, with zero reuse events in its scored windows, which is a
+mathematical certainty rather than a statistical property of that trace.
 
 Fifth, the evaluated dataset uses unit-object, count-based capacities (32,
 64, 128, or 256 objects) with unconditional admission of the requested

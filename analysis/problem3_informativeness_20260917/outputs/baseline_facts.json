@@ -1,0 +1,22 @@
+{
+  "total_decision_horizon_count": 2363286,
+  "total_candidate_rows": 277995072.0,
+  "all_tied_fraction": 0.676601985540472,
+  "discriminative_fraction": 0.323398014459528,
+  "random_optimal_probability": 0.9912418754543462,
+  "expected_uniform_random_regret": 0.008826200441884731,
+  "unique_winner_fraction": 0.0,
+  "min_optimal_set_size": 16,
+  "mean_optimal_set_size": 116.96959614705965,
+  "max_optimal_set_size": 256,
+  "p90_expected_random_regret": 0.03125,
+  "p95_expected_random_regret": 0.046875,
+  "p99_expected_random_regret": 0.09375,
+  "elapsed_seconds": 194.44076561927795,
+  "validation": {
+    "zero_not_z": 0.0,
+    "positive_z": 0.0,
+    "n_decisions": 2363286,
+    "n_candidate_rows": 277995072.0
+  }
+}

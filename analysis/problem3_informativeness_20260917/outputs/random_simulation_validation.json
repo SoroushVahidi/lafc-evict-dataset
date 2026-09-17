@@ -1,0 +1,8 @@
+{
+  "n_decisions": 118524,
+  "analytical_mean_random_regret": 0.008913740571529816,
+  "simulated_mean_random_regret": 0.00919644966420303,
+  "simulated_optimal_rate": 0.9908963585434174,
+  "mean_regret_delta": -0.00028270909267321363,
+  "elapsed_seconds": 1.3779723644256592
+}

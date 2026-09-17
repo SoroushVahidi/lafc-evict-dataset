@@ -1,0 +1,352 @@
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+scored 12/168 files in 12.1s
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+scored 24/168 files in 16.3s
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+scored 36/168 files in 24.1s
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+scored 48/168 files in 30.0s
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+scored 60/168 files in 88.5s
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+scored 72/168 files in 114.3s
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+scored 84/168 files in 154.5s
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+scored 96/168 files in 194.6s
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+scored 108/168 files in 255.1s
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+scored 120/168 files in 260.6s
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+scored 132/168 files in 276.2s
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+scored 144/168 files in 289.5s
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+scored 156/168 files in 293.3s
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+/home/soroush/modal-venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but HistGradientBoostingRegressor was fitted without feature names
+  warnings.warn(
+scored 168/168 files in 298.9s
+wrote 2363286 frozen-HGB decision outcomes to /home/soroush/projects/lafc-evict-dataset/worktrees/problem3-informativeness-stratification-20260917/analysis/problem3_informativeness_20260917/outputs/frozen_hgb_outcomes.parquet
+EXIT:0

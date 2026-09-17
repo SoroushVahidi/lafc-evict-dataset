@@ -45,11 +45,17 @@ extreme: all-tied fraction 1.0 at every capacity and every horizon tested,
 with zero reuse events in its scored windows (Section~\ref{sec:mechanisms}
 shows this is a mathematical certainty, not a statistical property of the
 trace, and treats wiki2018 as a genuine negative control rather than a
-benchmark failure). Discriminativeness also increases with horizon within
-every non-degenerate family (e.g.\ twemcache/cap32 rises from 0.46 at
-$H=4$ to 0.76 at $H=16$) -- a longer look-ahead window resolves more ties,
-consistent with more future requests giving more opportunities for
-candidates' fates to diverge.
+benchmark failure). Discriminativeness also tends to increase with horizon
+within non-degenerate families: a longer look-ahead window resolves more
+ties, consistent with more future requests giving more opportunities for
+candidates' fates to diverge. A longer-horizon audit extends this check
+from $H=16$ to $H\in\{32,64,128\}$ for the same five families: pooled mean
+random regret rises from 0.0132 at $H=16$ to 0.0367 at $H=128$, and 16 of
+20 family$\times$capacity cells become more discriminative between $H=16$
+and $H=128$. Horizon length is not the whole explanation, however: at
+$H=128$, the pooled all-tied fraction remains 0.596, wiki2018 remains
+exactly all-tied at every capacity, and MetaKV remains mostly
+low-information (all-tied fractions 0.79--0.86 across capacities).
 
 \begin{figure}[t]
   \centering
@@ -61,15 +67,99 @@ candidates' fates to diverge.
   \label{fig:discriminativeness}
 \end{figure}
 
+\subsection{Does informativeness translate into method separation?}
+\label{sec:informativeness-utility}
+
+To answer whether the benchmark can distinguish methods when the decision
+contains useful eviction information, we pre-registered a decision
+informativeness statistic before evaluating selector outcomes:
+\[
+  E[\mathrm{regret}\mid\mathrm{uniform\ random}]
+  = \mathrm{mean}_c(\texttt{y\_loss}(c)) - \min_c \texttt{y\_loss}(c).
+\]
+This statistic is zero exactly for all-tied decisions and is measured in
+misses. We keep those zero-information decisions as stratum Z. For
+positive-information decisions, we assign quartiles within each
+family$\times$capacity$\times$horizon cell and then pool corresponding
+quartile ranks (Q1--Q4); this prevents one workload or capacity scale from
+defining the thresholds. The protocol and scripts are in
+\texttt{analysis/problem3\_informativeness\_20260917/}; the protocol was
+committed before the selector-outcome pass.
+
+\input{tables/table_informativeness_strata}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/figure_problem3_mean_regret_by_informativeness.pdf}
+  \caption{Mean realized regret by pre-registered decision-informativeness
+  stratum. Zero-information decisions correctly produce no method
+  separation. In positive-information strata, LRU and the clean pairwise
+  selector remain close to the decision optimum, while the clean linear and
+  frozen HGB pointwise models are clearly separated as weaker selectors.}
+  \label{fig:informativeness-regret}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/figure_problem3_improvement_vs_random.pdf}
+  \caption{Regret improvement relative to uniform random by
+  informativeness stratum. The gain for LRU and the clean pairwise selector
+  is positive in every positive-information stratum but not monotone: Q4
+  contains regimes where random choices are costlier but LRU-style recency
+  is also less reliable.}
+  \label{fig:informativeness-improvement}
+\end{figure}
+
+The resulting pattern is conditional rather than universal. In stratum Z,
+every method has exactly zero regret and 100\% optimal-set selection, which
+is the desired behavior: when all candidates are equivalent under the
+finite-horizon objective, the benchmark should not manufacture separation.
+As expected random regret increases, uniform random regret rises from
+0.0144 (Q1) to 0.0492 (Q4). LRU and the clean pairwise selector are much
+better than random in every positive-information stratum (mean regret
+0.0005--0.0341), and their optimal-set selection rates remain above 0.967
+even in Q4. The clean linear and frozen HGB pointwise selectors, by
+contrast, are worse than random in every positive-information stratum;
+this is a useful failure signal rather than something hidden by ties.
+
+The separation is not a monotone success story. LRU and clean pairwise gain
+most over random in Q3 (about 0.025 misses) and less in Q4 (about 0.015
+misses), because the highest-information bin includes regimes where
+non-optimal choices are more costly but the LRU-like feature signal is also
+less reliable. Family-level robustness confirms the condition: MetaCDN,
+MetaKV, and most lower-informativeness non-wiki strata show strong
+LRU/pairwise separation from random, while alibaba-block and twemcache Q4
+are harder and can sharply reduce or reverse the LRU advantage. Therefore
+\lafc\ is useful as a regime-conditioned benchmark: it distinguishes
+reasonable tie-aware selectors from random and from weaker learned
+pointwise selectors where the finite-horizon counterfactual signal is
+informative, but it is not uniformly discriminative across all
+workload/capacity regimes.
+
+The headline random-optimal probability is also less catastrophic than it
+sounds. Of all decisions, 67.66\% are zero-information and contribute no
+random regret. Another 31.66\% have very large optimal sets (optimal-set
+fraction at least 0.90) and at least one worse candidate; these account
+for 86.8\% of total expected random regret but still have mean
+random-optimal probability 0.976. Only 0.68\% of decisions fall into the
+material-regret-separation group (expected random regret above 1/16
+misses), yet they contribute 13.2\% of total expected random regret. Thus
+the 99.12\% random-optimal statistic is dominated by decisions where
+alternative choices are exactly or nearly equivalent under the benchmark
+objective, not by a failure to identify meaningful regimes.
+
 \subsection{Interpretation}
 
 The scientific contribution here is partly \emph{characterizing} where the
 target is informative rather than asserting it is informative everywhere.
 High tie rates are not hidden or explained away: they are the majority
-regime in this dataset, and Section~\ref{sec:mechanisms} connects them
-directly to trace-level reuse structure (capacity-scale locality), giving
-a mechanistic account of exactly why metacdn/twemcache are discriminative
-and alibaba-block/metakv/wiki2018 are not. Sections~\ref{sec:closed-loop}
-and~\ref{sec:linkage} then ask whether this same discriminativeness
-structure predicts anything about actual closed-loop cache-policy
-behavior (it does, in the regimes identified here).
+regime in this dataset. The informativeness-stratified utility result
+separates two facts that the aggregate random-optimal statistic conflates:
+low-information decisions correctly show little or no method separation,
+while positive-information regimes can distinguish LRU-like and tie-aware
+selectors from both random choice and weaker pointwise learned selectors.
+Section~\ref{sec:mechanisms} connects this structure to trace-level reuse
+(capacity-scale locality), and Sections~\ref{sec:closed-loop}
+and~\ref{sec:linkage} then ask whether the same discriminativeness
+structure predicts actual closed-loop cache-policy behavior (it does, in
+the regimes identified here).

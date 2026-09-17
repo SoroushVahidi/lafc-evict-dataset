@@ -47,9 +47,11 @@ two specific, characterized exceptions. \textbf{(RQ3)} How does this
 correspondence depend on workload, capacity, and horizon? We find that
 capacity-scale locality in the underlying trace correlates with both
 offline discriminativeness and closed-loop policy separation, and that,
-among the three horizons this paper evaluates ($H\in\{4,8,16\}$), $H=16$
-aligns offline and closed-loop evidence most strongly, though modestly;
-this paper does not evaluate $H>16$. \textbf{(RQ4)} How
+among the three main-release horizons ($H\in\{4,8,16\}$), $H=16$
+aligns offline and closed-loop evidence most strongly, though modestly.
+A separate H32--H128 characterization audit shows that longer horizons
+increase informativeness in reuse-heavy workloads but do not eliminate
+low-information regimes. \textbf{(RQ4)} How
 sensitive are the labels to the choice of continuation policy after a
 forced eviction? A sampled robustness study at two cache capacities finds
 the labels robust to MRU and mean-random continuations by a

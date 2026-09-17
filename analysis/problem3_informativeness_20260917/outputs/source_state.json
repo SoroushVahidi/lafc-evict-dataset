@@ -1,0 +1,12 @@
+{
+  "source_repo": "/home/soroush/projects/lafc-evict-dataset/repo",
+  "source_branch": "repair/feature-provenance-and-modeling-20260917",
+  "source_sha": "a79da7235297eb2be3436a884195025f24df3c68",
+  "problem3_branch": "experiment/problem3-informativeness-stratification-20260917",
+  "problem3_head_at_run_start": "076e1cf7ea5e1d3d5058b8b1f3004328687e1aa5",
+  "problem3_worktree": "/home/soroush/projects/lafc-evict-dataset/worktrees/problem3-informativeness-stratification-20260917",
+  "candidate_source": "/home/soroush/projects/lafc-evict-dataset/repo/release/lafc-evict-v0.1-open-current-contract-preserved/data/candidate_rows/**/*.parquet",
+  "decision_view": "/home/soroush/projects/lafc-evict-dataset/repo/release/lafc-evict-v0.1-open-current-contract-preserved/data/decision_view/decision_view.parquet",
+  "protocol_commit": "076e1cf7ea5e1d3d5058b8b1f3004328687e1aa5",
+  "started_unix_time": 1789652295.9934118
+}

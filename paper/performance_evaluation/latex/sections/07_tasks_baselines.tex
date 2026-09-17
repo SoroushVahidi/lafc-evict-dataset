@@ -75,16 +75,20 @@ not a population or online-policy claim.
 
 The best-candidate evaluator groups candidate rows by the canonical
 9-column decision key and reports 2,363,286 decisions, an exact match
-with the decision view (Section~\ref{sec:benchmark-design}). A cheap
-decision-level floor computed directly from the decision view shows why
-this match matters for interpretation: a uniform-random selector's
-expected optimal-selection rate is 0.9912 with expected regret 0.0088,
-both more favorable than the linear-score selector's observed 0.8753
-optimal-selection rate and 0.1251 mean regret, purely because of the tie
-density documented in Section~\ref{sec:characterization} -- not because
-the linear score underperforms a stronger baseline. Headline
-selection-rate and regret numbers should therefore always be read
-alongside this random floor rather than in isolation.
+with the decision view (Section~\ref{sec:benchmark-design}). Because many
+decisions have exact ties, top-1 optimal-set selection rate is not a
+sufficient primary metric: a uniform-random selector's expected
+optimal-selection rate is already 0.9912 with expected regret 0.0088.
+Accordingly, the decision-level utility analysis in
+Section~\ref{sec:characterization} treats ties as genuine equal optima and
+uses realized regret, stratified by expected random regret, as the primary
+selector-quality view. In that analysis random is evaluated analytically;
+LRU chooses the released LRU victim; the clean linear selector uses the
+Problem-2 seven-feature least-squares loss model; the clean pairwise
+selector uses the Problem-2 strict-preference feature-difference logistic
+model as a within-decision score; and the frozen HGB artifacts are scored
+with their original loss-prediction orientation. Equal-loss pairs are never
+converted into arbitrary wins or losses.
 
 \input{tables/table_pairwise_sample_stats}
 
