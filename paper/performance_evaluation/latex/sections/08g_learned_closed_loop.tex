@@ -16,7 +16,8 @@ this section, is the ordering among policies evaluated together under one
 matched, held-out protocol.
 \end{sloppypar}
 
-\textbf{Setup.} We refer to this baseline model as HGB (scikit-learn's \texttt{HistGradientBoostingRegressor}). It was trained to predict the $H=16$ \texttt{y\_loss} target, selected by offline validation, and frozen. As a pre-repair artifact, its serialized schema reflects the legacy 26-feature interface. A forensic audit deprecated 19 of those columns (18 constant, 1 redundant alias); structural checks verified the fitted estimator never branches on the constants, though it uses the redundant alias (carrying no independent information). Consequently, HGB is retained as a historical baseline rather than a clean seven-feature model. The policy was evaluated by true closed-loop replay -- evicting the candidate with the lowest predicted \texttt{y\_loss} -- on the same 10 cells against matched LRU, MRU, SIEVE, LFU, and random baselines under identical warmup and scoring conventions.
+\textbf{Setup.} We refer to this baseline model as HGB (scikit-learn's
+{\ttfamily\hyphenchar\font=`\- HistGradientBoostingRegressor}). It was trained to predict the $H=16$ \texttt{y\_loss} target, selected by offline validation, and frozen. As a pre-repair artifact, its serialized schema reflects the legacy 26-feature interface. A forensic audit deprecated 19 of those columns (18 constant, 1 redundant alias); structural checks verified the fitted estimator never branches on the constants, though it uses the redundant alias (carrying no independent information). Consequently, HGB is retained as a historical baseline rather than a clean seven-feature model. The policy was evaluated by true closed-loop replay -- evicting the candidate with the lowest predicted \texttt{y\_loss} -- on the same 10 cells against matched LRU, MRU, SIEVE, LFU, and random baselines under identical warmup and scoring conventions.
 
 \input{tables/table_learned_closed_loop}
 
