@@ -81,8 +81,12 @@ corrected before it is ever uploaded to Zenodo.
 ### Next required action to make v1.0 actually public
 
 1. Review `release/lafc-evict-v1.0/` (README, manifest, validation report,
-   checksums) and confirm the packaging decisions (wiki2018-only
-   pseudonymization, pairwise_sample exclusion) are acceptable.
+   checksums) and confirm the packaging decisions are acceptable: wiki2018
+   pseudonymization, and the inclusion of the *canonical regenerated*
+   pairwise sample (not the stale one shipped in
+   `lafc-evict-v0.1-open-current-contract-preserved`) -- see
+   `release/lafc-evict-v1.0/README.md`'s "Pairwise sample" section and
+   `analysis/pairwise_provenance_repair_20260913/REPORT.md` for why.
 2. Upload to Hugging Face: `python scripts/publish_to_huggingface.py
    --release-root release/lafc-evict-v1.0 --repo-id
    SoroushVahidi/lafc-evict-v1.0` (or the existing dataset repo, as a new

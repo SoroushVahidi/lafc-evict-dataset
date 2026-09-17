@@ -22,15 +22,22 @@ four families' candidate identifiers are already opaque
 hardlink where possible to avoid duplicating ~2.6 GB of already-validated
 Parquet bytes on disk.
 
-The `pairwise_sample` view is intentionally NOT included: the source tree's
-`pairwise_sample.parquet` is documented as stale/non-canonical
-(`docs/CURRENT_PROJECT_STATUS_AND_HANDOFF.md` section 7 -- six-column vs.
-nine-column decision-selection key bug), and promoting the corrected
-regenerated sample into a public release is explicitly flagged in that same
-document as requiring "a separate release decision." The manuscript's
-headline benchmark claim (277,995,072 candidate rows / 2,363,286 decisions)
-does not depend on the pairwise sample, so this script leaves that decision
-out of scope.
+The `pairwise_sample` view uses the CANONICAL regenerated sample at
+`analysis/pairwise_provenance_repair_20260913/artifacts/pairwise_sample_regenerated_canonical.parquet`
+(SHA256 `1d770c6999ac999673b46805a6ca173e24b116793b35405d2d211cae7b9eda02`,
+tracked in git), NOT the source tree's own
+`data/pairwise_sample/pairwise_sample.parquet`, which is documented as
+stale/non-canonical (`docs/CURRENT_PROJECT_STATUS_AND_HANDOFF.md` section 7
+-- six-column vs. nine-column decision-selection key bug, plus a pre-fix A/B
+orientation bug). The canonical sample's label distribution
+(a_better=60,673, b_better=61,065, tie=878,262), non-tie count (121,738,
+including 2,211 in `test`), and A/B orientation balance (~49.8%/50.2%)
+already match the manuscript's committed tables exactly
+(`analysis/pairwise_provenance_repair_20260913/REPORT.md`); this script
+additionally applies the same wiki2018 pseudonymization used for candidate
+rows/decision view to `candidate_a_page_id`/`candidate_b_page_id`, since the
+canonical sample (like the source candidate rows before this script's other
+transform) still carries raw Wikipedia page titles for wiki2018 rows.
 """
 
 import argparse
@@ -57,6 +64,12 @@ SELECTED_FAMILIES = ["cloudphysics", "metacdn", "metakv", "twemcache", "wiki2018
 EXCLUDED_FAMILIES = ["brightkite", "citibike"]
 EXPECTED_CANDIDATE_ROWS = 277_995_072
 EXPECTED_DECISION_ROWS = 2_363_286
+EXPECTED_PAIRWISE_ROWS = 1_000_000
+CANONICAL_PAIRWISE_SAMPLE = (
+    ROOT / "analysis" / "pairwise_provenance_repair_20260913" / "artifacts"
+    / "pairwise_sample_regenerated_canonical.parquet"
+)
+CANONICAL_PAIRWISE_SAMPLE_SHA256 = "1d770c6999ac999673b46805a6ca173e24b116793b35405d2d211cae7b9eda02"
 
 
 def hardlink_or_copy(src: Path, dst: Path) -> None:
@@ -107,6 +120,22 @@ def transform_decision_view(src: Path, dst: Path) -> None:
     df.to_parquet(dst, index=False)
 
 
+def transform_pairwise_sample(src: Path, dst: Path) -> None:
+    actual_sha256 = sha256_file(src)
+    if actual_sha256 != CANONICAL_PAIRWISE_SAMPLE_SHA256:
+        raise SystemExit(
+            f"Canonical pairwise sample checksum mismatch: expected {CANONICAL_PAIRWISE_SAMPLE_SHA256}, "
+            f"got {actual_sha256}. Refusing to package a pairwise sample that does not match the "
+            "checksum recorded in analysis/pairwise_provenance_repair_20260913/ARTIFACT_MANIFEST.md."
+        )
+    df = pd.read_parquet(src)
+    mask = df["trace_family"].astype(str) == PSEUDONYMIZED_FAMILY
+    df.loc[mask, "candidate_a_page_id"] = df.loc[mask, "candidate_a_page_id"].map(pseudonymize_object_id)
+    df.loc[mask, "candidate_b_page_id"] = df.loc[mask, "candidate_b_page_id"].map(pseudonymize_object_id)
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    df.to_parquet(dst, index=False)
+
+
 def build(source_root: Path, output_root: Path, *, overwrite: bool) -> dict:
     if output_root.exists() and any(output_root.iterdir()) and not overwrite:
         raise SystemExit(f"Output dir {output_root} already exists and is non-empty; pass --overwrite")
@@ -134,10 +163,16 @@ def build(source_root: Path, output_root: Path, *, overwrite: bool) -> dict:
         output_root / "data" / "decision_view" / "decision_view.parquet",
     )
 
+    transform_pairwise_sample(
+        CANONICAL_PAIRWISE_SAMPLE,
+        output_root / "data" / "pairwise_sample" / "pairwise_sample.parquet",
+    )
+
     return {
         "candidate_partitions_transformed": n_transformed,
         "candidate_partitions_linked": n_linked,
         "candidate_partitions_total": len(parquet_files),
+        "pairwise_sample_source": str(CANONICAL_PAIRWISE_SAMPLE),
     }
 
 
@@ -173,6 +208,44 @@ def independent_recount(output_root: Path) -> dict:
         """
     ).fetchone()[0]
 
+    pairwise_path = output_root / "data" / "pairwise_sample" / "pairwise_sample.parquet"
+    pairwise_stats: dict[str, object] = {}
+    if pairwise_path.exists():
+        pairwise_stats["total_rows"] = int(
+            con.execute(f"SELECT COUNT(*) FROM read_parquet('{pairwise_path}')").fetchone()[0]
+        )
+        label_row = con.execute(
+            f"SELECT SUM(label_a_better), SUM(label_b_better), SUM(is_tie) FROM read_parquet('{pairwise_path}')"
+        ).fetchone()
+        pairwise_stats["a_better"] = int(label_row[0])
+        pairwise_stats["b_better"] = int(label_row[1])
+        pairwise_stats["tie"] = int(label_row[2])
+        pairwise_stats["unique_decisions"] = int(
+            con.execute(f"SELECT COUNT(DISTINCT decision_id) FROM read_parquet('{pairwise_path}')").fetchone()[0]
+        )
+        pairwise_stats["by_split"] = {
+            k: int(v)
+            for k, v in con.execute(
+                f"SELECT split, COUNT(*) FROM read_parquet('{pairwise_path}') GROUP BY 1 ORDER BY 1"
+            ).fetchall()
+        }
+        pairwise_stats["by_family"] = {
+            k: int(v)
+            for k, v in con.execute(
+                f"SELECT trace_family, COUNT(*) FROM read_parquet('{pairwise_path}') GROUP BY 1 ORDER BY 1"
+            ).fetchall()
+        }
+        pairwise_stats["wiki2018_unpseudonymized_leak_count"] = int(
+            con.execute(
+                f"""
+                SELECT COUNT(*) FROM read_parquet('{pairwise_path}')
+                WHERE trace_family = 'wiki2018'
+                  AND (candidate_a_page_id NOT LIKE 'obj\\_%' ESCAPE '\\'
+                       OR candidate_b_page_id NOT LIKE 'obj\\_%' ESCAPE '\\')
+                """
+            ).fetchone()[0]
+        )
+
     return {
         "total_candidate_rows": int(total),
         "by_family": {k: int(v) for k, v in by_family},
@@ -182,6 +255,7 @@ def independent_recount(output_root: Path) -> dict:
         "families_seen": families_seen,
         "decision_view_rows": int(decision_view_rows),
         "wiki2018_unpseudonymized_leak_count": int(leaked_raw_titles),
+        "pairwise_sample": pairwise_stats,
     }
 
 
@@ -217,11 +291,17 @@ def main() -> None:
     recount = independent_recount(output_root)
     print(json.dumps({"independent_recount": recount}, indent=2))
 
+    pairwise = recount.get("pairwise_sample") or {}
     ok = (
         recount["total_candidate_rows"] == EXPECTED_CANDIDATE_ROWS
         and recount["decision_view_rows"] == EXPECTED_DECISION_ROWS
         and recount["families_seen"] == sorted(SELECTED_FAMILIES)
         and recount["wiki2018_unpseudonymized_leak_count"] == 0
+        and pairwise.get("total_rows") == EXPECTED_PAIRWISE_ROWS
+        and pairwise.get("a_better") == 60_673
+        and pairwise.get("b_better") == 61_065
+        and pairwise.get("tie") == 878_262
+        and pairwise.get("wiki2018_unpseudonymized_leak_count") == 0
     )
     print(json.dumps({"matches_manuscript_corpus": ok}, indent=2))
     if not ok:
