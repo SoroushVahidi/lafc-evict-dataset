@@ -1,0 +1,58 @@
+{
+  "schema_name": "lafc-evict-model-feature-schema-v2",
+  "supersedes": "lafc-evict-candidate-v1 FEATURE_COLUMNS (implicit, undifferentiated 26-column list)",
+  "created": "2026-09-17",
+  "provenance": "analysis/feature_provenance_repair_20260917/FEATURE_PROVENANCE_AUDIT.md",
+  "purpose": "Distinguishes which of the 26 legacy FEATURE_COLUMNS are valid inputs for new modeling work from which are deprecated legacy/placeholder fields, without altering any released candidate-row values. This schema governs NEW baselines and NEW model training only; release/lafc-evict-v1.0's Parquet files are unchanged.",
+
+  "identifier_columns": [
+    "trace_name", "trace_family", "dataset_source", "capacity", "horizon",
+    "decision_id", "decision_t", "decision_chunk_id", "candidate_page_id"
+  ],
+  "split_column": ["split"],
+  "label_columns": ["y_loss", "y_value"],
+
+  "valid_model_features": [
+    {"name": "candidate_recency_rank", "reason": "Non-constant (256 distinct values); pure function of within-decision recency order, available at decision time."},
+    {"name": "candidate_age_norm", "reason": "Non-constant (472 distinct values); normalized recency_rank, available at decision time."},
+    {"name": "candidate_lru_score", "reason": "Non-constant (472 distinct values); pure function of within-decision recency order, available at decision time."},
+    {"name": "candidate_is_lru_victim", "reason": "Non-constant (2 distinct values); argmax of candidate_lru_score, available at decision time."},
+    {"name": "score_gap_to_lru_victim", "reason": "Non-constant (472 distinct values); verified exact deterministic transform of candidate_lru_score (gap to the same decision's best LRU score); legitimate within-decision normalization, not leakage."},
+    {"name": "recent_candidate_request_rate", "reason": "Non-constant (159 distinct values); rolling window over already-elapsed request history."},
+    {"name": "recent_candidate_hit_rate", "reason": "Non-constant (285 distinct values); rolling window over already-elapsed hit history."}
+  ],
+
+  "deprecated_legacy_features": [
+    {"name": "request_bucket", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.0},
+    {"name": "request_confidence", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.5},
+    {"name": "candidate_bucket", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.0},
+    {"name": "candidate_confidence", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.5},
+    {"name": "candidate_predictor_score", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.5},
+    {"name": "candidate_is_predictor_victim", "category": "REDUNDANT_ALIAS", "duplicate_of": "candidate_is_lru_victim"},
+    {"name": "score_gap_to_predictor_best", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.0},
+    {"name": "bucket_gap_to_predictor_best", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.0},
+    {"name": "bucket_gap_to_lru_victim", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.0},
+    {"name": "confidence_gap_to_predictor_best", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.0},
+    {"name": "confidence_gap_to_lru_victim", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.0},
+    {"name": "cache_bucket_mean", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.0},
+    {"name": "cache_bucket_std", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.0},
+    {"name": "cache_bucket_min", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.0},
+    {"name": "cache_bucket_max", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.0},
+    {"name": "cache_unique_bucket_count", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 1.0},
+    {"name": "cache_confidence_mean", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.5},
+    {"name": "cache_confidence_std", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.0},
+    {"name": "predictor_lru_disagree", "category": "ACCIDENTAL_PLACEHOLDER", "constant_value": 0.0}
+  ],
+
+  "prohibited_leakage_columns": [
+    "y_loss", "y_value", "split", "decision_id",
+    "optimal_candidate_page_ids", "regret_mean", "regret_std", "regret_max", "regret_sum",
+    "min_y_loss", "max_y_value", "optimal_candidate_count", "tie_count"
+  ],
+
+  "rules": {
+    "official_model_feature_set": ["candidate_recency_rank", "candidate_age_norm", "candidate_lru_score", "candidate_is_lru_victim", "score_gap_to_lru_victim", "recent_candidate_request_rate", "recent_candidate_hit_rate"],
+    "deprecated_features_must_not_enter_official_model_feature_set": true,
+    "data_values_unchanged": "This schema does not alter any value in release/lafc-evict-v1.0 or any prior release. Deprecated columns remain present in the released Parquet files for provenance/reproducibility; they are simply excluded from scripts/validate_model_features.py's allowed input list for new baselines."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "predictor_victim_neq_lru_victim_count": 0,
+  "score_gap_matches_lru_minus_decision_max": 0,
+  "candidate_lru_score_equals_y_loss_count": 47736,
+  "candidate_age_norm_equals_y_loss_count": 43316,
+  "candidate_recency_rank_equals_y_loss_count": 2363430,
+  "recent_candidate_request_rate_equals_y_loss_count": 1007017,
+  "recent_candidate_hit_rate_equals_y_loss_count": 1173563,
+  "score_gap_to_lru_victim_equals_y_loss_count": 10191
+}
