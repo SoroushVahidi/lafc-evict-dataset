@@ -1,0 +1,93 @@
+{
+  "total_cells": 80,
+  "by_ratio_pooled": {
+    "0.0625": {
+      "ratio": 0.0625,
+      "cells_count": 5,
+      "total_decisions": 189374,
+      "pooled_all_tied_fraction": 0.5818380559105262,
+      "pooled_discriminative_fraction": 0.4181619440894738,
+      "pooled_random_optimal_probability": 0.9951313274261514,
+      "pooled_mean_random_regret": 0.004881152012683876,
+      "pooled_mean_random_regret_per_request": 0.00030507200079274226
+    },
+    "0.125": {
+      "ratio": 0.125,
+      "cells_count": 10,
+      "total_decisions": 383600,
+      "pooled_all_tied_fraction": 0.5669916579770594,
+      "pooled_discriminative_fraction": 0.4330083420229406,
+      "pooled_random_optimal_probability": 0.9915874995926747,
+      "pooled_mean_random_regret": 0.00845878274895721,
+      "pooled_mean_random_regret_per_request": 0.0004019435528545341
+    },
+    "0.25": {
+      "ratio": 0.25,
+      "cells_count": 15,
+      "total_decisions": 583324,
+      "pooled_all_tied_fraction": 0.5581237871234511,
+      "pooled_discriminative_fraction": 0.4418762128765489,
+      "pooled_random_optimal_probability": 0.9859775613552674,
+      "pooled_mean_random_regret": 0.014192999409419078,
+      "pooled_mean_random_regret_per_request": 0.0005312451768201488
+    },
+    "0.5": {
+      "ratio": 0.5,
+      "cells_count": 20,
+      "total_decisions": 787762,
+      "pooled_all_tied_fraction": 0.5594900490249594,
+      "pooled_discriminative_fraction": 0.44050995097504064,
+      "pooled_random_optimal_probability": 0.977523103027945,
+      "pooled_mean_random_regret": 0.023085851120008296,
+      "pooled_mean_random_regret_per_request": 0.0007001176269123388
+    },
+    "1.0": {
+      "ratio": 1.0,
+      "cells_count": 15,
+      "total_decisions": 598388,
+      "pooled_all_tied_fraction": 0.5713550405422567,
+      "pooled_discriminative_fraction": 0.4286449594577433,
+      "pooled_random_optimal_probability": 0.9653546930461506,
+      "pooled_mean_random_regret": 0.036701403917692166,
+      "pooled_mean_random_regret_per_request": 0.0006768337872895068
+    },
+    "2.0": {
+      "ratio": 2.0,
+      "cells_count": 10,
+      "total_decisions": 404162,
+      "pooled_all_tied_fraction": 0.6045273924812328,
+      "pooled_discriminative_fraction": 0.3954726075187672,
+      "pooled_random_optimal_probability": 0.9605448666005215,
+      "pooled_mean_random_regret": 0.042214005460681554,
+      "pooled_mean_random_regret_per_request": 0.0004926302249894528
+    },
+    "4.0": {
+      "ratio": 4.0,
+      "cells_count": 5,
+      "total_decisions": 204438,
+      "pooled_all_tied_fraction": 0.6383157729971922,
+      "pooled_discriminative_fraction": 0.3616842270028078,
+      "pooled_random_optimal_probability": 0.9606847491660063,
+      "pooled_mean_random_regret": 0.041378987761570694,
+      "pooled_mean_random_regret_per_request": 0.00032327334188727105
+    }
+  },
+  "all_ratios_covered": [
+    0.0625,
+    0.125,
+    0.25,
+    0.5,
+    1.0,
+    2.0,
+    4.0
+  ],
+  "all_ratios_covered_str": [
+    "0.0625",
+    "0.1250",
+    "0.2500",
+    "0.5000",
+    "1.0000",
+    "2.0000",
+    "4.0000"
+  ]
+}

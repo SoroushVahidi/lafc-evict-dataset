@@ -60,25 +60,55 @@ candidates' fates to diverge.
   \label{fig:discriminativeness}
 \end{figure}
 
-\input{tables/table_long_horizon_sensitivity}
+\input{tables/table_matched_long_horizon_sensitivity}
 
 The extended long-horizon comparison asks whether this picture changes
 when the look-ahead window grows beyond the release horizons.
-Table~\ref{tab:long-horizon-sensitivity} and
-Figure~\ref{fig:long-horizon-sensitivity} summarize the validated
-$H\in\{16,32,64,128\}$ comparison. H16 is not regenerated: it is adapted
-from the canonical decision-view audit, while H32--H128 come from the
-completed Wulver long-horizon campaign. In paired family$\times$capacity
-cells, on the matched decision population, aggregate discriminativeness increases monotonically with the look-ahead horizon (mean discriminative-fraction deltas of +0.0427 from H16 to H32, +0.0246 from H32 to H64, and +0.0095 from H64 to H128), while the aggregate all-tied fraction decreases monotonically and expected random regret increases in the aggregate. Thus the changes diminish between H64 and H128, but a saturation claim would be too strong: effects remain heterogeneous by family and capacity. The target also remains strongly tie-degenerate at H128: the decision-micro all-tied fraction is 0.5961 and the cell-macro all-tied mean is 0.4681.
+Table~\ref{tab:matched-long-horizon} and
+Figure~\ref{fig:matched-long-horizon} summarize the validated
+$H\in\{16,32,64,128\}$ comparison. This uses the exact same canonical
+physical eviction-decision population of 787,762 decisions across all horizons,
+removing any aggregate denominator mismatch. On this matched population,
+aggregate discriminativeness increases monotonically with the look-ahead horizon
+(pooled discriminative fraction rising from 0.3807 at $H=16$ to 0.4566 at $H=128$),
+while the aggregate all-tied fraction decreases monotonically and expected random
+regret increases. Thus the changes diminish between H64 and H128, but a
+saturation claim would be too strong: effects remain heterogeneous by family
+and capacity. The target also remains strongly tie-degenerate at H128:
+the decision-micro all-tied fraction is 0.5434.
+
+\textbf{Look-ahead relative to cache capacity ($H/C$).} To investigate
+whether the high tie mass is merely an artifact of look-ahead horizons
+being short relative to cache capacity, we analyze the cell-level $H/C$
+ratios across the matched-population dataset, spanning $H/C \in [0.0625, 4.0]$.
+We find that even in regimes where the look-ahead horizon is equal to or
+exceeds the cache capacity ($H/C \ge 1.0$), a massive tie-degenerate
+fraction persists: the pooled all-tied fraction is 57.14\% at $H/C = 1.0$,
+60.45\% at $H/C = 2.0$, and 63.83\% at $H/C = 4.0$. This demonstrates that
+high tie mass is a fundamental scientific property of the workloads and
+re-use characteristics, rather than a short-horizon artifact.
+
+Additionally, we distinguish between cumulative raw regret and normalized
+regret per request ($\text{regret}/H$). While raw random regret rises
+with $H$ in the aggregate, the per-request normalized regret generally
+declines. For example, for metacdn/cap32 ($H/C$ rising from 0.5 to 4.0),
+raw random regret rises from 0.0601 ($H=16$) to 0.0894 ($H=128$), but the
+normalized regret per request drops from 0.00375 to 0.00070. Conversely,
+the most tie-heavy families like alibaba-block and metakv remain
+consistently low-information and low-regret across all horizons. This
+indicates that longer look-ahead horizons accumulate more raw opportunity
+for regret, but do not increase the per-request target informativeness
+proportionally, further highlighting the importance of evaluating both raw
+and normalized metrics.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{figures/figure6_long_horizon_sensitivity.pdf}
-  \caption{Extended horizon sensitivity for discriminativeness,
-  random-optimal probability, and mean random regret. Thin gray lines are
-  individual family$\times$capacity cells; the dark line is the
-  decision-micro aggregate.}
-  \label{fig:long-horizon-sensitivity}
+  \includegraphics[width=\columnwidth]{figures/figure_problem4_matched_long_horizon_sensitivity.pdf}
+  \caption{Matched-population long-horizon sensitivity. Thin gray lines are
+  family$\times$capacity cells and the blue line is the decision-micro
+  aggregate; every trajectory follows the same physical eviction decisions
+  across $H\in\{16,32,64,128\}$.}
+  \label{fig:matched-long-horizon}
 \end{figure}
 
 \subsection{Interpretation}

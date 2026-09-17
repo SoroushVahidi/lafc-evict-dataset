@@ -1,0 +1,8 @@
+{
+  "all_tied_horizon_effect_matched_h16_to_h32": -0.03857764147039333,
+  "all_tied_population_effect_old_h16_to_matched_h16": 0.0,
+  "random_optimal_horizon_effect_matched_h16_to_h32": -0.007241702800147798,
+  "random_optimal_population_effect_old_h16_to_matched_h16": 0.0,
+  "regret_horizon_effect_matched_h16_to_h32": 0.007675308540206309,
+  "regret_population_effect_old_h16_to_matched_h16": -1.214306433183765e-17
+}

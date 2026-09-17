@@ -1,0 +1,294 @@
+{
+  "artifact": "common matched H16/H32/H64/H128 physical decision population",
+  "cells": [
+    {
+      "capacity": 32,
+      "decision_count": 49241,
+      "key_sha256": "e97e1b77383cc86a89a7b71df98994682e5d6e4c37b1d304c455318bf8724d32",
+      "max_decision_t": 49999,
+      "min_decision_t": 32,
+      "reader_family": "alibaba-block",
+      "split_counts": {
+        "test": 8058,
+        "train": 37187,
+        "val": 3996
+      },
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 64,
+      "decision_count": 48511,
+      "key_sha256": "0ddf8409166cbf339c2fe4e1d494ab1b1e9db3b469da4211b0a195997341c23e",
+      "max_decision_t": 49999,
+      "min_decision_t": 73,
+      "reader_family": "alibaba-block",
+      "split_counts": {
+        "test": 7971,
+        "train": 36656,
+        "val": 3884
+      },
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 128,
+      "decision_count": 47620,
+      "key_sha256": "22ee6f4d850807c8f5918be9c238d27c4ee01272a780f0e58c57e303cf3a5b23",
+      "max_decision_t": 49999,
+      "min_decision_t": 149,
+      "reader_family": "alibaba-block",
+      "split_counts": {
+        "test": 7832,
+        "train": 36043,
+        "val": 3745
+      },
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 256,
+      "decision_count": 46701,
+      "key_sha256": "415c39172e9e522c5279bed52083cb282241c63ee82920b10451fb52f438af32",
+      "max_decision_t": 49999,
+      "min_decision_t": 277,
+      "reader_family": "alibaba-block",
+      "split_counts": {
+        "test": 7667,
+        "train": 35381,
+        "val": 3653
+      },
+      "trace_family": "cloudphysics"
+    },
+    {
+      "capacity": 32,
+      "decision_count": 29348,
+      "key_sha256": "121285866a6d7aaa5a492886aecd30f999bc2d311848ed76b0bdac26f669c7a3",
+      "max_decision_t": 49996,
+      "min_decision_t": 44,
+      "reader_family": "metacdn",
+      "split_counts": {
+        "train": 17519,
+        "val": 11829
+      },
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 64,
+      "decision_count": 28552,
+      "key_sha256": "18287703ff82af7b33f4145126aef0e95a15e88ccd81847c32b09693d6ac0ce1",
+      "max_decision_t": 49996,
+      "min_decision_t": 91,
+      "reader_family": "metacdn",
+      "split_counts": {
+        "train": 17091,
+        "val": 11461
+      },
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 128,
+      "decision_count": 27683,
+      "key_sha256": "5265cfe9def1fe15df3ee60f4c754456994aa9b5c5aa267b1df6ce2981a1e560",
+      "max_decision_t": 49996,
+      "min_decision_t": 194,
+      "reader_family": "metacdn",
+      "split_counts": {
+        "train": 16567,
+        "val": 11116
+      },
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 256,
+      "decision_count": 26737,
+      "key_sha256": "79ef41799585b2c3afbb789a886d471aa11a1b3c547a03238e81d6a2727d272f",
+      "max_decision_t": 49996,
+      "min_decision_t": 402,
+      "reader_family": "metacdn",
+      "split_counts": {
+        "train": 16047,
+        "val": 10690
+      },
+      "trace_family": "metacdn"
+    },
+    {
+      "capacity": 32,
+      "decision_count": 38032,
+      "key_sha256": "71a5d1bbddab936c12fd1ebac419f073d6d860f9c33a88bc3cd6a566ca03cbff",
+      "max_decision_t": 49999,
+      "min_decision_t": 56,
+      "reader_family": "metakv",
+      "split_counts": {
+        "test": 3003,
+        "train": 25579,
+        "val": 9450
+      },
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 64,
+      "decision_count": 37977,
+      "key_sha256": "76cbe0148e75f24d86828938c49adad8794309c4138abb9cb440a32bdbb9b0c7",
+      "max_decision_t": 49999,
+      "min_decision_t": 101,
+      "reader_family": "metakv",
+      "split_counts": {
+        "test": 2965,
+        "train": 25567,
+        "val": 9445
+      },
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 128,
+      "decision_count": 37856,
+      "key_sha256": "21f39b8bc9b2f164a55c4001ebbed4852b5bc4cee74235602169de92fd771add",
+      "max_decision_t": 49999,
+      "min_decision_t": 192,
+      "reader_family": "metakv",
+      "split_counts": {
+        "test": 2858,
+        "train": 25555,
+        "val": 9443
+      },
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 256,
+      "decision_count": 37486,
+      "key_sha256": "c9fbe394c0287c3ae26e7ea36458af1a711d06aafb8f1f3d80898876d4a1d6fc",
+      "max_decision_t": 49999,
+      "min_decision_t": 430,
+      "reader_family": "metakv",
+      "split_counts": {
+        "test": 2489,
+        "train": 25554,
+        "val": 9443
+      },
+      "trace_family": "metakv"
+    },
+    {
+      "capacity": 32,
+      "decision_count": 37849,
+      "key_sha256": "46831ab53fca7b0524339d9baca8131dc84ffc228492c2c88287611e099de6f3",
+      "max_decision_t": 49999,
+      "min_decision_t": 40,
+      "reader_family": "twemcache",
+      "split_counts": {
+        "test": 6153,
+        "train": 28782,
+        "val": 2914
+      },
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 64,
+      "decision_count": 34748,
+      "key_sha256": "32fc570c660b8a51ea93c7e6a85b8dd7d3c001a886f92fa3f91c39cd55fd4e59",
+      "max_decision_t": 49999,
+      "min_decision_t": 74,
+      "reader_family": "twemcache",
+      "split_counts": {
+        "test": 5633,
+        "train": 26462,
+        "val": 2653
+      },
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 128,
+      "decision_count": 31195,
+      "key_sha256": "8dabaf0e2a153e50a69eed48a6ca997a4ea1bb12dd1e23bea027876ab1ec7560",
+      "max_decision_t": 49997,
+      "min_decision_t": 202,
+      "reader_family": "twemcache",
+      "split_counts": {
+        "test": 5083,
+        "train": 23742,
+        "val": 2370
+      },
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 256,
+      "decision_count": 28706,
+      "key_sha256": "b1c272afea63a79606a6e77e7b86a14902eaceafa07616cdb1da2231a17ca230",
+      "max_decision_t": 49997,
+      "min_decision_t": 455,
+      "reader_family": "twemcache",
+      "split_counts": {
+        "test": 4710,
+        "train": 21810,
+        "val": 2186
+      },
+      "trace_family": "twemcache"
+    },
+    {
+      "capacity": 32,
+      "decision_count": 49968,
+      "key_sha256": "a35212a04dd7843dfbb54af4e3bdebe4e946bdcb7e23771d3e4c09a6cf3f0d33",
+      "max_decision_t": 49999,
+      "min_decision_t": 32,
+      "reader_family": "wiki2018",
+      "split_counts": {
+        "test": 4096,
+        "train": 41776,
+        "val": 4096
+      },
+      "trace_family": "wiki2018"
+    },
+    {
+      "capacity": 64,
+      "decision_count": 49936,
+      "key_sha256": "a79c87305e72e67fcfe8bc5ef981a73dcf687cb556be0498bf49d76a7fd46bfb",
+      "max_decision_t": 49999,
+      "min_decision_t": 64,
+      "reader_family": "wiki2018",
+      "split_counts": {
+        "test": 4096,
+        "train": 41744,
+        "val": 4096
+      },
+      "trace_family": "wiki2018"
+    },
+    {
+      "capacity": 128,
+      "decision_count": 49872,
+      "key_sha256": "dbb0c73327fcd64709d458c0275a662ca68e375b868416393130509d16195ee7",
+      "max_decision_t": 49999,
+      "min_decision_t": 128,
+      "reader_family": "wiki2018",
+      "split_counts": {
+        "test": 4096,
+        "train": 41680,
+        "val": 4096
+      },
+      "trace_family": "wiki2018"
+    },
+    {
+      "capacity": 256,
+      "decision_count": 49744,
+      "key_sha256": "44baf81149b9b46b64670e977efb41fe884dce71fc731e4c84e18ee411da32f6",
+      "max_decision_t": 49999,
+      "min_decision_t": 256,
+      "reader_family": "wiki2018",
+      "split_counts": {
+        "test": 4096,
+        "train": 41552,
+        "val": 4096
+      },
+      "trace_family": "wiki2018"
+    }
+  ],
+  "common_population_keys": "analysis/problem4_matched_horizon_20260917/artifacts/common_population_keys.parquet",
+  "common_population_keys_sha256": "0952041f5e4c6eb26b08445508912e8a9d580600fca2adbcb17dbe657bea593b",
+  "global_key_sha256": "bdf8f090741ab7ecea018c196faba58a0c13b758a30dc1e893102975ecb1f845",
+  "horizons": [
+    16,
+    32,
+    64,
+    128
+  ],
+  "physical_key_format": "trace_name|trace_family|cap=<capacity>|t=<decision_t>|split=<split>",
+  "source_decision_view": "/home/soroush/projects/lafc-evict-dataset/repo/release/lafc-evict-v0.1-open-current-contract-preserved/data/decision_view/decision_view.parquet",
+  "source_decision_view_sha256": "04337dd5bdcdd4f8ec3e1869a9be570e3b503d7871a388b66271d5539b91827b",
+  "total_decisions": 787762
+}
