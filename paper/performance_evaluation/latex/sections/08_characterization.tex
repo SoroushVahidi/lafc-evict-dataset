@@ -81,25 +81,28 @@ the decision-micro all-tied fraction is 0.5434.
 whether the high tie mass is merely an artifact of look-ahead horizons
 being short relative to cache capacity, we analyze the cell-level $H/C$
 ratios across the matched-population dataset, spanning $H/C \in [0.0625, 4.0]$.
-We find that even in regimes where the look-ahead horizon is equal to or
-exceeds the cache capacity ($H/C \ge 1.0$), a massive tie-degenerate
-fraction persists: the pooled all-tied fraction is 57.14\% at $H/C = 1.0$,
-60.45\% at $H/C = 2.0$, and 63.83\% at $H/C = 4.0$. This demonstrates that
-high tie mass is a fundamental scientific property of the workloads and
-re-use characteristics, rather than a short-horizon artifact.
+Substantial degeneracy remains in evaluated cells where $H$ equals or exceeds
+cache capacity, so the high tie mass cannot be attributed solely to using
+horizons shorter than the cache: the pooled all-tied fraction is 57.14\% at
+$H/C = 1.0$, 60.45\% at $H/C = 2.0$, and 63.83\% at $H/C = 4.0$. Because $H/C$
+buckets contain different capacity/horizon compositions, these pooled $H/C$
+differences should not be interpreted as a causal effect of $H/C$ itself, but
+rather as evidence that family and capacity composition remain important and
+that $H \ge C$ regimes are not inherently tie-free.
 
 Additionally, we distinguish between cumulative raw regret and normalized
-regret per request ($\text{regret}/H$). While raw random regret rises
-with $H$ in the aggregate, the per-request normalized regret generally
-declines. For example, for metacdn/cap32 ($H/C$ rising from 0.5 to 4.0),
-raw random regret rises from 0.0601 ($H=16$) to 0.0894 ($H=128$), but the
+regret per request ($\text{regret}/H$). On the exact matched 787,762-decision
+population, raw random regret rises monotonically with $H$ (0.0132 at $H=16$,
+to 0.0361 at $H=128$), but the aggregate normalized regret per request decreases
+monotonically: 0.000826 at $H=16$, 0.000653 at $H=32$, 0.000453 at $H=64$, and
+0.000282 at $H=128$. For example, for metacdn/cap32 ($H/C$ rising from 0.5 to
+4.0), raw random regret rises from 0.0601 ($H=16$) to 0.0894 ($H=128$), but the
 normalized regret per request drops from 0.00375 to 0.00070. Conversely,
 the most tie-heavy families like alibaba-block and metakv remain
 consistently low-information and low-regret across all horizons. This
 indicates that longer look-ahead horizons accumulate more raw opportunity
-for regret, but do not increase the per-request target informativeness
-proportionally, further highlighting the importance of evaluating both raw
-and normalized metrics.
+for regret mechanically, but do not increase the per-request target
+informativeness proportionally.
 
 \begin{figure}[t]
   \centering
