@@ -37,8 +37,9 @@ columns are diagnostic. On the 2,211-row test non-tie subset, the logistic
 feature-difference model reaches 0.7078 accuracy (Wilson 95\% CI
 $[0.688, 0.726]$) and 0.5494 log loss,
 ahead of random/majority checks and the 1-D score baselines
-(Table~\ref{tab:pairwise-feature-baselines}). This replaces the earlier
-overall non-tie 0.9660 figure as the number to cite. The train/validation
+(Table~\ref{tab:pairwise-feature-baselines}). This corrected test
+non-tie accuracy represents the authoritative baseline for pairwise
+generalization on the held-out split. The train/validation
 gap is large, and the test non-tie subset is small and unusually tie-heavy,
 so the result supports only a capped-sample, non-tie pairwise baseline,
 not a population or online-policy claim.
