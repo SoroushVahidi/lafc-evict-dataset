@@ -1,17 +1,17 @@
-\begin{table*}[t]
+\begin{table}[tbp]
   \centering
   \small
   \caption{Canonical evaluation protocol and workload specifications per trace family. Every family has release capacities of $\{32, 64, 128, 256\}$ and horizons of $\{4, 8, 16\}$, while closed-loop evaluation focuses on capacities $\{32, 128\}$.}
   \label{tab:evaluation-protocols}
-  \begin{tabularx}{\textwidth}{@{}lP{0.14\textwidth}lP{0.14\textwidth}llL@{}}
+  \begin{tabularx}{\textwidth}{@{}l P{0.13\textwidth} c c L c@{}}
     \toprule
-    Family & Workload Type & Splits & Closed-Loop Split & Scored Chunks & Init / Warm-up & Key Characteristics \& Caveats \\
+    Family & Workload & Splits & CL Split & Scored Window & Warm-up / Init \\
     \midrule
-    \texttt{alibaba-block} & Block Storage & train/val/test & test & 2 chunks (8,192 req.) & Warm & Near-zero offline gap, cap32 sign flips (weak signal). \\
-    \texttt{metacdn} & CDN Cache & train/val & validation & 3 chunks (20,480 req.) & Warm & Tier-1 closed loop uses validation-window only (no Tier-1 test chunks); the separate learned-policy campaign evaluates MetaCDN under its own held-out protocol. \\
-    \texttt{metakv} & Key-Value & train/val/test & test & 1 chunk (4,096 req.) & Cold Start & Cold start (no unscored warmup); random gap flips at cap128. \\
-    \texttt{twemcache} & Memcached & train/val/test & test & 2 chunks (8,192 req.) & Warm & Highly discriminative, strong-agreement, clear separation. \\
-    \texttt{wiki2018} & Wikipedia & train/val/test & test & 1 chunk (4,096 req.) & Warm & Negative-control family; 100\% tie-degenerate (zero random regret). \\
+    \texttt{alibaba-block} & Block Storage & train/val/test & test & 2 chunks (8,192 req.) & Warm \\
+    \texttt{metacdn} & CDN Cache & train/val & validation & 3 chunks (20,480 req.) & Warm \\
+    \texttt{metakv} & Key-Value & train/val/test & test & 1 chunk (4,096 req.) & Cold Start \\
+    \texttt{twemcache} & Memcached & train/val/test & test & 2 chunks (8,192 req.) & Warm \\
+    \texttt{wiki2018} & Wikipedia & train/val/test & test & 1 chunk (4,096 req.) & Warm \\
     \bottomrule
   \end{tabularx}
-\end{table*}
+\end{table}

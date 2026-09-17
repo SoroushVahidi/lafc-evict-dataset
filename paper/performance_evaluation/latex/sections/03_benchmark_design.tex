@@ -65,6 +65,13 @@ The evaluation in this paper is organized to satisfy four requirements:
 
 \input{tables/table_evaluation_protocols}
 
+The canonical workload and evaluation parameters are summarized in Table~\ref{tab:evaluation-protocols}. When reading and interpreting the results, the following trace-specific design nuances should be kept in mind:
+\begin{itemize}[leftmargin=*]
+  \item \textbf{MetaCDN Validation Status:} Tier-1 closed-loop evidence for MetaCDN uses validation-window chunks because no Tier-1 test-split chunks are available at these capacities. The separate learned-policy campaign evaluates MetaCDN under its own independent held-out protocol.
+  \item \textbf{MetaKV Cold Start:} MetaKV is evaluated starting from an empty cache (a cold start) with no leading unscored warm-up, whereas the other four workload families continuous-warmup from preceding unscored trace prefixes.
+  \item \textbf{Wiki2018 Negative Control:} Wiki2018 is a deterministic zero-reuse negative-control workload where all candidate eviction options result in identical miss costs (100\% tie-degenerate, zero random regret), acting as a baseline verification of cache boundaries.
+\end{itemize}
+
 \input{tables/table_dataset_scale}
 
 \input{tables/table_split_counts}
