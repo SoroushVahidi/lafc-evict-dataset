@@ -1,24 +1,26 @@
 \section{Release Construction and Validation}
 \label{sec:release-validation}
 
-The release pipeline is designed to package existing generated candidate rows into a benchmark artifact without requiring raw traces in the release package. The builder uses an out-of-core DuckDB path to ingest candidate shards, normalize split values, emit partitioned Parquet candidate rows, derive the decision view, optionally create a capped pairwise sample, and write release metadata and checksums.
-
-The validation surface is part of the benchmark contribution. The validation workflow includes:
-\begin{itemize}[leftmargin=*]
-  \item schema completeness for candidate partitions,
-  \item split normalization and split-set consistency,
-  \item presence of selected families and absence of blocked families,
-  \item duplicate candidate detection within decision groups,
-  \item consistency of decision metadata within a decision,
-  \item decision-view schema and count consistency,
-  \item checksum verification.
-\end{itemize}
+The release packages existing generated candidate rows into a benchmark
+artifact without requiring raw traces, and validates that package before
+any number in this paper is computed from it. Validation checks schema
+completeness, split normalization, presence of the selected families and
+absence of blocked ones, duplicate candidates within a decision,
+consistency of decision metadata, decision-view count consistency, and
+checksums (Table~\ref{tab:artifact-layout} summarizes the package
+components these checks cover). This validation is itself part of the
+contribution: a released benchmark is only as trustworthy as the checks
+that produced it, so we treat it as reproducible evidence rather than an
+implementation detail.
 
 \begin{sloppypar}
-The evaluated open-release snapshot passed metadata repair, the provided verification suite, publication-bundle validation, and end-to-end release validation. The validation evidence comes from manifest-backed counts, schema checks, split checks, duplicate detection, and checksum verification implemented in reproducible scripts. The manuscript therefore reports validation of the release package without relying on unpublished hosting details. It does not claim that final public hosting or DOI assignment is complete. It also does not treat superseded status notes as the authoritative source of scientific evidence.
+The evaluated open-release snapshot passed metadata repair, the full
+verification suite, publication-bundle validation, and end-to-end release
+validation, all via reproducible scripts rather than manual inspection.
+This is validation of the release package itself; it does not claim that
+public hosting or DOI assignment is complete, and superseded status notes
+are never treated as evidence in their own right.
 \end{sloppypar}
-
-Table~\ref{tab:artifact-layout} summarizes the release-package components used in the evaluation: candidate rows, derived benchmark views, manifest metadata, and checksums. Validation claims rely on those package contents together with reproducible validation scripts rather than on any standalone status note.
 
 \input{tables/table_artifact_layout}
 
@@ -42,30 +44,26 @@ decision-horizon records, 30/30 validity gates, independent recheck
 passed). All six are scripted, reproducible, and checked into the
 repository alongside this manuscript as compact evidence artifacts.
 
-\textbf{Two label sources must not be conflated.} The candidate-level
-\texttt{y\_loss}/\texttt{y\_value} labels released and evaluated throughout
-this paper use the canonical LRU continuation policy
-(Section~\ref{sec:label-generation}). The continuation-sensitivity study
-(Section~\ref{sec:continuation}) additionally computes MRU- and
-random-continuation \emph{relabelings} of sampled decisions and an
-MRU-continuation relabeling of the full census population, strictly for
-the purpose of measuring sensitivity -- these sensitivity-study outputs
-are not an alternative release and are not used anywhere in this paper as
-if they were the canonical label.
+\textbf{Two label sources must not be conflated.} The canonical labels
+evaluated throughout this paper always use LRU continuation
+(Section~\ref{sec:label-generation}). The MRU and random \emph{relabelings}
+computed for the continuation-sensitivity study
+(Section~\ref{sec:continuation}) exist only to measure sensitivity and are
+never treated elsewhere as the canonical label.
 
 \textbf{The population-scale MRU continuation census is frozen evidence.}
-The census run \texttt{20260914T042528Z\_1a29e773a113} is complete,
-validated, independently rechecked, and frozen via
-\texttt{analysis/continuation\_\allowbreak policy\_\allowbreak mru\_\allowbreak population\_\allowbreak census\_\allowbreak 20260914/validated/20260914T042528Z\_\allowbreak 1a29e773a113/EVIDENCE\_\allowbreak MANIFEST.json}.
-The raw 1.6 GB census output is preserved separately outside this
+The census (run \texttt{20260914T042528Z\_1a29e773a113}) is complete,
+validated, and independently rechecked; its manifest and validation report
+are committed to the repository. The raw 1.6 GB census output is preserved
+separately outside this
 manuscript branch; the manuscript imports only compact summaries,
 validation reports, manifests, and Figure~\ref{fig:continuation-robustness}
 source data.
 
-\textbf{A known, unresolved provenance limitation, carried forward
-honestly rather than hidden:} the exact historical commit provenance of
-the full-release label generator is incomplete. This does not affect the
-validity of the frozen analysis artifacts above, each of which independently
+\textbf{A known, unresolved provenance limitation.} The exact historical
+commit provenance of the full-release label generator is incomplete. This
+does not affect the validity of the frozen analysis artifacts above, each
+of which independently
 records its own generation provenance, but it means the full historical
 lineage of the generator code itself predating those artifacts is not
 completely reconstructable from repository history alone.

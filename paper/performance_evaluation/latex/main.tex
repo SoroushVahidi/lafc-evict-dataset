@@ -68,43 +68,39 @@
 
 \begin{abstract}
 \begin{sloppypar}
-Evaluating cache-eviction decisions requires knowing what would have
-happened under each candidate choice -- information not observable from a
-single trace replay. This paper introduces \lafc, a reusable way to
-construct that counterfactual evidence at scale: a per-decision,
-per-candidate finite-horizon counterfactual miss-cost label, computed for
-real cache traces, evaluated against five questions. \textbf{(RQ1)} Is the
-target discriminative between candidates? Across five trace families,
-four capacities, and three horizons, two-thirds of decisions are fully
-tied in aggregate and no audited decision has a strict unique winner, but
-discriminativeness varies strongly and predictably by workload, capacity,
-and horizon, and one workload is a fully degenerate, mechanistically
-explained negative control. \textbf{(RQ2)} Does the offline ranking
-correspond to closed-loop cache performance? A closed-loop evaluation over
-production-derived traces (representative classical, adaptive, randomized,
-and modern lightweight replacement policies -- LRU, MRU, random, SIEVE,
-ARC, LIRS, S3-FIFO; five families, two capacities, 20 random seeds) shows
-offline and closed-loop policy orderings agree in most regimes where the
-offline signal is not near zero, with two characterized exceptions; LRU
-remains near-best almost everywhere but, once the comparator set is
-broadened beyond the original four policies, no longer wins outright in
-nearly every cell. \textbf{(RQ3)} Capacity-scale reuse correlates with
-both offline discriminativeness and closed-loop separation
-($r=0.83$--$0.97$, $n=10$, exploratory); this correlation is strongest at
-the longest of the three main-release horizons ($H=16$ of
-$H\in\{4,8,16\}$), while a matched-population H16--H128 characterization
-audit shows that longer horizons increase informativeness without
-eliminating low-information regimes.
-\textbf{(RQ4)} A pre-registered sampled study (5,500 decisions, capacities
-32 and 128) and a separate full-population MRU census (capacities 32, 64,
-128, and 256) both find the canonical LRU-continuation labels robust;
-random continuation is measurably more perturbing than MRU, and no
-population-scale random result is claimed. \textbf{(RQ5)} This offline
-supervision complements rather than replaces closed-loop evaluation, and
-we give concrete guidance for when it can be trusted. \lafc\ also releases
-the underlying candidate-, decision-, and pairwise-level supervision for
-reuse, with every quantitative claim traced to an independently
-validated, gate-checked artifact.
+Judging a cache-eviction decision requires knowing what would have
+happened under each candidate the system could have evicted instead --
+information a single trace replay never reveals, since only one candidate
+is actually evicted. This complicates comparisons across learned
+cache-eviction papers, which typically derive their own labels from raw
+traces using different traces, label definitions, and evaluation
+protocols. \lafc\ removes that variable: for every full-cache-miss
+decision in five real production traces, it computes how many additional
+misses would occur over a finite horizon $H$ if each candidate,
+specifically, had been the one evicted. We evaluate this label directly
+rather than assuming it is useful. Two-thirds of decisions (67.7\%) are
+completely tied and no decision has a single best candidate, so a
+uniform-random guess already lands in the optimal set 99.1\% of the time
+-- but an informativeness-stratified analysis shows the benchmark is
+conditionally, not uniformly, discriminative: in decisions with positive
+expected random regret, LRU-like and tie-aware selectors clearly separate
+from random and from weaker learned models, and this separation strengthens,
+monotonically for every decision tested, as the horizon grows from 16 to
+128. Closed-loop replay of seven real policies (LRU, MRU, random, SIEVE,
+ARC, LIRS, S3-FIFO) confirms that offline and closed-loop policy orderings
+agree in most, but not all, of the regimes where the offline signal is
+non-trivial; LRU stays near-best almost everywhere but, once compared
+against a broader policy set, no longer wins outright in nearly every
+cell, correcting an earlier, narrower reading of the same evidence.
+Swapping the label's continuation assumption for MRU or mean-random
+replay, at both a sampled and a full-population scale, changes almost
+nothing about which candidate is optimal. Taken together, \lafc\ is
+useful as a reproducible, regime-aware benchmark for candidate-level
+eviction supervision -- not as a universal target, and not as evidence
+that a learned selector will improve real cache performance without
+closed-loop validation. The underlying candidate-, decision-, and
+pairwise-level data are released for reuse, with every number in this
+paper traced to an independently validated artifact.
 \end{sloppypar}
 \end{abstract}
 

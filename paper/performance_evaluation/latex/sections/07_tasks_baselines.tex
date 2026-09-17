@@ -13,43 +13,32 @@ Given all candidate rows for one decision, identify a member of the minimum-loss
 Predict whether candidate A is better than candidate B within the same decision, where ``better'' means lower \texttt{y\_loss} or equivalently higher \texttt{y\_value}. This task uses the pairwise view or shipped pairwise sample as a simpler interface for within-decision preference modeling. Because equal losses induce ties, reports must state whether evaluation includes ties, excludes them, or treats them as a separate class. In the shipped sample, deterministic hash randomization of A/B orientation keeps the non-tie A-better/B-better split balanced (about 49.8\%/50.2\%) rather than encoding candidate-identifier order.
 
 \paragraph{Candidate-label distribution characterization.}
-Summarize the empirical label surface without training a predictive model. This characterization task studies distributions of \texttt{y\_loss}, \texttt{y\_value}, regret, tie frequency, and decision ambiguity across families, capacities, horizons, and splits. It is descriptive rather than competitive, but it is important for understanding benchmark difficulty and for interpreting downstream task results.
+Summarize the empirical label distributions without training a predictive model. This characterization task studies distributions of \texttt{y\_loss}, \texttt{y\_value}, regret, tie frequency, and decision ambiguity across families, capacities, horizons, and splits. It is descriptive rather than competitive, but it is important for understanding benchmark difficulty and for interpreting downstream task results.
 
 The empirical scope of this paper remains intentionally narrow. Rather than presenting a large model bake-off, we report lightweight baselines that can be executed directly from the committed release views and that establish reproducible reference points for later work.
 
 \begin{sloppypar}
-The current results surface covers three such references. A linear regression baseline over candidate rows predicts \texttt{y\_loss} from released features. It is intentionally weak: test MAE is 3.8739 with RMSE 4.7152 and $R^2=0.0026$, and the validation-split $R^2$ is slightly negative ($-0.0506$). Using that same linear score for within-decision selection nevertheless provides a reproducible decision-level floor. On the pairwise task, the earlier random and majority non-tie results remain useful sanity checks, but by themselves they do not test whether the released candidate features contain decision-relevant signal.
+The current results cover three such references. A linear regression baseline over candidate rows predicts \texttt{y\_loss} from released features. It is intentionally weak: test MAE is 3.8739 with RMSE 4.7152 and $R^2=0.0026$, and the validation-split $R^2$ is slightly negative ($-0.0506$). Using that same linear score for within-decision selection nevertheless provides a reproducible decision-level floor. On the pairwise task, the earlier random and majority non-tie results remain useful sanity checks, but by themselves they do not test whether the released candidate features contain decision-relevant signal.
 \end{sloppypar}
 
 \paragraph{Candidate-feature quality disclosure.} Of the 26 released
-candidate-level feature columns, an independent full-corpus audit
-(277,995,072 rows) found that 18 are globally constant and one
-(\texttt{candidate\_is\_predictor\_victim}) is bit-identical to
-\texttt{candidate\_is\_lru\_victim}; only 7 columns
+candidate-level feature columns, a full-corpus audit (277,995,072 rows)
+found that 19 are uninformative: 18 are globally constant and one is
+bit-identical to another column. The cause is an upstream generator bug --
+an annotation step these columns depend on never runs before feature
+extraction, so they silently receive a hardcoded default -- not a modeling
+choice, so we deprecate all 19 from the modeling feature set rather than
+reconstruct them (reconstruction would require a routine that uses
+ground-truth future arrival time, which would leak future information into
+columns the benchmark otherwise keeps online-computable). Only 7 columns
 (\texttt{candidate\_recency\_rank}, \texttt{candidate\_age\_norm},
 \texttt{candidate\_lru\_score}, \texttt{candidate\_is\_lru\_victim},
 \texttt{score\_gap\_to\_lru\_victim}, \texttt{recent\_candidate\_request\_rate},
-\texttt{recent\_candidate\_hit\_rate}) are non-degenerate. The root cause is
-a code-level gap in the upstream generator: the predictor/bucket/confidence
-annotation step that these columns depend on is never invoked before
-candidate-feature extraction runs, so every dependent column silently
-receives its hardcoded default. We deliberately did not reconstruct these
-values: the only available bucket-annotation routine in the generator
-codebase derives buckets from ground-truth future arrival time, so using it
-would both fabricate a predictor that never historically ran and leak
-future information into columns the benchmark otherwise keeps
-online-computable. We instead deprecate all 19 affected columns from the
-official modeling feature set (a versioned specification,
-\texttt{metadata/model\_feature\_schema\_v2.json}, ships with the release)
-while leaving their original values in place for provenance. Refitting
-every baseline in this section on only the 7 non-degenerate columns
-reproduces the reported numbers to the displayed precision for the linear
-regression baseline and the LRU-score pairwise baseline, and closely
-(within a few tenths of a percentage point) for the linear-score and
-logistic feature-difference pairwise baselines -- confirming that the 19
-deprecated columns contributed no measurable signal to any previously
-reported result. Full audit, root-cause evidence, and the legacy-vs-clean
-comparison are in the repository under
+\texttt{recent\_candidate\_hit\_rate}) remain. Refitting every baseline
+below on only these 7 columns reproduces the reported numbers exactly for
+two baselines and within a few tenths of a percentage point for the other
+two, confirming the 19 deprecated columns contributed no measurable signal
+to any result reported here. Full audit and root cause:
 \texttt{analysis/feature\_provenance\_repair\_20260917/}.
 
 To test whether released candidate features carry pairwise signal without

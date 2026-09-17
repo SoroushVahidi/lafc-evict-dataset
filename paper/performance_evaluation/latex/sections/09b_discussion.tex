@@ -1,57 +1,29 @@
 \section{Discussion}
 \label{sec:discussion}
 
-\textbf{What LAFC-Evict enables.} A reusable, candidate-level, finite-horizon
-counterfactual supervision surface, materialized once from real traces and
-usable across value-regression, best-candidate-selection, and pairwise
-formulations (Sections~\ref{sec:background}--\ref{sec:tasks-baselines})
-without every study re-deriving its own labels from raw traces
-(Section~\ref{sec:related-work} situates this against prior learned-cache
-work, most of which derives labels internally and non-reusably).
+The four preceding sections evaluate the same counterfactual label from
+four angles: whether it discriminates between candidates
+(Section~\ref{sec:characterization}), why its discriminativeness varies by
+workload (Section~\ref{sec:mechanisms}), whether it agrees with actual
+closed-loop cache behavior (Section~\ref{sec:linkage}), and whether it
+depends on the LRU-continuation assumption used to generate it
+(Section~\ref{sec:continuation}). None of these four questions can be
+answered by describing the label alone; each required either a real
+closed-loop replay, an independent trace-level measurement, or a relabeling
+experiment.
 
-\textbf{What the evaluation reveals, beyond the surface itself.} Four
-findings that only emerge from evaluating the surface against closed-loop
-behavior, not from describing the surface alone: the target's
-discriminativeness is workload-structured, not incidental
-(Section~\ref{sec:characterization}); that structure is explained, not
-just observed, by a single trace-level property, capacity-scale reuse
-(Section~\ref{sec:mechanisms}); offline and closed-loop policy orderings
-agree in most, not all, informative regimes, with the exceptions
-identified rather than smoothed over (Section~\ref{sec:linkage}); and the
-canonical LRU-continuation assumption is robust, with quantified limits,
-at the capacities tested (Section~\ref{sec:continuation}).
+The offline$\leftrightarrow$closed-loop correspondence is the paper's
+central empirical contribution, not the offline label by itself: the two
+discordant cells in Section~\ref{sec:linkage} were found by the same
+procedure that found the eight agreeing ones, not selected after the fact,
+and both are mechanistically investigated rather than smoothed over
+(Section~\ref{sec:mechanisms}). Similarly, wiki2018's complete degeneracy
+and alibaba-block/cap32's near-zero offline signal are explained, not
+merely observed (Section~\ref{sec:mechanisms}) -- understanding why a
+result is degenerate is what makes the non-degenerate results trustworthy.
 
-\textbf{Why degenerate regimes are useful.} wiki2018's complete degeneracy
-and alibaba-block/cap32's near-zero offline signal are explained results
-(Section~\ref{sec:mechanisms}), not unexplained anomalies. Mechanistically
-understood degenerate cases make the non-degenerate claims more
-trustworthy and answer the earlier criticism that tie-heaviness was stated
-but not investigated.
-
-\textbf{Offline surrogate evaluation vs.\ closed-loop performance.} This
-paper's position, supported by Sections~\ref{sec:linkage}
-and~\ref{sec:closed-loop}, is that the offline$\leftrightarrow$closed-loop
-correspondence itself -- not the offline surrogate alone -- is the
-contribution: the two exceptions found were identified by the same
-symmetric procedure that found the 8 agreeing cells, not selected for
-balance, and are characterized rather than smoothed over
-(Section~\ref{sec:practical-implications} gives the resulting practitioner
-guidance in detail).
-
-\textbf{Continuation robustness as currently validated.} The robustness
-finding in Section~\ref{sec:continuation} is deliberately reported with
-its exact scope attached: sampled MRU and mean-random continuation at
-capacities 32/128, and full-population MRU continuation at capacities
-32/64/128/256. Within that scope, the LRU continuation used for label
-generation is not driving the target ordering to a practically meaningful
-degree: Set-C median Jaccard remains 1.0, mean cross-continuation regret
-is below 0.001 misses in the population MRU census, and capacities 64/256
-do not reveal hidden sensitivity. The result does not say that every
-stateful deployed continuation policy would preserve the same ordering;
-it says the tested alternatives did, with random tested only in the
-validated sample.
-
-\textbf{Methodological limits} are collected in
-Section~\ref{sec:limitations}. For this discussion, the load-bearing ones
-are target discriminativeness, small-$n$ linkage evidence, and the tested
-scope of continuation policies.
+Section~\ref{sec:limitations} collects the full scope of every claim above;
+the load-bearing ones for this discussion are the target's substantial tie
+mass, the small sample size ($n=8$--10) behind the linkage correlations,
+and the tested-but-not-exhaustive scope of continuation policies
+(Section~\ref{sec:continuation}).

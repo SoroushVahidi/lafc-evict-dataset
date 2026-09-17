@@ -29,65 +29,57 @@ introduced, so that every quantity used later in the paper is grounded in
 a concrete example first.
 
 \begin{sloppypar}
-The contribution of this paper is not a new eviction policy. It is an
-evaluation of a reusable offline supervision surface against closed-loop
-cache-policy behavior, organized around five questions. \textbf{(RQ1)} Is
-the finite-horizon counterfactual target actually discriminative between
-candidates, and when does it degenerate to an uninformative tie? We find
-that it is not uniformly discriminative: aggregate tie rates are
-substantial, and no audited decision has a strict unique winner, but
-discriminativeness varies strongly and predictably by workload, cache
+This paper does not propose a new eviction policy. It evaluates a reusable
+offline label against actual closed-loop cache behavior, organized around
+five questions. \textbf{(RQ1)} Is the finite-horizon counterfactual target
+actually discriminative between candidates, and when does it degenerate to
+an uninformative tie? It is not uniformly discriminative: aggregate tie
+rates are substantial, and no audited decision has a strict unique winner,
+but discriminativeness varies strongly and predictably by workload, cache
 capacity, and horizon, and one workload in our evaluation is a genuine,
 mechanistically explained negative control. \textbf{(RQ2)} Does the
 offline candidate ranking correspond to actual closed-loop cache
-performance? Across a closed-loop evaluation over production-derived traces, offline and
-closed-loop policy orderings agree in the large majority of workload/
-capacity regimes where the offline signal itself is not near zero, with
-two specific, characterized exceptions. \textbf{(RQ3)} How does this
-correspondence depend on workload, capacity, and horizon? We find that
-capacity-scale locality in the underlying trace correlates with both
-offline discriminativeness and closed-loop policy separation, and that,
-among the three main-release horizons ($H\in\{4,8,16\}$), $H=16$
-aligns offline and closed-loop evidence most strongly, though modestly.
-A matched-population H16--H128 characterization audit shows that longer
-horizons increase informativeness but do not eliminate low-information
-regimes. \textbf{(RQ4)} How
-sensitive are the labels to the choice of continuation policy after a
-forced eviction? A sampled robustness study at two cache capacities finds
-the labels robust to MRU and mean-random continuations by a
-pre-registered criterion; a separate full-population census extends the
-MRU result across all four evaluated capacities, while still leaving
-arbitrary continuation policies outside the claim. \textbf{(RQ5)} What does
-this imply in practice for a researcher deciding between offline and
-closed-loop evaluation? We argue, and the evidence in this paper supports,
-that the offline supervision this dataset provides complements rather than
-replaces closed-loop evaluation, and we give concrete, evidenced guidance
-for when the offline signal can be trusted.
+performance? Closed-loop replay of seven policies shows offline and
+closed-loop orderings agree in the large majority of workload/capacity
+regimes where the offline signal itself is not near zero, with two
+specific, characterized exceptions. \textbf{(RQ3)} How does this
+correspondence depend on workload, capacity, and horizon? Capacity-scale
+locality in the underlying trace correlates with both offline
+discriminativeness and closed-loop policy separation, and among the three
+main-release horizons ($H\in\{4,8,16\}$), $H=16$ aligns offline and
+closed-loop evidence most strongly, though modestly; a matched-population
+audit extending to $H=128$ on the identical decisions shows informativeness
+keeps rising with horizon without eliminating low-information regimes.
+\textbf{(RQ4)} How sensitive are the labels to the choice of continuation
+policy after a forced eviction? A sampled study and a separate
+full-population census both find the canonical LRU-continuation labels
+robust to MRU and mean-random continuation, within the capacities and
+policies actually tested. \textbf{(RQ5)} What does this imply in practice
+for a researcher choosing between offline and closed-loop evaluation? The
+offline label complements, rather than replaces, closed-loop evaluation;
+Section~\ref{sec:practical-implications} gives concrete guidance for when
+it can be trusted.
 \end{sloppypar}
 
 Every quantitative claim in this paper traces to a specific, independently
-validated evidence artifact; Sections~\ref{sec:tasks-baselines}
-through~\ref{sec:characterization} and the limitations discussion in
-Section~\ref{sec:limitations} state the exact scope, sample sizes, and
-caveats attached to each result rather than presenting them as unqualified
-findings. The underlying release also exposes candidate-level, decision-level,
-and pairwise derived views of the same supervision at production scale
-(Table~\ref{tab:dataset-scale}), which supports the evaluation methodology
-in this paper and is also intended for reuse by other researchers studying
-learned cache eviction; release construction, schema, and validation are
-described in Sections~\ref{sec:benchmark-design}--\ref{sec:release-validation}
-but are not the paper's central argument.
+validated evidence artifact, with exact scope, sample sizes, and caveats
+stated alongside each result rather than presented as unqualified findings
+(Section~\ref{sec:release-validation}). The same underlying labels are
+also released as candidate-, decision-, and pairwise-level views at
+production scale (Table~\ref{tab:dataset-scale}) for reuse by other
+researchers; release construction, schema, and validation are described in
+Sections~\ref{sec:benchmark-design}--\ref{sec:release-validation} but are
+not this paper's central argument.
 
-To our knowledge, existing public cache-replacement resources do not
-provide a reusable candidate-level counterfactual supervision surface at
-this scale together with a direct evaluation of its relationship to
-closed-loop cache-policy behavior; we make this claim with the restrained
-scope stated above, not as a claim of exhaustive prior-art coverage (see
-Section~\ref{sec:related-work}).
+To our knowledge, no existing public cache-replacement resource provides
+reusable candidate-level counterfactual labels at this scale together with
+a direct evaluation of their relationship to closed-loop cache-policy
+behavior; this is a specific, bounded claim, not one of exhaustive
+prior-art coverage (Section~\ref{sec:related-work}).
 
 The rest of the paper proceeds as follows. Section~\ref{sec:background}
-gives the worked example and motivates decision-aligned counterfactual
-supervision. Sections~\ref{sec:benchmark-design}--\ref{sec:release-validation}
+works through the worked example and motivates the counterfactual label.
+Sections~\ref{sec:benchmark-design}--\ref{sec:release-validation}
 describe construction, label definition, schema, and release validation.
 Section~\ref{sec:tasks-baselines} defines the benchmark tasks. Section~\ref{sec:characterization}
 reports target discriminativeness (RQ1) and, together with material drawn

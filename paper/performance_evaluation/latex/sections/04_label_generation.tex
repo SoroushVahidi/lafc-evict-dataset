@@ -25,7 +25,9 @@ This paper treats \texttt{y\_loss} as canonical and uses
 \texttt{y\_value} only where a specific baseline is more naturally stated
 as a maximization, never reporting the same statistic under both names.
 
-This label has two consequences for the paper. First, it creates a common numerical target for regression-style benchmark tasks. Second, it induces structured decision-level objects. For a fixed decision $(t, S_t^{-}, C_t)$, the benchmark-optimal candidate set is
+This label serves two purposes: it gives a common numerical target for
+regression-style benchmark tasks, and it induces structured decision-level
+objects. For a fixed decision $(t, S_t^{-}, C_t)$, the benchmark-optimal candidate set is
 \[
 C_t^{\star} = \arg\min_{c \in C_t} L_{t,H}^{\pi}(c),
 \]
@@ -35,4 +37,9 @@ and the per-candidate regret is
 \]
 These quantities define best-candidate selection targets, pairwise preferences, and tie structure within a decision.
 
-This supervision is a generated counterfactual label family, not an upstream annotation. It is finite-horizon, not asymptotic. It is tied to a continuation policy, not a universally optimal control objective. The label is therefore decision-aligned for the benchmarked eviction choice, but it is not an offline-optimal label in the sense of solving the full future control problem. These boundaries are central to the scientific positioning of the paper.
+This label is generated, not an upstream annotation; finite-horizon, not
+asymptotic; and tied to one continuation policy, not a universally optimal
+control objective. It scores the specific eviction choice under test, but
+it does not solve the full future control problem the way an
+offline-optimal (Belady-style) label would. Every result in this paper
+should be read against that boundary.

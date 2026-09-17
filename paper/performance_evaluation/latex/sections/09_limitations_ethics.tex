@@ -1,7 +1,7 @@
 \section{Limitations, Ethics, and Reuse}
 \label{sec:limitations}
 
-This evaluation surface has several important constraints, and the
+\lafc's labels and evaluation have several important constraints, and the
 practical guidance in Section~\ref{sec:practical-implications} should be
 read together with them rather than instead of them.
 
@@ -27,19 +27,14 @@ Section~\ref{sec:continuation} support robustness only within their stated
 scopes; random continuation is not validated at population scale, and no
 experiment covers every deployment policy.
 
-Fourth, the target is substantially tied. Across the full audited canonical
-dataset, the all-tied fraction is approximately 0.68 and the unique-winner
-fraction is exactly 0.0 -- no audited decision in this dataset has a single
-uniquely-best candidate victim. The informativeness-stratified analysis
-shows this is not equivalent to benchmark uselessness: zero-information
-decisions correctly show no method separation, while positive-information
-strata separate LRU-like and tie-aware selectors from random and from weak
-pointwise learned selectors. The support remains conditional, not
-universal; family/capacity regimes with high expected random regret can
-also be regimes where simple recency-based selectors are less reliable.
-Wiki2018 is a fully degenerate negative control at every capacity and
-horizon tested, with zero reuse events in its scored windows, which is a
-mathematical certainty rather than a statistical property of that trace.
+Fourth, the target is substantially tied (Section~\ref{sec:characterization}:
+all-tied fraction 0.68, unique-winner fraction exactly 0.0). Support for
+the benchmark's usefulness is conditional on decision informativeness, not
+universal, and no result in this paper claims it generalizes beyond the
+audited population. wiki2018 remains a fully degenerate negative control
+at every capacity and horizon tested; Section~\ref{sec:mechanisms} proves
+this follows deductively from zero reuse events, not as a statistical
+property of the trace.
 
 Fifth, the evaluated dataset uses unit-object, count-based capacities (32,
 64, 128, or 256 objects) with unconditional admission of the requested
@@ -49,15 +44,12 @@ is never withheld. Claims in this paper should be read as scoped to this
 abstraction and not generalized to byte-addressable or admission-gated
 cache models without further evidence.
 
-Sixth, closed-loop evidence itself has two family-specific caveats that
-must be carried alongside any result that uses it. MetaCDN's closed-loop
-evidence is validation-window evidence, not a temporally held-out test
-window (Twemcache's is test-window). MetaKV is the only family whose
-scored window begins at an empty cache (a cold start, identifiable from
-the identity evictions = misses - capacity); this is plausibly, but not
-conclusively, connected to MetaKV being the one Tier-1 cell where LRU
-falls to third place, behind both SIEVE and random-mean
-(Section~\ref{sec:mechanisms}).
+Sixth, closed-loop evidence carries two family-specific caveats stated in
+full in Section~\ref{sec:experimental-methodology}: MetaCDN's evidence is
+validation-window, not test-window; MetaKV's scored window begins at an
+empty cache. Section~\ref{sec:mechanisms} discusses, without resolving,
+whether the cold start plausibly contributes to MetaKV being the one
+cell where LRU is not the best policy.
 
 Seventh, a known data-generation issue remains open: in the audited
 canonical data, the predictor-victim flag is identical to the LRU-victim
