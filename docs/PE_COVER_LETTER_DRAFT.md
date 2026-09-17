@@ -45,12 +45,17 @@ identify and mechanistically explain a workload for which the offline
 target is fully degenerate rather than omitting it.
 
 This manuscript is not under review, and has not been published, at any
-other journal or conference. [Author to confirm: an earlier, substantially
-different version of this material was previously submitted to a
-different venue and not accepted; the present manuscript has been
-restructured around additional validated evidence since then. State this
-plainly if the journal's submission form asks about prior submissions,
-rather than omitting it.]
+other journal or conference. We wish to disclose that a related manuscript,
+currently under consideration at *Knowledge-Based Systems*, focuses on the
+design and closed-loop evaluation of a learned cache-eviction model/policy. The
+present *Performance Evaluation* manuscript instead focuses on the LAFC-Evict
+counterfactual dataset and evaluation benchmark, including target
+characterization, degeneracy, horizon/capacity sensitivity, continuation
+robustness, offline–closed-loop correspondence, expanded comparator
+robustness, and release methodology. The two works share some underlying
+caching infrastructure and counterfactual-label concepts, and the related
+submission is disclosed for editorial consideration to ensure complete
+transparency.
 
 Thank you for considering our manuscript. We look forward to your
 response.
