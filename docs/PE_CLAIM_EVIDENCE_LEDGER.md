@@ -169,6 +169,19 @@ row here rather than restating numbers from memory.
 - Values: trace-derived LRU hit rate vs. offline all-tied fraction (H=16): pooled r=-0.832 (n=10), cap32 r=-0.829 (n=5), cap128 r=-0.834 (n=5). vs. closed-loop |MRU-LRU| miss-ratio gap: pooled r=0.899 (n=10), cap32 r=0.909 (n=5), cap128 r=0.893 (n=5).
 - Census-dependent: NO.
 
+### C16. A frozen offline-trained learned selector evaluated in true closed-loop is generally not competitive with heuristic baselines
+
+- Status: SUPPORTED (confirmatory, frozen-model evaluation under pre-registered protocol)
+- Evidence: `analysis/pe_publication_learned_closed_loop_20260916/PE_LEARNED_CLOSED_LOOP_FINAL_REPORT.md` (campaign `pe_publication_learned_closed_loop_20260916`, 250 tasks total).
+- Values:
+  - **Overall macro miss ratio**: Learned `0.7629` vs. LRU `0.71175`, SIEVE `0.70965`, Random (seed mean) `0.72285`, LFU `0.78245`, MRU `0.84839` across all 10 cells.
+  - **Excluding 2 degenerate wiki2018 cells**: Learned `0.7036` vs. LRU `0.6397`, SIEVE `0.6371`, Random `0.6536` on the remaining 8 cells.
+  - **Win/tie/loss counts** (vs. LRU/SIEVE/random): 1 win, 2 ties (the degenerate wiki2018 cells), 7 losses.
+  - **Single learned win**: metakv/cap128 (learned `0.76497` vs. LRU `0.76582`, SIEVE `0.76656`, random-mean `0.76685`).
+  - **twemcache** shows largest gap: learned worse by ~0.15.
+- Interpretation: Good offline predictive structure does not translate automatically to closed-loop improvement. This is likely due to trajectory/state shift, action-underdetermined labels, or continuation-policy mismatch.
+- Census-dependent: NO.
+
 ## Cross-cutting caveats that apply to nearly every claim above
 
 - Labels are finite-horizon; canonical continuation is LRU (see C10 for the sensitivity result on that assumption).
@@ -183,4 +196,3 @@ row here rather than restating numbers from memory.
 
 - Any full-population random-continuation number.
 - Any claim of continuation-independence for arbitrary deployed policies.
-- Any Tier-2 / learned-policy closed-loop result (Tier 2 was never run; out of scope for this task and explicitly forbidden from being launched here).
