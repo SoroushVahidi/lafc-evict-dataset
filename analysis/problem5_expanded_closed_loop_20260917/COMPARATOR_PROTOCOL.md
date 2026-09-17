@@ -95,3 +95,29 @@ instead of silently running it on a login node for hours (not expected).
 This file is committed before the production run in Phase 4 and is not
 edited afterward to match observed results. Any post hoc protocol change
 would be recorded as a new dated addendum, not a silent edit.
+
+## Addendum, 2026-09-17 (Phase 3, before any production execution): W-TinyLFU dropped
+
+Phase 3 implementation validation (`tests/test_expanded_policies_validation.py`)
+found that `libcachesim`'s `WTinyLFU` class, with its own documented default
+parameter `window_size=0.01`, is **completely non-functional at cache_size=32**
+-- one of this manuscript's two required Tier-1 capacities. `round(0.01 * 32)`
+degenerates the window-LRU segment to zero slots, and the cache then never
+admits anything (`get_n_obj()` stays 0 forever, every request is a permanent
+miss). It only becomes functional starting around `cache_size>=100` (confirmed
+working at 100/110/120/128). This was found and reproduced BEFORE any
+expanded-policy production run (see the runtime log this file's commit
+precedes).
+
+Changing `window_size` away from its published default specifically so the
+policy merely functions at capacity 32 would itself be exactly the kind of
+capacity-specific tuning this protocol forbids (Phase 2/Phase 3: "no
+trace-specific tuning"). Since W-TinyLFU was pre-registered above as an
+*optional* fourth policy, not one of the three primary additions, the correct
+action per this protocol's own stop-condition language ("do not run full
+production if implementation validation fails... STOP rather than writing
+approximate substitutes") is to drop it, not patch its configuration.
+
+**Final Problem-5 policy set: ARC, LIRS, S3-FIFO (three primary policies, as
+originally targeted; no optional fourth).** This addendum is written before
+Phase 4 production and is not revised afterward.
