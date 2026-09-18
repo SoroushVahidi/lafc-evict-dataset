@@ -1,11 +1,18 @@
 # V0.3/V1.0 Provenance and Licensing Gaps
 
-**Status:** INTERNAL planning document. Not legal advice -- same caveat as
-`dataset_card/LICENSE_DATA.md` and `manifests/source_family_registry.yaml`,
-which remain the canonical machine-readable source-family registry. This
-document only summarizes what those already say and identifies what
-external research is still needed; it does not perform that research
-(no data owners were contacted).
+> **Historical planning record.** This document preserves an earlier
+> provenance-gap assessment. It is not the current release-clearance state for
+> v1.0. Current source-family clearance is recorded in
+> `manifests/source_family_registry.yaml`, `dataset_card/LICENSE_DATA.md`, and
+> `THIRD_PARTY_DATA.md`: the five public v1.0 families are cleared, while
+> CitiBike and Brightkite remain blocked.
+
+**Status at the time this historical assessment was written:** INTERNAL
+planning document. Not legal advice -- same caveat as
+`dataset_card/LICENSE_DATA.md` and `manifests/source_family_registry.yaml`.
+This document summarized the registry state before the later v1.0 clearance
+updates and identified what external research was still needed; it did not
+perform that research (no data owners were contacted).
 
 ---
 

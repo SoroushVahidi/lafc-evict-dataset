@@ -24,17 +24,17 @@ identifiers:
     description: "Zenodo concept DOI, current version DOI 10.5281/zenodo.21895844 identifies v0.2 only. No Zenodo version exists yet for v0.3 or v1.0; do not cite the concept DOI as identifying v1.0."
 preferred-citation:
   type: article
-  title: "Decision-aligned eviction-value prediction for robust learning-augmented caching"
+  title: "LAFC-Evict: A Large-Scale Counterfactual Benchmark for Learned Cache Eviction"
   authors:
     - family-names: "Vahidi"
       given-names: "Soroush"
   year: 2026
-  url: "https://ssrn.com/abstract=6636732"
   notes: >-
-    No independent DOI has been verified for this preprint as of this
-    release; do not cite the LAFC-Evict dataset's Zenodo DOI as this
-    article's DOI. Cite the dataset itself using the `identifiers` DOI
-    above (Zenodo concept DOI 10.5281/zenodo.21895843).
+    Submitted manuscript for Performance Evaluation. No journal DOI, volume,
+    issue, or page numbers have been assigned as of this release; do not cite
+    the LAFC-Evict dataset's Zenodo DOI as this article's DOI. Cite the
+    dataset itself using the host/version being used; the Zenodo DOI above
+    identifies the v0.2 archival line, not v1.0.
 keywords:
   - "cache eviction"
   - "caching"

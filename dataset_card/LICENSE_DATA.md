@@ -47,8 +47,8 @@ relicense the third-party trace data described above. Every trace family's
 own upstream license governs redistribution of material derived from it;
 LAFC-Evict's derived/transformed artifacts are distributed subject to the
 applicable upstream attribution/notice requirements (CC BY 4.0 attribution
-for `wiki2018`/`twemcache`/`cloudphysics`, Apache-2.0 attribution and
-notice preservation for `metakv`/`metacdn`), not under MIT.
+for `twemcache`/`cloudphysics`, Apache-2.0 attribution and notice
+preservation for `metakv`/`metacdn`; Wiki2018 is CC0-1.0), not under MIT.
 
 **On the `cacheMon/cache_dataset` mirror:** this collection separately
 redistributes `metakv`, `metacdn`, and a *different* trace it calls
@@ -62,7 +62,10 @@ mirror path only, not the license basis.
 
 ## Release guidance
 
-- The published v0.2 release includes only `wiki2018`.
+- The current full public v1.0 release includes `wiki2018`, `cloudphysics`
+  (Alibaba Block), `metacdn`, `metakv`, and `twemcache`.
+- The published v0.2 Zenodo archival release includes only `wiki2018`.
+- The older v0.3 HF-main/AWS release includes only `wiki2018`.
 - The v0.1-open trees are historical unpublished local artifacts.
 - `cloudphysics` (Alibaba), `metacdn`, `metakv`, and `twemcache` are now
   `cleared_for_public_release` per the 2026-09-15 review recorded above and

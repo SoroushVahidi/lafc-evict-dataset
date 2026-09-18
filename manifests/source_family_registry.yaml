@@ -134,14 +134,14 @@ families:
   - family: wiki2018
     source_name: Wikimedia public pageviews derived proxy trace
     source_url: https://dumps.wikimedia.org/other/pageviews/
-    upstream_license: wikimedia_public_pageviews_with_attribution
+    upstream_license: CC0-1.0
     redistribution_status: eligible_pending_final_review
     publication_clearance: cleared_for_public_release
     recommended_for_v0_1_open: true
     privacy_risk: low
-    notes: Pageview-derived proxy trace for request mixtures; not a byte-for-byte CDN trace and should be described that way.
+    notes: Pageview-derived proxy trace for request mixtures; not a byte-for-byte CDN trace and should be described that way. Wikimedia Analytics pageview data are documented as CC0.
     required_citation: true
-    review_status: needs_review
+    review_status: reviewed_2026_09_15
     recommended_for_v0_2_preview: true
     v0_2_preview_redistribution_status: CC0_ANALYTICS_DATA_PUBLIC_DERIVED_PREVIEW_OK
     v0_2_preview_public_upload_status: APPROVED_WITH_ATTRIBUTION_AND_CAVEAT

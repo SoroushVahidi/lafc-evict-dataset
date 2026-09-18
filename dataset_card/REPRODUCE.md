@@ -21,20 +21,20 @@ research software — this does not mean every trace family it can process is
 cleared for redistribution; see `RELEASE_SCOPE.md` and `LICENSE_DATA.md` for
 which families are actually cleared.
 
-## Associated Paper / Preprint
+## Associated Paper
 
-This dataset release accompanies the public preprint/manuscript:  
-**Decision-aligned eviction-value prediction for robust learning-augmented caching**  
-Soroush Vahidi.  
-Available at SSRN 6636732.  
-Status: public preprint; manuscript under peer review.
+This dataset release accompanies the submitted manuscript:
+**LAFC-Evict: A Large-Scale Counterfactual Benchmark for Learned Cache Eviction**
+Soroush Vahidi.
+Submitted for consideration to *Performance Evaluation*.
+Canonical repository PDF: `paper/performance_evaluation/LAFC-Evict-Performance-Evaluation.pdf`.
 
 The paper describes the learning-augmented caching setting and the experiments
 that motivated this dataset release. This repository provides dataset-release
 artifacts, schemas, validation tools, benchmark views, and reproducibility
 utilities. When using the data artifact, cite the paper/preprint and the
 specific host/version used; cite the Zenodo DOI only for DOI-backed Zenodo
-versions. As of this handoff, v0.3 has no documented Zenodo DOI.
+versions. Zenodo currently archives v0.2 only; no v1.0 Zenodo DOI exists.
 
 ## Inputs
 
@@ -48,8 +48,9 @@ Supported inputs for release export:
 ## Reproduce historical v0.1-open staging
 
 The commands in this section reproduce historical local staging artifacts, not
-the current public release. The current published v0.2 payload is represented
-by its release-local manifests and host records.
+the current public v1.0 Hugging Face release. Current v1.0 publication state is
+recorded in `docs/LAFC_EVICT_PUBLICATION_STATE.md` and
+`publication/LAFC_EVICT_PUBLICATION_STATE.json`.
 
 Dry-run first:
 

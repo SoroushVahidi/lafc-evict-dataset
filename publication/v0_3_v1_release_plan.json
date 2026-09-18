@@ -2,7 +2,8 @@
   "document_type": "v0_3_v1_release_plan",
   "status": "INTERNAL_PLANNING_DRAFT_NOT_APPROVED",
   "plan_date": "2026-08-11",
-  "note": "v0.3 now has a local validated candidate but no publication action. v1.0 remains a design proposal only. See docs/V0_3_V1_RELEASE_DESIGN.md for full rationale.",
+  "historical_notice": "Historical planning record. This file preserves the August 2026 v0.3/v1.0 planning state and is not the current publication status. Current state is recorded in docs/LAFC_EVICT_PUBLICATION_STATE.md and publication/LAFC_EVICT_PUBLICATION_STATE.json.",
+  "note": "Historical note: at the time this plan was written, v0.3 had a local validated candidate but no publication action, and v1.0 remained a design proposal. This was superseded by later publication-state records.",
   "tiers": [
     {
       "tier": "A",

@@ -20,20 +20,20 @@ on Hugging Face `main` revision and AWS Open Data. The prior **v0.2 published pr
 (https://doi.org/10.5281/zenodo.21895844 -- this DOI identifies v0.2 only; Zenodo
 does not yet have a v0.3 or v1.0 version DOI).
 
-## Associated Paper / Preprint
+## Associated Paper
 
-This dataset release accompanies the public preprint/manuscript:  
-**Decision-aligned eviction-value prediction for robust learning-augmented caching**  
-Soroush Vahidi.  
-Available at SSRN 6636732.  
-Status: public preprint; manuscript under peer review.
+This dataset release accompanies the submitted manuscript:
+**LAFC-Evict: A Large-Scale Counterfactual Benchmark for Learned Cache Eviction**
+Soroush Vahidi.
+Submitted for consideration to *Performance Evaluation*.
+Canonical repository PDF: `paper/performance_evaluation/LAFC-Evict-Performance-Evaluation.pdf`.
 
 The paper describes the learning-augmented caching setting and the experiments
 that motivated this dataset release. This repository provides dataset-release
 artifacts, schemas, validation tools, benchmark views, and reproducibility
 utilities. When using the data artifact, cite the paper/preprint and the
 specific host/version used; cite the Zenodo DOI only for DOI-backed Zenodo
-versions. As of this handoff, v0.3 has no documented Zenodo DOI.
+versions. Zenodo currently archives v0.2 only; no v1.0 Zenodo DOI exists.
 
 ## What this repository releases
 

@@ -1,22 +1,31 @@
-# Publication Tooling
+# Publication Hosting Index
 
-This directory contains templates, records, and helpers for preparing LAFC-Evict
-publication metadata. The authoritative current state is
-`LAFC_EVICT_PUBLICATION_STATE.json`.
+This directory contains host-state records, publication templates, archived bundle metadata, and release-planning artifacts for LAFC-Evict. The authoritative current state is:
 
-- All publication scripts are **dry-run by default**.
-- Hugging Face is the current interactive dataset host.
-- AWS Open Data hosts the current wiki2018-only v0.3 public payload.
-- Zenodo is the current DOI-backed archival host for v0.2.
-- GitHub Releases are intended for code release notes and small metadata assets, not the main large dataset payload.
+- Human-readable: [`../docs/LAFC_EVICT_PUBLICATION_STATE.md`](../docs/LAFC_EVICT_PUBLICATION_STATE.md)
+- Machine-readable: [`LAFC_EVICT_PUBLICATION_STATE.json`](LAFC_EVICT_PUBLICATION_STATE.json)
 
-The current public release is v0.3, limited to wiki2018-derived supervision.
-It is published on Hugging Face and hosted through AWS Open Data at
-`lafc-evict-open-data` in `us-west-2`. Zenodo still serves v0.2 as the latest
-documented DOI-backed release; no v0.3 Zenodo DOI has been minted. The
-v0.1-open trees are historical local staging artifacts.
+## Current
 
-The full five-family canonical scientific dataset is not the same thing as the
-public wiki2018-only v0.3 release. See
-`docs/CURRENT_PROJECT_STATUS_AND_HANDOFF.md` before making publication,
-manuscript, or cleanup decisions.
+- **Hugging Face v1.0** is the current full public release.
+- Dataset: <https://huggingface.co/datasets/SoroushVahidi/lafc-evict>
+- Revision/branch: `v1.0`
+- Scope: five families, 277,995,072 candidate rows, 2,363,286 decision-horizon rows, and 1,000,000 canonical pairwise rows.
+
+## Older Active Hosting
+
+- **Hugging Face `main`** retains the older v0.3 Wiki2018-only state.
+- **AWS Open Data** hosts the older v0.3 Wiki2018-only payload in bucket `lafc-evict-open-data`, region `us-west-2`.
+
+## Archival
+
+- **Zenodo** currently archives v0.2 only.
+- Version DOI: <https://doi.org/10.5281/zenodo.21895844>
+- Concept DOI: <https://doi.org/10.5281/zenodo.21895843>
+- No v0.3 or v1.0 Zenodo version DOI has been minted.
+
+## Historical Artifacts
+
+Files named `v0_3_*`, `zenodo_v0_*`, `V0_3_*`, and the archived bundle material are retained as historical publication evidence or planning records. They may describe earlier build, upload, or draft states and should not be read as the current release status unless they point back to the publication-state files above.
+
+Publication scripts are dry-run by default. GitHub Releases, tags, and final branch cleanup are intentionally deferred to final release closure.

@@ -2,8 +2,9 @@
 
 This document defines stable column semantics. Release-specific fields, dtypes,
 and file inventories are authoritative in each release's
-`metadata/schema.json` and `metadata/release_manifest.json`; the v0.2
-published preview is the current public schema instance.
+`metadata/schema.json` and `metadata/release_manifest.json`; v1.0 is the
+current full public release, while v0.3 and v0.2 remain older active
+reference/archival schema instances.
 
 The canonical base row represents one candidate victim at one full-cache miss eviction decision, for one capacity and one finite horizon.
 

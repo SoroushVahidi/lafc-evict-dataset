@@ -9,6 +9,7 @@ publication/.env
 *.gz
 *.zip
 __pycache__/
+*.pyc
 .pytest_cache/
 .ruff_cache/
 .venv/
@@ -17,6 +18,10 @@ dist/
 build/
 reports/
 .duckdb_tmp/
+.DS_Store
+*~
+*.swp
+*.swo
 *.blg
 paper/performance_evaluation/latex/main.pdf
 paper/performance_evaluation/latex/*.aux

@@ -1,30 +1,30 @@
 # LAFC-Evict Repository State
 
-Audit date: 2026-09-15.
+Audit date: 2026-09-18.
 
 ## Canonical State
 
 - Canonical branch: `master`
-- Canonical master SHA at this audit: `3553d2eaa46c9671aebd81e560ba10d65ad62db8`
+- Canonical master SHA at this audit: `d569ed7608e8f7af7d72fc9853715a6395438be8`
 - Remote: `origin`
 - Repository: `SoroushVahidi/lafc-evict-dataset`
 - Paper: LAFC-Evict: A Large-Scale Counterfactual Benchmark for Learned Cache Eviction
 - Canonical manuscript PDF: `paper/performance_evaluation/LAFC-Evict-Performance-Evaluation.pdf`
 - LaTeX source entry point: `paper/performance_evaluation/latex/main.tex`
-- Manuscript status: integrated into `master`, validated to build successfully at 45 pages.
-
-The manuscript commit `d48a1450b1054eb74463e6c420fd200d6c50ab70` is in
-`master`. The provenance commits
-`eb0304ac4831104120312343df6268ea4a3381a9` and
-`148d9f97934e1512a78f52010011b1ecd82af2dc` are also in `master`.
+- Manuscript status: integrated into `master`, submitted for consideration to
+  *Performance Evaluation*, and recorded as a validated 53-page PDF in
+  `docs/PERFORMANCE_EVALUATION_FINAL_SUBMISSION_STATE.md`.
 
 ## Public Release Scope
 
-The current public derived-data package is v0.3 and is wiki2018-only. The
-Performance Evaluation manuscript evaluates a five-family scientific corpus,
-but Alibaba Block, MetaCDN, MetaKV, and Twemcache generated rows are not
-claimed as publicly downloadable release rows. Public release and DOI details
-are tracked in `docs/LAFC_EVICT_PUBLICATION_STATE.md` and
+The current full public derived-data release is LAFC-Evict v1.0 on Hugging
+Face revision `v1.0`. It contains the five evaluated public families
+(Alibaba Block / `cloudphysics`, MetaCDN, MetaKV, Twemcache, and Wiki2018),
+277,995,072 candidate rows, 2,363,286 decision-horizon rows, and a
+1,000,000-row canonical pairwise sample. The older v0.3 Wiki2018-only state
+remains active on Hugging Face `main` and AWS Open Data. Zenodo remains on
+the v0.2 archival preview only; no v1.0 Zenodo DOI exists. Public release and
+DOI details are tracked in `docs/LAFC_EVICT_PUBLICATION_STATE.md` and
 `publication/LAFC_EVICT_PUBLICATION_STATE.json`.
 
 ## Provenance Terminology
@@ -46,8 +46,8 @@ Major validated evidence currently represented on `master` includes:
 - Continuation-sensitivity pilot/full-study artifacts.
 - Compact validated full-population MRU-continuation census summaries under
   `analysis/continuation_policy_mru_population_census_20260914/validated/`.
-- Publication-state and provenance/license corrections for public release
-  scope.
+- Publication-state and provenance/license corrections for the v1.0 public
+  release scope.
 
 ## Branch And Worktree Notes
 

@@ -1,9 +1,17 @@
 # V0.3/V1.0 Build Plan
 
-**Status:** INTERNAL planning document. A Wiki2018-only v0.3 candidate now
-exists at `release/lafc-evict-v0.3-candidate/`. It passed local validation and
-security scanning but has not been uploaded or approved for publication. No
-v1.0 build or publication action has occurred.
+> **Historical planning record.** This document preserves an earlier
+> pre-publication build plan and is not the current publication status. Current
+> release truth is in `docs/LAFC_EVICT_PUBLICATION_STATE.md` and
+> `publication/LAFC_EVICT_PUBLICATION_STATE.json`: v1.0 is now public on
+> Hugging Face, v0.3 remains the older Wiki2018-only HF-main/AWS release, and
+> Zenodo remains v0.2 only.
+
+**Status at the time this historical plan was written:** INTERNAL planning
+document. A Wiki2018-only v0.3 candidate existed at
+`release/lafc-evict-v0.3-candidate/`. It passed local validation and security
+scanning but had not yet been uploaded or approved for publication. No v1.0
+build or publication action had occurred at that time.
 
 ---
 

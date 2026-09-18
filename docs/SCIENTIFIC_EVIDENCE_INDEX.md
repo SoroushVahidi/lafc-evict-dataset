@@ -1,10 +1,8 @@
 # LAFC-Evict Scientific Evidence Index
 
-> **Updated 2026-09-14** with Tier-1/linkage/mechanistic/continuation rows
-> added below the original table (marked NEW). See
-> `docs/CURRENT_PROJECT_STATUS_AND_HANDOFF_20260914B.md` for the current
-> canonical handoff and `docs/PE_CLAIM_EVIDENCE_LEDGER.md` for exact
-> manuscript-ready values. Original rows below are unmodified.
+> **Updated 2026-09-18** for the public v1.0 repository state. Prefer
+> `analysis/README.md` for the public analysis navigation layer and
+> `docs/PE_CLAIM_EVIDENCE_LEDGER.md` for exact manuscript-ready values.
 
 This index maps each current scientific question to the repository artifact that
 supports it. It is a navigation aid; the frozen reports remain the source of
@@ -17,8 +15,8 @@ exact numbers.
 | Predictor feature issue | Target audit and pairwise repair reports | `76d562f` | Documented unresolved issue | `candidate_is_predictor_victim == candidate_is_lru_victim` across audited canonical data; related predictor fields include constants/placeholders. | Avoid unsupported predictor-field claims; fix upstream generation only in a separate authorized task. |
 | Closed-loop pilot | `analysis/closed_loop_pilot_20260913/` | `experiment/closed-loop-pilot-20260913` / `983d7d0` | Frozen evidence | `B = MIXED`; LRU/random/MRU offline H=16 ordering agrees with closed-loop ordering on MetaCDN and Twemcache cap32; learned policy beats random/SIEVE but loses to LRU on Twemcache; MetaCDN learned policy blocked. | Use as feasibility evidence and retain exact split caveats. |
 | Production closed-loop design | `analysis/closed_loop_production_design_20260913/` | `experiment/closed-loop-production-design-20260913` / `adc7c64` | Designed, not run | Tier 1 covers five families, capacities 32 and 128, LRU/MRU/random/SIEVE, random seeds 0..19; Tier 2 is narrow and approval-gated. | Run and validate Tier 1 only after design review. |
-| Performance Evaluation manuscript | `paper/performance_evaluation/` | `manuscript/performance-evaluation-template-20260913` / `471b3c4` | Separate manuscript branch | Elsevier migration and acknowledgments/funding are complete; scientific reviewer revision is not incorporated. | Do not rewrite until production evidence is available or the user explicitly chooses a manuscript-only revision. |
-| Public v0.3 release | `dataset_card/`, `publication/`, `docs/LAFC_EVICT_PUBLICATION_STATE.md` | `polish/final-handoff-20260914` after Query 2 | Current public status | v0.3 is wiki2018-only on Hugging Face and AWS Open Data; Zenodo remains v0.2 DOI-backed; public v0.3 is not the five-family scientific dataset. | Keep public/canonical distinction prominent in all future release docs. |
+| Performance Evaluation manuscript | `paper/performance_evaluation/` and `paper/performance_evaluation/LAFC-Evict-Performance-Evaluation.pdf` | `master` / `d569ed7` | Integrated final submission package | Canonical 53-page manuscript PDF is tracked; submission state is recorded in `docs/PERFORMANCE_EVALUATION_FINAL_SUBMISSION_STATE.md`. | Do not modify manuscript science during repository-polish work. |
+| Public release state | `dataset_card/`, `publication/`, `docs/LAFC_EVICT_PUBLICATION_STATE.md` | `master` / `d569ed7` | Current public status | v1.0 is the full five-family Hugging Face release; v0.3 remains the older Wiki2018-only HF-main/AWS release; Zenodo remains v0.2 DOI-backed only. | Keep v1.0/v0.3/v0.2 host distinctions prominent in all public docs. |
 | Continuation-policy sensitivity | `analysis/continuation_policy_sensitivity_full_20260914/`; `analysis/continuation_policy_mru_population_census_20260914/validated/20260914T042528Z_1a29e773a113/` | `experiment/continuation-sensitivity-full-20260914` / `484417c`; `analysis/continuation-mru-census-validation-20260915` / `95e3a41` | Validated | Sampled MRU/random at capacities 32/128 and full-population MRU at capacities 32/64/128/256 classify ROBUST under the pre-registered Set-C criterion. | Integrate with exact scope; do not imply population random or arbitrary-policy validation. |
 | Related-work/citation state | `paper/sigmod2027/latex/refs.bib`, related-work notes, manuscript branches | Multiple historical branches | Incomplete | Several references are present but need metadata checks; Cache-Coliseum, Learning Caching Policies with Subsampling, DAgger, Park, and QD-LP are high-priority gaps. | Verify against authoritative sources before editing bibliography metadata. |
 

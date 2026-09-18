@@ -24,9 +24,13 @@ Processed traces are standardized outputs produced by preprocessing scripts from
 
 These processed traces are generated artifacts, but they are still trace-derived and may remain subject to upstream redistribution constraints.
 
-The current public release is the Wiki2018-only v0.2 published preview. The
-historical `v0.1-open` trees are unpublished local staging artifacts. Only
-families with explicit publication clearance may enter a public release.
+The current full public release is v1.0 on Hugging Face and contains the five
+cleared public families: Alibaba Block (`cloudphysics` internally), MetaCDN,
+MetaKV, Twemcache, and Wiki2018. The older v0.3 Wiki2018-only payload remains
+active on Hugging Face `main` and AWS Open Data. Zenodo currently archives the
+v0.2 preview only. Historical `v0.1-open` trees are unpublished local staging
+artifacts. Only families with explicit publication clearance may enter a
+public release.
 
 ## 3. Generated features
 
@@ -58,9 +62,9 @@ These benchmark tasks are authored in this project and are distinct from the ups
 
 ## 6. Current release boundary
 
-Wiki2018 is currently cleared for the published derived preview with
-attribution and caveat requirements. As of 2026-09-15, Twemcache, MetaKV,
-MetaCDN, and the Alibaba Block trace (internal key `cloudphysics`) are also
-`cleared_for_public_release` per `manifests/source_family_registry.yaml`,
-`dataset_card/LICENSE_DATA.md`, and `THIRD_PARTY_DATA.md`. CitiBike and
-Brightkite remain blocked pending license/privacy review.
+Wiki2018 is cleared for public release under CC0-1.0. As of the 2026-09-15
+review, Twemcache, MetaKV, MetaCDN, and the Alibaba Block trace (internal key
+`cloudphysics`) are also `cleared_for_public_release` per
+`manifests/source_family_registry.yaml`, `dataset_card/LICENSE_DATA.md`, and
+`THIRD_PARTY_DATA.md`. CitiBike and Brightkite remain blocked pending
+license/privacy review.

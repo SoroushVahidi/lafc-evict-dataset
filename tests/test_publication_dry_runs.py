@@ -228,6 +228,16 @@ def _v0_2_paths() -> tuple[Path, Path, Path]:
     )
 
 
+def _v0_2_paths_with_payload() -> tuple[Path, Path, Path]:
+    metadata_path, release_dir, manifest_path = _v0_2_paths()
+    if not any(release_dir.rglob("*")):
+        pytest.skip(
+            "Zenodo v0.2 payload is an ignored local release artifact; "
+            "payload-dependent dry-run tests run only when it is present."
+        )
+    return metadata_path, release_dir, manifest_path
+
+
 def test_huggingface_dry_run_succeeds_without_token(tmp_path: Path) -> None:
     release_dir, _ = _build_release_and_bundle(tmp_path)
     result = subprocess.run(
@@ -273,7 +283,7 @@ def test_zenodo_dry_run_succeeds_without_token(tmp_path: Path) -> None:
 
 
 def test_zenodo_v0_2_manifest_plan_validates_exact_files() -> None:
-    metadata_path, release_dir, manifest_path = _v0_2_paths()
+    metadata_path, release_dir, manifest_path = _v0_2_paths_with_payload()
     plan = plan_zenodo_v0_2_draft(
         metadata_path=metadata_path,
         release_dir=release_dir,
@@ -291,7 +301,7 @@ def test_zenodo_v0_2_manifest_plan_validates_exact_files() -> None:
 
 
 def test_zenodo_v0_2_dry_run_reports_no_write_actions() -> None:
-    metadata_path, release_dir, manifest_path = _v0_2_paths()
+    metadata_path, release_dir, manifest_path = _v0_2_paths_with_payload()
     plan = plan_zenodo_v0_2_draft(
         metadata_path=metadata_path,
         release_dir=release_dir,
@@ -319,7 +329,7 @@ def test_zenodo_v0_2_dry_run_reports_no_write_actions() -> None:
 
 
 def test_zenodo_v0_2_cli_dry_run_uses_manifest_without_token() -> None:
-    metadata_path, release_dir, manifest_path = _v0_2_paths()
+    metadata_path, release_dir, manifest_path = _v0_2_paths_with_payload()
     result = subprocess.run(
         [
             sys.executable,
@@ -344,7 +354,7 @@ def test_zenodo_v0_2_cli_dry_run_uses_manifest_without_token() -> None:
 
 
 def test_zenodo_v0_2_create_draft_requires_no_publish_flag() -> None:
-    metadata_path, release_dir, manifest_path = _v0_2_paths()
+    metadata_path, release_dir, manifest_path = _v0_2_paths_with_payload()
     result = subprocess.run(
         [
             sys.executable,
@@ -371,7 +381,7 @@ def test_zenodo_v0_2_create_draft_requires_no_publish_flag() -> None:
 def test_zenodo_v0_2_execute_creates_unpublished_verified_draft_with_mock(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    metadata_path, release_dir, manifest_path = _v0_2_paths()
+    metadata_path, release_dir, manifest_path = _v0_2_paths_with_payload()
     session = _FakeZenodoV02Session(manifest_path, metadata_path)
     monkeypatch.setenv("ZENODO_API_TOKEN", "production-token")
     monkeypatch.delenv("ZENODO_SANDBOX_TOKEN", raising=False)

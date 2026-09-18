@@ -62,14 +62,27 @@ def test_citibike_and_brightkite_are_excluded_with_reasons() -> None:
 def test_publication_clearance_is_explicit_and_fail_closed() -> None:
     registry = load_source_family_registry(_registry_path())
     clearance = {str(entry["family"]): str(entry["publication_clearance"]) for entry in registry}
+    licenses = {str(entry["family"]): str(entry["upstream_license"]) for entry in registry}
 
-    assert clearance["wiki2018"] == "cleared_for_public_release"
-    assert all(
-        clearance[family] == "not_cleared_pending_final_review"
-        for family in ("cloudphysics", "metacdn", "metakv", "twemcache")
-    )
-    assert clearance["brightkite"] == "blocked"
-    assert clearance["citibike"] == "blocked"
+    expected_public = {
+        "cloudphysics": "CC BY 4.0",
+        "metacdn": "Apache License 2.0",
+        "metakv": "Apache License 2.0",
+        "twemcache": "CC BY 4.0",
+        "wiki2018": "CC0-1.0",
+    }
+    expected_blocked = {"brightkite", "citibike"}
+
+    assert set(clearance) == set(expected_public) | expected_blocked
+    assert {
+        family for family, status in clearance.items() if status == "cleared_for_public_release"
+    } == set(expected_public)
+    assert {
+        family for family, status in clearance.items() if status == "blocked"
+    } == expected_blocked
+
+    for family, expected_license in expected_public.items():
+        assert licenses[family] == expected_license
 
 
 def test_selector_output_contains_exclusion_reasons(tmp_path: Path) -> None:
