@@ -1,4 +1,33 @@
-# LAFC-Evict
+# LAFC-Evict: A Large-Scale Counterfactual Dataset for Learned Cache Eviction
+
+**In plain words.** Machine-learned cache-eviction policies need training labels, but real caches only ever record what *did* happen, not what would have happened under a different eviction. LAFC-Evict fills that gap. At every full-cache miss, for every item that could be evicted, it simulates forcing that eviction and records the resulting future miss cost. The v1.0 release has about 278 million candidate rows drawn from five public cache-trace families (Alibaba Block, MetaCDN, MetaKV, Twemcache, Wiki2018). This repository holds the schema, validation and release tooling, reproducibility evidence and the manuscript. The data itself is hosted on Hugging Face and AWS Open Data.
+
+## Preprint and related paper
+
+- **Preprint:** S. Vahidi. *LAFC-Evict: A Large-Scale Counterfactual Benchmark for Learned Cache Eviction.* SSRN, 2026. [ssrn.com/abstract=7625523](https://ssrn.com/abstract=7625523) · [doi:10.2139/ssrn.7625523](https://doi.org/10.2139/ssrn.7625523). Not yet peer-reviewed.
+- Related published method paper: S. Vahidi. *Decision-aligned eviction-value prediction for learning-augmented caching.* Knowledge-Based Systems, 2026. [doi:10.1016/j.knosys.2026.117353](https://doi.org/10.1016/j.knosys.2026.117353). Code: [Augmented-caching](https://github.com/SoroushVahidi/Augmented-caching)
+
+```bibtex
+@misc{vahidi2026lafcevict,
+  author = {Vahidi, Soroush},
+  title  = {{LAFC-Evict}: A Large-Scale Counterfactual Benchmark for Learned Cache Eviction},
+  year   = {2026},
+  note   = {SSRN preprint},
+  doi    = {10.2139/ssrn.7625523}
+}
+```
+
+## Get the data
+
+| Where | What |
+|---|---|
+| [Hugging Face, branch `v1.0`](https://huggingface.co/datasets/SoroushVahidi/lafc-evict/tree/v1.0) | Full v1.0 release |
+| [AWS Registry of Open Data](https://registry.opendata.aws/lafc-evict/) | `s3://lafc-evict-open-data/v1.0/` (anonymous access); historical v0.3 at the bucket root |
+| [lafc-evict-tutorial](https://github.com/SoroushVahidi/lafc-evict-tutorial) | Credential-free notebook that reads a small slice from S3 |
+
+---
+
+> The detailed documentation below is kept from the previous README, with only small factual updates.
 
 LAFC-Evict is a public dataset and reproducibility repository for learned cache eviction. It releases candidate-level finite-horizon counterfactual supervision for cache-eviction decisions: for each full-cache miss and resident candidate, the benchmark records the miss-cost label that would follow from forcing that candidate's eviction under the documented continuation policy. The repository contains the public benchmark metadata, validation code, reproducibility evidence, and manuscript package for studying decision-aligned learned eviction methods.
 
@@ -29,10 +58,10 @@ The current full public release is **LAFC-Evict v1.0** on Hugging Face:
 
 Public v1.0 includes five evaluated trace families: Alibaba Block (`cloudphysics` internally), MetaCDN (`metacdn`), MetaKV (`metakv`), Twemcache (`twemcache`), and Wiki2018 (`wiki2018`). CitiBike and Brightkite remain excluded from public releases.
 
-Older active hosting is intentionally split:
+Other hosting:
 
 - Hugging Face `main`: older v0.3, Wiki2018-only state.
-- AWS Open Data: older v0.3, Wiki2018-only payload in bucket `lafc-evict-open-data`, region `us-west-2`.
+- AWS Open Data (bucket `lafc-evict-open-data`, region `us-west-2`): **v1.0** under the `v1.0/` prefix (per the [registry entry](https://registry.opendata.aws/lafc-evict/), updated 2026-09-24); the older v0.3 Wiki2018-only payload remains at the bucket root.
 - Zenodo: v0.2 archival preview only. Version DOI: <https://doi.org/10.5281/zenodo.21895844>; concept DOI: <https://doi.org/10.5281/zenodo.21895843>. There is no v1.0 Zenodo DOI.
 
 The authoritative release-status documents are [`docs/LAFC_EVICT_PUBLICATION_STATE.md`](docs/LAFC_EVICT_PUBLICATION_STATE.md) and [`publication/LAFC_EVICT_PUBLICATION_STATE.json`](publication/LAFC_EVICT_PUBLICATION_STATE.json).
