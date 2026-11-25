@@ -44,11 +44,11 @@ The `paper/performance_evaluation/` tree is the current manuscript package. The 
 
 ## Dataset
 
-The current full public release is **LAFC-Evict v1.0** on Hugging Face:
+The five-family manuscript benchmark is **LAFC-Evict v1.0** on Hugging Face:
 
 - Dataset: <https://huggingface.co/datasets/SoroushVahidi/lafc-evict>
 - Revision/branch: `v1.0`
-- Release commit: `37173bc96de2a615455bf9713bb90d846156af29`
+- Manuscript-pinned data commit: `37173bc96de2a615455bf9713bb90d846156af29`
 
 | View | Rows |
 | --- | ---: |
@@ -56,15 +56,16 @@ The current full public release is **LAFC-Evict v1.0** on Hugging Face:
 | Decision-horizon rows | 2,363,286 |
 | Canonical pairwise sample | 1,000,000 |
 
-Public v1.0 includes five evaluated trace families: Alibaba Block (`cloudphysics` internally), MetaCDN (`metacdn`), MetaKV (`metakv`), Twemcache (`twemcache`), and Wiki2018 (`wiki2018`). CitiBike and Brightkite remain excluded from public releases.
+Public v1.0 includes five evaluated trace families: Alibaba Block (`cloudphysics` internally), MetaCDN (`metacdn`), MetaKV (`metakv`), Twemcache (`twemcache`), and Wiki2018 (`wiki2018`). Citi Bike and BrightKite are outside the five-family decision-level benchmark.
 
 Other hosting:
 
 - Hugging Face `main`: older v0.3, Wiki2018-only state.
+- Hugging Face `v1.1`: the same benchmark payload and a separate 60-row BrightKite statistical companion.
 - AWS Open Data (bucket `lafc-evict-open-data`, region `us-west-2`): **v1.0** under the `v1.0/` prefix (per the [registry entry](https://registry.opendata.aws/lafc-evict/), updated 2026-09-24); the older v0.3 Wiki2018-only payload remains at the bucket root.
 - Zenodo: v0.2 archival preview only. Version DOI: <https://doi.org/10.5281/zenodo.21895844>; concept DOI: <https://doi.org/10.5281/zenodo.21895843>. There is no v1.0 Zenodo DOI.
 
-The authoritative release-status documents are [`docs/LAFC_EVICT_PUBLICATION_STATE.md`](docs/LAFC_EVICT_PUBLICATION_STATE.md) and [`publication/LAFC_EVICT_PUBLICATION_STATE.json`](publication/LAFC_EVICT_PUBLICATION_STATE.json).
+Use the [revision verification guide](docs/RELEASE_REVISION_VERIFICATION.md) for immutable loading and checksum comparison. The release-status documents are [`docs/LAFC_EVICT_PUBLICATION_STATE.md`](docs/LAFC_EVICT_PUBLICATION_STATE.md) and [`publication/LAFC_EVICT_PUBLICATION_STATE.json`](publication/LAFC_EVICT_PUBLICATION_STATE.json).
 
 ## Quick Start
 
