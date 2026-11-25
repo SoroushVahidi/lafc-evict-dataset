@@ -3,6 +3,8 @@
 This is the human-readable publication overview. The machine-readable source
 of truth is `publication/LAFC_EVICT_PUBLICATION_STATE.json`.
 
+See [release revision verification](RELEASE_REVISION_VERIFICATION.md) for pinned host revisions and check commands.
+
 ## Current public release
 
 **Publication is currently split across platforms.**
@@ -16,17 +18,14 @@ of truth is `publication/LAFC_EVICT_PUBLICATION_STATE.json`.
   The prior v0.3 revision (`2113cc4d1edee57275d769d8760da77ed67c875d`) remains fully
   accessible on the `main` branch, and the prior v0.2 revision
   (`b77413fef197e808aed9cfa708878064a5c00493`) is also pinnable for reproducibility.
-- **AWS Open Data** publicly hosts the older **v0.3 wiki2018-only payload** in
-  bucket `lafc-evict-open-data`, region `us-west-2`: 18 objects,
-  approximately 106.1 MiB, CC0 1.0, with anonymous public download verified PASS.
-  The full five-family v1.0 release is NOT hosted on AWS.
+- **Hugging Face v1.1** adds a separate [60-row statistical companion](https://huggingface.co/datasets/SoroushVahidi/lafc-evict/tree/6e957259fbe01162f7b4bfc73e0b45273690980d). The five-family payload matches the v1.0 scientific checksums.
+- **AWS Open Data** hosts the five-family v1.0 release under the `v1.0/` prefix. The historical v0.3 Wiki2018 payload remains at the bucket root. See the [AWS registry](https://registry.opendata.aws/lafc-evict/).
 - **Zenodo** still serves **LAFC-Evict v0.2** as the current version:
   version DOI <https://doi.org/10.5281/zenodo.21895844>, concept DOI
   <https://doi.org/10.5281/zenodo.21895843>. A v0.3 or v1.0 Zenodo version has
   **not** been created. No Zenodo version DOI exists yet for v0.3 or v1.0.
 
-v1.0 scope: Full five-family release, deterministic pseudonymization of wiki2018 identifiers. Configs:
-`cross_family_evict_value_v1` and `objective_ablation_scalar`. Candidate rows:
+v1.0 scope: Full five-family release, deterministic pseudonymization of wiki2018 identifiers. Views: `candidate_rows`, `decision_view`, and `pairwise_sample`. Candidate rows:
 277,995,072. Dataset license is multi-licensed by family: CC0-1.0 (wiki2018), CC BY 4.0
 (Alibaba Block, Twemcache), and Apache License 2.0 (MetaCDN, MetaKV).
 
