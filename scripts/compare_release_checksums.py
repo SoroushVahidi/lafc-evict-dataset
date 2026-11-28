@@ -4,29 +4,15 @@ from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path, PurePosixPath
-import re
+import sys
+from pathlib import Path
 
+# Load the shared parser without importing release dependencies.
+SRC = Path(__file__).resolve().parents[1] / "src" / "lafc_evict_dataset"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
 
-def read_checksums(path: Path) -> dict[str, str]:
-    result = {}
-    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
-        if not line.strip():
-            continue
-        match = re.fullmatch(r"([0-9a-fA-F]{64}) [ *](.+)", line)
-        if match is None:
-            raise ValueError(f"{path}:{number}: invalid sha256sum row")
-        digest, name = match.groups()
-        relative = PurePosixPath(name)
-        if relative.is_absolute() or ".." in relative.parts or str(relative) == ".":
-            raise ValueError(f"{path}:{number}: expected a safe relative path")
-        name = str(relative)
-        if name in result:
-            raise ValueError(f"{path}:{number}: duplicate path {name!r}")
-        result[name] = digest.lower()
-    if not result:
-        raise ValueError(f"{path}: empty inventory")
-    return result
+from checksums import read_checksums  # noqa: E402
 
 
 def compare(left: dict[str, str], right: dict[str, str], prefix: str = "") -> dict:
