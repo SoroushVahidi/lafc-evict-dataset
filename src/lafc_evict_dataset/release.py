@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from .checksums import checksum_lines
 from .io import ensure_clean_output_dir, ensure_parent, fail_if_output_exists, iter_files, sha256_file
 from .publication import render_hf_dataset_card_metadata
 from .schema import CANONICAL_COLUMNS, DECISION_KEY_COLUMNS, SCHEMA_VERSION, normalize_split_value
@@ -57,16 +58,6 @@ def _write_partitioned_candidate_rows(df: pd.DataFrame, candidate_root: Path) ->
             }
         )
     return file_entries
-
-
-def _checksum_lines(root: Path, checksum_output_path: Path) -> list[str]:
-    lines: list[str] = []
-    for file_path in iter_files(root):
-        if file_path.resolve() == checksum_output_path.resolve():
-            continue
-        rel = file_path.resolve().relative_to(root.resolve())
-        lines.append(f"{sha256_file(file_path)}  {rel.as_posix()}")
-    return lines
 
 
 def _write_validation_report(
@@ -222,8 +213,8 @@ def build_sample_release(
         candidate_row_count=int(len(df)),
     )
 
-    checksum_lines = _checksum_lines(release_root, checksums_path)
-    ensure_parent(checksums_path).write_text("\n".join(checksum_lines) + "\n", encoding="utf-8")
+    lines = checksum_lines(release_root, checksums_path)
+    ensure_parent(checksums_path).write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     generated_files = sorted(
         {
@@ -241,8 +232,8 @@ def build_sample_release(
         output_path=validation_report_path,
     )
 
-    checksum_lines = _checksum_lines(release_root, checksums_path)
-    checksums_path.write_text("\n".join(checksum_lines) + "\n", encoding="utf-8")
+    lines = checksum_lines(release_root, checksums_path)
+    checksums_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     generated_files = tuple(
         sorted(

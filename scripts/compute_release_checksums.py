@@ -11,7 +11,8 @@ if str(SRC) not in sys.path:
 
 
 def main() -> None:
-    from lafc_evict_dataset.io import ensure_parent, fail_if_output_exists, iter_files, sha256_file
+    from lafc_evict_dataset.checksums import checksum_lines
+    from lafc_evict_dataset.io import ensure_parent, fail_if_output_exists
 
     parser = argparse.ArgumentParser(
         description=(
@@ -29,15 +30,7 @@ def main() -> None:
         input_path = Path(args.input_path).resolve()
         output_path = ensure_parent(args.output_path).resolve()
         fail_if_output_exists(output_path, overwrite=args.overwrite, kind="Checksum output")
-        lines: list[str] = []
-
-        for file_path in iter_files(input_path):
-            if file_path.resolve() == output_path:
-                continue
-            digest = sha256_file(file_path)
-            rel = file_path.resolve().relative_to(input_path) if input_path.is_dir() else Path(file_path.name)
-            lines.append(f"{digest}  {rel.as_posix()}")
-
+        lines = checksum_lines(input_path, output_path)
         output_path.write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
         print(f"Wrote {output_path}")
     except Exception as exc:

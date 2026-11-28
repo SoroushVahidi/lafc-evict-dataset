@@ -19,6 +19,9 @@ dependencies = [
   "PyYAML>=6.0",
 ]
 
+[project.scripts]
+lafc-verify-checksums = "lafc_evict_dataset.checksums:main"
+
 [project.optional-dependencies]
 dev = [
   "pytest>=8.0",

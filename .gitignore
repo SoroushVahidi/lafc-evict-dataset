@@ -34,3 +34,10 @@ paper/performance_evaluation/latex/*.toc
 paper/performance_evaluation/latex/*.lof
 paper/performance_evaluation/latex/*.lot
 paper/performance_evaluation/latex/*.synctex.gz
+/.venv*/
+/.coverage
+/htmlcov/
+/.mypy_cache/
+/.env
+/.env.*
+!/.env.example

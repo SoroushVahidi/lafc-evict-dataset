@@ -11,7 +11,7 @@ def test_data_prefix_omits_metadata_changes(tmp_path):
     previous, current = tmp_path / "previous", tmp_path / "current"
     previous.write_text(f"{'0' * 64}  README.md\n{'1' * 64}  data/rows.parquet\n")
     current.write_text(f"{'2' * 64}  README.md\n{'1' * 64} *data/rows.parquet\n")
-    run = subprocess.run([sys.executable, str(SCRIPT), str(previous), str(current), "--prefix", "data/"],
+    run = subprocess.run([sys.executable, "-S", str(SCRIPT), str(previous), str(current), "--prefix", "data/"],
                          text=True, capture_output=True, check=True)
     assert '"unchanged": 1' in run.stdout
     assert '"changed": []' in run.stdout
