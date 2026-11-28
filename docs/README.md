@@ -2,6 +2,8 @@
 
 This directory mixes current public documentation with historical audits, handoffs, and planning records. New readers should start with the current documents below. Historical files are retained for reproducibility and decision provenance, but they are not current setup or release instructions unless they explicitly say so.
 
+Use the [release tooling guide](RELEASE_TOOLING.md) for installation, local integrity checks and contribution guidance.
+
 ## Current Public Documentation
 
 - [`LAFC_EVICT_PUBLICATION_STATE.md`](LAFC_EVICT_PUBLICATION_STATE.md): authoritative human-readable hosting and release-state overview for Hugging Face v1.0, AWS v0.3, and Zenodo v0.2.

@@ -5,7 +5,7 @@
 ## Preprint and related paper
 
 - **Preprint:** S. Vahidi. *LAFC-Evict: A Large-Scale Counterfactual Benchmark for Learned Cache Eviction.* SSRN, 2026. [ssrn.com/abstract=7625523](https://ssrn.com/abstract=7625523) · [doi:10.2139/ssrn.7625523](https://doi.org/10.2139/ssrn.7625523). Not yet peer-reviewed.
-- Related published method paper: S. Vahidi. *Decision-aligned eviction-value prediction for learning-augmented caching.* Knowledge-Based Systems, 2026. [doi:10.1016/j.knosys.2026.117353](https://doi.org/10.1016/j.knosys.2026.117353). Code: [Augmented-caching](https://github.com/SoroushVahidi/Augmented-caching)
+- Related published method paper: S. Vahidi. *Decision-aligned eviction-value prediction for learning-augmented caching.* Knowledge-Based Systems 356 (2027), article 117353. [doi:10.1016/j.knosys.2026.117353](https://doi.org/10.1016/j.knosys.2026.117353). Code: [Augmented-caching](https://github.com/SoroushVahidi/Augmented-caching)
 
 ```bibtex
 @misc{vahidi2026lafcevict,
@@ -21,13 +21,11 @@
 
 | Where | What |
 |---|---|
-| [Hugging Face, branch `v1.0`](https://huggingface.co/datasets/SoroushVahidi/lafc-evict/tree/v1.0) | Full v1.0 release |
+| [Hugging Face, pinned v1.0](https://huggingface.co/datasets/SoroushVahidi/lafc-evict/tree/37173bc96de2a615455bf9713bb90d846156af29) | Full manuscript-referenced v1.0 release |
 | [AWS Registry of Open Data](https://registry.opendata.aws/lafc-evict/) | `s3://lafc-evict-open-data/v1.0/` (anonymous access); historical v0.3 at the bucket root |
 | [lafc-evict-tutorial](https://github.com/SoroushVahidi/lafc-evict-tutorial) | Credential-free notebook that reads a small slice from S3 |
 
 ---
-
-> The detailed documentation below is kept from the previous README, with only small factual updates.
 
 LAFC-Evict is a public dataset and reproducibility repository for learned cache eviction. It releases candidate-level finite-horizon counterfactual supervision for cache-eviction decisions: for each full-cache miss and resident candidate, the benchmark records the miss-cost label that would follow from forcing that candidate's eviction under the documented continuation policy. The repository contains the public benchmark metadata, validation code, reproducibility evidence, and manuscript package for studying decision-aligned learned eviction methods.
 
@@ -76,11 +74,11 @@ git clone https://github.com/SoroushVahidi/lafc-evict-dataset.git
 cd lafc-evict-dataset
 python -m venv .venv
 source .venv/bin/activate
-pip install -e '.[dev]'
+python -m pip install -e '.[dev]'
 python -m pytest -q tests
 ```
 
-The command above is the base repository test contract. Some analysis-specific tests under `analysis/` require additional simulator or policy dependencies, such as `libcachesim`, and are documented with the corresponding frozen analysis campaign rather than required for the base install.
+The command above is the base repository test contract. For local integrity checks and a fully synthetic workflow, see the [release tooling guide](docs/RELEASE_TOOLING.md). Some analysis-specific tests under `analysis/` require additional simulator or policy dependencies, such as `libcachesim`, and are documented with the corresponding frozen analysis campaign rather than required for the base install.
 
 Useful starting points after cloning:
 
